@@ -1,29 +1,17 @@
 ## Problem
 
-When saving a bottle, the form shows a generic "Please review highlighted fields" message but no field is actually highlighted, so users can't tell what's wrong. The most common cause is the required **Colour** field being empty (it's a custom Select, not a registered Input, so it doesn't get any visible error styling), but the same is true for **Producer** and **Quantity** — there's no inline error text anywhere in the form, only the generic banner.
+The Rating field is showing up in the "Please fix" banner even though it should be optional. Two related issues:
 
-## Fix
+1. The Rating `<Select>` has no way to clear a value once set — there's no "No rating" entry. If a user picks a star and then changes their mind, the value stays.
+2. More importantly, when a star is picked the form value becomes a number, but no path exists to set it back to undefined. Combined with how the Select value is bound (`rating ? String(rating) : ""`), edge cases (e.g. selecting `0` programmatically, or stale state on edit) can leave the field in a state Zod rejects.
 
-Make validation errors visible and specific in `src/components/WineFormDialog.tsx`:
+The schema in `src/lib/wine.ts` is already correct — `rating` is `optionalNum(...)` and accepts undefined/null. The fix is purely UI.
 
-1. **Inline error messages under each field.** For every field bound to react-hook-form (Producer, Quantity, Colour, Vintage, numeric fields, year fields, etc.), render a small red text under the input when `errors.<field>` exists, showing the actual zod message ("Producer is required", "Expected number, received nan", etc.).
+## Fix (one file: `src/components/WineFormDialog.tsx`)
 
-2. **Red ring on invalid inputs.** Add `aria-invalid={!!errors.<field>}` and a conditional `border-destructive` class so the field visually lights up.
+1. **Add a "No rating" option** to the Rating `<Select>` so users can explicitly clear it.
+2. **Wire clearing to `undefined`** — when "No rating" is picked, call `setValue("rating", undefined, { shouldValidate: true })`. When a star is picked, set the number as before, also with `shouldValidate: true`.
+3. **Default Rating to `undefined`** explicitly in both `reset()` calls (new bottle and edit), so it never carries a stale value across opens.
+4. **Same treatment for Occasion** Select while we're here, since it has the identical pattern and could trip the same way: add a "None" entry that maps to `undefined`.
 
-3. **Highlight the Colour Select when invalid.** The `SelectTrigger` for Colour gets the same red border / aria-invalid treatment when `errors.colour` is set — this is the most likely silent failure today.
-
-4. **Replace the generic banner with a specific summary.** Instead of "Please review highlighted fields.", list the names of the fields that failed (e.g. "Missing: Colour, Quantity"). This gives an immediate answer even if the user hasn't scrolled.
-
-5. **Scroll to first error on submit.** When `handleSubmit` rejects, scroll the dialog to the first invalid field so it's visible without hunting.
-
-## Out of scope
-
-No schema changes — `Producer`, `Colour`, and `Quantity` remain the only required fields. The earlier "drink window required" rule is not currently in the schema and is not being re-added.
-
-## Technical notes
-
-- File touched: `src/components/WineFormDialog.tsx` only.
-- Use `formState.errors` from the existing `useForm` call.
-- Add a tiny `<FieldError name="..." />` helper inside the file to keep markup tidy.
-- For the Colour Select, pass `className={errors.colour ? "border-destructive" : ""}` to `SelectTrigger`.
-- Use `handleSubmit(onSubmit, onInvalid)` where `onInvalid` focuses/scrolls to the first errored field via `document.querySelector('[aria-invalid="true"]')`.
+No schema or hook changes. After this, Rating (and Occasion) can be left empty or cleared, and won't appear in the validation banner.
