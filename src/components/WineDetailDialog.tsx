@@ -1,5 +1,6 @@
 import { Wine, OCCASION_LABEL, OCCASION_CLASS, getDrinkStatus, DRINK_LABEL, wineTitle } from "@/lib/wine";
 import { useWineColoursCtx, colourClassFor } from "@/contexts/WineColoursContext";
+import { useGeographyLookups } from "@/hooks/useWineGeography";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
