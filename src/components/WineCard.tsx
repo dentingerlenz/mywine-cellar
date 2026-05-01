@@ -19,6 +19,8 @@ type Props = {
 
 export const WineCard = ({ wine, onOpen, onEdit, onDelete }: Props) => {
   const { labelFor } = useWineColoursCtx();
+  const { regionNameFor } = useGeographyLookups();
+  const regionName = regionNameFor(wine);
   return (
     <Card
       onClick={() => onOpen(wine)}
