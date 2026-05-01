@@ -163,10 +163,10 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
   const occasion = watch("occasion");
   const rating = watch("rating");
   const cl = watch("cl");
-  const country = watch("country");
-  const region = watch("region");
+  const countryId = watch("country_id");
+  const regionId = watch("region_id");
 
-  const selectedCountry = countries.find((c) => c.name === country);
+  const selectedCountry = countries.find((c) => c.id === countryId);
   const filteredRegions = selectedCountry
     ? allRegions.filter((r) => r.country_id === selectedCountry.id)
     : [];
