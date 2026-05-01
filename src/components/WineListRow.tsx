@@ -38,7 +38,7 @@ export const WineListRow = ({ wine, onOpen, onEdit, onDelete }: Props) => {
       <TableCell className="text-primary font-display">{wine.vintage || "—"}</TableCell>
       <TableCell className="text-sm">{wine.region || "—"}</TableCell>
       <TableCell className="text-sm max-w-[180px] truncate">{wine.variety || "—"}</TableCell>
-      <TableCell className="text-center">×{wine.quantity}</TableCell>
+      <TableCell className="text-center"><QuantityControls wine={wine} size="sm" /></TableCell>
       <TableCell className="text-right font-display text-primary whitespace-nowrap">
         {wine.price_chf != null ? `${wine.price_chf.toFixed(0)} CHF` : <span className="text-muted-foreground italic">—</span>}
       </TableCell>
