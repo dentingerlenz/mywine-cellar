@@ -232,18 +232,26 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
             </div>
             <div>
               <Label>Occasion</Label>
-              <Select value={occasion ?? ""} onValueChange={(v) => setValue("occasion", v as any)}>
+              <Select
+                value={occasion ?? "none"}
+                onValueChange={(v) => setValue("occasion", v === "none" ? (undefined as any) : (v as any), { shouldValidate: true })}
+              >
                 <SelectTrigger><SelectValue placeholder="—" /></SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="none">None</SelectItem>
                   {OCCASIONS.map((o) => <SelectItem key={o} value={o}>{OCCASION_LABEL[o]}</SelectItem>)}
                 </SelectContent>
               </Select>
             </div>
             <div>
               <Label>Rating</Label>
-              <Select value={rating ? String(rating) : ""} onValueChange={(v) => setValue("rating", Number(v) as any)}>
+              <Select
+                value={rating ? String(rating) : "none"}
+                onValueChange={(v) => setValue("rating", v === "none" ? (undefined as any) : (Number(v) as any), { shouldValidate: true })}
+              >
                 <SelectTrigger><SelectValue placeholder="—" /></SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="none">No rating</SelectItem>
                   {[1,2,3,4,5].map((n) => <SelectItem key={n} value={String(n)}>{"★".repeat(n)}</SelectItem>)}
                 </SelectContent>
               </Select>
