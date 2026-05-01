@@ -43,6 +43,45 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     defaultValues: { quantity: 1, cl: 75 },
   });
 
+  const FIELD_LABELS: Record<string, string> = {
+    producer: "Producer",
+    description: "Description",
+    vintage: "Vintage",
+    cl: "Bottle size",
+    colour: "Colour",
+    variety: "Variety",
+    residual_sugar_gl: "Residual sugar",
+    dosage: "Dosage",
+    alcohol_pct: "Alcohol",
+    country: "Country",
+    region: "Region",
+    sub_region: "Sub-region",
+    appellation: "Appellation",
+    ausbau_terroir: "Ausbau / Terroir",
+    notes: "Notes",
+    occasion: "Occasion",
+    quantity: "Quantity",
+    price_chf: "Price",
+    purchased_from: "Purchased from",
+    ready_from: "Ready from",
+    drink_by: "Drink by",
+    rating: "Rating",
+  };
+
+  const errClass = (name: string) => (errors as any)[name] ? "border-destructive focus-visible:ring-destructive" : "";
+  const errMsg = (name: string) => {
+    const e = (errors as any)[name];
+    return e?.message ? <p className="text-xs text-destructive mt-1">{String(e.message)}</p> : null;
+  };
+
+  const onInvalid = () => {
+    setTimeout(() => {
+      const el = document.querySelector('[aria-invalid="true"]') as HTMLElement | null;
+      el?.scrollIntoView({ behavior: "smooth", block: "center" });
+      el?.focus?.();
+    }, 0);
+  };
+
   useEffect(() => {
     if (open) {
       if (wine) {
