@@ -380,7 +380,7 @@ const CountryItem = ({
                     <RegionRow
                       key={r.id}
                       region={r}
-                      affected={regionAffected(r.name)}
+                      affected={regionAffected(r.id)}
                       isFirst={idx === 0}
                       isLast={idx === regions.length - 1}
                       onMoveUp={() => moveRegion(idx, -1)}
