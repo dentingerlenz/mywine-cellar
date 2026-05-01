@@ -83,6 +83,19 @@ export const useDeleteWine = () => {
   });
 };
 
+export const useUpdateQuantity = () => {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, quantity }: { id: string; quantity: number }) => {
+      const q = Math.max(0, Math.floor(quantity));
+      const { error } = await supabase.from("wines").update({ quantity: q }).eq("id", id);
+      if (error) throw error;
+      return q;
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["wines"] }),
+  });
+};
+
 export const uploadLabelPhoto = async (file: File, userId: string): Promise<string> => {
   const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
   const path = `${userId}/${crypto.randomUUID()}.${ext}`;
