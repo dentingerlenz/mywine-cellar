@@ -11,10 +11,12 @@ const COLOUR_HEX: Record<WineColour, string> = {
 };
 
 export const Dashboard = ({ wines }: { wines: Wine[] }) => {
-  const totalBottles = wines.reduce((s, b) => s + b.quantity, 0);
-  const totalValue = wines.reduce((s, b) => s + (b.price_chf ?? 0) * b.quantity, 0);
-  const drinkNow = wines.filter((b) => getDrinkStatus(b) === "drink_now" && (b.ready_from || b.drink_by));
-  const layDown = wines.filter((b) => b.occasion === "l");
+  const inStock = wines.filter((b) => b.quantity > 0);
+  const totalBottles = inStock.reduce((s, b) => s + b.quantity, 0);
+  const totalValue = inStock.reduce((s, b) => s + (b.price_chf ?? 0) * b.quantity, 0);
+  const labelCount = inStock.length;
+  const drinkNow = inStock.filter((b) => getDrinkStatus(b) === "drink_now" && (b.ready_from || b.drink_by));
+  const layDown = inStock.filter((b) => b.occasion === "l");
 
   const byColour = (Object.keys(COLOUR_LABEL) as WineColour[]).map((c) => ({
     name: COLOUR_LABEL[c],
