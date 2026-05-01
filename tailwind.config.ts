@@ -57,6 +57,17 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        wine: {
+          red: "hsl(var(--wine-red))",
+          white: "hsl(var(--wine-white))",
+          rose: "hsl(var(--wine-rose))",
+          sparkling: "hsl(var(--wine-sparkling))",
+          dessert: "hsl(var(--wine-dessert))",
+        },
+      },
+      fontFamily: {
+        display: ['"Playfair Display"', 'Georgia', 'serif'],
+        body: ['Lora', 'Georgia', 'serif'],
       },
       borderRadius: {
         lg: "var(--radius)",
