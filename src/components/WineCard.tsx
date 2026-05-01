@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { BottlePlaceholder } from "./BottlePlaceholder";
 import { Pencil, Trash2, Star } from "lucide-react";
 import { QuantityControls } from "./QuantityControls";
+import { PriceControl } from "./PriceControl";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -66,9 +67,7 @@ export const WineCard = ({ wine, onOpen, onEdit, onDelete }: Props) => {
           </div>
         )}
         <div className="flex items-center justify-between pt-2">
-          <span className="text-sm font-display text-primary">
-            {wine.price_chf != null ? `${wine.price_chf.toFixed(0)} CHF` : <span className="text-muted-foreground italic text-xs">No price</span>}
-          </span>
+          <PriceControl wine={wine} size="sm" />
           <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
             <Button size="icon" variant="ghost" className="h-8 w-8" onClick={(e) => { e.stopPropagation(); onEdit(wine); }}>
               <Pencil className="w-4 h-4" />

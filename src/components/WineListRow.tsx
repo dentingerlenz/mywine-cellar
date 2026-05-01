@@ -5,6 +5,7 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 import { QuantityControls } from "./QuantityControls";
+import { PriceControl } from "./PriceControl";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -39,8 +40,8 @@ export const WineListRow = ({ wine, onOpen, onEdit, onDelete }: Props) => {
       <TableCell className="text-sm">{wine.region || "—"}</TableCell>
       <TableCell className="text-sm max-w-[180px] truncate">{wine.variety || "—"}</TableCell>
       <TableCell className="text-center"><QuantityControls wine={wine} size="sm" /></TableCell>
-      <TableCell className="text-right font-display text-primary whitespace-nowrap">
-        {wine.price_chf != null ? `${wine.price_chf.toFixed(0)} CHF` : <span className="text-muted-foreground italic">—</span>}
+      <TableCell className="text-right whitespace-nowrap">
+        <PriceControl wine={wine} size="sm" align="right" />
       </TableCell>
       <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
         <DropdownMenu>

@@ -1,26 +1,52 @@
 ## Goal
 
-Allow direct editing of the bottle quantity number in both grid and list views — currently only the − / + buttons work.
+Make the CHF price directly editable from the wine card (grid view) and the row (list view) — just like the quantity already is — without opening the edit form.
 
-## Change
+## Behaviour
 
-Update `src/components/QuantityControls.tsx`:
+- Click the price (e.g. "45 CHF" or the muted "No price" / "—") → it becomes a focused, auto-selected number input.
+- Enter or blur → save to Supabase, show a brief toast ("Price updated · 45 CHF" or "Price cleared").
+- Esc → cancel and revert.
+- Empty input → clears the price (saved as `null`, displayed as "No price" / "—").
+- Negative or invalid input → reverts.
+- Decimals allowed (step 0.01), but display stays rounded as today (`toFixed(0)` + " CHF").
+- Clicking the price never opens the wine detail dialog (stop propagation).
+- Reuses the same luxury styling: gold primary colour, `font-display tabular-nums`, muted italic when empty.
 
-- Replace the static `<span>` showing the quantity with a click-to-edit field.
-- Click the number → it becomes a focused, auto-selected `<input type="number">`.
-- Press Enter or blur → commit the new value via the existing `useUpdateQuantity` mutation (with the same toast feedback).
-- Press Escape → cancel and revert.
-- Invalid input (empty, NaN, negative) reverts to the current quantity.
-- Keep the existing − / + buttons unchanged.
-- Preserve muted/italic style when quantity is 0.
-- Keep `onClick` propagation stopped so editing on a card doesn't open the detail dialog.
+## Changes
 
-No other files need to change — `WineCard` and `WineListRow` already use this component.
+1. **New component `src/components/PriceControl.tsx`**
+   - Props: `wine: Wine`, `align?: "left" | "right"`, `size?: "sm" | "md"`.
+   - Internal `editing` / `draft` state, `useRef` for input, identical pattern to `QuantityControls`.
+   - Calls a new `useUpdatePrice` mutation.
+   - Renders either the formatted price button or a small inline number input with a "CHF" suffix.
+
+2. **New mutation `useUpdatePrice` in `src/hooks/useWines.ts`**
+   - Accepts `{ id, price_chf: number | null }`.
+   - Updates the `wines` row, invalidates the `wines` query.
+   - Empty / null → writes `null` to the column.
+
+3. **`src/components/WineCard.tsx`**
+   - Replace the static `<span>` showing `wine.price_chf` in the bottom row with `<PriceControl wine={wine} size="sm" />`.
+
+4. **`src/components/WineListRow.tsx`**
+   - Replace the price `<TableCell>` content with `<PriceControl wine={wine} size="sm" align="right" />`.
+
+No schema, RLS, or form changes are needed — the column already exists and is nullable, and RLS already permits the owner to update.
 
 ## Technical detail
 
-- Add `useState` for `editing` and `draft` string, `useRef` for the input.
-- Sync `draft` from `wine.quantity` when not editing (handles external updates).
-- Auto-focus + select on entering edit mode via `useEffect`.
-- Reuse existing `useUpdateQuantity` hook; floor + clamp to ≥0 before saving.
-- Hide native number spinners with the existing tailwind arbitrary selectors.
+- Input uses `type="number"` with `inputMode="decimal"`, `step="0.01"`, `min="0"`, native spinners hidden via the same `[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none` classes used in `QuantityControls`.
+- Width sized for ~5 chars + " CHF" suffix; right-aligned in list view to match current cell alignment.
+- Commit logic:
+  ```ts
+  const trimmed = draft.trim();
+  if (trimmed === "") savePrice(null);
+  else {
+    const n = Number(trimmed);
+    if (!Number.isFinite(n) || n < 0) revert();
+    else if (n !== (wine.price_chf ?? null)) savePrice(n);
+  }
+  ```
+- Toast: `Price updated · ${n.toFixed(0)} CHF` or `Price cleared`.
+- Mutation skips the network call when the value is unchanged.

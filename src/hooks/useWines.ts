@@ -83,6 +83,19 @@ export const useDeleteWine = () => {
   });
 };
 
+export const useUpdatePrice = () => {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, price_chf }: { id: string; price_chf: number | null }) => {
+      const value = price_chf == null || !Number.isFinite(price_chf) || price_chf < 0 ? null : price_chf;
+      const { error } = await supabase.from("wines").update({ price_chf: value }).eq("id", id);
+      if (error) throw error;
+      return value;
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["wines"] }),
+  });
+};
+
 export const useUpdateQuantity = () => {
   const qc = useQueryClient();
   return useMutation({
