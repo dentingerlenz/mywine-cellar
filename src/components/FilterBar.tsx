@@ -1,34 +1,39 @@
-import { Bottle, WINE_COLOURS, COLOUR_LABEL, WineColour } from "@/lib/wine";
+import { Wine, WINE_COLOURS, COLOUR_LABEL, WineColour, OCCASIONS, OCCASION_LABEL, Occasion } from "@/lib/wine";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, X } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+
+export type SortKey = "added" | "producer" | "vintage" | "region" | "price";
 
 export type Filters = {
   q: string;
   colour: WineColour | "all";
   country: string;
   region: string;
-  grape: string;
+  occasion: Occasion | "all";
   vintageMin: string;
   vintageMax: string;
-  drinkStatus: "all" | "drink_now" | "too_young" | "past_peak";
+  inStockOnly: boolean;
+  sort: SortKey;
 };
 
 export const emptyFilters: Filters = {
-  q: "", colour: "all", country: "", region: "", grape: "",
-  vintageMin: "", vintageMax: "", drinkStatus: "all",
+  q: "", colour: "all", country: "", region: "", occasion: "all",
+  vintageMin: "", vintageMax: "", inStockOnly: false, sort: "added",
 };
 
 export const FilterBar = ({
-  filters, setFilters, bottles,
+  filters, setFilters, wines,
 }: {
   filters: Filters;
   setFilters: (f: Filters) => void;
-  bottles: Bottle[];
+  wines: Wine[];
 }) => {
-  const countries = Array.from(new Set(bottles.map((b) => b.country).filter(Boolean) as string[])).sort();
-  const regions = Array.from(new Set(bottles.map((b) => b.region).filter(Boolean) as string[])).sort();
+  const countries = Array.from(new Set(wines.map((b) => b.country).filter(Boolean) as string[])).sort();
+  const regions = Array.from(new Set(wines.map((b) => b.region).filter(Boolean) as string[])).sort();
   const hasFilter = JSON.stringify(filters) !== JSON.stringify(emptyFilters);
 
   return (
@@ -36,13 +41,13 @@ export const FilterBar = ({
       <div className="relative">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
         <Input
-          placeholder="Search by name or producer…"
+          placeholder="Search producer, description, variety, notes…"
           value={filters.q}
           onChange={(e) => setFilters({ ...filters, q: e.target.value })}
           className="pl-9 bg-input/50"
         />
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2">
         <Select value={filters.colour} onValueChange={(v) => setFilters({ ...filters, colour: v as any })}>
           <SelectTrigger><SelectValue placeholder="Colour" /></SelectTrigger>
           <SelectContent>
@@ -64,20 +69,31 @@ export const FilterBar = ({
             {regions.map((r) => <SelectItem key={r} value={r}>{r}</SelectItem>)}
           </SelectContent>
         </Select>
-        <Input placeholder="Grape" value={filters.grape} onChange={(e) => setFilters({ ...filters, grape: e.target.value })} />
+        <Select value={filters.occasion} onValueChange={(v) => setFilters({ ...filters, occasion: v as any })}>
+          <SelectTrigger><SelectValue placeholder="Occasion" /></SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Any occasion</SelectItem>
+            {OCCASIONS.map((o) => <SelectItem key={o} value={o}>{OCCASION_LABEL[o]}</SelectItem>)}
+          </SelectContent>
+        </Select>
         <div className="flex gap-1">
           <Input type="number" placeholder="From" value={filters.vintageMin} onChange={(e) => setFilters({ ...filters, vintageMin: e.target.value })} />
           <Input type="number" placeholder="To" value={filters.vintageMax} onChange={(e) => setFilters({ ...filters, vintageMax: e.target.value })} />
         </div>
-        <Select value={filters.drinkStatus} onValueChange={(v) => setFilters({ ...filters, drinkStatus: v as any })}>
-          <SelectTrigger><SelectValue placeholder="Window" /></SelectTrigger>
+        <Select value={filters.sort} onValueChange={(v) => setFilters({ ...filters, sort: v as SortKey })}>
+          <SelectTrigger><SelectValue placeholder="Sort" /></SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Any window</SelectItem>
-            <SelectItem value="drink_now">Drink now</SelectItem>
-            <SelectItem value="too_young">Too young</SelectItem>
-            <SelectItem value="past_peak">Past peak</SelectItem>
+            <SelectItem value="added">Recently added</SelectItem>
+            <SelectItem value="producer">Producer</SelectItem>
+            <SelectItem value="vintage">Vintage</SelectItem>
+            <SelectItem value="region">Region</SelectItem>
+            <SelectItem value="price">Price</SelectItem>
           </SelectContent>
         </Select>
+        <div className="flex items-center gap-2 px-3 rounded-md border border-border bg-input/50">
+          <Switch id="inStock" checked={filters.inStockOnly} onCheckedChange={(v) => setFilters({ ...filters, inStockOnly: v })} />
+          <Label htmlFor="inStock" className="text-xs cursor-pointer">In stock</Label>
+        </div>
       </div>
       {hasFilter && (
         <Button variant="ghost" size="sm" onClick={() => setFilters(emptyFilters)} className="text-xs">
@@ -88,27 +104,41 @@ export const FilterBar = ({
   );
 };
 
-export const applyFilters = (bottles: Bottle[], f: Filters): Bottle[] => {
-  return bottles.filter((b) => {
+const parseVintageYear = (v: string | null): number | null => {
+  if (!v) return null;
+  const m = v.match(/(\d{4})/);
+  return m ? Number(m[1]) : null;
+};
+
+export const applyFilters = (wines: Wine[], f: Filters): Wine[] => {
+  const list = wines.filter((b) => {
     if (f.q) {
       const q = f.q.toLowerCase();
-      if (!b.name.toLowerCase().includes(q) && !(b.producer ?? "").toLowerCase().includes(q)) return false;
+      const hay = [b.producer, b.description, b.variety, b.notes, b.region, b.country].filter(Boolean).join(" ").toLowerCase();
+      if (!hay.includes(q)) return false;
     }
     if (f.colour !== "all" && b.colour !== f.colour) return false;
     if (f.country && b.country !== f.country) return false;
     if (f.region && b.region !== f.region) return false;
-    if (f.grape && !(b.grape ?? "").toLowerCase().includes(f.grape.toLowerCase())) return false;
-    if (f.vintageMin && (b.vintage ?? 0) < Number(f.vintageMin)) return false;
-    if (f.vintageMax && (b.vintage ?? 9999) > Number(f.vintageMax)) return false;
-    if (f.drinkStatus !== "all") {
-      const year = new Date().getFullYear();
-      const status =
-        b.ready_from == null && b.drink_by == null ? "unknown"
-        : b.ready_from != null && year < b.ready_from ? "too_young"
-        : b.drink_by != null && year > b.drink_by ? "past_peak"
-        : "drink_now";
-      if (status !== f.drinkStatus) return false;
-    }
+    if (f.occasion !== "all" && b.occasion !== f.occasion) return false;
+    if (f.inStockOnly && b.quantity <= 0) return false;
+    const y = parseVintageYear(b.vintage);
+    if (f.vintageMin) { if (y == null || y < Number(f.vintageMin)) return false; }
+    if (f.vintageMax) { if (y == null || y > Number(f.vintageMax)) return false; }
     return true;
   });
+
+  const sorted = [...list];
+  switch (f.sort) {
+    case "producer":
+      sorted.sort((a, b) => (a.producer ?? "").localeCompare(b.producer ?? "")); break;
+    case "vintage":
+      sorted.sort((a, b) => (parseVintageYear(b.vintage) ?? 0) - (parseVintageYear(a.vintage) ?? 0)); break;
+    case "region":
+      sorted.sort((a, b) => (a.region ?? "").localeCompare(b.region ?? "")); break;
+    case "price":
+      sorted.sort((a, b) => (b.price_chf ?? 0) - (a.price_chf ?? 0)); break;
+    default: break;
+  }
+  return sorted;
 };

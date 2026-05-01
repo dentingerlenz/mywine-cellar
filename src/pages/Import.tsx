@@ -4,27 +4,46 @@ import Papa from "papaparse";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useBulkInsertBottles } from "@/hooks/useBottles";
-import { bottleSchema, BottleInput, WINE_COLOURS } from "@/lib/wine";
+import { useBulkInsertWines } from "@/hooks/useWines";
+import { wineSchema, WineInput, WINE_COLOURS, OCCASIONS } from "@/lib/wine";
 import { toast } from "sonner";
 import { ArrowLeft, Upload, Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
 
-type ParsedRow = { row: number; raw: any; data?: BottleInput; error?: string };
+type ParsedRow = { row: number; raw: any; data?: WineInput; error?: string };
 
 const normaliseColour = (v: string | undefined) => {
   if (!v) return undefined;
-  const s = v.toLowerCase().trim().replace("é", "e");
-  if (s.startsWith("red")) return "red";
-  if (s.startsWith("whi")) return "white";
-  if (s.startsWith("ros")) return "rose";
+  const s = v.toLowerCase().trim().replace(/[éè]/g, "e").replace(/[\s/-]+/g, "_");
+  if (WINE_COLOURS.includes(s as any)) return s;
   if (s.startsWith("spa") || s.includes("champ") || s.includes("bub")) return "sparkling";
-  if (s.startsWith("des") || s.includes("sweet") || s.includes("port")) return "dessert";
-  return WINE_COLOURS.find((c) => c === s);
+  if (s.startsWith("whi")) return "white";
+  if (s.startsWith("red")) return "red";
+  if (s.startsWith("ros") || s.startsWith("ora") || s.includes("orange")) return "orange_rose";
+  if (s.startsWith("des") || s.includes("sweet") || s.includes("port") || s.includes("forti")) return "dessert_fortified";
+  return undefined;
+};
+
+const normaliseOccasion = (v: string | undefined) => {
+  if (!v) return undefined;
+  const s = v.trim();
+  if (OCCASIONS.includes(s as any)) return s;
+  const l = s.toLowerCase();
+  if (l.startsWith("any")) return "a";
+  if (l.startsWith("spec")) return "t";
+  if (l.startsWith("lay") || l.startsWith("age")) return "l";
+  if (l.startsWith("top")) return "T";
+  return undefined;
+};
+
+const num = (v: any) => {
+  if (v === undefined || v === null || v === "") return undefined;
+  const n = Number(String(v).replace(",", "."));
+  return Number.isFinite(n) ? n : undefined;
 };
 
 export default function Import() {
   const navigate = useNavigate();
-  const bulk = useBulkInsertBottles();
+  const bulk = useBulkInsertWines();
   const [rows, setRows] = useState<ParsedRow[]>([]);
   const [fileName, setFileName] = useState("");
   const [importing, setImporting] = useState(false);
@@ -38,22 +57,27 @@ export default function Import() {
       complete: (results) => {
         const parsed: ParsedRow[] = results.data.map((raw: any, i) => {
           const candidate = {
-            name: raw.name,
-            producer: raw.producer,
-            vintage: raw.vintage ? Number(raw.vintage) : undefined,
-            region: raw.region,
-            country: raw.country,
-            appellation: raw.appellation,
-            grape: raw.grape,
             colour: normaliseColour(raw.colour ?? raw.color),
-            format: raw.format,
-            quantity: raw.quantity ? Number(raw.quantity) : 1,
-            ready_from: raw.ready_from ? Number(raw.ready_from) : undefined,
-            drink_by: raw.drink_by ? Number(raw.drink_by) : undefined,
-            note: raw.note,
-            rating: raw.rating ? Number(raw.rating) : undefined,
+            producer: raw.producer,
+            description: raw.description,
+            vintage: raw.vintage ? String(raw.vintage) : undefined,
+            cl: num(raw.cl),
+            variety: raw.variety,
+            residual_sugar_gl: num(raw.residual_sugar_gl ?? raw.residual_sugar),
+            dosage: raw.dosage,
+            alcohol_pct: num(raw.alcohol_pct ?? raw.alcohol),
+            country: raw.country,
+            region: raw.region,
+            sub_region: raw.sub_region ?? raw.subregion,
+            appellation: raw.appellation,
+            ausbau_terroir: raw.ausbau_terroir ?? raw.ausbau,
+            notes: raw.notes,
+            occasion: normaliseOccasion(raw.occasion),
+            quantity: num(raw.quantity) ?? 1,
+            price_chf: num(raw.price_chf ?? raw.price),
+            purchased_from: raw.purchased_from ?? raw.purchase_source,
           };
-          const result = bottleSchema.safeParse(candidate);
+          const result = wineSchema.safeParse(candidate);
           if (result.success) return { row: i + 2, raw, data: result.data };
           return { row: i + 2, raw, error: result.error.issues.map((x) => `${x.path.join(".")}: ${x.message}`).join("; ") };
         });
@@ -89,12 +113,12 @@ export default function Import() {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8 max-w-5xl">
+      <main className="container mx-auto px-4 py-8 max-w-6xl">
         <Card className="p-6 gold-border bg-card/80 mb-6">
           <h2 className="font-display text-xl mb-2">Expected columns</h2>
           <p className="text-sm text-muted-foreground mb-4 font-body">
-            <code className="text-primary text-xs">name, producer, vintage, region, country, appellation, grape, colour, format, quantity, ready_from, drink_by, note, rating</code>
-            <br />Only <em>name</em> is required. Headers are case-insensitive.
+            <code className="text-primary text-xs break-all">colour, producer, description, vintage, cl, variety, residual_sugar_gl, dosage, alcohol_pct, country, region, sub_region, appellation, ausbau_terroir, notes, occasion, quantity, price_chf, purchased_from</code>
+            <br />Columns may appear in any order. Headers are case-insensitive. Missing values are tolerated.
           </p>
           <label className="block">
             <div className="border-2 border-dashed border-primary/40 rounded-lg p-10 text-center hover:bg-secondary/40 transition cursor-pointer">
@@ -125,12 +149,14 @@ export default function Import() {
                   <TableHeader>
                     <TableRow>
                       <TableHead>Row</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Name</TableHead>
+                      <TableHead></TableHead>
                       <TableHead>Producer</TableHead>
+                      <TableHead>Description</TableHead>
                       <TableHead>Vintage</TableHead>
                       <TableHead>Colour</TableHead>
+                      <TableHead>Country</TableHead>
                       <TableHead>Qty</TableHead>
+                      <TableHead>Price</TableHead>
                       <TableHead>Issue</TableHead>
                     </TableRow>
                   </TableHeader>
@@ -141,12 +167,14 @@ export default function Import() {
                         <TableCell>
                           {r.data ? <CheckCircle2 className="w-4 h-4 text-primary" /> : <AlertCircle className="w-4 h-4 text-destructive" />}
                         </TableCell>
-                        <TableCell className="max-w-[200px] truncate">{r.raw.name || <span className="text-muted-foreground italic">—</span>}</TableCell>
-                        <TableCell className="max-w-[150px] truncate">{r.raw.producer}</TableCell>
+                        <TableCell className="max-w-[180px] truncate">{r.raw.producer}</TableCell>
+                        <TableCell className="max-w-[200px] truncate">{r.raw.description}</TableCell>
                         <TableCell>{r.raw.vintage}</TableCell>
                         <TableCell>{r.data?.colour || r.raw.colour}</TableCell>
+                        <TableCell>{r.raw.country}</TableCell>
                         <TableCell>{r.raw.quantity}</TableCell>
-                        <TableCell className="text-xs text-destructive max-w-[300px] truncate">{r.error}</TableCell>
+                        <TableCell>{r.raw.price_chf ?? r.raw.price}</TableCell>
+                        <TableCell className="text-xs text-destructive max-w-[260px] truncate">{r.error}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>

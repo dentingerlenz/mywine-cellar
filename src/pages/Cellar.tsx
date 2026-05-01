@@ -1,36 +1,40 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import { useBottles, useDeleteBottle } from "@/hooks/useBottles";
-import { Bottle } from "@/lib/wine";
-import { BottleCard } from "@/components/BottleCard";
-import { BottleFormDialog } from "@/components/BottleFormDialog";
+import { useWines, useDeleteWine } from "@/hooks/useWines";
+import { Wine, wineTitle } from "@/lib/wine";
+import { WineCard } from "@/components/WineCard";
+import { WineFormDialog } from "@/components/WineFormDialog";
+import { WineDetailDialog } from "@/components/WineDetailDialog";
 import { Dashboard } from "@/components/Dashboard";
 import { FilterBar, applyFilters, emptyFilters, Filters } from "@/components/FilterBar";
 import { Button } from "@/components/ui/button";
-import { Plus, LogOut, Wine, Upload } from "lucide-react";
+import { Plus, LogOut, Wine as WineIcon, Upload } from "lucide-react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 
 export default function Cellar() {
   const { user, signOut } = useAuth();
-  const { data: bottles = [], isLoading } = useBottles();
-  const del = useDeleteBottle();
+  const { data: wines = [], isLoading } = useWines();
+  const del = useDeleteWine();
   const [filters, setFilters] = useState<Filters>(emptyFilters);
   const [formOpen, setFormOpen] = useState(false);
-  const [editing, setEditing] = useState<Bottle | null>(null);
-  const [deleteTarget, setDeleteTarget] = useState<Bottle | null>(null);
+  const [editing, setEditing] = useState<Wine | null>(null);
+  const [detail, setDetail] = useState<Wine | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<Wine | null>(null);
 
-  const filtered = useMemo(() => applyFilters(bottles, filters), [bottles, filters]);
+  const filtered = useMemo(() => applyFilters(wines, filters), [wines, filters]);
 
   const onAdd = () => { setEditing(null); setFormOpen(true); };
-  const onEdit = (b: Bottle) => { setEditing(b); setFormOpen(true); };
+  const onEdit = (b: Wine) => { setDetail(null); setEditing(b); setFormOpen(true); };
+  const onOpenDetail = (b: Wine) => setDetail(b);
 
   const confirmDelete = async () => {
     if (!deleteTarget) return;
     try {
       await del.mutateAsync(deleteTarget.id);
       toast.success("Bottle removed");
+      setDetail(null);
     } catch (e: any) {
       toast.error(e.message);
     }
@@ -42,7 +46,7 @@ export default function Cellar() {
       <header className="border-b border-primary/20 backdrop-blur bg-background/70 sticky top-0 z-40">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Wine className="w-6 h-6 text-primary" strokeWidth={1.5} />
+            <WineIcon className="w-6 h-6 text-primary" strokeWidth={1.5} />
             <h1 className="font-display text-2xl tracking-tight">Cave</h1>
           </div>
           <div className="flex items-center gap-2">
@@ -66,9 +70,9 @@ export default function Cellar() {
           <p className="text-muted-foreground italic mt-1">A living record of every bottle.</p>
         </div>
 
-        {bottles.length > 0 && <Dashboard bottles={bottles} />}
+        {wines.length > 0 && <Dashboard wines={wines} />}
 
-        {bottles.length > 0 && <FilterBar filters={filters} setFilters={setFilters} bottles={bottles} />}
+        {wines.length > 0 && <FilterBar filters={filters} setFilters={setFilters} wines={wines} />}
 
         {isLoading ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
@@ -76,9 +80,9 @@ export default function Cellar() {
               <div key={i} className="aspect-[3/4] rounded-lg bg-card/40 animate-pulse" />
             ))}
           </div>
-        ) : bottles.length === 0 ? (
+        ) : wines.length === 0 ? (
           <div className="text-center py-20 gold-border rounded-lg bg-card/40">
-            <Wine className="w-16 h-16 text-primary/50 mx-auto mb-4" strokeWidth={1.2} />
+            <WineIcon className="w-16 h-16 text-primary/50 mx-auto mb-4" strokeWidth={1.2} />
             <h3 className="font-display text-2xl mb-2">Your cellar is empty</h3>
             <p className="text-muted-foreground italic mb-6">Time to stock up.</p>
             <div className="flex gap-2 justify-center">
@@ -90,21 +94,35 @@ export default function Cellar() {
           <div className="text-center py-16 text-muted-foreground italic">No bottles match these filters.</div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-            {filtered.map((b) => (
-              <BottleCard key={b.id} bottle={b} onEdit={onEdit} onDelete={(b) => setDeleteTarget(b)} />
+            {filtered.map((w) => (
+              <WineCard
+                key={w.id}
+                wine={w}
+                onOpen={onOpenDetail}
+                onEdit={onEdit}
+                onDelete={(b) => setDeleteTarget(b)}
+              />
             ))}
           </div>
         )}
       </main>
 
-      <BottleFormDialog open={formOpen} onOpenChange={setFormOpen} bottle={editing} />
+      <WineFormDialog open={formOpen} onOpenChange={setFormOpen} wine={editing} />
+
+      <WineDetailDialog
+        wine={detail}
+        open={!!detail}
+        onOpenChange={(o) => !o && setDetail(null)}
+        onEdit={onEdit}
+        onDelete={(b) => setDeleteTarget(b)}
+      />
 
       <AlertDialog open={!!deleteTarget} onOpenChange={(o) => !o && setDeleteTarget(null)}>
         <AlertDialogContent className="gold-border bg-card">
           <AlertDialogHeader>
             <AlertDialogTitle className="font-display">Remove this bottle?</AlertDialogTitle>
             <AlertDialogDescription>
-              "{deleteTarget?.name}" will be removed from your cellar. This cannot be undone.
+              {deleteTarget ? `Remove "${wineTitle(deleteTarget)}" from your cellar? This cannot be undone.` : ""}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
