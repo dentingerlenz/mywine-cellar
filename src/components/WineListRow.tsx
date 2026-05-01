@@ -41,7 +41,7 @@ export const WineListRow = ({ wine, onOpen, onEdit, onDelete }: Props) => {
         {wine.description || "—"}
       </TableCell>
       <TableCell className="text-primary font-display">{wine.vintage || "—"}</TableCell>
-      <TableCell className="text-sm">{wine.region || "—"}</TableCell>
+      <TableCell className="text-sm">{regionNameFor(wine) || "—"}</TableCell>
       <TableCell className="text-sm max-w-[180px] truncate">{wine.variety || "—"}</TableCell>
       <TableCell className="text-center"><QuantityControls wine={wine} size="sm" /></TableCell>
       <TableCell className="text-right whitespace-nowrap">
