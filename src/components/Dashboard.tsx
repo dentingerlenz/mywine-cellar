@@ -73,6 +73,42 @@ export const Dashboard = ({ wines }: { wines: Wine[] }) => {
               </span>
             ))}
           </div>
+          {colourBreakdown.length > 0 && (
+            <div className="mt-4 pt-4 border-t border-primary/20">
+              <p className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Value breakdown</p>
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="text-muted-foreground border-b border-primary/15">
+                    <th className="text-left font-normal uppercase tracking-wider py-1.5 text-[10px]">Colour</th>
+                    <th className="text-right font-normal uppercase tracking-wider py-1.5 text-[10px]">Bottles</th>
+                    <th className="text-right font-normal uppercase tracking-wider py-1.5 text-[10px]">Labels</th>
+                    <th className="text-right font-normal uppercase tracking-wider py-1.5 text-[10px]">CHF</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {colourBreakdown.map((d) => (
+                    <tr key={d.colour} className="border-b border-primary/10 last:border-0">
+                      <td className="py-1.5">
+                        <span className="flex items-center gap-1.5">
+                          <span className="w-2 h-2 rounded-full shrink-0" style={{ background: d.fill }} />
+                          <span className="truncate">{d.name}</span>
+                        </span>
+                      </td>
+                      <td className="text-right tabular-nums py-1.5">{d.bottles}</td>
+                      <td className="text-right tabular-nums py-1.5">{d.labels}</td>
+                      <td className="text-right tabular-nums py-1.5">{d.value.toFixed(0)}</td>
+                    </tr>
+                  ))}
+                  <tr className="border-t border-primary/30 font-display text-primary">
+                    <td className="py-2 uppercase tracking-wider text-[11px]">Total</td>
+                    <td className="text-right tabular-nums py-2">{totalBottles}</td>
+                    <td className="text-right tabular-nums py-2">{labelCount}</td>
+                    <td className="text-right tabular-nums py-2">{totalValue.toFixed(0)}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          )}
         </Card>
 
         <Card className="p-6 gold-border bg-card/80 shadow-card">
