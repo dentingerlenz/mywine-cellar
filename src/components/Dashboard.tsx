@@ -1,16 +1,10 @@
-import { Wine, COLOUR_LABEL, getDrinkStatus, WineColour, wineTitle } from "@/lib/wine";
+import { Wine, getDrinkStatus, wineTitle } from "@/lib/wine";
+import { useWineColoursCtx, colourHexFor } from "@/contexts/WineColoursContext";
 import { Card } from "@/components/ui/card";
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from "recharts";
 
-const COLOUR_HEX: Record<WineColour, string> = {
-  sparkling: "hsl(45, 70%, 70%)",
-  white: "hsl(48, 55%, 75%)",
-  red: "hsl(350, 70%, 35%)",
-  orange_rose: "hsl(25, 70%, 60%)",
-  dessert_fortified: "hsl(30, 65%, 50%)",
-};
-
 export const Dashboard = ({ wines }: { wines: Wine[] }) => {
+  const { colours } = useWineColoursCtx();
   const inStock = wines.filter((b) => b.quantity > 0);
   const totalBottles = inStock.reduce((s, b) => s + b.quantity, 0);
   const totalValue = inStock.reduce((s, b) => s + (b.price_chf ?? 0) * b.quantity, 0);
@@ -18,17 +12,35 @@ export const Dashboard = ({ wines }: { wines: Wine[] }) => {
   const drinkNow = inStock.filter((b) => getDrinkStatus(b) === "drink_now" && (b.ready_from || b.drink_by));
   const layDown = inStock.filter((b) => b.occasion === "l");
 
-  const colourBreakdown = (Object.keys(COLOUR_LABEL) as WineColour[]).map((c) => {
-    const items = inStock.filter((b) => b.colour === c);
-    return {
-      colour: c,
-      name: COLOUR_LABEL[c],
-      fill: COLOUR_HEX[c],
-      bottles: items.reduce((s, b) => s + b.quantity, 0),
-      labels: items.length,
-      value: items.reduce((s, b) => s + (b.price_chf ?? 0) * b.quantity, 0),
-    };
-  }).filter((d) => d.bottles > 0);
+  // Build breakdown from user's defined categories, plus any "orphan" colour values
+  // present on bottles that are not in the user's category list.
+  const knownNames = new Set(colours.map((c) => c.name));
+  const orphanNames = Array.from(
+    new Set(
+      inStock
+        .map((b) => b.colour)
+        .filter((v): v is string => !!v && !knownNames.has(v)),
+    ),
+  );
+
+  const allCategories = [
+    ...colours.map((c) => ({ name: c.name, display_name: c.display_name })),
+    ...orphanNames.map((n) => ({ name: n, display_name: n })),
+  ];
+
+  const colourBreakdown = allCategories
+    .map((c) => {
+      const items = inStock.filter((b) => b.colour === c.name);
+      return {
+        colour: c.name,
+        name: c.display_name,
+        fill: colourHexFor(c.name),
+        bottles: items.reduce((s, b) => s + b.quantity, 0),
+        labels: items.length,
+        value: items.reduce((s, b) => s + (b.price_chf ?? 0) * b.quantity, 0),
+      };
+    })
+    .filter((d) => d.bottles > 0);
 
   const byColour = colourBreakdown.map((d) => ({ name: d.name, value: d.bottles, fill: d.fill }));
 
