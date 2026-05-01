@@ -43,6 +43,45 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     defaultValues: { quantity: 1, cl: 75 },
   });
 
+  const FIELD_LABELS: Record<string, string> = {
+    producer: "Producer",
+    description: "Description",
+    vintage: "Vintage",
+    cl: "Bottle size",
+    colour: "Colour",
+    variety: "Variety",
+    residual_sugar_gl: "Residual sugar",
+    dosage: "Dosage",
+    alcohol_pct: "Alcohol",
+    country: "Country",
+    region: "Region",
+    sub_region: "Sub-region",
+    appellation: "Appellation",
+    ausbau_terroir: "Ausbau / Terroir",
+    notes: "Notes",
+    occasion: "Occasion",
+    quantity: "Quantity",
+    price_chf: "Price",
+    purchased_from: "Purchased from",
+    ready_from: "Ready from",
+    drink_by: "Drink by",
+    rating: "Rating",
+  };
+
+  const errClass = (name: string) => (errors as any)[name] ? "border-destructive focus-visible:ring-destructive" : "";
+  const errMsg = (name: string) => {
+    const e = (errors as any)[name];
+    return e?.message ? <p className="text-xs text-destructive mt-1">{String(e.message)}</p> : null;
+  };
+
+  const onInvalid = () => {
+    setTimeout(() => {
+      const el = document.querySelector('[aria-invalid="true"]') as HTMLElement | null;
+      el?.scrollIntoView({ behavior: "smooth", block: "center" });
+      el?.focus?.();
+    }, 0);
+  };
+
   useEffect(() => {
     if (open) {
       if (wine) {
@@ -116,7 +155,7 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
         <DialogHeader>
           <DialogTitle className="font-display text-2xl">{wine ? "Edit bottle" : "Add a bottle"}</DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit, onInvalid)} className="space-y-4">
           <div className="flex gap-4">
             <div className="w-32 shrink-0">
               <div className="aspect-[3/4] rounded-md overflow-hidden gold-border bg-secondary relative group">
@@ -148,20 +187,24 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
             <div className="flex-1 space-y-3">
               <div>
                 <Label>Producer *</Label>
-                <Input {...register("producer")} placeholder="e.g. Egly-Ouriet" />
+                <Input {...register("producer")} placeholder="e.g. Egly-Ouriet" aria-invalid={!!errors.producer} className={errClass("producer")} />
+                {errMsg("producer")}
               </div>
               <div>
                 <Label>Description</Label>
-                <Input {...register("description")} placeholder="e.g. Les Vignes de Vrigny Brut" />
+                <Input {...register("description")} placeholder="e.g. Les Vignes de Vrigny Brut" aria-invalid={!!errors.description} className={errClass("description")} />
+                {errMsg("description")}
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <Label>Vintage</Label>
-                  <Input {...register("vintage")} placeholder='NV, 2015, ~15 years…' />
+                  <Input {...register("vintage")} placeholder='NV, 2015, ~15 years…' aria-invalid={!!errors.vintage} className={errClass("vintage")} />
+                  {errMsg("vintage")}
                 </div>
                 <div>
                   <Label>Quantity *</Label>
-                  <Input type="number" {...register("quantity")} />
+                  <Input type="number" {...register("quantity")} aria-invalid={!!errors.quantity} className={errClass("quantity")} />
+                  {errMsg("quantity")}
                 </div>
               </div>
             </div>
@@ -170,12 +213,13 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <div>
               <Label>Colour *</Label>
-              <Select value={colour ?? ""} onValueChange={(v) => setValue("colour", v as any)}>
-                <SelectTrigger><SelectValue placeholder="Select" /></SelectTrigger>
+              <Select value={colour ?? ""} onValueChange={(v) => setValue("colour", v as any, { shouldValidate: true })}>
+                <SelectTrigger aria-invalid={!!errors.colour} className={errClass("colour")}><SelectValue placeholder="Select" /></SelectTrigger>
                 <SelectContent>
                   {WINE_COLOURS.map((c) => <SelectItem key={c} value={c}>{COLOUR_LABEL[c]}</SelectItem>)}
                 </SelectContent>
               </Select>
+              {errMsg("colour")}
             </div>
             <div>
               <Label>Bottle (cl)</Label>
@@ -273,7 +317,11 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
           </div>
 
           {Object.keys(errors).length > 0 && (
-            <p className="text-xs text-destructive">Please review highlighted fields.</p>
+            <div className="rounded-md border border-destructive/50 bg-destructive/10 px-3 py-2">
+              <p className="text-xs text-destructive font-medium">
+                Please fix: {Object.keys(errors).map((k) => FIELD_LABELS[k] ?? k).join(", ")}
+              </p>
+            </div>
           )}
 
           <DialogFooter>
