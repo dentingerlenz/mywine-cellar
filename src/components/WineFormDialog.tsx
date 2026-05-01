@@ -32,6 +32,7 @@ const MAX_PHOTO_SIZE = 5 * 1024 * 1024;
 export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
   const { user } = useAuth();
   const upsert = useUpsertWine();
+  const { colours: wineColours } = useWineColoursCtx();
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [removePhoto, setRemovePhoto] = useState(false);
@@ -215,7 +216,7 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
               <Select value={colour ?? ""} onValueChange={(v) => setValue("colour", v as any, { shouldValidate: true })}>
                 <SelectTrigger aria-invalid={!!errors.colour} className={errClass("colour")}><SelectValue placeholder="Select" /></SelectTrigger>
                 <SelectContent>
-                  {WINE_COLOURS.map((c) => <SelectItem key={c} value={c}>{COLOUR_LABEL[c]}</SelectItem>)}
+                  {wineColours.map((c) => <SelectItem key={c.name} value={c.name}>{c.display_name}</SelectItem>)}
                 </SelectContent>
               </Select>
               {errMsg("colour")}
