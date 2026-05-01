@@ -28,6 +28,7 @@ const Field = ({ label, value }: { label: string; value: React.ReactNode }) => {
 
 export const WineDetailDialog = ({ wine, open, onOpenChange, onEdit, onDelete }: Props) => {
   const { labelFor } = useWineColoursCtx();
+  const { countryNameFor, regionNameFor } = useGeographyLookups();
   if (!wine) return null;
   const status = getDrinkStatus(wine);
   return (
