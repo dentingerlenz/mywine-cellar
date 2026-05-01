@@ -1,4 +1,5 @@
-import { Wine, COLOUR_LABEL, COLOUR_CLASS, OCCASION_LABEL, OCCASION_CLASS, getDrinkStatus, DRINK_LABEL, wineTitle } from "@/lib/wine";
+import { Wine, OCCASION_LABEL, OCCASION_CLASS, getDrinkStatus, DRINK_LABEL, wineTitle } from "@/lib/wine";
+import { useWineColoursCtx, colourClassFor } from "@/contexts/WineColoursContext";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -25,6 +26,7 @@ const Field = ({ label, value }: { label: string; value: React.ReactNode }) => {
 };
 
 export const WineDetailDialog = ({ wine, open, onOpenChange, onEdit, onDelete }: Props) => {
+  const { labelFor } = useWineColoursCtx();
   if (!wine) return null;
   const status = getDrinkStatus(wine);
   return (
@@ -43,7 +45,7 @@ export const WineDetailDialog = ({ wine, open, onOpenChange, onEdit, onDelete }:
           </div>
           <div className="space-y-4">
             <div className="flex flex-wrap gap-2">
-              {wine.colour && <Badge className={cn("font-body text-[10px] uppercase tracking-wider", COLOUR_CLASS[wine.colour])}>{COLOUR_LABEL[wine.colour]}</Badge>}
+              {wine.colour && <Badge className={cn("font-body text-[10px] uppercase tracking-wider", colourClassFor(wine.colour))}>{labelFor(wine.colour)}</Badge>}
               {wine.occasion && <Badge variant="outline" className={cn("font-body text-[10px] uppercase tracking-wider", OCCASION_CLASS[wine.occasion])}>{OCCASION_LABEL[wine.occasion]}</Badge>}
               <Badge variant="outline" className="text-xs border-primary/40 text-primary">{DRINK_LABEL[status]}</Badge>
               {wine.rating && (

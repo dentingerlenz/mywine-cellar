@@ -12,7 +12,7 @@ import { FilterBar, applyFilters, emptyFilters, Filters } from "@/components/Fil
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { Plus, LogOut, Wine as WineIcon, Upload, LayoutGrid, List } from "lucide-react";
+import { Plus, LogOut, Wine as WineIcon, Upload, LayoutGrid, List, Settings as SettingsIcon } from "lucide-react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 
@@ -60,6 +60,9 @@ export default function Cellar() {
             </Button>
             <Button onClick={onAdd} size="sm">
               <Plus className="w-4 h-4" /> Add bottle
+            </Button>
+            <Button variant="ghost" size="icon" asChild title="Settings">
+              <Link to="/settings"><SettingsIcon className="w-4 h-4" /></Link>
             </Button>
             <Button variant="ghost" size="icon" onClick={() => signOut()} title="Sign out">
               <LogOut className="w-4 h-4" />

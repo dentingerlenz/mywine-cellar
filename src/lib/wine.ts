@@ -1,22 +1,19 @@
 import { z } from "zod";
 
-export const WINE_COLOURS = ["sparkling", "white", "red", "orange_rose", "dessert_fortified"] as const;
-export type WineColour = (typeof WINE_COLOURS)[number];
+// NOTE: colour categories are now stored per-user in the `wine_colours` table.
+// These built-in names remain as the default seed and as the keys for built-in
+// visual styling (see src/contexts/WineColoursContext.tsx).
+export const BUILTIN_WINE_COLOURS = ["sparkling", "white", "red", "orange_rose", "dessert_fortified"] as const;
+export type WineColour = string;
 
-export const COLOUR_LABEL: Record<WineColour, string> = {
+// Legacy export kept as a small fallback for static UI that still imports COLOUR_LABEL.
+// The dynamic source of truth is the WineColoursContext.
+export const COLOUR_LABEL: Record<string, string> = {
   sparkling: "Sparkling",
   white: "White",
   red: "Red",
   orange_rose: "Orange / Rosé",
   dessert_fortified: "Dessert / Fortified",
-};
-
-export const COLOUR_CLASS: Record<WineColour, string> = {
-  sparkling: "bg-wine-sparkling text-background",
-  white: "bg-wine-white text-background",
-  red: "bg-wine-red text-foreground",
-  orange_rose: "bg-wine-rose text-background",
-  dessert_fortified: "bg-wine-dessert text-background",
 };
 
 export const OCCASIONS = ["a", "t", "l", "T"] as const;
@@ -49,7 +46,7 @@ export const wineSchema = z.object({
   description: z.string().trim().max(300).optional().or(z.literal("")),
   vintage: z.string().trim().max(60).optional().or(z.literal("")),
   cl: optionalNum(z.coerce.number().int().min(1).max(9999)),
-  colour: z.enum([...WINE_COLOURS] as [WineColour, ...WineColour[]]),
+  colour: z.string().trim().min(1, "Colour is required").max(60),
   variety: z.string().trim().max(200).optional().or(z.literal("")),
   residual_sugar_gl: optionalNum(z.coerce.number().min(0).max(999)),
   dosage: z.string().trim().max(60).optional().or(z.literal("")),

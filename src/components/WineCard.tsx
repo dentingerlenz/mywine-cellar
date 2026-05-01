@@ -1,4 +1,5 @@
-import { Wine, COLOUR_CLASS, COLOUR_LABEL, OCCASION_CLASS, OCCASION_LABEL, wineTitle } from "@/lib/wine";
+import { Wine, OCCASION_CLASS, OCCASION_LABEL, wineTitle } from "@/lib/wine";
+import { useWineColoursCtx, colourClassFor } from "@/contexts/WineColoursContext";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,7 @@ type Props = {
 };
 
 export const WineCard = ({ wine, onOpen, onEdit, onDelete }: Props) => {
+  const { labelFor } = useWineColoursCtx();
   return (
     <Card
       onClick={() => onOpen(wine)}
@@ -33,8 +35,8 @@ export const WineCard = ({ wine, onOpen, onEdit, onDelete }: Props) => {
           <BottlePlaceholder className="w-full h-full" />
         )}
         {wine.colour && (
-          <Badge className={cn("absolute top-2 left-2 font-body text-[9px] uppercase tracking-wider px-1.5 py-0", COLOUR_CLASS[wine.colour])}>
-            {COLOUR_LABEL[wine.colour]}
+          <Badge className={cn("absolute top-2 left-2 font-body text-[9px] uppercase tracking-wider px-1.5 py-0", colourClassFor(wine.colour))}>
+            {labelFor(wine.colour)}
           </Badge>
         )}
         <div className="absolute top-2 right-2">

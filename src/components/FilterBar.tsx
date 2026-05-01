@@ -1,4 +1,5 @@
-import { Wine, WINE_COLOURS, COLOUR_LABEL, WineColour, OCCASIONS, OCCASION_LABEL, Occasion } from "@/lib/wine";
+import { Wine, WineColour, OCCASIONS, OCCASION_LABEL, Occasion } from "@/lib/wine";
+import { useWineColoursCtx } from "@/contexts/WineColoursContext";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, X } from "lucide-react";
@@ -32,6 +33,7 @@ export const FilterBar = ({
   setFilters: (f: Filters) => void;
   wines: Wine[];
 }) => {
+  const { colours } = useWineColoursCtx();
   const countries = Array.from(new Set(wines.map((b) => b.country).filter(Boolean) as string[])).sort();
   const regions = Array.from(new Set(wines.map((b) => b.region).filter(Boolean) as string[])).sort();
   const hasFilter = JSON.stringify(filters) !== JSON.stringify(emptyFilters);
@@ -52,7 +54,7 @@ export const FilterBar = ({
           <SelectTrigger><SelectValue placeholder="Colour" /></SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All colours</SelectItem>
-            {WINE_COLOURS.map((c) => <SelectItem key={c} value={c}>{COLOUR_LABEL[c]}</SelectItem>)}
+            {colours.map((c) => <SelectItem key={c.name} value={c.name}>{c.display_name}</SelectItem>)}
           </SelectContent>
         </Select>
         <Select value={filters.country || "all"} onValueChange={(v) => setFilters({ ...filters, country: v === "all" ? "" : v })}>
