@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BottlePlaceholder } from "./BottlePlaceholder";
 import { Pencil, Trash2, Star } from "lucide-react";
+import { QuantityControls } from "./QuantityControls";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -35,8 +36,8 @@ export const WineCard = ({ wine, onOpen, onEdit, onDelete }: Props) => {
             {COLOUR_LABEL[wine.colour]}
           </Badge>
         )}
-        <div className="absolute top-3 right-3 bg-background/80 backdrop-blur px-2 py-1 rounded-md text-xs font-body text-primary border border-primary/30">
-          ×{wine.quantity}
+        <div className="absolute top-3 right-3">
+          <QuantityControls wine={wine} size="sm" />
         </div>
         {wine.occasion && (
           <Badge variant="outline" className={cn("absolute bottom-3 left-3 font-body text-[10px] uppercase tracking-wider", OCCASION_CLASS[wine.occasion])}>
