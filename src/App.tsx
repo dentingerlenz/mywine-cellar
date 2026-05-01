@@ -4,9 +4,11 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
+import { WineColoursProvider } from "@/contexts/WineColoursContext";
 import Auth from "./pages/Auth";
 import Cellar from "./pages/Cellar";
 import ImportPage from "./pages/Import";
+import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,12 +34,15 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <AuthProvider>
-          <Routes>
-            <Route path="/auth" element={<PublicOnly><Auth /></PublicOnly>} />
-            <Route path="/" element={<Protected><Cellar /></Protected>} />
-            <Route path="/import" element={<Protected><ImportPage /></Protected>} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <WineColoursProvider>
+            <Routes>
+              <Route path="/auth" element={<PublicOnly><Auth /></PublicOnly>} />
+              <Route path="/" element={<Protected><Cellar /></Protected>} />
+              <Route path="/import" element={<Protected><ImportPage /></Protected>} />
+              <Route path="/settings" element={<Protected><Settings /></Protected>} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </WineColoursProvider>
         </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
