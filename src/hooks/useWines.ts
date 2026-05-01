@@ -84,6 +84,16 @@ export const useUpsertWine = () => {
       label_photo_url?: string | null;
     }) => {
       if (!user) throw new Error("Not signed in");
+      if (values.colour) {
+        const { data: colourRow, error: colourErr } = await supabase
+          .from("wine_colours")
+          .select("name")
+          .eq("user_id", user.id)
+          .eq("name", values.colour)
+          .maybeSingle();
+        if (colourErr) throw colourErr;
+        if (!colourRow) throw new Error(`Unknown colour category: ${values.colour}`);
+      }
       const geo = await fetchGeoMaps();
       const payload: any = { ...toPayload(values, geo), user_id: user.id };
       if (label_photo_url !== undefined) payload.label_photo_url = label_photo_url;
