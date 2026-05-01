@@ -147,7 +147,7 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
             </div>
             <div className="flex-1 space-y-3">
               <div>
-                <Label>Producer</Label>
+                <Label>Producer *</Label>
                 <Input {...register("producer")} placeholder="e.g. Egly-Ouriet" />
               </div>
               <div>
@@ -169,7 +169,7 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <div>
-              <Label>Colour</Label>
+              <Label>Colour *</Label>
               <Select value={colour ?? ""} onValueChange={(v) => setValue("colour", v as any)}>
                 <SelectTrigger><SelectValue placeholder="Select" /></SelectTrigger>
                 <SelectContent>
