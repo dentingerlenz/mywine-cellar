@@ -1,5 +1,6 @@
 import { Wine, WineColour, OCCASIONS, OCCASION_LABEL, Occasion } from "@/lib/wine";
 import { useWineColoursCtx } from "@/contexts/WineColoursContext";
+import { useWineCountries, useWineRegions } from "@/hooks/useWineGeography";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, X } from "lucide-react";
@@ -34,8 +35,30 @@ export const FilterBar = ({
   wines: Wine[];
 }) => {
   const { colours } = useWineColoursCtx();
-  const countries = Array.from(new Set(wines.map((b) => b.country).filter(Boolean) as string[])).sort();
-  const regions = Array.from(new Set(wines.map((b) => b.region).filter(Boolean) as string[])).sort();
+  const { data: countriesRows = [] } = useWineCountries();
+  const { data: allRegions = [] } = useWineRegions();
+  // Merge curated countries with any orphan country values present on bottles
+  const countries = Array.from(
+    new Set<string>([
+      ...countriesRows.map((c) => c.name),
+      ...(wines.map((b) => b.country).filter(Boolean) as string[]),
+    ]),
+  ).sort();
+  const selectedCountryRow = countriesRows.find((c) => c.name === filters.country);
+  const regions = filters.country
+    ? selectedCountryRow
+      ? allRegions
+          .filter((r) => r.country_id === selectedCountryRow.id)
+          .map((r) => r.name)
+      : Array.from(
+          new Set(
+            wines
+              .filter((b) => b.country === filters.country)
+              .map((b) => b.region)
+              .filter(Boolean) as string[],
+          ),
+        ).sort()
+    : Array.from(new Set(wines.map((b) => b.region).filter(Boolean) as string[])).sort();
   const hasFilter = JSON.stringify(filters) !== JSON.stringify(emptyFilters);
 
   return (
@@ -57,15 +80,27 @@ export const FilterBar = ({
             {colours.map((c) => <SelectItem key={c.name} value={c.name}>{c.display_name}</SelectItem>)}
           </SelectContent>
         </Select>
-        <Select value={filters.country || "all"} onValueChange={(v) => setFilters({ ...filters, country: v === "all" ? "" : v })}>
+        <Select
+          value={filters.country || "all"}
+          onValueChange={(v) =>
+            // Reset region whenever country changes
+            setFilters({ ...filters, country: v === "all" ? "" : v, region: "" })
+          }
+        >
           <SelectTrigger><SelectValue placeholder="Country" /></SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All countries</SelectItem>
             {countries.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
           </SelectContent>
         </Select>
-        <Select value={filters.region || "all"} onValueChange={(v) => setFilters({ ...filters, region: v === "all" ? "" : v })}>
-          <SelectTrigger><SelectValue placeholder="Region" /></SelectTrigger>
+        <Select
+          value={filters.region || "all"}
+          onValueChange={(v) => setFilters({ ...filters, region: v === "all" ? "" : v })}
+          disabled={!filters.country}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder={filters.country ? "Region" : "Select a country first"} />
+          </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All regions</SelectItem>
             {regions.map((r) => <SelectItem key={r} value={r}>{r}</SelectItem>)}

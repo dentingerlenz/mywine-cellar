@@ -1,10 +1,12 @@
 import { Wine, getDrinkStatus, wineTitle } from "@/lib/wine";
 import { useWineColoursCtx, colourHexFor } from "@/contexts/WineColoursContext";
+import { useWineCountries } from "@/hooks/useWineGeography";
 import { Card } from "@/components/ui/card";
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from "recharts";
 
 export const Dashboard = ({ wines }: { wines: Wine[] }) => {
   const { colours } = useWineColoursCtx();
+  const { data: countryRows = [] } = useWineCountries();
   const inStock = wines.filter((b) => b.quantity > 0);
   const totalBottles = inStock.reduce((s, b) => s + b.quantity, 0);
   const totalValue = inStock.reduce((s, b) => s + (b.price_chf ?? 0) * b.quantity, 0);
@@ -44,13 +46,26 @@ export const Dashboard = ({ wines }: { wines: Wine[] }) => {
 
   const byColour = colourBreakdown.map((d) => ({ name: d.name, value: d.bottles, fill: d.fill }));
 
-  const byCountry = Object.entries(
-    inStock.reduce<Record<string, number>>((acc, b) => {
-      const key = b.country || "Unknown";
-      acc[key] = (acc[key] || 0) + b.quantity;
-      return acc;
-    }, {})
-  ).map(([name, value]) => ({ name, value })).sort((a, b) => b.value - a.value).slice(0, 8);
+  // Aggregate bottles by country, using display names from wine_countries when available.
+  const countryByName = new Map(countryRows.map((c) => [c.name, c]));
+  const countryTotals = inStock.reduce<Record<string, number>>((acc, b) => {
+    const raw = b.country || "Unknown";
+    const display = countryByName.get(raw)?.name ?? raw;
+    acc[display] = (acc[display] || 0) + b.quantity;
+    return acc;
+  }, {});
+  const byCountry = Object.entries(countryTotals)
+    .map(([name, value]) => ({
+      name,
+      value,
+      sort_order: countryByName.get(name)?.sort_order ?? Number.MAX_SAFE_INTEGER,
+    }))
+    .sort((a, b) => {
+      // Curated order first; uncurated countries fall back to descending volume
+      if (a.sort_order !== b.sort_order) return a.sort_order - b.sort_order;
+      return b.value - a.value;
+    })
+    .slice(0, 8);
 
   return (
     <div className="space-y-4 mb-8">

@@ -10,6 +10,7 @@ import {
   CL_OPTIONS,
 } from "@/lib/wine";
 import { useWineColoursCtx } from "@/contexts/WineColoursContext";
+import { useWineCountries, useWineRegions } from "@/hooks/useWineGeography";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -33,6 +34,8 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
   const { user } = useAuth();
   const upsert = useUpsertWine();
   const { colours: wineColours } = useWineColoursCtx();
+  const { data: countries = [] } = useWineCountries();
+  const { data: allRegions = [] } = useWineRegions();
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [removePhoto, setRemovePhoto] = useState(false);
@@ -148,6 +151,13 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
   const occasion = watch("occasion");
   const rating = watch("rating");
   const cl = watch("cl");
+  const country = watch("country");
+  const region = watch("region");
+
+  const selectedCountry = countries.find((c) => c.name === country);
+  const filteredRegions = selectedCountry
+    ? allRegions.filter((r) => r.country_id === selectedCountry.id)
+    : [];
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -288,11 +298,41 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <div>
               <Label>Country</Label>
-              <Input {...register("country")} placeholder="France" />
+              <Select
+                value={country || "none"}
+                onValueChange={(v) => {
+                  const next = v === "none" ? "" : v;
+                  setValue("country", next, { shouldValidate: true });
+                  // Reset region whenever country changes
+                  setValue("region", "", { shouldValidate: true });
+                }}
+              >
+                <SelectTrigger><SelectValue placeholder="Select country" /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">—</SelectItem>
+                  {countries.map((c) => (
+                    <SelectItem key={c.id} value={c.name}>{c.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div>
               <Label>Region</Label>
-              <Input {...register("region")} placeholder="FR - Champagne" />
+              <Select
+                value={region || "none"}
+                onValueChange={(v) => setValue("region", v === "none" ? "" : v, { shouldValidate: true })}
+                disabled={!selectedCountry}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder={selectedCountry ? "Select region" : "Select a country first"} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">—</SelectItem>
+                  {filteredRegions.map((r) => (
+                    <SelectItem key={r.id} value={r.name}>{r.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div>
               <Label>Sub-region</Label>
