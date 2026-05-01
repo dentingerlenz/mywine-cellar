@@ -111,7 +111,7 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
         });
         setPhotoPreview(wine.label_photo_url);
       } else {
-        reset({ quantity: 1, cl: 75 });
+        reset({ quantity: 1, cl: 75, rating: undefined, occasion: undefined });
         setPhotoPreview(null);
       }
       setPhotoFile(null);
