@@ -14,69 +14,93 @@ export type Database = {
   }
   public: {
     Tables: {
-      bottles: {
+      wines: {
         Row: {
+          alcohol_pct: number | null
           appellation: string | null
-          colour: Database["public"]["Enums"]["wine_colour"] | null
+          ausbau_terroir: string | null
+          cl: number | null
+          colour: string | null
           country: string | null
           created_at: string
+          description: string | null
+          dosage: string | null
           drink_by: number | null
-          format: string | null
-          grape: string | null
           id: string
-          name: string
-          note: string | null
-          photo_url: string | null
+          label_photo_url: string | null
+          notes: string | null
+          occasion: string | null
+          price_chf: number | null
           producer: string | null
-          quantity: number
+          purchased_from: string | null
+          quantity: number | null
           rating: number | null
           ready_from: number | null
           region: string | null
+          residual_sugar_gl: number | null
+          sub_region: string | null
           updated_at: string
           user_id: string
-          vintage: number | null
+          variety: string | null
+          vintage: string | null
         }
         Insert: {
+          alcohol_pct?: number | null
           appellation?: string | null
-          colour?: Database["public"]["Enums"]["wine_colour"] | null
+          ausbau_terroir?: string | null
+          cl?: number | null
+          colour?: string | null
           country?: string | null
           created_at?: string
+          description?: string | null
+          dosage?: string | null
           drink_by?: number | null
-          format?: string | null
-          grape?: string | null
           id?: string
-          name: string
-          note?: string | null
-          photo_url?: string | null
+          label_photo_url?: string | null
+          notes?: string | null
+          occasion?: string | null
+          price_chf?: number | null
           producer?: string | null
-          quantity?: number
+          purchased_from?: string | null
+          quantity?: number | null
           rating?: number | null
           ready_from?: number | null
           region?: string | null
+          residual_sugar_gl?: number | null
+          sub_region?: string | null
           updated_at?: string
           user_id: string
-          vintage?: number | null
+          variety?: string | null
+          vintage?: string | null
         }
         Update: {
+          alcohol_pct?: number | null
           appellation?: string | null
-          colour?: Database["public"]["Enums"]["wine_colour"] | null
+          ausbau_terroir?: string | null
+          cl?: number | null
+          colour?: string | null
           country?: string | null
           created_at?: string
+          description?: string | null
+          dosage?: string | null
           drink_by?: number | null
-          format?: string | null
-          grape?: string | null
           id?: string
-          name?: string
-          note?: string | null
-          photo_url?: string | null
+          label_photo_url?: string | null
+          notes?: string | null
+          occasion?: string | null
+          price_chf?: number | null
           producer?: string | null
-          quantity?: number
+          purchased_from?: string | null
+          quantity?: number | null
           rating?: number | null
           ready_from?: number | null
           region?: string | null
+          residual_sugar_gl?: number | null
+          sub_region?: string | null
           updated_at?: string
           user_id?: string
-          vintage?: number | null
+          variety?: string | null
+          vintage?: string | null
         }
         Relationships: []
       }
@@ -88,7 +112,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      wine_colour: "red" | "white" | "rose" | "sparkling" | "dessert"
+      [_ in never]: never
     }
     CompositeTypes: {
       [_ in never]: never
@@ -215,8 +239,6 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {
-      wine_colour: ["red", "white", "rose", "sparkling", "dessert"],
-    },
+    Enums: {},
   },
 } as const
