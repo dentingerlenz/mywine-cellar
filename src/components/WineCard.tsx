@@ -62,7 +62,7 @@ export const WineCard = ({ wine, onOpen, onEdit, onDelete }: Props) => {
         </div>
         <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
           {wine.vintage && <span className="text-primary font-display text-sm">{wine.vintage}</span>}
-          {wine.region && <span className="truncate">· {wine.region}</span>}
+          {regionName && <span className="truncate">· {regionName}</span>}
         </div>
         {wine.rating && (
           <div className="flex gap-0.5">
