@@ -46,11 +46,13 @@ export const Dashboard = ({ wines }: { wines: Wine[] }) => {
 
   const byColour = colourBreakdown.map((d) => ({ name: d.name, value: d.bottles, fill: d.fill }));
 
-  // Aggregate bottles by country, using display names from wine_countries when available.
+  // Aggregate bottles by country, joining wines.country_id → wine_countries.
+  // Falls back to the legacy text column for any wine not yet linked by id.
+  const countryById = new Map(countryRows.map((c) => [c.id, c]));
   const countryByName = new Map(countryRows.map((c) => [c.name, c]));
   const countryTotals = inStock.reduce<Record<string, number>>((acc, b) => {
-    const raw = b.country || "Unknown";
-    const display = countryByName.get(raw)?.name ?? raw;
+    const linked = b.country_id ? countryById.get(b.country_id) : undefined;
+    const display = linked?.name ?? b.country ?? "Unknown";
     acc[display] = (acc[display] || 0) + b.quantity;
     return acc;
   }, {});
@@ -61,7 +63,6 @@ export const Dashboard = ({ wines }: { wines: Wine[] }) => {
       sort_order: countryByName.get(name)?.sort_order ?? Number.MAX_SAFE_INTEGER,
     }))
     .sort((a, b) => {
-      // Curated order first; uncurated countries fall back to descending volume
       if (a.sort_order !== b.sort_order) return a.sort_order - b.sort_order;
       return b.value - a.value;
     })
