@@ -1,5 +1,6 @@
 import { Wine, WineColour, OCCASIONS, OCCASION_LABEL, Occasion } from "@/lib/wine";
 import { useWineColoursCtx } from "@/contexts/WineColoursContext";
+import { useWineCountries, useWineRegions } from "@/hooks/useWineGeography";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, X } from "lucide-react";
