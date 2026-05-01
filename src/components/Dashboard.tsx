@@ -20,12 +20,12 @@ export const Dashboard = ({ wines }: { wines: Wine[] }) => {
 
   const byColour = (Object.keys(COLOUR_LABEL) as WineColour[]).map((c) => ({
     name: COLOUR_LABEL[c],
-    value: wines.filter((b) => b.colour === c).reduce((s, b) => s + b.quantity, 0),
+    value: inStock.filter((b) => b.colour === c).reduce((s, b) => s + b.quantity, 0),
     fill: COLOUR_HEX[c],
   })).filter((d) => d.value > 0);
 
   const byCountry = Object.entries(
-    wines.reduce<Record<string, number>>((acc, b) => {
+    inStock.reduce<Record<string, number>>((acc, b) => {
       const key = b.country || "Unknown";
       acc[key] = (acc[key] || 0) + b.quantity;
       return acc;
