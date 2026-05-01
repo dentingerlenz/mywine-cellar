@@ -169,6 +169,20 @@ export const useBulkInsertWines = () => {
   return useMutation({
     mutationFn: async (rows: WineInput[]) => {
       if (!user) throw new Error("Not signed in");
+      const colours = new Set(
+        rows.map((r) => r.colour).filter((c): c is string => !!c)
+      );
+      if (colours.size > 0) {
+        const { data: known, error: cErr } = await supabase
+          .from("wine_colours")
+          .select("name")
+          .eq("user_id", user.id)
+          .in("name", Array.from(colours));
+        if (cErr) throw cErr;
+        const knownSet = new Set((known ?? []).map((r: any) => r.name));
+        const missing = Array.from(colours).filter((c) => !knownSet.has(c));
+        if (missing.length) throw new Error(`Unknown colour categories: ${missing.join(", ")}`);
+      }
       const geo = await fetchGeoMaps();
       const payload = rows.map((v) => ({ ...toPayload(v, geo), user_id: user.id }));
       const { error } = await supabase.from("wines").insert(payload);
