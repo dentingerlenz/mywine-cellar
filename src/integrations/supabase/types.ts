@@ -117,6 +117,7 @@ export type Database = {
           cl: number | null
           colour: string | null
           country: string | null
+          country_id: string | null
           created_at: string
           description: string | null
           dosage: string | null
@@ -132,6 +133,7 @@ export type Database = {
           rating: number | null
           ready_from: number | null
           region: string | null
+          region_id: string | null
           residual_sugar_gl: number | null
           sub_region: string | null
           updated_at: string
@@ -146,6 +148,7 @@ export type Database = {
           cl?: number | null
           colour?: string | null
           country?: string | null
+          country_id?: string | null
           created_at?: string
           description?: string | null
           dosage?: string | null
@@ -161,6 +164,7 @@ export type Database = {
           rating?: number | null
           ready_from?: number | null
           region?: string | null
+          region_id?: string | null
           residual_sugar_gl?: number | null
           sub_region?: string | null
           updated_at?: string
@@ -175,6 +179,7 @@ export type Database = {
           cl?: number | null
           colour?: string | null
           country?: string | null
+          country_id?: string | null
           created_at?: string
           description?: string | null
           dosage?: string | null
@@ -190,6 +195,7 @@ export type Database = {
           rating?: number | null
           ready_from?: number | null
           region?: string | null
+          region_id?: string | null
           residual_sugar_gl?: number | null
           sub_region?: string | null
           updated_at?: string
@@ -197,7 +203,22 @@ export type Database = {
           variety?: string | null
           vintage?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "wines_country_id_fkey"
+            columns: ["country_id"]
+            isOneToOne: false
+            referencedRelation: "wine_countries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "wines_region_id_fkey"
+            columns: ["region_id"]
+            isOneToOne: false
+            referencedRelation: "wine_regions"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
