@@ -10,6 +10,7 @@ import {
   CL_OPTIONS,
 } from "@/lib/wine";
 import { useWineColoursCtx } from "@/contexts/WineColoursContext";
+import { useWineCountries, useWineRegions } from "@/hooks/useWineGeography";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -33,6 +34,8 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
   const { user } = useAuth();
   const upsert = useUpsertWine();
   const { colours: wineColours } = useWineColoursCtx();
+  const { data: countries = [] } = useWineCountries();
+  const { data: allRegions = [] } = useWineRegions();
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [removePhoto, setRemovePhoto] = useState(false);
