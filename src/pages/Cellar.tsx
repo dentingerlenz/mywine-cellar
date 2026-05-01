@@ -78,6 +78,24 @@ export default function Cellar() {
 
         {wines.length > 0 && <FilterBar filters={filters} setFilters={setFilters} wines={wines} />}
 
+        {wines.length > 0 && (
+          <div className="flex justify-end mb-4">
+            <ToggleGroup
+              type="single"
+              value={view}
+              onValueChange={(v) => v && setView(v as "grid" | "list")}
+              className="border border-primary/30 rounded-md bg-card/40"
+            >
+              <ToggleGroupItem value="grid" aria-label="Grid view" className="data-[state=on]:bg-primary/20 data-[state=on]:text-primary">
+                <LayoutGrid className="w-4 h-4" />
+              </ToggleGroupItem>
+              <ToggleGroupItem value="list" aria-label="List view" className="data-[state=on]:bg-primary/20 data-[state=on]:text-primary">
+                <List className="w-4 h-4" />
+              </ToggleGroupItem>
+            </ToggleGroup>
+          </div>
+        )}
+
         {isLoading ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
             {Array.from({ length: 4 }).map((_, i) => (
@@ -96,7 +114,7 @@ export default function Cellar() {
           </div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-16 text-muted-foreground italic">No bottles match these filters.</div>
-        ) : (
+        ) : view === "grid" ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
             {filtered.map((w) => (
               <WineCard
@@ -107,6 +125,35 @@ export default function Cellar() {
                 onDelete={(b) => setDeleteTarget(b)}
               />
             ))}
+          </div>
+        ) : (
+          <div className="gold-border rounded-lg bg-card/40 overflow-hidden">
+            <Table>
+              <TableHeader>
+                <TableRow className="border-primary/20 hover:bg-transparent">
+                  <TableHead>Colour</TableHead>
+                  <TableHead>Producer</TableHead>
+                  <TableHead>Description</TableHead>
+                  <TableHead>Vintage</TableHead>
+                  <TableHead>Region</TableHead>
+                  <TableHead>Variety</TableHead>
+                  <TableHead className="text-center">Qty</TableHead>
+                  <TableHead className="text-right">Price</TableHead>
+                  <TableHead className="w-12"></TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filtered.map((w) => (
+                  <WineListRow
+                    key={w.id}
+                    wine={w}
+                    onOpen={onOpenDetail}
+                    onEdit={onEdit}
+                    onDelete={(b) => setDeleteTarget(b)}
+                  />
+                ))}
+              </TableBody>
+            </Table>
           </div>
         )}
       </main>
