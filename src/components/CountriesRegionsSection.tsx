@@ -559,7 +559,7 @@ export const CountriesRegionsSection = () => {
                   key={c.id}
                   country={c}
                   regions={regionsForCountry(c.id)}
-                  countryAffected={countryAffected(c.name)}
+                  countryAffected={countryAffected(c.id)}
                   regionAffected={regionAffected}
                   expanded={!!expanded[c.id]}
                   onToggleExpanded={() => toggleExpanded(c.id)}
@@ -569,12 +569,12 @@ export const CountriesRegionsSection = () => {
                   onMoveDown={() => moveCountry(idx, 1)}
                   onRenameCountry={(name) => renameCountryMut.mutateAsync({ id: c.id, name })}
                   onDeleteCountry={() =>
-                    setDeleteTarget({ type: "country", row: c, affected: countryAffected(c.name) })
+                    setDeleteTarget({ type: "country", row: c, affected: countryAffected(c.id) })
                   }
                   onAddRegion={(name) => addRegionMut.mutateAsync({ country_id: c.id, name })}
                   onRenameRegion={(id, name) => renameRegionMut.mutateAsync({ id, name })}
                   onDeleteRegion={(region) =>
-                    setDeleteTarget({ type: "region", row: region, affected: regionAffected(region.name) })
+                    setDeleteTarget({ type: "region", row: region, affected: regionAffected(region.id) })
                   }
                   onReorderRegions={(ids) => handleReorderRegions(c.id, ids)}
                   renamingCountry={renameCountryMut.isPending}
