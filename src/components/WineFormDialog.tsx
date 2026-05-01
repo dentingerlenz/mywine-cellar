@@ -311,19 +311,19 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
             <div>
               <Label>Country</Label>
               <Select
-                value={country || "none"}
+                value={countryId || "none"}
                 onValueChange={(v) => {
                   const next = v === "none" ? "" : v;
-                  setValue("country", next, { shouldValidate: true });
+                  setValue("country_id", next, { shouldValidate: true });
                   // Reset region whenever country changes
-                  setValue("region", "", { shouldValidate: true });
+                  setValue("region_id", "", { shouldValidate: true });
                 }}
               >
                 <SelectTrigger><SelectValue placeholder="Select country" /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="none">—</SelectItem>
                   {countries.map((c) => (
-                    <SelectItem key={c.id} value={c.name}>{c.name}</SelectItem>
+                    <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -331,8 +331,8 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
             <div>
               <Label>Region</Label>
               <Select
-                value={region || "none"}
-                onValueChange={(v) => setValue("region", v === "none" ? "" : v, { shouldValidate: true })}
+                value={regionId || "none"}
+                onValueChange={(v) => setValue("region_id", v === "none" ? "" : v, { shouldValidate: true })}
                 disabled={!selectedCountry}
               >
                 <SelectTrigger>
@@ -341,7 +341,7 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
                 <SelectContent>
                   <SelectItem value="none">—</SelectItem>
                   {filteredRegions.map((r) => (
-                    <SelectItem key={r.id} value={r.name}>{r.name}</SelectItem>
+                    <SelectItem key={r.id} value={r.id}>{r.name}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
