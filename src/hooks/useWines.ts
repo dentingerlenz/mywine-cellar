@@ -3,30 +3,56 @@ import { supabase } from "@/integrations/supabase/client";
 import { Wine, WineInput } from "@/lib/wine";
 import { useAuth } from "@/contexts/AuthContext";
 
-const toPayload = (v: WineInput) => ({
-  colour: v.colour ?? null,
-  producer: v.producer || null,
-  description: v.description || null,
-  vintage: v.vintage || null,
-  cl: (v.cl as number | null | undefined) ?? null,
-  variety: v.variety || null,
-  residual_sugar_gl: (v.residual_sugar_gl as number | null | undefined) ?? null,
-  dosage: v.dosage || null,
-  alcohol_pct: (v.alcohol_pct as number | null | undefined) ?? null,
-  country: v.country || null,
-  region: v.region || null,
-  sub_region: v.sub_region || null,
-  appellation: v.appellation || null,
-  ausbau_terroir: v.ausbau_terroir || null,
-  notes: v.notes || null,
-  occasion: v.occasion ?? null,
-  quantity: v.quantity ?? 1,
-  price_chf: (v.price_chf as number | null | undefined) ?? null,
-  purchased_from: v.purchased_from || null,
-  ready_from: (v.ready_from as number | null | undefined) ?? null,
-  drink_by: (v.drink_by as number | null | undefined) ?? null,
-  rating: (v.rating as number | null | undefined) ?? null,
-});
+type GeoMaps = {
+  countryById: Map<string, string>; // id -> name
+  regionById: Map<string, string>; // id -> name
+};
+
+const toPayload = (v: WineInput, geo?: GeoMaps) => {
+  const country_id = v.country_id ? String(v.country_id) : null;
+  const region_id = v.region_id ? String(v.region_id) : null;
+  // Mirror the resolved name into the legacy text columns so any code
+  // still reading `country` / `region` keeps working until fully retired.
+  const country = country_id ? geo?.countryById.get(country_id) ?? null : null;
+  const region = region_id ? geo?.regionById.get(region_id) ?? null : null;
+  return {
+    colour: v.colour ?? null,
+    producer: v.producer || null,
+    description: v.description || null,
+    vintage: v.vintage || null,
+    cl: (v.cl as number | null | undefined) ?? null,
+    variety: v.variety || null,
+    residual_sugar_gl: (v.residual_sugar_gl as number | null | undefined) ?? null,
+    dosage: v.dosage || null,
+    alcohol_pct: (v.alcohol_pct as number | null | undefined) ?? null,
+    country_id,
+    region_id,
+    country,
+    region,
+    sub_region: v.sub_region || null,
+    appellation: v.appellation || null,
+    ausbau_terroir: v.ausbau_terroir || null,
+    notes: v.notes || null,
+    occasion: v.occasion ?? null,
+    quantity: v.quantity ?? 1,
+    price_chf: (v.price_chf as number | null | undefined) ?? null,
+    purchased_from: v.purchased_from || null,
+    ready_from: (v.ready_from as number | null | undefined) ?? null,
+    drink_by: (v.drink_by as number | null | undefined) ?? null,
+    rating: (v.rating as number | null | undefined) ?? null,
+  };
+};
+
+const fetchGeoMaps = async (): Promise<GeoMaps> => {
+  const [{ data: countries }, { data: regions }] = await Promise.all([
+    supabase.from("wine_countries").select("id, name"),
+    supabase.from("wine_regions").select("id, name"),
+  ]);
+  return {
+    countryById: new Map((countries ?? []).map((c: any) => [c.id, c.name])),
+    regionById: new Map((regions ?? []).map((r: any) => [r.id, r.name])),
+  };
+};
 
 export const useWines = () => {
   const { user } = useAuth();
@@ -58,7 +84,8 @@ export const useUpsertWine = () => {
       label_photo_url?: string | null;
     }) => {
       if (!user) throw new Error("Not signed in");
-      const payload: any = { ...toPayload(values), user_id: user.id };
+      const geo = await fetchGeoMaps();
+      const payload: any = { ...toPayload(values, geo), user_id: user.id };
       if (label_photo_url !== undefined) payload.label_photo_url = label_photo_url;
       if (id) {
         const { error } = await supabase.from("wines").update(payload).eq("id", id);
@@ -121,13 +148,19 @@ export const uploadLabelPhoto = async (file: File, userId: string): Promise<stri
   return data.publicUrl;
 };
 
+/**
+ * Bulk insert used by CSV import. Accepts either resolved {country_id, region_id}
+ * (preferred) or legacy {country, region} text — but text-based rows must be
+ * resolved to ids by the caller before this point.
+ */
 export const useBulkInsertWines = () => {
   const qc = useQueryClient();
   const { user } = useAuth();
   return useMutation({
     mutationFn: async (rows: WineInput[]) => {
       if (!user) throw new Error("Not signed in");
-      const payload = rows.map((v) => ({ ...toPayload(v), user_id: user.id }));
+      const geo = await fetchGeoMaps();
+      const payload = rows.map((v) => ({ ...toPayload(v, geo), user_id: user.id }));
       const { error } = await supabase.from("wines").insert(payload);
       if (error) throw error;
     },
