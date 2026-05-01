@@ -39,11 +39,11 @@ export const OCCASION_CLASS: Record<Occasion, string> = {
 export const CL_OPTIONS = [37.5, 50, 75, 100, 150, 300, 600] as const;
 
 export const wineSchema = z.object({
-  producer: z.string().trim().max(200).optional().or(z.literal("")),
+  producer: z.string().trim().min(1, "Producer is required").max(200),
   description: z.string().trim().max(300).optional().or(z.literal("")),
   vintage: z.string().trim().max(60).optional().or(z.literal("")),
   cl: z.coerce.number().int().min(1).max(9999).optional().nullable(),
-  colour: z.enum(WINE_COLOURS).optional().nullable(),
+  colour: z.enum(WINE_COLOURS, { required_error: "Colour is required" }),
   variety: z.string().trim().max(200).optional().or(z.literal("")),
   residual_sugar_gl: z.coerce.number().min(0).max(999).optional().nullable(),
   dosage: z.string().trim().max(60).optional().or(z.literal("")),
