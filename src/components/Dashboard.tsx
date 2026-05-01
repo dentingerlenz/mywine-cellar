@@ -38,7 +38,7 @@ export const Dashboard = ({ wines }: { wines: Wine[] }) => {
         <Card className="p-6 gold-border bg-card/80 shadow-card">
           <p className="text-xs uppercase tracking-widest text-muted-foreground">In the cellar</p>
           <p className="font-display text-5xl text-primary mt-2">{totalBottles}</p>
-          <p className="text-sm text-muted-foreground mt-1">{wines.length} {wines.length === 1 ? "label" : "labels"}</p>
+          <p className="text-sm text-muted-foreground mt-1">{labelCount} {labelCount === 1 ? "label" : "labels"}</p>
           <div className="mt-4 pt-4 border-t border-primary/20">
             <p className="text-xs uppercase tracking-widest text-muted-foreground">Total value</p>
             <p className="font-display text-2xl text-foreground mt-1">{totalValue.toFixed(0)} <span className="text-sm text-muted-foreground">CHF</span></p>
