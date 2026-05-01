@@ -14,7 +14,75 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      wines: {
+        Row: {
+          aging: string | null
+          alcohol_volume: number | null
+          bottle_size: string | null
+          country: string | null
+          created_at: string
+          dosage: string | null
+          grape_variety: string | null
+          id: string
+          in_stock: number | null
+          occasion: string | null
+          price: number | null
+          producer: string | null
+          purchase_source: string | null
+          region: string | null
+          sub_region: string | null
+          tasting_notes: string | null
+          updated_at: string
+          vintage: number | null
+          wine_id: string | null
+          wine_name: string
+        }
+        Insert: {
+          aging?: string | null
+          alcohol_volume?: number | null
+          bottle_size?: string | null
+          country?: string | null
+          created_at?: string
+          dosage?: string | null
+          grape_variety?: string | null
+          id?: string
+          in_stock?: number | null
+          occasion?: string | null
+          price?: number | null
+          producer?: string | null
+          purchase_source?: string | null
+          region?: string | null
+          sub_region?: string | null
+          tasting_notes?: string | null
+          updated_at?: string
+          vintage?: number | null
+          wine_id?: string | null
+          wine_name: string
+        }
+        Update: {
+          aging?: string | null
+          alcohol_volume?: number | null
+          bottle_size?: string | null
+          country?: string | null
+          created_at?: string
+          dosage?: string | null
+          grape_variety?: string | null
+          id?: string
+          in_stock?: number | null
+          occasion?: string | null
+          price?: number | null
+          producer?: string | null
+          purchase_source?: string | null
+          region?: string | null
+          sub_region?: string | null
+          tasting_notes?: string | null
+          updated_at?: string
+          vintage?: number | null
+          wine_id?: string | null
+          wine_name?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
