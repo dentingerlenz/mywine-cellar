@@ -6,6 +6,10 @@ import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useBulkInsertWines } from "@/hooks/useWines";
 import { wineSchema, WineInput, BUILTIN_WINE_COLOURS, OCCASIONS } from "@/lib/wine";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
+import { useWineCountries, useWineRegions } from "@/hooks/useWineGeography";
+import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { ArrowLeft, Upload, Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
 
