@@ -38,16 +38,22 @@ export const OCCASION_CLASS: Record<Occasion, string> = {
 
 export const CL_OPTIONS = [37.5, 50, 75, 100, 150, 300, 600] as const;
 
+const optionalNum = (schema: z.ZodTypeAny) =>
+  z.preprocess(
+    (v) => (v === "" || v === null || v === undefined || (typeof v === "number" && Number.isNaN(v)) ? undefined : v),
+    schema.optional().nullable()
+  );
+
 export const wineSchema = z.object({
   producer: z.string().trim().min(1, "Producer is required").max(200),
   description: z.string().trim().max(300).optional().or(z.literal("")),
   vintage: z.string().trim().max(60).optional().or(z.literal("")),
-  cl: z.coerce.number().int().min(1).max(9999).optional().nullable(),
+  cl: optionalNum(z.coerce.number().int().min(1).max(9999)),
   colour: z.enum([...WINE_COLOURS] as [WineColour, ...WineColour[]]),
   variety: z.string().trim().max(200).optional().or(z.literal("")),
-  residual_sugar_gl: z.coerce.number().min(0).max(999).optional().nullable(),
+  residual_sugar_gl: optionalNum(z.coerce.number().min(0).max(999)),
   dosage: z.string().trim().max(60).optional().or(z.literal("")),
-  alcohol_pct: z.coerce.number().min(0).max(99).optional().nullable(),
+  alcohol_pct: optionalNum(z.coerce.number().min(0).max(99)),
   country: z.string().trim().max(120).optional().or(z.literal("")),
   region: z.string().trim().max(120).optional().or(z.literal("")),
   sub_region: z.string().trim().max(120).optional().or(z.literal("")),
@@ -56,11 +62,11 @@ export const wineSchema = z.object({
   notes: z.string().max(2000).optional().or(z.literal("")),
   occasion: z.enum(OCCASIONS).optional().nullable(),
   quantity: z.coerce.number().int().min(0).max(9999).default(1),
-  price_chf: z.coerce.number().min(0).max(999999).optional().nullable(),
+  price_chf: optionalNum(z.coerce.number().min(0).max(999999)),
   purchased_from: z.string().trim().max(200).optional().or(z.literal("")),
-  ready_from: z.coerce.number().int().min(1800).max(2200).optional().nullable(),
-  drink_by: z.coerce.number().int().min(1800).max(2200).optional().nullable(),
-  rating: z.coerce.number().int().min(1).max(5).optional().nullable(),
+  ready_from: optionalNum(z.coerce.number().int().min(1800).max(2200)),
+  drink_by: optionalNum(z.coerce.number().int().min(1800).max(2200)),
+  rating: optionalNum(z.coerce.number().int().min(1).max(5)),
 });
 
 export type WineInput = z.infer<typeof wineSchema>;
