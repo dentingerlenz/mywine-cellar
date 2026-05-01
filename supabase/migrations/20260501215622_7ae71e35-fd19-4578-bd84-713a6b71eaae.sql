@@ -1,0 +1,1 @@
+ALTER TABLE public.wines DROP CONSTRAINT IF EXISTS wines_colour_check;
