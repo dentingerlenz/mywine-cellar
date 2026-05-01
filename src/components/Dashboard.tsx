@@ -11,19 +11,21 @@ const COLOUR_HEX: Record<WineColour, string> = {
 };
 
 export const Dashboard = ({ wines }: { wines: Wine[] }) => {
-  const totalBottles = wines.reduce((s, b) => s + b.quantity, 0);
-  const totalValue = wines.reduce((s, b) => s + (b.price_chf ?? 0) * b.quantity, 0);
-  const drinkNow = wines.filter((b) => getDrinkStatus(b) === "drink_now" && (b.ready_from || b.drink_by));
-  const layDown = wines.filter((b) => b.occasion === "l");
+  const inStock = wines.filter((b) => b.quantity > 0);
+  const totalBottles = inStock.reduce((s, b) => s + b.quantity, 0);
+  const totalValue = inStock.reduce((s, b) => s + (b.price_chf ?? 0) * b.quantity, 0);
+  const labelCount = inStock.length;
+  const drinkNow = inStock.filter((b) => getDrinkStatus(b) === "drink_now" && (b.ready_from || b.drink_by));
+  const layDown = inStock.filter((b) => b.occasion === "l");
 
   const byColour = (Object.keys(COLOUR_LABEL) as WineColour[]).map((c) => ({
     name: COLOUR_LABEL[c],
-    value: wines.filter((b) => b.colour === c).reduce((s, b) => s + b.quantity, 0),
+    value: inStock.filter((b) => b.colour === c).reduce((s, b) => s + b.quantity, 0),
     fill: COLOUR_HEX[c],
   })).filter((d) => d.value > 0);
 
   const byCountry = Object.entries(
-    wines.reduce<Record<string, number>>((acc, b) => {
+    inStock.reduce<Record<string, number>>((acc, b) => {
       const key = b.country || "Unknown";
       acc[key] = (acc[key] || 0) + b.quantity;
       return acc;
@@ -36,7 +38,7 @@ export const Dashboard = ({ wines }: { wines: Wine[] }) => {
         <Card className="p-6 gold-border bg-card/80 shadow-card">
           <p className="text-xs uppercase tracking-widest text-muted-foreground">In the cellar</p>
           <p className="font-display text-5xl text-primary mt-2">{totalBottles}</p>
-          <p className="text-sm text-muted-foreground mt-1">{wines.length} {wines.length === 1 ? "label" : "labels"}</p>
+          <p className="text-sm text-muted-foreground mt-1">{labelCount} {labelCount === 1 ? "label" : "labels"}</p>
           <div className="mt-4 pt-4 border-t border-primary/20">
             <p className="text-xs uppercase tracking-widest text-muted-foreground">Total value</p>
             <p className="font-display text-2xl text-foreground mt-1">{totalValue.toFixed(0)} <span className="text-sm text-muted-foreground">CHF</span></p>
