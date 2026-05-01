@@ -82,6 +82,8 @@ export type Wine = {
   alcohol_pct: number | null;
   country: string | null;
   region: string | null;
+  country_id: string | null;
+  region_id: string | null;
   sub_region: string | null;
   appellation: string | null;
   ausbau_terroir: string | null;
