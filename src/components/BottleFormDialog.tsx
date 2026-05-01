@@ -29,8 +29,8 @@ export const BottleFormDialog = ({ open, onOpenChange, bottle }: Props) => {
   const [removePhoto, setRemovePhoto] = useState(false);
   const [uploading, setUploading] = useState(false);
 
-  const { register, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm<BottleInput>({
-    resolver: zodResolver(bottleSchema),
+  const { register, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm<any>({
+    resolver: zodResolver(bottleSchema) as any,
     defaultValues: { quantity: 1, format: "75cl" },
   });
 
