@@ -88,6 +88,18 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
   useEffect(() => {
     if (open) {
       if (wine) {
+        // Resolve country_id / region_id from FK columns; fall back to legacy
+        // text matches if a wine hasn't been migrated yet.
+        const initialCountryId =
+          wine.country_id ??
+          countries.find((c) => c.name === wine.country)?.id ??
+          "";
+        const initialRegionId =
+          wine.region_id ??
+          allRegions.find(
+            (r) => r.name === wine.region && r.country_id === initialCountryId,
+          )?.id ??
+          "";
         reset({
           producer: wine.producer ?? "",
           description: wine.description ?? "",
@@ -98,8 +110,8 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
           residual_sugar_gl: wine.residual_sugar_gl ?? undefined,
           dosage: wine.dosage ?? "",
           alcohol_pct: wine.alcohol_pct ?? undefined,
-          country: wine.country ?? "",
-          region: wine.region ?? "",
+          country_id: initialCountryId,
+          region_id: initialRegionId,
           sub_region: wine.sub_region ?? "",
           appellation: wine.appellation ?? "",
           ausbau_terroir: wine.ausbau_terroir ?? "",
@@ -120,7 +132,7 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
       setPhotoFile(null);
       setRemovePhoto(false);
     }
-  }, [open, wine, reset]);
+  }, [open, wine, reset, countries, allRegions]);
 
   const handlePhoto = (file: File) => {
     if (file.size > MAX_PHOTO_SIZE) { toast.error("Photo must be under 5 MB"); return; }
