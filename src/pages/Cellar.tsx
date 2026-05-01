@@ -4,12 +4,15 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useWines, useDeleteWine } from "@/hooks/useWines";
 import { Wine, wineTitle } from "@/lib/wine";
 import { WineCard } from "@/components/WineCard";
+import { WineListRow } from "@/components/WineListRow";
 import { WineFormDialog } from "@/components/WineFormDialog";
 import { WineDetailDialog } from "@/components/WineDetailDialog";
 import { Dashboard } from "@/components/Dashboard";
 import { FilterBar, applyFilters, emptyFilters, Filters } from "@/components/FilterBar";
 import { Button } from "@/components/ui/button";
-import { Plus, LogOut, Wine as WineIcon, Upload } from "lucide-react";
+import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { Plus, LogOut, Wine as WineIcon, Upload, LayoutGrid, List } from "lucide-react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 
