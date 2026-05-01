@@ -43,7 +43,7 @@ export const wineSchema = z.object({
   description: z.string().trim().max(300).optional().or(z.literal("")),
   vintage: z.string().trim().max(60).optional().or(z.literal("")),
   cl: z.coerce.number().int().min(1).max(9999).optional().nullable(),
-  colour: z.enum(WINE_COLOURS, { errorMap: () => ({ message: "Colour is required" }) }),
+  colour: z.enum([...WINE_COLOURS] as [WineColour, ...WineColour[]]),
   variety: z.string().trim().max(200).optional().or(z.literal("")),
   residual_sugar_gl: z.coerce.number().min(0).max(999).optional().nullable(),
   dosage: z.string().trim().max(60).optional().or(z.literal("")),
