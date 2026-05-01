@@ -1,74 +1,106 @@
 import { z } from "zod";
 
-export const WINE_COLOURS = ["red", "white", "rose", "sparkling", "dessert"] as const;
+export const WINE_COLOURS = ["sparkling", "white", "red", "orange_rose", "dessert_fortified"] as const;
 export type WineColour = (typeof WINE_COLOURS)[number];
 
 export const COLOUR_LABEL: Record<WineColour, string> = {
-  red: "Red",
-  white: "White",
-  rose: "Rosé",
   sparkling: "Sparkling",
-  dessert: "Dessert",
+  white: "White",
+  red: "Red",
+  orange_rose: "Orange / Rosé",
+  dessert_fortified: "Dessert / Fortified",
 };
 
 export const COLOUR_CLASS: Record<WineColour, string> = {
-  red: "bg-wine-red text-foreground",
-  white: "bg-wine-white text-background",
-  rose: "bg-wine-rose text-background",
   sparkling: "bg-wine-sparkling text-background",
-  dessert: "bg-wine-dessert text-background",
+  white: "bg-wine-white text-background",
+  red: "bg-wine-red text-foreground",
+  orange_rose: "bg-wine-rose text-background",
+  dessert_fortified: "bg-wine-dessert text-background",
 };
 
-export const FORMATS = ["375ml", "75cl", "Magnum (1.5L)", "Jeroboam (3L)", "Methuselah (6L)"] as const;
+export const OCCASIONS = ["a", "t", "l", "T"] as const;
+export type Occasion = (typeof OCCASIONS)[number];
 
-export const bottleSchema = z.object({
-  name: z.string().trim().min(1, "Name is required").max(200),
+export const OCCASION_LABEL: Record<Occasion, string> = {
+  a: "Anytime",
+  t: "Special occasion",
+  l: "Lay down",
+  T: "Top bottle",
+};
+
+export const OCCASION_CLASS: Record<Occasion, string> = {
+  a: "bg-secondary text-foreground border-primary/30",
+  t: "bg-primary/20 text-primary border-primary/50",
+  l: "bg-secondary text-foreground border-primary/30",
+  T: "bg-primary text-primary-foreground border-primary",
+};
+
+export const CL_OPTIONS = [37.5, 50, 75, 100, 150, 300, 600] as const;
+
+export const wineSchema = z.object({
   producer: z.string().trim().max(200).optional().or(z.literal("")),
-  vintage: z.coerce.number().int().min(1800).max(new Date().getFullYear() + 1).optional().nullable(),
-  region: z.string().trim().max(120).optional().or(z.literal("")),
-  country: z.string().trim().max(120).optional().or(z.literal("")),
-  appellation: z.string().trim().max(120).optional().or(z.literal("")),
-  grape: z.string().trim().max(200).optional().or(z.literal("")),
+  description: z.string().trim().max(300).optional().or(z.literal("")),
+  vintage: z.string().trim().max(60).optional().or(z.literal("")),
+  cl: z.coerce.number().int().min(1).max(9999).optional().nullable(),
   colour: z.enum(WINE_COLOURS).optional().nullable(),
-  format: z.string().max(40).optional().or(z.literal("")),
+  variety: z.string().trim().max(200).optional().or(z.literal("")),
+  residual_sugar_gl: z.coerce.number().min(0).max(999).optional().nullable(),
+  dosage: z.string().trim().max(60).optional().or(z.literal("")),
+  alcohol_pct: z.coerce.number().min(0).max(99).optional().nullable(),
+  country: z.string().trim().max(120).optional().or(z.literal("")),
+  region: z.string().trim().max(120).optional().or(z.literal("")),
+  sub_region: z.string().trim().max(120).optional().or(z.literal("")),
+  appellation: z.string().trim().max(120).optional().or(z.literal("")),
+  ausbau_terroir: z.string().max(2000).optional().or(z.literal("")),
+  notes: z.string().max(2000).optional().or(z.literal("")),
+  occasion: z.enum(OCCASIONS).optional().nullable(),
   quantity: z.coerce.number().int().min(0).max(9999).default(1),
-  note: z.string().max(2000).optional().or(z.literal("")),
-  rating: z.coerce.number().int().min(1).max(5).optional().nullable(),
+  price_chf: z.coerce.number().min(0).max(999999).optional().nullable(),
+  purchased_from: z.string().trim().max(200).optional().or(z.literal("")),
   ready_from: z.coerce.number().int().min(1800).max(2200).optional().nullable(),
   drink_by: z.coerce.number().int().min(1800).max(2200).optional().nullable(),
+  rating: z.coerce.number().int().min(1).max(5).optional().nullable(),
 });
 
-export type BottleInput = z.infer<typeof bottleSchema>;
+export type WineInput = z.infer<typeof wineSchema>;
 
-export type Bottle = {
+export type Wine = {
   id: string;
   user_id: string;
-  name: string;
-  producer: string | null;
-  vintage: number | null;
-  region: string | null;
-  country: string | null;
-  appellation: string | null;
-  grape: string | null;
   colour: WineColour | null;
-  format: string | null;
+  producer: string | null;
+  description: string | null;
+  vintage: string | null;
+  cl: number | null;
+  variety: string | null;
+  residual_sugar_gl: number | null;
+  dosage: string | null;
+  alcohol_pct: number | null;
+  country: string | null;
+  region: string | null;
+  sub_region: string | null;
+  appellation: string | null;
+  ausbau_terroir: string | null;
+  notes: string | null;
+  occasion: Occasion | null;
   quantity: number;
-  note: string | null;
-  rating: number | null;
+  price_chf: number | null;
+  purchased_from: string | null;
   ready_from: number | null;
   drink_by: number | null;
-  photo_url: string | null;
+  rating: number | null;
+  label_photo_url: string | null;
   created_at: string;
-  updated_at: string;
 };
 
 export type DrinkStatus = "drink_now" | "too_young" | "past_peak" | "unknown";
 
-export const getDrinkStatus = (b: Pick<Bottle, "ready_from" | "drink_by">): DrinkStatus => {
+export const getDrinkStatus = (w: Pick<Wine, "ready_from" | "drink_by">): DrinkStatus => {
   const year = new Date().getFullYear();
-  if (b.ready_from == null && b.drink_by == null) return "unknown";
-  if (b.ready_from != null && year < b.ready_from) return "too_young";
-  if (b.drink_by != null && year > b.drink_by) return "past_peak";
+  if (w.ready_from == null && w.drink_by == null) return "unknown";
+  if (w.ready_from != null && year < w.ready_from) return "too_young";
+  if (w.drink_by != null && year > w.drink_by) return "past_peak";
   return "drink_now";
 };
 
@@ -78,3 +110,6 @@ export const DRINK_LABEL: Record<DrinkStatus, string> = {
   past_peak: "Past peak",
   unknown: "—",
 };
+
+export const wineTitle = (w: Pick<Wine, "producer" | "description">) =>
+  [w.producer, w.description].filter(Boolean).join(" — ") || "Untitled bottle";
