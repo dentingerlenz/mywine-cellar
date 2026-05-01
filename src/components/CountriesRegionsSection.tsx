@@ -211,7 +211,7 @@ const CountryItem = ({
   country: WineCountryRow;
   regions: WineRegionRow[];
   countryAffected: number;
-  regionAffected: (regionName: string) => number;
+  regionAffected: (regionId: string) => number;
   expanded: boolean;
   onToggleExpanded: () => void;
   isFirst: boolean;
