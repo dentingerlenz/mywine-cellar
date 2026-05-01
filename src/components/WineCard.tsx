@@ -21,7 +21,7 @@ export const WineCard = ({ wine, onOpen, onEdit, onDelete }: Props) => {
       onClick={() => onOpen(wine)}
       className="group overflow-hidden gold-border shadow-card hover:shadow-warm transition-all duration-300 bg-card/80 backdrop-blur cursor-pointer"
     >
-      <div className="aspect-[3/4] relative overflow-hidden">
+      <div className="aspect-[4/3] relative overflow-hidden">
         {wine.label_photo_url ? (
           <img
             src={wine.label_photo_url}
@@ -33,47 +33,47 @@ export const WineCard = ({ wine, onOpen, onEdit, onDelete }: Props) => {
           <BottlePlaceholder className="w-full h-full" />
         )}
         {wine.colour && (
-          <Badge className={cn("absolute top-3 left-3 font-body text-[10px] uppercase tracking-wider", COLOUR_CLASS[wine.colour])}>
+          <Badge className={cn("absolute top-2 left-2 font-body text-[9px] uppercase tracking-wider px-1.5 py-0", COLOUR_CLASS[wine.colour])}>
             {COLOUR_LABEL[wine.colour]}
           </Badge>
         )}
-        <div className="absolute top-3 right-3">
+        <div className="absolute top-2 right-2">
           <QuantityControls wine={wine} size="sm" />
         </div>
         {wine.occasion && (
-          <Badge variant="outline" className={cn("absolute bottom-3 left-3 font-body text-[10px] uppercase tracking-wider", OCCASION_CLASS[wine.occasion])}>
+          <Badge variant="outline" className={cn("absolute bottom-2 left-2 font-body text-[9px] uppercase tracking-wider px-1.5 py-0", OCCASION_CLASS[wine.occasion])}>
             {OCCASION_LABEL[wine.occasion]}
           </Badge>
         )}
       </div>
-      <div className="p-4 space-y-2">
+      <div className="p-2.5 space-y-1">
         <div>
-          <h3 className="font-display text-lg leading-tight text-foreground line-clamp-2">
+          <h3 className="font-display text-base leading-tight text-foreground line-clamp-2">
             {wine.producer || <span className="italic text-muted-foreground">Unknown producer</span>}
           </h3>
           {wine.description && (
-            <p className="text-sm text-muted-foreground italic line-clamp-1">{wine.description}</p>
+            <p className="text-[11px] text-muted-foreground italic line-clamp-1">{wine.description}</p>
           )}
         </div>
-        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          {wine.vintage && <span className="text-primary font-display">{wine.vintage}</span>}
+        <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+          {wine.vintage && <span className="text-primary font-display text-sm">{wine.vintage}</span>}
           {wine.region && <span className="truncate">· {wine.region}</span>}
         </div>
         {wine.rating && (
           <div className="flex gap-0.5">
             {Array.from({ length: 5 }).map((_, i) => (
-              <Star key={i} className={cn("w-3.5 h-3.5", i < wine.rating! ? "fill-primary text-primary" : "text-muted")} />
+              <Star key={i} className={cn("w-3 h-3", i < wine.rating! ? "fill-primary text-primary" : "text-muted")} />
             ))}
           </div>
         )}
-        <div className="flex items-center justify-between pt-2">
+        <div className="flex items-center justify-between pt-1">
           <PriceControl wine={wine} size="sm" />
-          <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-            <Button size="icon" variant="ghost" className="h-8 w-8" onClick={(e) => { e.stopPropagation(); onEdit(wine); }}>
-              <Pencil className="w-4 h-4" />
+          <div className="flex gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+            <Button size="icon" variant="ghost" className="h-7 w-7" onClick={(e) => { e.stopPropagation(); onEdit(wine); }}>
+              <Pencil className="w-3.5 h-3.5" />
             </Button>
-            <Button size="icon" variant="ghost" className="h-8 w-8 hover:text-destructive" onClick={(e) => { e.stopPropagation(); onDelete(wine); }}>
-              <Trash2 className="w-4 h-4" />
+            <Button size="icon" variant="ghost" className="h-7 w-7 hover:text-destructive" onClick={(e) => { e.stopPropagation(); onDelete(wine); }}>
+              <Trash2 className="w-3.5 h-3.5" />
             </Button>
           </div>
         </div>
