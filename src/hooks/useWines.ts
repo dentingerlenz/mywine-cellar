@@ -21,11 +21,11 @@ const toPayload = (v: WineInput) => ({
   notes: v.notes || null,
   occasion: v.occasion ?? null,
   quantity: v.quantity ?? 1,
-  price_chf: v.price_chf ?? null,
+  price_chf: (v.price_chf as number | null | undefined) ?? null,
   purchased_from: v.purchased_from || null,
-  ready_from: v.ready_from ?? null,
-  drink_by: v.drink_by ?? null,
-  rating: v.rating ?? null,
+  ready_from: (v.ready_from as number | null | undefined) ?? null,
+  drink_by: (v.drink_by as number | null | undefined) ?? null,
+  rating: (v.rating as number | null | undefined) ?? null,
 });
 
 export const useWines = () => {
