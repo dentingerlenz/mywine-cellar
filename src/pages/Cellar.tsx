@@ -21,6 +21,7 @@ export default function Cellar() {
   const { data: wines = [], isLoading } = useWines();
   const del = useDeleteWine();
   const [filters, setFilters] = useState<Filters>(emptyFilters);
+  const [view, setView] = useState<"grid" | "list">("grid");
   const [formOpen, setFormOpen] = useState(false);
   const [editing, setEditing] = useState<Wine | null>(null);
   const [detail, setDetail] = useState<Wine | null>(null);
