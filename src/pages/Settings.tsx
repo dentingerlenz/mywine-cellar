@@ -26,6 +26,7 @@ import {
 import { ArrowLeft, Pencil, Trash2, Plus, Check, X, Settings as SettingsIcon, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { CountriesRegionsSection } from "@/components/CountriesRegionsSection";
 
 export default function Settings() {
   const { data: colours = [], isLoading } = useWineColours();
@@ -214,6 +215,10 @@ export default function Settings() {
             </div>
           </div>
         </Card>
+
+        <div className="mt-6">
+          <CountriesRegionsSection />
+        </div>
       </main>
 
       <AlertDialog open={!!deleteTarget} onOpenChange={(o) => !o && setDeleteTarget(null)}>
