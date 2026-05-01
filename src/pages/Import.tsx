@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useBulkInsertWines } from "@/hooks/useWines";
-import { wineSchema, WineInput, WINE_COLOURS, OCCASIONS } from "@/lib/wine";
+import { wineSchema, WineInput, BUILTIN_WINE_COLOURS, OCCASIONS } from "@/lib/wine";
 import { toast } from "sonner";
 import { ArrowLeft, Upload, Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
 
@@ -14,7 +14,7 @@ type ParsedRow = { row: number; raw: any; data?: WineInput; error?: string };
 const normaliseColour = (v: string | undefined) => {
   if (!v) return undefined;
   const s = v.toLowerCase().trim().replace(/[éè]/g, "e").replace(/[\s/-]+/g, "_");
-  if (WINE_COLOURS.includes(s as any)) return s;
+  if ((BUILTIN_WINE_COLOURS as readonly string[]).includes(s)) return s;
   if (s.startsWith("spa") || s.includes("champ") || s.includes("bub")) return "sparkling";
   if (s.startsWith("whi")) return "white";
   if (s.startsWith("red")) return "red";

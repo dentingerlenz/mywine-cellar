@@ -5,12 +5,11 @@ import {
   Wine,
   WineInput,
   wineSchema,
-  WINE_COLOURS,
-  COLOUR_LABEL,
   OCCASIONS,
   OCCASION_LABEL,
   CL_OPTIONS,
 } from "@/lib/wine";
+import { useWineColoursCtx } from "@/contexts/WineColoursContext";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
