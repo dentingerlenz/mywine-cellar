@@ -19,6 +19,7 @@ type Props = {
 
 export const WineListRow = ({ wine, onOpen, onEdit, onDelete }: Props) => {
   const { labelFor } = useWineColoursCtx();
+  const { regionNameFor } = useGeographyLookups();
   return (
     <TableRow
       onClick={() => onOpen(wine)}
