@@ -1,5 +1,6 @@
 import { Wine, OCCASION_LABEL, OCCASION_CLASS, getDrinkStatus, DRINK_LABEL, wineTitle } from "@/lib/wine";
 import { useWineColoursCtx, colourClassFor } from "@/contexts/WineColoursContext";
+import { useGeographyLookups } from "@/hooks/useWineGeography";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -27,6 +28,7 @@ const Field = ({ label, value }: { label: string; value: React.ReactNode }) => {
 
 export const WineDetailDialog = ({ wine, open, onOpenChange, onEdit, onDelete }: Props) => {
   const { labelFor } = useWineColoursCtx();
+  const { countryNameFor, regionNameFor } = useGeographyLookups();
   if (!wine) return null;
   const status = getDrinkStatus(wine);
   return (
@@ -64,8 +66,8 @@ export const WineDetailDialog = ({ wine, open, onOpenChange, onEdit, onDelete }:
               <Field label="Alcohol" value={wine.alcohol_pct != null ? `${wine.alcohol_pct} %` : null} />
               <Field label="Residual sugar" value={wine.residual_sugar_gl != null ? `${wine.residual_sugar_gl} g/L` : null} />
               <Field label="Dosage" value={wine.dosage} />
-              <Field label="Country" value={wine.country} />
-              <Field label="Region" value={wine.region} />
+              <Field label="Country" value={countryNameFor(wine)} />
+              <Field label="Region" value={regionNameFor(wine)} />
               <Field label="Sub-region" value={wine.sub_region} />
               <Field label="Appellation" value={wine.appellation} />
               <Field label="Ready from" value={wine.ready_from} />

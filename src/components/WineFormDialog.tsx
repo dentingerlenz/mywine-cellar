@@ -56,8 +56,8 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     residual_sugar_gl: "Residual sugar",
     dosage: "Dosage",
     alcohol_pct: "Alcohol",
-    country: "Country",
-    region: "Region",
+    country_id: "Country",
+    region_id: "Region",
     sub_region: "Sub-region",
     appellation: "Appellation",
     ausbau_terroir: "Ausbau / Terroir",
@@ -88,6 +88,18 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
   useEffect(() => {
     if (open) {
       if (wine) {
+        // Resolve country_id / region_id from FK columns; fall back to legacy
+        // text matches if a wine hasn't been migrated yet.
+        const initialCountryId =
+          wine.country_id ??
+          countries.find((c) => c.name === wine.country)?.id ??
+          "";
+        const initialRegionId =
+          wine.region_id ??
+          allRegions.find(
+            (r) => r.name === wine.region && r.country_id === initialCountryId,
+          )?.id ??
+          "";
         reset({
           producer: wine.producer ?? "",
           description: wine.description ?? "",
@@ -98,8 +110,8 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
           residual_sugar_gl: wine.residual_sugar_gl ?? undefined,
           dosage: wine.dosage ?? "",
           alcohol_pct: wine.alcohol_pct ?? undefined,
-          country: wine.country ?? "",
-          region: wine.region ?? "",
+          country_id: initialCountryId,
+          region_id: initialRegionId,
           sub_region: wine.sub_region ?? "",
           appellation: wine.appellation ?? "",
           ausbau_terroir: wine.ausbau_terroir ?? "",
@@ -120,7 +132,7 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
       setPhotoFile(null);
       setRemovePhoto(false);
     }
-  }, [open, wine, reset]);
+  }, [open, wine, reset, countries, allRegions]);
 
   const handlePhoto = (file: File) => {
     if (file.size > MAX_PHOTO_SIZE) { toast.error("Photo must be under 5 MB"); return; }
@@ -151,10 +163,10 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
   const occasion = watch("occasion");
   const rating = watch("rating");
   const cl = watch("cl");
-  const country = watch("country");
-  const region = watch("region");
+  const countryId = watch("country_id");
+  const regionId = watch("region_id");
 
-  const selectedCountry = countries.find((c) => c.name === country);
+  const selectedCountry = countries.find((c) => c.id === countryId);
   const filteredRegions = selectedCountry
     ? allRegions.filter((r) => r.country_id === selectedCountry.id)
     : [];
@@ -299,19 +311,19 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
             <div>
               <Label>Country</Label>
               <Select
-                value={country || "none"}
+                value={countryId || "none"}
                 onValueChange={(v) => {
                   const next = v === "none" ? "" : v;
-                  setValue("country", next, { shouldValidate: true });
+                  setValue("country_id", next, { shouldValidate: true });
                   // Reset region whenever country changes
-                  setValue("region", "", { shouldValidate: true });
+                  setValue("region_id", "", { shouldValidate: true });
                 }}
               >
                 <SelectTrigger><SelectValue placeholder="Select country" /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="none">—</SelectItem>
                   {countries.map((c) => (
-                    <SelectItem key={c.id} value={c.name}>{c.name}</SelectItem>
+                    <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -319,8 +331,8 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
             <div>
               <Label>Region</Label>
               <Select
-                value={region || "none"}
-                onValueChange={(v) => setValue("region", v === "none" ? "" : v, { shouldValidate: true })}
+                value={regionId || "none"}
+                onValueChange={(v) => setValue("region_id", v === "none" ? "" : v, { shouldValidate: true })}
                 disabled={!selectedCountry}
               >
                 <SelectTrigger>
@@ -329,7 +341,7 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
                 <SelectContent>
                   <SelectItem value="none">—</SelectItem>
                   {filteredRegions.map((r) => (
-                    <SelectItem key={r.id} value={r.name}>{r.name}</SelectItem>
+                    <SelectItem key={r.id} value={r.id}>{r.name}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>

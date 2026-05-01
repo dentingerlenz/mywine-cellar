@@ -6,6 +6,10 @@ import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useBulkInsertWines } from "@/hooks/useWines";
 import { wineSchema, WineInput, BUILTIN_WINE_COLOURS, OCCASIONS } from "@/lib/wine";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
+import { useWineCountries, useWineRegions } from "@/hooks/useWineGeography";
+import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { ArrowLeft, Upload, Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
 
@@ -43,7 +47,11 @@ const num = (v: any) => {
 
 export default function Import() {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const qc = useQueryClient();
   const bulk = useBulkInsertWines();
+  const { data: countries = [] } = useWineCountries();
+  const { data: regions = [] } = useWineRegions();
   const [rows, setRows] = useState<ParsedRow[]>([]);
   const [fileName, setFileName] = useState("");
   const [importing, setImporting] = useState(false);
@@ -56,6 +64,8 @@ export default function Import() {
       transformHeader: (h) => h.toLowerCase().trim().replace(/\s+/g, "_"),
       complete: (results) => {
         const parsed: ParsedRow[] = results.data.map((raw: any, i) => {
+          // Note: country / region are NOT validated here as ids — they are
+          // resolved (and created if missing) at import time.
           const candidate = {
             colour: normaliseColour(raw.colour ?? raw.color),
             producer: raw.producer,
@@ -66,8 +76,6 @@ export default function Import() {
             residual_sugar_gl: num(raw.residual_sugar_gl ?? raw.residual_sugar),
             dosage: raw.dosage,
             alcohol_pct: num(raw.alcohol_pct ?? raw.alcohol),
-            country: raw.country,
-            region: raw.region,
             sub_region: raw.sub_region ?? raw.subregion,
             appellation: raw.appellation,
             ausbau_terroir: raw.ausbau_terroir ?? raw.ausbau,
@@ -90,11 +98,90 @@ export default function Import() {
   const valid = rows.filter((r) => r.data);
   const invalid = rows.filter((r) => r.error);
 
+  /**
+   * Resolve a country / region text value to an id. If no curated row matches
+   * (case-insensitive, trimmed), create a new entry in the relevant table.
+   */
+  const resolveGeography = async (
+    countryText: string | undefined,
+    regionText: string | undefined,
+  ): Promise<{ country_id: string | null; region_id: string | null }> => {
+    if (!user) return { country_id: null, region_id: null };
+    const cName = (countryText ?? "").trim();
+    const rName = (regionText ?? "").trim();
+    let country_id: string | null = null;
+    let region_id: string | null = null;
+
+    if (cName) {
+      const existing = countries.find(
+        (c) => c.name.toLowerCase() === cName.toLowerCase(),
+      );
+      if (existing) {
+        country_id = existing.id;
+      } else {
+        const sort_order = countries.length;
+        const { data, error } = await supabase
+          .from("wine_countries")
+          .insert({ user_id: user.id, name: cName, sort_order })
+          .select("id")
+          .single();
+        if (error) throw error;
+        country_id = data.id;
+        // Locally extend the list so subsequent rows in this batch reuse it.
+        countries.push({ id: data.id, user_id: user.id, name: cName, sort_order });
+      }
+    }
+
+    if (rName && country_id) {
+      const existing = regions.find(
+        (r) =>
+          r.country_id === country_id &&
+          r.name.toLowerCase() === rName.toLowerCase(),
+      );
+      if (existing) {
+        region_id = existing.id;
+      } else {
+        const sort_order = regions.filter((r) => r.country_id === country_id).length;
+        const { data, error } = await supabase
+          .from("wine_regions")
+          .insert({ user_id: user.id, country_id, name: rName, sort_order })
+          .select("id")
+          .single();
+        if (error) throw error;
+        region_id = data.id;
+        regions.push({
+          id: data.id,
+          user_id: user.id,
+          country_id,
+          name: rName,
+          sort_order,
+        });
+      }
+    }
+
+    return { country_id, region_id };
+  };
+
   const onImport = async () => {
     if (valid.length === 0) return;
     setImporting(true);
     try {
-      await bulk.mutateAsync(valid.map((r) => r.data!));
+      // Resolve geography sequentially so we don't insert the same country twice.
+      const enriched: WineInput[] = [];
+      for (const r of valid) {
+        const { country_id, region_id } = await resolveGeography(
+          r.raw.country,
+          r.raw.region,
+        );
+        enriched.push({
+          ...(r.data as WineInput),
+          country_id: country_id ?? "",
+          region_id: region_id ?? "",
+        });
+      }
+      await bulk.mutateAsync(enriched);
+      qc.invalidateQueries({ queryKey: ["wine_countries"] });
+      qc.invalidateQueries({ queryKey: ["wine_regions"] });
       toast.success(`${valid.length} bottles imported`);
       navigate("/");
     } catch (e: any) {

@@ -1,5 +1,6 @@
 import { Wine } from "@/lib/wine";
 import { useWineColoursCtx, colourClassFor } from "@/contexts/WineColoursContext";
+import { useGeographyLookups } from "@/hooks/useWineGeography";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
@@ -18,6 +19,7 @@ type Props = {
 
 export const WineListRow = ({ wine, onOpen, onEdit, onDelete }: Props) => {
   const { labelFor } = useWineColoursCtx();
+  const { regionNameFor } = useGeographyLookups();
   return (
     <TableRow
       onClick={() => onOpen(wine)}
@@ -39,7 +41,7 @@ export const WineListRow = ({ wine, onOpen, onEdit, onDelete }: Props) => {
         {wine.description || "—"}
       </TableCell>
       <TableCell className="text-primary font-display">{wine.vintage || "—"}</TableCell>
-      <TableCell className="text-sm">{wine.region || "—"}</TableCell>
+      <TableCell className="text-sm">{regionNameFor(wine) || "—"}</TableCell>
       <TableCell className="text-sm max-w-[180px] truncate">{wine.variety || "—"}</TableCell>
       <TableCell className="text-center"><QuantityControls wine={wine} size="sm" /></TableCell>
       <TableCell className="text-right whitespace-nowrap">

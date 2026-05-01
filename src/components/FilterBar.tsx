@@ -10,11 +10,12 @@ import { Label } from "@/components/ui/label";
 
 export type SortKey = "added" | "producer" | "vintage" | "region" | "price";
 
+// Filter values are now FK ids (country_id / region_id) not text strings.
 export type Filters = {
   q: string;
   colour: WineColour | "all";
-  country: string;
-  region: string;
+  country_id: string;
+  region_id: string;
   occasion: Occasion | "all";
   vintageMin: string;
   vintageMax: string;
@@ -23,7 +24,7 @@ export type Filters = {
 };
 
 export const emptyFilters: Filters = {
-  q: "", colour: "all", country: "", region: "", occasion: "all",
+  q: "", colour: "all", country_id: "", region_id: "", occasion: "all",
   vintageMin: "", vintageMax: "", inStockOnly: false, sort: "added",
 };
 
@@ -35,30 +36,11 @@ export const FilterBar = ({
   wines: Wine[];
 }) => {
   const { colours } = useWineColoursCtx();
-  const { data: countriesRows = [] } = useWineCountries();
+  const { data: countries = [] } = useWineCountries();
   const { data: allRegions = [] } = useWineRegions();
-  // Merge curated countries with any orphan country values present on bottles
-  const countries = Array.from(
-    new Set<string>([
-      ...countriesRows.map((c) => c.name),
-      ...(wines.map((b) => b.country).filter(Boolean) as string[]),
-    ]),
-  ).sort();
-  const selectedCountryRow = countriesRows.find((c) => c.name === filters.country);
-  const regions = filters.country
-    ? selectedCountryRow
-      ? allRegions
-          .filter((r) => r.country_id === selectedCountryRow.id)
-          .map((r) => r.name)
-      : Array.from(
-          new Set(
-            wines
-              .filter((b) => b.country === filters.country)
-              .map((b) => b.region)
-              .filter(Boolean) as string[],
-          ),
-        ).sort()
-    : Array.from(new Set(wines.map((b) => b.region).filter(Boolean) as string[])).sort();
+  const regions = filters.country_id
+    ? allRegions.filter((r) => r.country_id === filters.country_id)
+    : [];
   const hasFilter = JSON.stringify(filters) !== JSON.stringify(emptyFilters);
 
   return (
@@ -81,29 +63,29 @@ export const FilterBar = ({
           </SelectContent>
         </Select>
         <Select
-          value={filters.country || "all"}
+          value={filters.country_id || "all"}
           onValueChange={(v) =>
             // Reset region whenever country changes
-            setFilters({ ...filters, country: v === "all" ? "" : v, region: "" })
+            setFilters({ ...filters, country_id: v === "all" ? "" : v, region_id: "" })
           }
         >
           <SelectTrigger><SelectValue placeholder="Country" /></SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All countries</SelectItem>
-            {countries.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+            {countries.map((c) => <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}
           </SelectContent>
         </Select>
         <Select
-          value={filters.region || "all"}
-          onValueChange={(v) => setFilters({ ...filters, region: v === "all" ? "" : v })}
-          disabled={!filters.country}
+          value={filters.region_id || "all"}
+          onValueChange={(v) => setFilters({ ...filters, region_id: v === "all" ? "" : v })}
+          disabled={!filters.country_id}
         >
           <SelectTrigger>
-            <SelectValue placeholder={filters.country ? "Region" : "Select a country first"} />
+            <SelectValue placeholder={filters.country_id ? "Region" : "Select a country first"} />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All regions</SelectItem>
-            {regions.map((r) => <SelectItem key={r} value={r}>{r}</SelectItem>)}
+            {regions.map((r) => <SelectItem key={r.id} value={r.id}>{r.name}</SelectItem>)}
           </SelectContent>
         </Select>
         <Select value={filters.occasion} onValueChange={(v) => setFilters({ ...filters, occasion: v as any })}>
@@ -155,8 +137,8 @@ export const applyFilters = (wines: Wine[], f: Filters): Wine[] => {
       if (!hay.includes(q)) return false;
     }
     if (f.colour !== "all" && b.colour !== f.colour) return false;
-    if (f.country && b.country !== f.country) return false;
-    if (f.region && b.region !== f.region) return false;
+    if (f.country_id && b.country_id !== f.country_id) return false;
+    if (f.region_id && b.region_id !== f.region_id) return false;
     if (f.occasion !== "all" && b.occasion !== f.occasion) return false;
     if (f.inStockOnly && b.quantity <= 0) return false;
     const y = parseVintageYear(b.vintage);

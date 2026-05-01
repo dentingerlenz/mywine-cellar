@@ -54,6 +54,25 @@ export const useWineRegions = () => {
 };
 
 /**
+ * Lookup helpers that resolve a wine's country / region display name.
+ * Prefers the FK ids (country_id / region_id); falls back to the legacy
+ * text columns if a wine hasn't been migrated yet.
+ */
+export const useGeographyLookups = () => {
+  const { data: countries = [] } = useWineCountries();
+  const { data: regions = [] } = useWineRegions();
+  const countryById = new Map(countries.map((c) => [c.id, c]));
+  const regionById = new Map(regions.map((r) => [r.id, r]));
+  const countryNameFor = (
+    w: { country_id?: string | null; country?: string | null },
+  ) => (w.country_id && countryById.get(w.country_id)?.name) || w.country || null;
+  const regionNameFor = (
+    w: { region_id?: string | null; region?: string | null },
+  ) => (w.region_id && regionById.get(w.region_id)?.name) || w.region || null;
+  return { countries, regions, countryById, regionById, countryNameFor, regionNameFor };
+};
+
+/**
  * Seeds wine_countries / wine_regions on first load by harvesting unique
  * country + region pairs from the user's existing wines. Runs once per session.
  */

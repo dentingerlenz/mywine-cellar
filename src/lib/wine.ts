@@ -51,8 +51,8 @@ export const wineSchema = z.object({
   residual_sugar_gl: optionalNum(z.coerce.number().min(0).max(999)),
   dosage: z.string().trim().max(60).optional().or(z.literal("")),
   alcohol_pct: optionalNum(z.coerce.number().min(0).max(99)),
-  country: z.string().trim().max(120).optional().or(z.literal("")),
-  region: z.string().trim().max(120).optional().or(z.literal("")),
+  country_id: z.string().uuid().optional().nullable().or(z.literal("")),
+  region_id: z.string().uuid().optional().nullable().or(z.literal("")),
   sub_region: z.string().trim().max(120).optional().or(z.literal("")),
   appellation: z.string().trim().max(120).optional().or(z.literal("")),
   ausbau_terroir: z.string().max(2000).optional().or(z.literal("")),
@@ -82,6 +82,8 @@ export type Wine = {
   alcohol_pct: number | null;
   country: string | null;
   region: string | null;
+  country_id: string | null;
+  region_id: string | null;
   sub_region: string | null;
   appellation: string | null;
   ausbau_terroir: string | null;

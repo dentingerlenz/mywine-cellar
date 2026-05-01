@@ -1,5 +1,6 @@
 import { Wine, OCCASION_CLASS, OCCASION_LABEL, wineTitle } from "@/lib/wine";
 import { useWineColoursCtx, colourClassFor } from "@/contexts/WineColoursContext";
+import { useGeographyLookups } from "@/hooks/useWineGeography";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -18,6 +19,8 @@ type Props = {
 
 export const WineCard = ({ wine, onOpen, onEdit, onDelete }: Props) => {
   const { labelFor } = useWineColoursCtx();
+  const { regionNameFor } = useGeographyLookups();
+  const regionName = regionNameFor(wine);
   return (
     <Card
       onClick={() => onOpen(wine)}
@@ -59,7 +62,7 @@ export const WineCard = ({ wine, onOpen, onEdit, onDelete }: Props) => {
         </div>
         <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
           {wine.vintage && <span className="text-primary font-display text-sm">{wine.vintage}</span>}
-          {wine.region && <span className="truncate">· {wine.region}</span>}
+          {regionName && <span className="truncate">· {regionName}</span>}
         </div>
         {wine.rating && (
           <div className="flex gap-0.5">
