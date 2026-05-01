@@ -149,7 +149,7 @@ export const BottleFormDialog = ({ open, onOpenChange, bottle }: Props) => {
               <div>
                 <Label>Name *</Label>
                 <Input {...register("name")} placeholder="e.g. Château Margaux" />
-                {errors.name && <p className="text-xs text-destructive mt-1">{errors.name.message}</p>}
+                {errors.name && <p className="text-xs text-destructive mt-1">{String(errors.name.message)}</p>}
               </div>
               <div>
                 <Label>Producer / Domaine</Label>
