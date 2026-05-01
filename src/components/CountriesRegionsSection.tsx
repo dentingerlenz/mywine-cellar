@@ -458,8 +458,10 @@ export const CountriesRegionsSection = () => {
   const [newCountry, setNewCountry] = useState("");
   const [deleteTarget, setDeleteTarget] = useState<DeleteTarget | null>(null);
 
-  const countryAffected = (name: string) => wines.filter((w) => w.country === name).length;
-  const regionAffected = (name: string) => wines.filter((w) => w.region === name).length;
+  const countryAffected = (id: string) =>
+    wines.filter((w) => w.country_id === id && (w.quantity ?? 0) > 0).length;
+  const regionAffected = (id: string) =>
+    wines.filter((w) => w.region_id === id && (w.quantity ?? 0) > 0).length;
 
   const handleAddCountry = async () => {
     const t = newCountry.trim();
