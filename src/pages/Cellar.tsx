@@ -97,7 +97,7 @@ export default function Cellar() {
         )}
 
         {isLoading ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
             {Array.from({ length: 4 }).map((_, i) => (
               <div key={i} className="aspect-[3/4] rounded-lg bg-card/40 animate-pulse" />
             ))}
