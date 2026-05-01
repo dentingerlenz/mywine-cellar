@@ -4,12 +4,15 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useWines, useDeleteWine } from "@/hooks/useWines";
 import { Wine, wineTitle } from "@/lib/wine";
 import { WineCard } from "@/components/WineCard";
+import { WineListRow } from "@/components/WineListRow";
 import { WineFormDialog } from "@/components/WineFormDialog";
 import { WineDetailDialog } from "@/components/WineDetailDialog";
 import { Dashboard } from "@/components/Dashboard";
 import { FilterBar, applyFilters, emptyFilters, Filters } from "@/components/FilterBar";
 import { Button } from "@/components/ui/button";
-import { Plus, LogOut, Wine as WineIcon, Upload } from "lucide-react";
+import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { Plus, LogOut, Wine as WineIcon, Upload, LayoutGrid, List } from "lucide-react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 
@@ -18,6 +21,7 @@ export default function Cellar() {
   const { data: wines = [], isLoading } = useWines();
   const del = useDeleteWine();
   const [filters, setFilters] = useState<Filters>(emptyFilters);
+  const [view, setView] = useState<"grid" | "list">("grid");
   const [formOpen, setFormOpen] = useState(false);
   const [editing, setEditing] = useState<Wine | null>(null);
   const [detail, setDetail] = useState<Wine | null>(null);
@@ -74,6 +78,24 @@ export default function Cellar() {
 
         {wines.length > 0 && <FilterBar filters={filters} setFilters={setFilters} wines={wines} />}
 
+        {wines.length > 0 && (
+          <div className="flex justify-end mb-4">
+            <ToggleGroup
+              type="single"
+              value={view}
+              onValueChange={(v) => v && setView(v as "grid" | "list")}
+              className="border border-primary/30 rounded-md bg-card/40"
+            >
+              <ToggleGroupItem value="grid" aria-label="Grid view" className="data-[state=on]:bg-primary/20 data-[state=on]:text-primary">
+                <LayoutGrid className="w-4 h-4" />
+              </ToggleGroupItem>
+              <ToggleGroupItem value="list" aria-label="List view" className="data-[state=on]:bg-primary/20 data-[state=on]:text-primary">
+                <List className="w-4 h-4" />
+              </ToggleGroupItem>
+            </ToggleGroup>
+          </div>
+        )}
+
         {isLoading ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
             {Array.from({ length: 4 }).map((_, i) => (
@@ -92,7 +114,7 @@ export default function Cellar() {
           </div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-16 text-muted-foreground italic">No bottles match these filters.</div>
-        ) : (
+        ) : view === "grid" ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
             {filtered.map((w) => (
               <WineCard
@@ -103,6 +125,35 @@ export default function Cellar() {
                 onDelete={(b) => setDeleteTarget(b)}
               />
             ))}
+          </div>
+        ) : (
+          <div className="gold-border rounded-lg bg-card/40 overflow-hidden">
+            <Table>
+              <TableHeader>
+                <TableRow className="border-primary/20 hover:bg-transparent">
+                  <TableHead>Colour</TableHead>
+                  <TableHead>Producer</TableHead>
+                  <TableHead>Description</TableHead>
+                  <TableHead>Vintage</TableHead>
+                  <TableHead>Region</TableHead>
+                  <TableHead>Variety</TableHead>
+                  <TableHead className="text-center">Qty</TableHead>
+                  <TableHead className="text-right">Price</TableHead>
+                  <TableHead className="w-12"></TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filtered.map((w) => (
+                  <WineListRow
+                    key={w.id}
+                    wine={w}
+                    onOpen={onOpenDetail}
+                    onEdit={onEdit}
+                    onDelete={(b) => setDeleteTarget(b)}
+                  />
+                ))}
+              </TableBody>
+            </Table>
           </div>
         )}
       </main>
