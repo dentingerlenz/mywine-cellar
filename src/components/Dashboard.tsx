@@ -18,11 +18,19 @@ export const Dashboard = ({ wines }: { wines: Wine[] }) => {
   const drinkNow = inStock.filter((b) => getDrinkStatus(b) === "drink_now" && (b.ready_from || b.drink_by));
   const layDown = inStock.filter((b) => b.occasion === "l");
 
-  const byColour = (Object.keys(COLOUR_LABEL) as WineColour[]).map((c) => ({
-    name: COLOUR_LABEL[c],
-    value: inStock.filter((b) => b.colour === c).reduce((s, b) => s + b.quantity, 0),
-    fill: COLOUR_HEX[c],
-  })).filter((d) => d.value > 0);
+  const colourBreakdown = (Object.keys(COLOUR_LABEL) as WineColour[]).map((c) => {
+    const items = inStock.filter((b) => b.colour === c);
+    return {
+      colour: c,
+      name: COLOUR_LABEL[c],
+      fill: COLOUR_HEX[c],
+      bottles: items.reduce((s, b) => s + b.quantity, 0),
+      labels: items.length,
+      value: items.reduce((s, b) => s + (b.price_chf ?? 0) * b.quantity, 0),
+    };
+  }).filter((d) => d.bottles > 0);
+
+  const byColour = colourBreakdown.map((d) => ({ name: d.name, value: d.bottles, fill: d.fill }));
 
   const byCountry = Object.entries(
     inStock.reduce<Record<string, number>>((acc, b) => {
