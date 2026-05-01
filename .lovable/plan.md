@@ -1,23 +1,26 @@
-## Problem
+## Goal
 
-Editing a wine fails unless you fill in "Ready from" and "Drink by" (and potentially other optional number fields). The schema marks them as optional, but empty number inputs come through as empty strings `""`, which `z.coerce.number()` converts to `0` — and `0` then fails the `min(1800)` year check, producing a validation error that blocks saving.
+Allow direct editing of the bottle quantity number in both grid and list views — currently only the − / + buttons work.
 
-This affects every optional numeric field: `cl`, `residual_sugar_gl`, `alcohol_pct`, `price_chf`, `ready_from`, `drink_by`, `rating`.
+## Change
 
-## Fix
+Update `src/components/QuantityControls.tsx`:
 
-Update `src/lib/wine.ts` to add a small `optionalNum` helper that preprocesses empty strings / null / NaN into `undefined` before the number schema runs. Apply it to all seven optional numeric fields. No UI changes needed.
+- Replace the static `<span>` showing the quantity with a click-to-edit field.
+- Click the number → it becomes a focused, auto-selected `<input type="number">`.
+- Press Enter or blur → commit the new value via the existing `useUpdateQuantity` mutation (with the same toast feedback).
+- Press Escape → cancel and revert.
+- Invalid input (empty, NaN, negative) reverts to the current quantity.
+- Keep the existing − / + buttons unchanged.
+- Preserve muted/italic style when quantity is 0.
+- Keep `onClick` propagation stopped so editing on a card doesn't open the detail dialog.
 
-After this, leaving "Ready from" and "Drink by" blank (or any other optional field) will save without errors. Producer, colour, and quantity remain the only required fields.
+No other files need to change — `WineCard` and `WineListRow` already use this component.
 
 ## Technical detail
 
-```ts
-const optionalNum = (schema) =>
-  z.preprocess(
-    (v) => (v === "" || v === null || v === undefined || Number.isNaN(v) ? undefined : v),
-    schema.optional().nullable()
-  );
-```
-
-Then `ready_from: optionalNum(z.coerce.number().int().min(1800).max(2200))`, etc.
+- Add `useState` for `editing` and `draft` string, `useRef` for the input.
+- Sync `draft` from `wine.quantity` when not editing (handles external updates).
+- Auto-focus + select on entering edit mode via `useEffect`.
+- Reuse existing `useUpdateQuantity` hook; floor + clamp to ≥0 before saving.
+- Hide native number spinners with the existing tailwind arbitrary selectors.
