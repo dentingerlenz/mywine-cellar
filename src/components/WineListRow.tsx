@@ -1,5 +1,6 @@
 import { Wine } from "@/lib/wine";
 import { useWineColoursCtx, colourClassFor } from "@/contexts/WineColoursContext";
+import { useGeographyLookups } from "@/hooks/useWineGeography";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
