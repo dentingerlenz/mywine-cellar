@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BottlePlaceholder } from "./BottlePlaceholder";
 import { Pencil, Trash2, Star } from "lucide-react";
+import { QuantityControls } from "./QuantityControls";
 import { cn } from "@/lib/utils";
 
 type Props = {
