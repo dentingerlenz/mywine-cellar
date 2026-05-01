@@ -1,4 +1,5 @@
-import { Wine, COLOUR_CLASS, COLOUR_LABEL } from "@/lib/wine";
+import { Wine } from "@/lib/wine";
+import { useWineColoursCtx, colourClassFor } from "@/contexts/WineColoursContext";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
@@ -16,6 +17,7 @@ type Props = {
 };
 
 export const WineListRow = ({ wine, onOpen, onEdit, onDelete }: Props) => {
+  const { labelFor } = useWineColoursCtx();
   return (
     <TableRow
       onClick={() => onOpen(wine)}
@@ -23,8 +25,8 @@ export const WineListRow = ({ wine, onOpen, onEdit, onDelete }: Props) => {
     >
       <TableCell>
         {wine.colour ? (
-          <Badge className={cn("font-body text-[10px] uppercase tracking-wider", COLOUR_CLASS[wine.colour])}>
-            {COLOUR_LABEL[wine.colour]}
+          <Badge className={cn("font-body text-[10px] uppercase tracking-wider", colourClassFor(wine.colour))}>
+            {labelFor(wine.colour)}
           </Badge>
         ) : (
           <span className="text-muted-foreground">—</span>
