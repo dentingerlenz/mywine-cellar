@@ -22,7 +22,8 @@ const normaliseColour = (v: string | undefined) => {
   if (s.startsWith("spa") || s.includes("champ") || s.includes("bub")) return "sparkling";
   if (s.startsWith("whi")) return "white";
   if (s.startsWith("red")) return "red";
-  if (s.startsWith("ros") || s.startsWith("ora") || s.includes("orange")) return "orange_rose";
+  if (s.startsWith("ros")) return "rose";
+  if (s.startsWith("ora") || s.includes("orange")) return "orange";
   if (s.startsWith("des") || s.includes("sweet") || s.includes("port") || s.includes("forti")) return "dessert_fortified";
   return undefined;
 };
