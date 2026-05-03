@@ -179,7 +179,7 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
         </DialogHeader>
         <form
           onSubmit={handleSubmit(onSubmit, onInvalid)}
-          className="space-y-4 [&_input::placeholder]:text-xs [&_input::placeholder]:opacity-35 [&_textarea::placeholder]:text-xs [&_textarea::placeholder]:opacity-35 [&_[data-placeholder]]:text-xs [&_[data-placeholder]]:opacity-35"
+          className="space-y-4 [&_input::placeholder]:text-xs [&_input::placeholder]:opacity-[0.35] [&_textarea::placeholder]:text-xs [&_textarea::placeholder]:opacity-[0.35] [&_[data-placeholder]]:text-xs [&_[data-placeholder]]:opacity-[0.35]"
         >
           <div className="flex gap-4">
             <div className="w-32 shrink-0">
