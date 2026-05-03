@@ -77,7 +77,7 @@ export const FilterBar = ({
           <SelectTrigger><SelectValue placeholder="Country" /></SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All countries</SelectItem>
-            {countries.map((c) => <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}
+            {visibleCountries.map((c) => <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}
           </SelectContent>
         </Select>
         <Select
