@@ -8,8 +8,9 @@ import { WineListRow } from "@/components/WineListRow";
 import { WineFormDialog } from "@/components/WineFormDialog";
 import { WineDetailDialog } from "@/components/WineDetailDialog";
 import { Dashboard } from "@/components/Dashboard";
-import { FilterBar, applyFilters, emptyFilters, Filters } from "@/components/FilterBar";
+import { FilterBar, applyFilters, emptyFilters, Filters, SortKey } from "@/components/FilterBar";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Plus, LogOut, Wine as WineIcon, Upload, LayoutGrid, List, Settings as SettingsIcon } from "lucide-react";
@@ -82,7 +83,22 @@ export default function Cellar() {
         {wines.length > 0 && <FilterBar filters={filters} setFilters={setFilters} wines={wines} />}
 
         {wines.length > 0 && (
-          <div className="flex justify-end mb-4">
+          <div className="flex justify-end items-center gap-2 mb-4">
+            <Select
+              value={filters.sort}
+              onValueChange={(v) => setFilters({ ...filters, sort: v as SortKey })}
+            >
+              <SelectTrigger className="w-[180px] bg-card/40">
+                <SelectValue placeholder="Sort" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="producer">Producer (A–Z)</SelectItem>
+                <SelectItem value="added">Recently added</SelectItem>
+                <SelectItem value="vintage">Vintage</SelectItem>
+                <SelectItem value="region">Region</SelectItem>
+                <SelectItem value="price">Price</SelectItem>
+              </SelectContent>
+            </Select>
             <ToggleGroup
               type="single"
               value={view}
