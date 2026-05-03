@@ -3,7 +3,7 @@ import { z } from "zod";
 // NOTE: colour categories are now stored per-user in the `wine_colours` table.
 // These built-in names remain as the default seed and as the keys for built-in
 // visual styling (see src/contexts/WineColoursContext.tsx).
-export const BUILTIN_WINE_COLOURS = ["sparkling", "white", "red", "orange_rose", "dessert_fortified"] as const;
+export const BUILTIN_WINE_COLOURS = ["sparkling", "white", "red", "rose", "dessert_fortified", "orange"] as const;
 export type WineColour = string;
 
 // Legacy export kept as a small fallback for static UI that still imports COLOUR_LABEL.
@@ -12,8 +12,9 @@ export const COLOUR_LABEL: Record<string, string> = {
   sparkling: "Sparkling",
   white: "White",
   red: "Red",
-  orange_rose: "Orange / Rosé",
+  rose: "Rosé",
   dessert_fortified: "Dessert / Fortified",
+  orange: "Orange",
 };
 
 export const OCCASIONS = ["a", "t", "l", "T"] as const;

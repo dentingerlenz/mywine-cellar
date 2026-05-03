@@ -15,7 +15,7 @@ export const DEFAULT_COLOURS: Array<{ name: string; display_name: string; sort_o
   { name: "sparkling", display_name: "Sparkling", sort_order: 0 },
   { name: "white", display_name: "White", sort_order: 1 },
   { name: "red", display_name: "Red", sort_order: 2 },
-  { name: "orange_rose", display_name: "Orange / Rosé", sort_order: 3 },
+  { name: "rose", display_name: "Rosé", sort_order: 3 },
   { name: "dessert_fortified", display_name: "Dessert / Fortified", sort_order: 4 },
 ];
 
