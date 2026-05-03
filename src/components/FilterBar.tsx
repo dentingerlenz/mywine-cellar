@@ -25,7 +25,7 @@ export type Filters = {
 
 export const emptyFilters: Filters = {
   q: "", colour: "all", country_id: "", region_id: "", occasion: "all",
-  vintageMin: "", vintageMax: "", inStockOnly: false, sort: "added",
+  vintageMin: "", vintageMax: "", inStockOnly: false, sort: "producer",
 };
 
 export const FilterBar = ({
@@ -38,9 +38,14 @@ export const FilterBar = ({
   const { colours } = useWineColoursCtx();
   const { data: countries = [] } = useWineCountries();
   const { data: allRegions = [] } = useWineRegions();
-  const regions = filters.country_id
+  // Only show countries/regions that are actually referenced by at least one wine
+  const usedCountryIds = new Set(wines.map((w) => w.country_id).filter(Boolean) as string[]);
+  const usedRegionIds = new Set(wines.map((w) => w.region_id).filter(Boolean) as string[]);
+  const visibleCountries = countries.filter((c) => usedCountryIds.has(c.id));
+  const regions = (filters.country_id
     ? allRegions.filter((r) => r.country_id === filters.country_id)
-    : [];
+    : []
+  ).filter((r) => usedRegionIds.has(r.id));
   const hasFilter = JSON.stringify(filters) !== JSON.stringify(emptyFilters);
 
   return (
@@ -54,7 +59,7 @@ export const FilterBar = ({
           className="pl-9 bg-input/50"
         />
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
         <Select value={filters.colour} onValueChange={(v) => setFilters({ ...filters, colour: v as any })}>
           <SelectTrigger><SelectValue placeholder="Colour" /></SelectTrigger>
           <SelectContent>
@@ -72,7 +77,7 @@ export const FilterBar = ({
           <SelectTrigger><SelectValue placeholder="Country" /></SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All countries</SelectItem>
-            {countries.map((c) => <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}
+            {visibleCountries.map((c) => <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}
           </SelectContent>
         </Select>
         <Select
@@ -99,16 +104,6 @@ export const FilterBar = ({
           <Input type="number" placeholder="From" value={filters.vintageMin} onChange={(e) => setFilters({ ...filters, vintageMin: e.target.value })} />
           <Input type="number" placeholder="To" value={filters.vintageMax} onChange={(e) => setFilters({ ...filters, vintageMax: e.target.value })} />
         </div>
-        <Select value={filters.sort} onValueChange={(v) => setFilters({ ...filters, sort: v as SortKey })}>
-          <SelectTrigger><SelectValue placeholder="Sort" /></SelectTrigger>
-          <SelectContent>
-            <SelectItem value="added">Recently added</SelectItem>
-            <SelectItem value="producer">Producer</SelectItem>
-            <SelectItem value="vintage">Vintage</SelectItem>
-            <SelectItem value="region">Region</SelectItem>
-            <SelectItem value="price">Price</SelectItem>
-          </SelectContent>
-        </Select>
         <div className="flex items-center gap-2 px-3 rounded-md border border-border bg-input/50">
           <Switch id="inStock" checked={filters.inStockOnly} onCheckedChange={(v) => setFilters({ ...filters, inStockOnly: v })} />
           <Label htmlFor="inStock" className="text-xs cursor-pointer">In stock</Label>

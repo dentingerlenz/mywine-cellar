@@ -55,8 +55,6 @@ import {
   GripVertical,
   ChevronRight,
   ChevronDown,
-  ArrowUp,
-  ArrowDown,
 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -162,12 +160,6 @@ const RegionRow = ({
           </>
         ) : (
           <>
-            <Button size="icon" variant="ghost" className="h-7 w-7" onClick={onMoveUp} disabled={isFirst} title="Move up">
-              <ArrowUp className="w-3.5 h-3.5" />
-            </Button>
-            <Button size="icon" variant="ghost" className="h-7 w-7" onClick={onMoveDown} disabled={isLast} title="Move down">
-              <ArrowDown className="w-3.5 h-3.5" />
-            </Button>
             <Button size="icon" variant="ghost" className="h-7 w-7" onClick={start} title="Rename">
               <Pencil className="w-3.5 h-3.5" />
             </Button>
@@ -345,12 +337,6 @@ const CountryItem = ({
             </>
           ) : (
             <>
-              <Button size="icon" variant="ghost" className="h-8 w-8" onClick={onMoveUp} disabled={isFirst} title="Move up">
-                <ArrowUp className="w-4 h-4" />
-              </Button>
-              <Button size="icon" variant="ghost" className="h-8 w-8" onClick={onMoveDown} disabled={isLast} title="Move down">
-                <ArrowDown className="w-4 h-4" />
-              </Button>
               <Button size="icon" variant="ghost" className="h-8 w-8" onClick={startEdit} title="Rename">
                 <Pencil className="w-3.5 h-3.5" />
               </Button>
