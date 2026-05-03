@@ -15,8 +15,8 @@ export const COLOUR_CLASS_BY_NAME: Record<string, string> = {
   sparkling: "bg-wine-sparkling text-background",
   white: "bg-wine-white text-background",
   red: "bg-wine-red text-foreground",
-  orange_rose: "bg-wine-rose text-background",
-  dessert_fortified: "bg-wine-dessert text-background",
+  orange_rose: "bg-wine-dessert text-background",
+  dessert_fortified: "bg-wine-rose text-background",
 };
 export const FALLBACK_COLOUR_CLASS = "bg-secondary text-foreground border border-primary/30";
 
@@ -24,8 +24,8 @@ export const COLOUR_HEX_BY_NAME: Record<string, string> = {
   sparkling: "hsl(45, 70%, 70%)",
   white: "hsl(48, 55%, 75%)",
   red: "hsl(350, 70%, 35%)",
-  orange_rose: "hsl(25, 70%, 60%)",
-  dessert_fortified: "hsl(30, 65%, 50%)",
+  orange_rose: "hsl(30, 65%, 50%)",
+  dessert_fortified: "hsl(25, 70%, 60%)",
 };
 export const FALLBACK_COLOUR_HEX = "hsl(44, 53%, 54%)";
 
