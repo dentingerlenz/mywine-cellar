@@ -25,7 +25,7 @@ export type Filters = {
 
 export const emptyFilters: Filters = {
   q: "", colour: "all", country_id: "", region_id: "", occasion: "all",
-  vintageMin: "", vintageMax: "", inStockOnly: false, sort: "added",
+  vintageMin: "", vintageMax: "", inStockOnly: false, sort: "producer",
 };
 
 export const FilterBar = ({
@@ -38,9 +38,14 @@ export const FilterBar = ({
   const { colours } = useWineColoursCtx();
   const { data: countries = [] } = useWineCountries();
   const { data: allRegions = [] } = useWineRegions();
-  const regions = filters.country_id
+  // Only show countries/regions that are actually referenced by at least one wine
+  const usedCountryIds = new Set(wines.map((w) => w.country_id).filter(Boolean) as string[]);
+  const usedRegionIds = new Set(wines.map((w) => w.region_id).filter(Boolean) as string[]);
+  const visibleCountries = countries.filter((c) => usedCountryIds.has(c.id));
+  const regions = (filters.country_id
     ? allRegions.filter((r) => r.country_id === filters.country_id)
-    : [];
+    : []
+  ).filter((r) => usedRegionIds.has(r.id));
   const hasFilter = JSON.stringify(filters) !== JSON.stringify(emptyFilters);
 
   return (
