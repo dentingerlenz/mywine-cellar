@@ -63,6 +63,7 @@ export default {
           rose: "hsl(var(--wine-rose))",
           sparkling: "hsl(var(--wine-sparkling))",
           dessert: "hsl(var(--wine-dessert))",
+          orange: "hsl(var(--wine-orange))",
         },
       },
       fontFamily: {
