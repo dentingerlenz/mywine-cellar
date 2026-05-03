@@ -59,7 +59,7 @@ export const FilterBar = ({
           className="pl-9 bg-input/50"
         />
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
         <Select value={filters.colour} onValueChange={(v) => setFilters({ ...filters, colour: v as any })}>
           <SelectTrigger><SelectValue placeholder="Colour" /></SelectTrigger>
           <SelectContent>
