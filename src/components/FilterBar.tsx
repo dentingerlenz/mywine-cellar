@@ -104,16 +104,6 @@ export const FilterBar = ({
           <Input type="number" placeholder="From" value={filters.vintageMin} onChange={(e) => setFilters({ ...filters, vintageMin: e.target.value })} />
           <Input type="number" placeholder="To" value={filters.vintageMax} onChange={(e) => setFilters({ ...filters, vintageMax: e.target.value })} />
         </div>
-        <Select value={filters.sort} onValueChange={(v) => setFilters({ ...filters, sort: v as SortKey })}>
-          <SelectTrigger><SelectValue placeholder="Sort" /></SelectTrigger>
-          <SelectContent>
-            <SelectItem value="added">Recently added</SelectItem>
-            <SelectItem value="producer">Producer</SelectItem>
-            <SelectItem value="vintage">Vintage</SelectItem>
-            <SelectItem value="region">Region</SelectItem>
-            <SelectItem value="price">Price</SelectItem>
-          </SelectContent>
-        </Select>
         <div className="flex items-center gap-2 px-3 rounded-md border border-border bg-input/50">
           <Switch id="inStock" checked={filters.inStockOnly} onCheckedChange={(v) => setFilters({ ...filters, inStockOnly: v })} />
           <Label htmlFor="inStock" className="text-xs cursor-pointer">In stock</Label>
