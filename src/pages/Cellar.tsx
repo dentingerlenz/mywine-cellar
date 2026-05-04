@@ -7,6 +7,7 @@ import { WineCard } from "@/components/WineCard";
 import { WineListRow } from "@/components/WineListRow";
 import { WineFormDialog } from "@/components/WineFormDialog";
 import { WineDetailDialog } from "@/components/WineDetailDialog";
+import { OpenBottleDialog } from "@/components/OpenBottleDialog";
 import { Dashboard } from "@/components/Dashboard";
 import { FilterBar, applyFilters, emptyFilters, Filters, SortKey } from "@/components/FilterBar";
 import { Button } from "@/components/ui/button";
@@ -27,6 +28,7 @@ export default function Cellar() {
   const [editing, setEditing] = useState<Wine | null>(null);
   const [detail, setDetail] = useState<Wine | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<Wine | null>(null);
+  const [openingBottle, setOpeningBottle] = useState<Wine | null>(null);
 
   const filtered = useMemo(() => applyFilters(wines, filters), [wines, filters]);
 
@@ -142,6 +144,7 @@ export default function Cellar() {
                 onOpen={onOpenDetail}
                 onEdit={onEdit}
                 onDelete={(b) => setDeleteTarget(b)}
+                onOpenBottle={(b) => setOpeningBottle(b)}
               />
             ))}
           </div>
@@ -169,6 +172,7 @@ export default function Cellar() {
                     onOpen={onOpenDetail}
                     onEdit={onEdit}
                     onDelete={(b) => setDeleteTarget(b)}
+                    onOpenBottle={(b) => setOpeningBottle(b)}
                   />
                 ))}
               </TableBody>
@@ -178,6 +182,12 @@ export default function Cellar() {
       </main>
 
       <WineFormDialog open={formOpen} onOpenChange={setFormOpen} wine={editing} />
+
+      <OpenBottleDialog
+        wine={openingBottle}
+        open={!!openingBottle}
+        onOpenChange={(o) => !o && setOpeningBottle(null)}
+      />
 
       <WineDetailDialog
         wine={detail}
