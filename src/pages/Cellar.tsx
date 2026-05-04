@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { Plus, LogOut, Wine as WineIcon, Upload, LayoutGrid, List, Settings as SettingsIcon } from "lucide-react";
+import { Plus, LogOut, Wine as WineIcon, Upload, LayoutGrid, List, Settings as SettingsIcon, BookOpen } from "lucide-react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 
@@ -58,6 +58,9 @@ export default function Cellar() {
           </div>
           <div className="flex items-center gap-2">
             <span className="hidden sm:inline text-xs text-muted-foreground italic">{user?.email}</span>
+            <Button variant="ghost" size="sm" asChild>
+              <Link to="/history"><BookOpen className="w-4 h-4" /> History</Link>
+            </Button>
             <Button variant="ghost" size="sm" asChild>
               <Link to="/import"><Upload className="w-4 h-4" /> Import</Link>
             </Button>

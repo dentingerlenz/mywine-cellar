@@ -9,6 +9,7 @@ import Auth from "./pages/Auth";
 import Cellar from "./pages/Cellar";
 import ImportPage from "./pages/Import";
 import Settings from "./pages/Settings";
+import History from "./pages/History";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -39,6 +40,7 @@ const App = () => (
               <Route path="/auth" element={<PublicOnly><Auth /></PublicOnly>} />
               <Route path="/" element={<Protected><Cellar /></Protected>} />
               <Route path="/import" element={<Protected><ImportPage /></Protected>} />
+              <Route path="/history" element={<Protected><History /></Protected>} />
               <Route path="/settings" element={<Protected><Settings /></Protected>} />
               <Route path="*" element={<NotFound />} />
             </Routes>
