@@ -54,8 +54,15 @@ export const WineColoursProvider = ({ children }: { children: ReactNode }) => {
   return <WineColoursContext.Provider value={value}>{children}</WineColoursContext.Provider>;
 };
 
+const FALLBACK_CTX: Ctx = {
+  colours: [],
+  byName: {},
+  labelFor: (name) => (name ? name : "—"),
+  loading: false,
+};
+
 export const useWineColoursCtx = () => {
   const ctx = useContext(WineColoursContext);
-  if (!ctx) throw new Error("useWineColoursCtx must be used within WineColoursProvider");
-  return ctx;
+  return ctx ?? FALLBACK_CTX;
 };
+
