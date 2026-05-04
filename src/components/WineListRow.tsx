@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import { MoreHorizontal, Pencil, Trash2, Wine as WineIcon } from "lucide-react";
 import { QuantityControls } from "./QuantityControls";
 import { PriceControl } from "./PriceControl";
 import { cn } from "@/lib/utils";
@@ -15,9 +15,10 @@ type Props = {
   onOpen: (w: Wine) => void;
   onEdit: (w: Wine) => void;
   onDelete: (w: Wine) => void;
+  onOpenBottle: (w: Wine) => void;
 };
 
-export const WineListRow = ({ wine, onOpen, onEdit, onDelete }: Props) => {
+export const WineListRow = ({ wine, onOpen, onEdit, onDelete, onOpenBottle }: Props) => {
   const { labelFor } = useWineColoursCtx();
   const { regionNameFor } = useGeographyLookups();
   return (
@@ -48,21 +49,32 @@ export const WineListRow = ({ wine, onOpen, onEdit, onDelete }: Props) => {
         <PriceControl wine={wine} size="sm" align="right" />
       </TableCell>
       <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button size="icon" variant="ghost" className="h-8 w-8">
-              <MoreHorizontal className="w-4 h-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="gold-border bg-card">
-            <DropdownMenuItem onClick={() => onEdit(wine)}>
-              <Pencil className="w-4 h-4 mr-2" /> Edit
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => onDelete(wine)} className="text-destructive focus:text-destructive">
-              <Trash2 className="w-4 h-4 mr-2" /> Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="flex items-center justify-end gap-1">
+          <Button
+            size="icon"
+            variant="ghost"
+            className="h-8 w-8 text-primary hover:text-primary hover:bg-primary/10"
+            onClick={() => onOpenBottle(wine)}
+            title="Open a bottle"
+          >
+            <WineIcon className="w-4 h-4" />
+          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button size="icon" variant="ghost" className="h-8 w-8">
+                <MoreHorizontal className="w-4 h-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="gold-border bg-card">
+              <DropdownMenuItem onClick={() => onEdit(wine)}>
+                <Pencil className="w-4 h-4 mr-2" /> Edit
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => onDelete(wine)} className="text-destructive focus:text-destructive">
+                <Trash2 className="w-4 h-4 mr-2" /> Delete
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </TableCell>
     </TableRow>
   );

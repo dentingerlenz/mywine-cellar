@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BottlePlaceholder } from "./BottlePlaceholder";
-import { Pencil, Trash2, Star } from "lucide-react";
+import { Pencil, Trash2, Star, Wine as WineIcon } from "lucide-react";
 import { QuantityControls } from "./QuantityControls";
 import { PriceControl } from "./PriceControl";
 import { cn } from "@/lib/utils";
@@ -15,9 +15,10 @@ type Props = {
   onOpen: (w: Wine) => void;
   onEdit: (w: Wine) => void;
   onDelete: (w: Wine) => void;
+  onOpenBottle: (w: Wine) => void;
 };
 
-export const WineCard = ({ wine, onOpen, onEdit, onDelete }: Props) => {
+export const WineCard = ({ wine, onOpen, onEdit, onDelete, onOpenBottle }: Props) => {
   const { labelFor } = useWineColoursCtx();
   const { regionNameFor } = useGeographyLookups();
   const regionName = regionNameFor(wine);
@@ -73,11 +74,20 @@ export const WineCard = ({ wine, onOpen, onEdit, onDelete }: Props) => {
         )}
         <div className="flex items-center justify-between pt-1">
           <PriceControl wine={wine} size="sm" />
-          <div className="flex gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
-            <Button size="icon" variant="ghost" className="h-7 w-7" onClick={(e) => { e.stopPropagation(); onEdit(wine); }}>
+          <div className="flex gap-0.5 transition-opacity">
+            <Button
+              size="icon"
+              variant="ghost"
+              className="h-7 w-7 text-primary hover:text-primary hover:bg-primary/10"
+              onClick={(e) => { e.stopPropagation(); onOpenBottle(wine); }}
+              title="Open a bottle"
+            >
+              <WineIcon className="w-3.5 h-3.5" />
+            </Button>
+            <Button size="icon" variant="ghost" className="h-7 w-7 opacity-0 group-hover:opacity-100" onClick={(e) => { e.stopPropagation(); onEdit(wine); }}>
               <Pencil className="w-3.5 h-3.5" />
             </Button>
-            <Button size="icon" variant="ghost" className="h-7 w-7 hover:text-destructive" onClick={(e) => { e.stopPropagation(); onDelete(wine); }}>
+            <Button size="icon" variant="ghost" className="h-7 w-7 opacity-0 group-hover:opacity-100 hover:text-destructive" onClick={(e) => { e.stopPropagation(); onDelete(wine); }}>
               <Trash2 className="w-3.5 h-3.5" />
             </Button>
           </div>
