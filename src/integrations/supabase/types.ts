@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      drinking_log: {
+        Row: {
+          created_at: string
+          date: string
+          id: string
+          note: string | null
+          people_ids: string[]
+          user_id: string
+          wine_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          date?: string
+          id?: string
+          note?: string | null
+          people_ids?: string[]
+          user_id: string
+          wine_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          id?: string
+          note?: string | null
+          people_ids?: string[]
+          user_id?: string
+          wine_id?: string | null
+        }
+        Relationships: []
+      }
       people: {
         Row: {
           avatar: string | null
