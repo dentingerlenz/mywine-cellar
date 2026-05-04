@@ -16,7 +16,8 @@ export const DEFAULT_COLOURS: Array<{ name: string; display_name: string; sort_o
   { name: "white", display_name: "White", sort_order: 1 },
   { name: "red", display_name: "Red", sort_order: 2 },
   { name: "rose", display_name: "Rosé", sort_order: 3 },
-  { name: "dessert_fortified", display_name: "Dessert / Fortified", sort_order: 4 },
+  { name: "orange", display_name: "Orange", sort_order: 4 },
+  { name: "dessert_fortified", display_name: "Dessert / Fortified", sort_order: 5 },
 ];
 
 export const slugifyColourName = (s: string): string =>

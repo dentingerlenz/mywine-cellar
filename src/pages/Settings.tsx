@@ -27,6 +27,7 @@ import { ArrowLeft, Pencil, Trash2, Plus, Check, X, Settings as SettingsIcon, Lo
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { CountriesRegionsSection } from "@/components/CountriesRegionsSection";
+import { PeopleSection } from "@/components/PeopleSection";
 
 export default function Settings() {
   const { data: colours = [], isLoading } = useWineColours();
@@ -218,6 +219,10 @@ export default function Settings() {
 
         <div className="mt-6">
           <CountriesRegionsSection />
+        </div>
+
+        <div className="mt-6">
+          <PeopleSection />
         </div>
       </main>
 
