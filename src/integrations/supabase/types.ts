@@ -14,6 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      people: {
+        Row: {
+          avatar: string | null
+          created_at: string
+          id: string
+          name: string
+          user_id: string
+        }
+        Insert: {
+          avatar?: string | null
+          created_at?: string
+          id?: string
+          name: string
+          user_id: string
+        }
+        Update: {
+          avatar?: string | null
+          created_at?: string
+          id?: string
+          name?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       wine_colours: {
         Row: {
           created_at: string
