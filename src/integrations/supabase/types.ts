@@ -68,6 +68,47 @@ export type Database = {
         }
         Relationships: []
       }
+      wine_appellations: {
+        Row: {
+          appellation_type: string | null
+          created_at: string
+          id: string
+          name: string
+          sort_order: number
+          sub_region_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          appellation_type?: string | null
+          created_at?: string
+          id?: string
+          name: string
+          sort_order?: number
+          sub_region_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          appellation_type?: string | null
+          created_at?: string
+          id?: string
+          name?: string
+          sort_order?: number
+          sub_region_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wine_appellations_sub_region_id_fkey"
+            columns: ["sub_region_id"]
+            isOneToOne: false
+            referencedRelation: "wine_sub_regions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       wine_colours: {
         Row: {
           created_at: string
@@ -100,6 +141,7 @@ export type Database = {
       }
       wine_countries: {
         Row: {
+          continent: string | null
           created_at: string
           id: string
           name: string
@@ -108,6 +150,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          continent?: string | null
           created_at?: string
           id?: string
           name: string
@@ -116,6 +159,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          continent?: string | null
           created_at?: string
           id?: string
           name?: string
@@ -159,6 +203,44 @@ export type Database = {
             columns: ["country_id"]
             isOneToOne: false
             referencedRelation: "wine_countries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      wine_sub_regions: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          region_id: string
+          sort_order: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          region_id: string
+          sort_order?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          region_id?: string
+          sort_order?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wine_sub_regions_region_id_fkey"
+            columns: ["region_id"]
+            isOneToOne: false
+            referencedRelation: "wine_regions"
             referencedColumns: ["id"]
           },
         ]
