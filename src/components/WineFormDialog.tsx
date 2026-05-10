@@ -45,6 +45,8 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
   const { colours: wineColours } = useWineColoursCtx();
   const { data: countries = [] } = useWineCountries();
   const { data: allRegions = [] } = useWineRegions();
+  const { data: allSubRegions = [] } = useWineSubRegions();
+  const { data: allAppellations = [] } = useWineAppellations();
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [removePhoto, setRemovePhoto] = useState(false);
