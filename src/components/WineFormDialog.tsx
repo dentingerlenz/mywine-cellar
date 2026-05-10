@@ -155,7 +155,7 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
       setPhotoFile(null);
       setRemovePhoto(false);
     }
-  }, [open, wine, reset, countries, allRegions]);
+  }, [open, wine, reset, countries, allRegions, allSubRegions]);
 
   const handlePhoto = (file: File) => {
     if (file.size > MAX_PHOTO_SIZE) { toast.error("Photo must be under 5 MB"); return; }
