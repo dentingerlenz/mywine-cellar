@@ -22,6 +22,7 @@ export const WineCard = ({ wine, onOpen, onEdit, onDelete, onOpenBottle }: Props
   const { labelFor } = useWineColoursCtx();
   const { regionNameFor } = useGeographyLookups();
   const regionName = regionNameFor(wine);
+  const geoExtra = [wine.sub_region, wine.appellation].filter(Boolean).join(" · ");
   return (
     <Card
       onClick={() => onOpen(wine)}
