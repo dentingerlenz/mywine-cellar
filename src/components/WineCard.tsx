@@ -66,6 +66,9 @@ export const WineCard = ({ wine, onOpen, onEdit, onDelete, onOpenBottle }: Props
           {wine.vintage && <span className="text-primary font-display text-sm">{wine.vintage}</span>}
           {regionName && <span className="truncate">· {regionName}</span>}
         </div>
+        {geoExtra && (
+          <p className="text-[10px] text-muted-foreground italic truncate">{geoExtra}</p>
+        )}
         {wine.rating && (
           <div className="flex gap-0.5">
             {Array.from({ length: 5 }).map((_, i) => (
