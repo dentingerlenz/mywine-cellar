@@ -136,9 +136,20 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
           drink_by: wine.drink_by ?? undefined,
           rating: wine.rating ?? undefined,
         });
+        // Resolve sub_region_id from the wine's text sub_region within the matched region.
+        const initialSubRegionId =
+          (wine.sub_region &&
+            allSubRegions.find(
+              (s) =>
+                s.region_id === initialRegionId &&
+                s.name.toLowerCase() === wine.sub_region!.toLowerCase(),
+            )?.id) ||
+          "";
+        setSubRegionId(initialSubRegionId);
         setPhotoPreview(wine.label_photo_url);
       } else {
         reset({ quantity: 1, cl: 75, rating: undefined, occasion: undefined });
+        setSubRegionId("");
         setPhotoPreview(null);
       }
       setPhotoFile(null);
