@@ -10,13 +10,22 @@ import {
   CL_OPTIONS,
 } from "@/lib/wine";
 import { useWineColoursCtx } from "@/contexts/WineColoursContext";
-import { useWineCountries, useWineRegions } from "@/hooks/useWineGeography";
+import {
+  useWineCountries,
+  useWineRegions,
+  useWineSubRegions,
+  useWineAppellations,
+} from "@/hooks/useWineGeography";
+import { AppellationCombobox } from "./AppellationCombobox";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+  SelectGroup, SelectLabel,
+} from "@/components/ui/select";
 import { useUpsertWine, uploadLabelPhoto } from "@/hooks/useWines";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
@@ -36,10 +45,13 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
   const { colours: wineColours } = useWineColoursCtx();
   const { data: countries = [] } = useWineCountries();
   const { data: allRegions = [] } = useWineRegions();
+  const { data: allSubRegions = [] } = useWineSubRegions();
+  const { data: allAppellations = [] } = useWineAppellations();
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [removePhoto, setRemovePhoto] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [subRegionId, setSubRegionId] = useState<string>("");
 
   const { register, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm<any>({
     resolver: zodResolver(wineSchema) as any,
@@ -124,15 +136,26 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
           drink_by: wine.drink_by ?? undefined,
           rating: wine.rating ?? undefined,
         });
+        // Resolve sub_region_id from the wine's text sub_region within the matched region.
+        const initialSubRegionId =
+          (wine.sub_region &&
+            allSubRegions.find(
+              (s) =>
+                s.region_id === initialRegionId &&
+                s.name.toLowerCase() === wine.sub_region!.toLowerCase(),
+            )?.id) ||
+          "";
+        setSubRegionId(initialSubRegionId);
         setPhotoPreview(wine.label_photo_url);
       } else {
         reset({ quantity: 1, cl: 75, rating: undefined, occasion: undefined });
+        setSubRegionId("");
         setPhotoPreview(null);
       }
       setPhotoFile(null);
       setRemovePhoto(false);
     }
-  }, [open, wine, reset, countries, allRegions]);
+  }, [open, wine, reset, countries, allRegions, allSubRegions]);
 
   const handlePhoto = (file: File) => {
     if (file.size > MAX_PHOTO_SIZE) { toast.error("Photo must be under 5 MB"); return; }
@@ -165,11 +188,52 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
   const cl = watch("cl");
   const countryId = watch("country_id");
   const regionId = watch("region_id");
+  const subRegionName = watch("sub_region");
+  const appellation = watch("appellation");
 
   const selectedCountry = countries.find((c) => c.id === countryId);
   const filteredRegions = selectedCountry
     ? allRegions.filter((r) => r.country_id === selectedCountry.id)
     : [];
+  const filteredSubRegions = regionId
+    ? allSubRegions.filter((s) => s.region_id === regionId)
+    : [];
+  // Appellation suggestions: by sub-region if picked, else any sub-region in the region.
+  const appellationSuggestions = (() => {
+    if (subRegionId) return allAppellations.filter((a) => a.sub_region_id === subRegionId);
+    if (regionId) {
+      const subIds = new Set(filteredSubRegions.map((s) => s.id));
+      return allAppellations.filter((a) => subIds.has(a.sub_region_id));
+    }
+    return [];
+  })();
+
+  // Country grouping by continent
+  const CONTINENT_ORDER = ["Europe", "Americas", "Oceania", "Africa", "Asia"] as const;
+  const continentGroups = (() => {
+    const groups = new Map<string, typeof countries>();
+    for (const c of countries) {
+      const key = c.continent || "Other";
+      if (!groups.has(key)) groups.set(key, [] as any);
+      groups.get(key)!.push(c);
+    }
+    const ordered: Array<{ continent: string; countries: typeof countries }> = [];
+    for (const cont of CONTINENT_ORDER) {
+      const list = groups.get(cont);
+      if (list && list.length) ordered.push({
+        continent: cont,
+        countries: [...list].sort((a, b) => a.name.localeCompare(b.name)),
+      });
+      groups.delete(cont);
+    }
+    for (const [cont, list] of groups.entries()) {
+      ordered.push({
+        continent: cont,
+        countries: [...list].sort((a, b) => a.name.localeCompare(b.name)),
+      });
+    }
+    return ordered;
+  })();
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -318,15 +382,25 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
                 onValueChange={(v) => {
                   const next = v === "none" ? "" : v;
                   setValue("country_id", next, { shouldValidate: true });
-                  // Reset region whenever country changes
+                  // Cascade clear
                   setValue("region_id", "", { shouldValidate: true });
+                  setValue("sub_region", "", { shouldValidate: true });
+                  setValue("appellation", "", { shouldValidate: true });
+                  setSubRegionId("");
                 }}
               >
                 <SelectTrigger><SelectValue placeholder="Select country" /></SelectTrigger>
-                <SelectContent>
+                <SelectContent className="max-h-72">
                   <SelectItem value="none">—</SelectItem>
-                  {countries.map((c) => (
-                    <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                  {continentGroups.map((g) => (
+                    <SelectGroup key={g.continent}>
+                      <SelectLabel className="text-[10px] uppercase tracking-widest text-primary/80">
+                        {g.continent}
+                      </SelectLabel>
+                      {g.countries.map((c) => (
+                        <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                      ))}
+                    </SelectGroup>
                   ))}
                 </SelectContent>
               </Select>
@@ -335,7 +409,12 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
               <Label>Region</Label>
               <Select
                 value={regionId || "none"}
-                onValueChange={(v) => setValue("region_id", v === "none" ? "" : v, { shouldValidate: true })}
+                onValueChange={(v) => {
+                  setValue("region_id", v === "none" ? "" : v, { shouldValidate: true });
+                  setValue("sub_region", "", { shouldValidate: true });
+                  setValue("appellation", "", { shouldValidate: true });
+                  setSubRegionId("");
+                }}
                 disabled={!selectedCountry}
               >
                 <SelectTrigger>
@@ -351,13 +430,44 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
             </div>
             <div>
               <Label>Sub-region</Label>
-              <Input {...register("sub_region")} />
+              <Select
+                value={subRegionId || "none"}
+                onValueChange={(v) => {
+                  if (v === "none") {
+                    setSubRegionId("");
+                    setValue("sub_region", "", { shouldValidate: true });
+                  } else {
+                    const sr = allSubRegions.find((s) => s.id === v);
+                    setSubRegionId(v);
+                    setValue("sub_region", sr?.name ?? "", { shouldValidate: true });
+                  }
+                  setValue("appellation", "", { shouldValidate: true });
+                }}
+                disabled={!regionId}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder={regionId ? "Select sub-region" : "Select a region first"} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">—</SelectItem>
+                  {filteredSubRegions.map((s) => (
+                    <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div>
               <Label>Appellation</Label>
-              <Input {...register("appellation")} />
+              <AppellationCombobox
+                value={appellation ?? ""}
+                onChange={(v) => setValue("appellation", v, { shouldValidate: true })}
+                suggestions={appellationSuggestions}
+                placeholder={regionId ? "Type or select" : "Select a region first"}
+                disabled={!regionId}
+              />
             </div>
           </div>
+
 
           <div className="grid grid-cols-2 gap-3">
             <div>

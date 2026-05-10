@@ -42,7 +42,14 @@ export const WineListRow = ({ wine, onOpen, onEdit, onDelete, onOpenBottle }: Pr
         {wine.description || "—"}
       </TableCell>
       <TableCell className="text-primary font-display">{wine.vintage || "—"}</TableCell>
-      <TableCell className="text-sm">{regionNameFor(wine) || "—"}</TableCell>
+      <TableCell className="text-sm">
+        <div className="truncate max-w-[200px]">{regionNameFor(wine) || "—"}</div>
+        {(wine.sub_region || wine.appellation) && (
+          <div className="text-[10px] text-muted-foreground italic truncate max-w-[200px]">
+            {[wine.sub_region, wine.appellation].filter(Boolean).join(" · ")}
+          </div>
+        )}
+      </TableCell>
       <TableCell className="text-sm max-w-[180px] truncate">{wine.variety || "—"}</TableCell>
       <TableCell className="text-center"><QuantityControls wine={wine} size="sm" /></TableCell>
       <TableCell className="text-right whitespace-nowrap">
