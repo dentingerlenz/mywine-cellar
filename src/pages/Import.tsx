@@ -129,7 +129,7 @@ export default function Import() {
         if (error) throw error;
         country_id = data.id;
         // Locally extend the list so subsequent rows in this batch reuse it.
-        countries.push({ id: data.id, user_id: user.id, name: cName, sort_order });
+        countries.push({ id: data.id, user_id: user.id, name: cName, sort_order, continent: null });
       }
     }
 
