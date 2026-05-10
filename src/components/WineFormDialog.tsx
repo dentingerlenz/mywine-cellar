@@ -188,11 +188,52 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
   const cl = watch("cl");
   const countryId = watch("country_id");
   const regionId = watch("region_id");
+  const subRegionName = watch("sub_region");
+  const appellation = watch("appellation");
 
   const selectedCountry = countries.find((c) => c.id === countryId);
   const filteredRegions = selectedCountry
     ? allRegions.filter((r) => r.country_id === selectedCountry.id)
     : [];
+  const filteredSubRegions = regionId
+    ? allSubRegions.filter((s) => s.region_id === regionId)
+    : [];
+  // Appellation suggestions: by sub-region if picked, else any sub-region in the region.
+  const appellationSuggestions = (() => {
+    if (subRegionId) return allAppellations.filter((a) => a.sub_region_id === subRegionId);
+    if (regionId) {
+      const subIds = new Set(filteredSubRegions.map((s) => s.id));
+      return allAppellations.filter((a) => subIds.has(a.sub_region_id));
+    }
+    return [];
+  })();
+
+  // Country grouping by continent
+  const CONTINENT_ORDER = ["Europe", "Americas", "Oceania", "Africa", "Asia"] as const;
+  const continentGroups = (() => {
+    const groups = new Map<string, typeof countries>();
+    for (const c of countries) {
+      const key = c.continent || "Other";
+      if (!groups.has(key)) groups.set(key, [] as any);
+      groups.get(key)!.push(c);
+    }
+    const ordered: Array<{ continent: string; countries: typeof countries }> = [];
+    for (const cont of CONTINENT_ORDER) {
+      const list = groups.get(cont);
+      if (list && list.length) ordered.push({
+        continent: cont,
+        countries: [...list].sort((a, b) => a.name.localeCompare(b.name)),
+      });
+      groups.delete(cont);
+    }
+    for (const [cont, list] of groups.entries()) {
+      ordered.push({
+        continent: cont,
+        countries: [...list].sort((a, b) => a.name.localeCompare(b.name)),
+      });
+    }
+    return ordered;
+  })();
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
