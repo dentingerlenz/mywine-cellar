@@ -382,15 +382,25 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
                 onValueChange={(v) => {
                   const next = v === "none" ? "" : v;
                   setValue("country_id", next, { shouldValidate: true });
-                  // Reset region whenever country changes
+                  // Cascade clear
                   setValue("region_id", "", { shouldValidate: true });
+                  setValue("sub_region", "", { shouldValidate: true });
+                  setValue("appellation", "", { shouldValidate: true });
+                  setSubRegionId("");
                 }}
               >
                 <SelectTrigger><SelectValue placeholder="Select country" /></SelectTrigger>
-                <SelectContent>
+                <SelectContent className="max-h-72">
                   <SelectItem value="none">—</SelectItem>
-                  {countries.map((c) => (
-                    <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                  {continentGroups.map((g) => (
+                    <SelectGroup key={g.continent}>
+                      <SelectLabel className="text-[10px] uppercase tracking-widest text-primary/80">
+                        {g.continent}
+                      </SelectLabel>
+                      {g.countries.map((c) => (
+                        <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                      ))}
+                    </SelectGroup>
                   ))}
                 </SelectContent>
               </Select>
@@ -399,7 +409,12 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
               <Label>Region</Label>
               <Select
                 value={regionId || "none"}
-                onValueChange={(v) => setValue("region_id", v === "none" ? "" : v, { shouldValidate: true })}
+                onValueChange={(v) => {
+                  setValue("region_id", v === "none" ? "" : v, { shouldValidate: true });
+                  setValue("sub_region", "", { shouldValidate: true });
+                  setValue("appellation", "", { shouldValidate: true });
+                  setSubRegionId("");
+                }}
                 disabled={!selectedCountry}
               >
                 <SelectTrigger>
@@ -415,13 +430,44 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
             </div>
             <div>
               <Label>Sub-region</Label>
-              <Input {...register("sub_region")} />
+              <Select
+                value={subRegionId || "none"}
+                onValueChange={(v) => {
+                  if (v === "none") {
+                    setSubRegionId("");
+                    setValue("sub_region", "", { shouldValidate: true });
+                  } else {
+                    const sr = allSubRegions.find((s) => s.id === v);
+                    setSubRegionId(v);
+                    setValue("sub_region", sr?.name ?? "", { shouldValidate: true });
+                  }
+                  setValue("appellation", "", { shouldValidate: true });
+                }}
+                disabled={!regionId}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder={regionId ? "Select sub-region" : "Select a region first"} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">—</SelectItem>
+                  {filteredSubRegions.map((s) => (
+                    <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div>
               <Label>Appellation</Label>
-              <Input {...register("appellation")} />
+              <AppellationCombobox
+                value={appellation ?? ""}
+                onChange={(v) => setValue("appellation", v, { shouldValidate: true })}
+                suggestions={appellationSuggestions}
+                placeholder={regionId ? "Type or select" : "Select a region first"}
+                disabled={!regionId}
+              />
             </div>
           </div>
+
 
           <div className="grid grid-cols-2 gap-3">
             <div>
