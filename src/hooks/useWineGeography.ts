@@ -9,6 +9,7 @@ export type WineCountryRow = {
   user_id: string;
   name: string;
   sort_order: number;
+  continent: string | null;
 };
 
 export type WineRegionRow = {
@@ -17,6 +18,57 @@ export type WineRegionRow = {
   country_id: string;
   name: string;
   sort_order: number;
+};
+
+export type WineSubRegionRow = {
+  id: string;
+  user_id: string;
+  region_id: string;
+  name: string;
+  sort_order: number;
+};
+
+export type WineAppellationRow = {
+  id: string;
+  user_id: string;
+  sub_region_id: string;
+  name: string;
+  appellation_type: string | null;
+  sort_order: number;
+};
+
+export const useWineSubRegions = () => {
+  const { user } = useAuth();
+  return useQuery({
+    queryKey: ["wine_sub_regions", user?.id],
+    enabled: !!user,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("wine_sub_regions")
+        .select("*")
+        .order("sort_order", { ascending: true })
+        .order("name", { ascending: true });
+      if (error) throw error;
+      return (data ?? []) as WineSubRegionRow[];
+    },
+  });
+};
+
+export const useWineAppellations = () => {
+  const { user } = useAuth();
+  return useQuery({
+    queryKey: ["wine_appellations", user?.id],
+    enabled: !!user,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("wine_appellations")
+        .select("*")
+        .order("sort_order", { ascending: true })
+        .order("name", { ascending: true });
+      if (error) throw error;
+      return (data ?? []) as WineAppellationRow[];
+    },
+  });
 };
 
 export const useWineCountries = () => {
