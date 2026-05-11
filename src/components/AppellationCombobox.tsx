@@ -200,12 +200,11 @@ export const AppellationCombobox = ({
     </button>
   );
 
-  const hasAnything = showReverse
-    ? reverseMatches.length > 0
-    : hasContextResults;
+  const popoverOpen =
+    open && allAppellations.length > 0 && (!!countryId || typed.length > 0);
 
   return (
-    <Popover open={open && hasAnything} onOpenChange={setOpen}>
+    <Popover open={popoverOpen} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Input
           ref={inputRef}
