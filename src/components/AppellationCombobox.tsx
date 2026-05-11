@@ -117,6 +117,10 @@ export const AppellationCombobox = ({
     ? allAppellations.filter(
         (a) => a.level === "appellation" && a.sub_region_id === subRegionId,
       )
+    : regionId
+    ? allAppellations.filter(
+        (a) => a.level === "appellation" && a.region_id === regionId,
+      )
     : [];
   const tierRegion = regionId
     ? allAppellations.filter(
@@ -137,9 +141,12 @@ export const AppellationCombobox = ({
   const hasContextResults =
     fTierAppellation.length + fTierRegion.length + fTierCountry.length > 0;
 
-  // ─── Reverse lookup (no country selected, OR no in-context results & user typed) ───
+  // ─── Reverse lookup ───
+  // Activates when (a) no country selected and user typed, OR
+  // (b) a country IS selected but current typed text yields no in-context results.
   const typed = (value ?? "").trim();
-  const showReverse = !countryId && typed.length > 0;
+  const showReverse =
+    typed.length > 0 && (!countryId || !hasContextResults);
 
   const reverseMatches = showReverse
     ? allAppellations.filter((a) => matchesQuery(a.name, typed))
@@ -193,12 +200,11 @@ export const AppellationCombobox = ({
     </button>
   );
 
-  const hasAnything = showReverse
-    ? reverseMatches.length > 0
-    : hasContextResults;
+  const popoverOpen =
+    open && allAppellations.length > 0 && (!!countryId || typed.length > 0);
 
   return (
-    <Popover open={open && hasAnything} onOpenChange={setOpen}>
+    <Popover open={popoverOpen} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Input
           ref={inputRef}
