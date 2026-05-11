@@ -71,9 +71,12 @@ export type Database = {
       wine_appellations: {
         Row: {
           appellation_type: string | null
+          country_id: string | null
           created_at: string
           id: string
+          level: string
           name: string
+          region_id: string | null
           sort_order: number
           sub_region_id: string
           updated_at: string
@@ -81,9 +84,12 @@ export type Database = {
         }
         Insert: {
           appellation_type?: string | null
+          country_id?: string | null
           created_at?: string
           id?: string
+          level?: string
           name: string
+          region_id?: string | null
           sort_order?: number
           sub_region_id: string
           updated_at?: string
@@ -91,15 +97,32 @@ export type Database = {
         }
         Update: {
           appellation_type?: string | null
+          country_id?: string | null
           created_at?: string
           id?: string
+          level?: string
           name?: string
+          region_id?: string | null
           sort_order?: number
           sub_region_id?: string
           updated_at?: string
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "wine_appellations_country_id_fkey"
+            columns: ["country_id"]
+            isOneToOne: false
+            referencedRelation: "wine_countries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "wine_appellations_region_id_fkey"
+            columns: ["region_id"]
+            isOneToOne: false
+            referencedRelation: "wine_regions"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "wine_appellations_sub_region_id_fkey"
             columns: ["sub_region_id"]
