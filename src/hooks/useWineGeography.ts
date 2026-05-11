@@ -28,10 +28,15 @@ export type WineSubRegionRow = {
   sort_order: number;
 };
 
+export type AppellationLevel = "country" | "region" | "appellation";
+
 export type WineAppellationRow = {
   id: string;
   user_id: string;
-  sub_region_id: string;
+  sub_region_id: string | null;
+  region_id: string | null;
+  country_id: string | null;
+  level: AppellationLevel;
   name: string;
   appellation_type: string | null;
   sort_order: number;
