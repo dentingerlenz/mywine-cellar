@@ -140,8 +140,14 @@ export const useSeedGeographyFromWines = () => {
     if (!user || seededRef.current) return;
     if (countriesLoading || regionsLoading || winesLoading) return;
     if (!countries || !regions || !wines) return;
-    // Only seed if both tables are empty for this user
-    if (countries.length > 0 || regions.length > 0) {
+
+    // If shared geography exists and every wine with a country is already linked
+    // via country_id, there's nothing to do.
+    const winesWithCountryText = wines.filter((w) => (w.country ?? "").trim());
+    const allLinked =
+      winesWithCountryText.length === 0 ||
+      winesWithCountryText.every((w) => !!w.country_id);
+    if (countries.length > 0 && allLinked) {
       seededRef.current = true;
       return;
     }
