@@ -19,20 +19,13 @@ export type AppellationAutoFill = {
 type Props = {
   value: string;
   onChange: (v: string) => void;
-  /** Currently selected ids — used to scope the in-context tiered list */
   countryId: string;
   regionId: string;
   subRegionId: string;
-  /** Full datasets — required for reverse lookup */
   allAppellations: WineAppellationRow[];
   countries: WineCountryRow[];
   regions: WineRegionRow[];
   subRegions: WineSubRegionRow[];
-  /**
-   * Called when a suggestion is picked. The handler must set
-   * country/region/sub-region/appellation in one go WITHOUT triggering
-   * cascading clears.
-   */
   onAutoFill: (next: AppellationAutoFill) => void;
   placeholder?: string;
   disabled?: boolean;
@@ -48,12 +41,10 @@ type ResolvedContext = {
 };
 
 const matchesQuery = (name: string, query: string) => {
-  if (!query) return true;
+  if (!query.trim()) return true;
   const q = query.toLowerCase().trim();
-  if (!q) return true;
   const n = name.toLowerCase();
   if (n.startsWith(q)) return true;
-  // Match start of any word inside the name
   return n.split(/[\s\-/(),.]+/).some((w) => w.startsWith(q));
 };
 
@@ -72,7 +63,7 @@ export const AppellationCombobox = ({
   disabled,
 }: Props) => {
   const [open, setOpen] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef(null);
 
   const countryById = new Map(countries.map((c) => [c.id, c]));
   const regionById = new Map(regions.map((r) => [r.id, r]));
@@ -112,7 +103,9 @@ export const AppellationCombobox = ({
     inputRef.current?.blur();
   };
 
-  // ─── Build tier 1 / 2 / 3 (in-context) ───
+  const typed = (value ?? "").trim();
+
+  // ─── In-context tiers (country/region/sub-region already selected) ───
   const tierAppellation = subRegionId
     ? allAppellations.filter(
         (a) => a.level === "appellation" && a.sub_region_id === subRegionId,
@@ -122,39 +115,42 @@ export const AppellationCombobox = ({
         (a) => a.level === "appellation" && a.region_id === regionId,
       )
     : [];
+
   const tierRegion = regionId
     ? allAppellations.filter(
         (a) => a.level === "region" && a.region_id === regionId,
       )
     : [];
+
   const tierCountry = countryId
     ? allAppellations.filter(
         (a) => a.level === "country" && a.country_id === countryId,
       )
     : [];
 
-  // Apply text filter to each tier
-  const fTierAppellation = tierAppellation.filter((a) => matchesQuery(a.name, value));
-  const fTierRegion = tierRegion.filter((a) => matchesQuery(a.name, value));
-  const fTierCountry = tierCountry.filter((a) => matchesQuery(a.name, value));
-
+  const fTierAppellation = tierAppellation.filter((a) => matchesQuery(a.name, typed));
+  const fTierRegion = tierRegion.filter((a) => matchesQuery(a.name, typed));
+  const fTierCountry = tierCountry.filter((a) => matchesQuery(a.name, typed));
   const hasContextResults =
     fTierAppellation.length + fTierRegion.length + fTierCountry.length > 0;
 
   // ─── Reverse lookup ───
-  // Activates when (a) no country selected and user typed, OR
-  // (b) a country IS selected but current typed text yields no in-context results.
-  const typed = (value ?? "").trim();
+  // Show when: no country selected at all, OR country selected but nothing
+  // matches in context AND the user has typed something.
   const showReverse =
-    typed.length > 0 && (!countryId || !hasContextResults);
+    allAppellations.length > 0 &&
+    typed.length > 0 &&
+    (!countryId || !hasContextResults);
 
   const reverseMatches = showReverse
     ? allAppellations.filter((a) => matchesQuery(a.name, typed))
     : [];
 
-  // Group reverse matches by country name
   const reverseGrouped = (() => {
-    const groups = new Map<string, { country: string | null; items: Array<{ a: WineAppellationRow; ctx: ResolvedContext }> }>();
+    const groups = new Map<
+      string,
+      { country: string | null; items: Array<{ a: WineAppellationRow; ctx: ResolvedContext }> }
+    >();
     for (const a of reverseMatches) {
       const ctx = resolveContext(a);
       const key = ctx.countryName ?? "Unknown";
@@ -165,6 +161,17 @@ export const AppellationCombobox = ({
       .sort(([a], [b]) => a.localeCompare(b))
       .map(([, v]) => v);
   })();
+
+  // ─── Decide whether to show the popover ───
+  // Always show if: data is loaded AND (user typed something OR a country is selected)
+  const shouldShowPopover =
+    open &&
+    allAppellations.length > 0 &&
+    (typed.length > 0 || !!countryId);
+
+  const hasAnything = showReverse
+    ? reverseMatches.length > 0
+    : hasContextResults;
 
   const renderTypeBadge = (t: string | null) =>
     t ? (
@@ -200,11 +207,8 @@ export const AppellationCombobox = ({
     </button>
   );
 
-  const popoverOpen =
-    open && allAppellations.length > 0 && (!!countryId || typed.length > 0);
-
   return (
-    <Popover open={popoverOpen} onOpenChange={setOpen}>
+    <Popover open={shouldShowPopover} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Input
           ref={inputRef}
@@ -226,19 +230,25 @@ export const AppellationCombobox = ({
         style={{ width: "var(--radix-popover-trigger-width)" }}
       >
         {showReverse ? (
-          reverseGrouped.map((g) => (
-            <div key={g.country ?? "unknown"}>
-              {renderHeader(g.country ?? "Unknown")}
-              {g.items.map(({ a, ctx }) => {
-                const parts = [
-                  ctx.subRegionName,
-                  ctx.regionName,
-                  ctx.countryName,
-                ].filter(Boolean);
-                return renderItem(a, parts.join(" — "));
-              })}
+          reverseGrouped.length > 0 ? (
+            reverseGrouped.map((g) => (
+              <div key={g.country ?? "unknown"}>
+                {renderHeader(g.country ?? "Unknown")}
+                {g.items.map(({ a, ctx }) => {
+                  const parts = [
+                    ctx.subRegionName,
+                    ctx.regionName,
+                    ctx.countryName,
+                  ].filter(Boolean);
+                  return renderItem(a, parts.join(" — "));
+                })}
+              </div>
+            ))
+          ) : (
+            <div className="px-2 py-1.5 text-sm text-muted-foreground">
+              No appellations found for &ldquo;{typed}&rdquo;
             </div>
-          ))
+          )
         ) : (
           <>
             {fTierAppellation.length > 0 && (
