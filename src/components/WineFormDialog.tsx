@@ -198,15 +198,7 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
   const filteredSubRegions = regionId
     ? allSubRegions.filter((s) => s.region_id === regionId)
     : [];
-  // Appellation suggestions: by sub-region if picked, else any sub-region in the region.
-  const appellationSuggestions = (() => {
-    if (subRegionId) return allAppellations.filter((a) => a.sub_region_id === subRegionId);
-    if (regionId) {
-      const subIds = new Set(filteredSubRegions.map((s) => s.id));
-      return allAppellations.filter((a) => subIds.has(a.sub_region_id));
-    }
-    return [];
-  })();
+
 
   // Country grouping by continent
   const CONTINENT_ORDER = ["Europe", "Americas", "Oceania", "Africa", "Asia"] as const;
@@ -461,9 +453,24 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
               <AppellationCombobox
                 value={appellation ?? ""}
                 onChange={(v) => setValue("appellation", v, { shouldValidate: true })}
-                suggestions={appellationSuggestions}
-                placeholder={regionId ? "Type or select" : "Select a region first"}
-                disabled={!regionId}
+                countryId={countryId ?? ""}
+                regionId={regionId ?? ""}
+                subRegionId={subRegionId}
+                allAppellations={allAppellations}
+                countries={countries}
+                regions={allRegions}
+                subRegions={allSubRegions}
+                onAutoFill={({ countryId: cId, regionId: rId, subRegionId: srId, appellationName }) => {
+                  // Set everything at once — no cascading clears.
+                  setValue("country_id", cId, { shouldValidate: true });
+                  setValue("region_id", rId, { shouldValidate: true });
+                  const sr = srId ? allSubRegions.find((s) => s.id === srId) : null;
+                  setSubRegionId(srId);
+                  setValue("sub_region", sr?.name ?? "", { shouldValidate: true });
+                  setValue("appellation", appellationName, { shouldValidate: true });
+                }}
+                placeholder="Type to search or pick"
+                disabled={false}
               />
             </div>
           </div>
