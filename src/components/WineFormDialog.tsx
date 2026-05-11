@@ -461,9 +461,24 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
               <AppellationCombobox
                 value={appellation ?? ""}
                 onChange={(v) => setValue("appellation", v, { shouldValidate: true })}
-                suggestions={appellationSuggestions}
-                placeholder={regionId ? "Type or select" : "Select a region first"}
-                disabled={!regionId}
+                countryId={countryId ?? ""}
+                regionId={regionId ?? ""}
+                subRegionId={subRegionId}
+                allAppellations={allAppellations}
+                countries={countries}
+                regions={allRegions}
+                subRegions={allSubRegions}
+                onAutoFill={({ countryId: cId, regionId: rId, subRegionId: srId, appellationName }) => {
+                  // Set everything at once — no cascading clears.
+                  setValue("country_id", cId, { shouldValidate: true });
+                  setValue("region_id", rId, { shouldValidate: true });
+                  const sr = srId ? allSubRegions.find((s) => s.id === srId) : null;
+                  setSubRegionId(srId);
+                  setValue("sub_region", sr?.name ?? "", { shouldValidate: true });
+                  setValue("appellation", appellationName, { shouldValidate: true });
+                }}
+                placeholder="Type to search or pick"
+                disabled={false}
               />
             </div>
           </div>
