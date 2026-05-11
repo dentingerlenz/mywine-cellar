@@ -198,15 +198,7 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
   const filteredSubRegions = regionId
     ? allSubRegions.filter((s) => s.region_id === regionId)
     : [];
-  // Appellation suggestions: by sub-region if picked, else any sub-region in the region.
-  const appellationSuggestions = (() => {
-    if (subRegionId) return allAppellations.filter((a) => a.sub_region_id === subRegionId);
-    if (regionId) {
-      const subIds = new Set(filteredSubRegions.map((s) => s.id));
-      return allAppellations.filter((a) => subIds.has(a.sub_region_id));
-    }
-    return [];
-  })();
+
 
   // Country grouping by continent
   const CONTINENT_ORDER = ["Europe", "Americas", "Oceania", "Africa", "Asia"] as const;
