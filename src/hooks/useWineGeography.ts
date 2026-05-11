@@ -167,20 +167,47 @@ export const useSeedGeographyFromWines = () => {
 
       if (map.size === 0) return;
 
-      const countryNames = Array.from(map.keys()).sort((a, b) => a.localeCompare(b));
-      const countryPayload = countryNames.map((name, i) => ({
-        user_id: user.id,
-        name,
-        sort_order: i,
-      }));
+      // Existing shared rows (case-insensitive lookup).
+      const existingCountryByName = new Map(
+        countries.map((c) => [c.name.trim().toLowerCase(), c]),
+      );
+      const existingRegionByKey = new Map(
+        regions.map((r) => [`${r.country_id}|${r.name.trim().toLowerCase()}`, r]),
+      );
 
-      const { data: inserted, error } = await supabase
-        .from("wine_countries")
-        .insert(countryPayload)
-        .select("id, name");
-      if (error || !inserted) return;
+      // Insert only countries that are missing from the shared list.
+      const missingCountries = Array.from(map.keys()).filter(
+        (name) => !existingCountryByName.has(name.trim().toLowerCase()),
+      );
 
-      const byName = new Map(inserted.map((c: any) => [c.name, c.id]));
+      let insertedCountries: Array<{ id: string; name: string }> = [];
+      if (missingCountries.length > 0) {
+        const baseSort = countries.length;
+        const payload = missingCountries
+          .sort((a, b) => a.localeCompare(b))
+          .map((name, i) => ({
+            user_id: user.id,
+            name,
+            sort_order: baseSort + i,
+          }));
+        const { data, error } = await supabase
+          .from("wine_countries")
+          .insert(payload)
+          .select("id, name");
+        if (error) return;
+        insertedCountries = data ?? [];
+      }
+
+      // Resolve country_id for every country name we saw.
+      const resolveCountryId = (name: string): string | undefined => {
+        const key = name.trim().toLowerCase();
+        return (
+          existingCountryByName.get(key)?.id ??
+          insertedCountries.find((c) => c.name.trim().toLowerCase() === key)?.id
+        );
+      };
+
+      // Collect missing regions per country.
       const regionPayload: Array<{
         user_id: string;
         country_id: string;
@@ -189,12 +216,23 @@ export const useSeedGeographyFromWines = () => {
       }> = [];
 
       for (const [country, regionSet] of map.entries()) {
-        const country_id = byName.get(country);
+        const country_id = resolveCountryId(country);
         if (!country_id) continue;
         const sorted = Array.from(regionSet).sort((a, b) => a.localeCompare(b));
-        sorted.forEach((name, i) => {
-          regionPayload.push({ user_id: user.id, country_id, name, sort_order: i });
-        });
+        let nextSort =
+          regions
+            .filter((r) => r.country_id === country_id)
+            .reduce((m, r) => Math.max(m, r.sort_order), -1) + 1;
+        for (const name of sorted) {
+          const key = `${country_id}|${name.trim().toLowerCase()}`;
+          if (existingRegionByKey.has(key)) continue;
+          regionPayload.push({
+            user_id: user.id,
+            country_id,
+            name,
+            sort_order: nextSort++,
+          });
+        }
       }
 
       if (regionPayload.length > 0) {
