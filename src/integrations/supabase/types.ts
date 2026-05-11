@@ -78,7 +78,7 @@ export type Database = {
           name: string
           region_id: string | null
           sort_order: number
-          sub_region_id: string
+          sub_region_id: string | null
           updated_at: string
           user_id: string
         }
@@ -91,7 +91,7 @@ export type Database = {
           name: string
           region_id?: string | null
           sort_order?: number
-          sub_region_id: string
+          sub_region_id?: string | null
           updated_at?: string
           user_id: string
         }
@@ -104,7 +104,7 @@ export type Database = {
           name?: string
           region_id?: string | null
           sort_order?: number
-          sub_region_id?: string
+          sub_region_id?: string | null
           updated_at?: string
           user_id?: string
         }
