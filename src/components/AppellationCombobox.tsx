@@ -90,12 +90,12 @@ export const AppellationCombobox = ({
     };
   };
 
-  const pick = (a: WineAppellationRow) => {
-    const ctx = resolveContext(a);
+  const pick = (a: WineAppellationRow, ctx?: ResolvedContext) => {
+    const resolved = ctx ?? resolveContext(a);
     onAutoFill({
-      countryId: ctx.countryId,
-      regionId: ctx.regionId,
-      subRegionId: ctx.subRegionId,
+      countryId: resolved.countryId,
+      regionId: resolved.regionId,
+      subRegionId: resolved.subRegionId,
       appellationName: a.name,
     });
     setOpen(false);
@@ -146,12 +146,33 @@ export const AppellationCombobox = ({
     : [];
 
   const reverseGrouped = (() => {
+    // Deduplicate by country+region+name. If a name appears across multiple
+    // sub-regions of the same region, clear sub_region so autofill doesn't
+    // arbitrarily pick one.
+    const seen = new Map<string, { a: WineAppellationRow; ctx: ResolvedContext }>();
+    for (const a of reverseMatches) {
+      const ctx = resolveContext(a);
+      const dedupeKey = `${ctx.countryName ?? ""}|${ctx.regionId}|${a.name}`;
+      if (!seen.has(dedupeKey)) {
+        const subRegionCount = reverseMatches.filter((m) => {
+          const mCtx = resolveContext(m);
+          return m.name === a.name && mCtx.regionId === ctx.regionId;
+        }).length;
+        seen.set(dedupeKey, {
+          a,
+          ctx:
+            subRegionCount > 1
+              ? { ...ctx, subRegionId: "", subRegionName: null }
+              : ctx,
+        });
+      }
+    }
+
     const groups = new Map<
       string,
       { country: string | null; items: Array<{ a: WineAppellationRow; ctx: ResolvedContext }> }
     >();
-    for (const a of reverseMatches) {
-      const ctx = resolveContext(a);
+    for (const { a, ctx } of seen.values()) {
       const key = ctx.countryName ?? "Unknown";
       if (!groups.has(key)) groups.set(key, { country: ctx.countryName, items: [] });
       groups.get(key)!.items.push({ a, ctx });
@@ -185,14 +206,18 @@ export const AppellationCombobox = ({
     </div>
   );
 
-  const renderItem = (a: WineAppellationRow, contextLine?: string) => (
+  const renderItem = (
+    a: WineAppellationRow,
+    contextLine?: string,
+    ctx?: ResolvedContext,
+  ) => (
     <button
-      key={a.id}
+      key={a.id + (ctx?.subRegionId ?? "")}
       type="button"
       className={cn(
         "w-full text-left px-2 py-1.5 rounded-sm text-sm hover:bg-accent flex items-start justify-between gap-2",
       )}
-      onClick={() => pick(a)}
+      onClick={() => pick(a, ctx)}
     >
       <span className="flex flex-col min-w-0">
         <span className="truncate">{a.name}</span>
@@ -234,7 +259,7 @@ export const AppellationCombobox = ({
                       ctx.regionName,
                       ctx.countryName,
                     ].filter(Boolean);
-                    return renderItem(a, parts.join(" — "));
+                    return renderItem(a, parts.join(" — "), ctx);
                   })}
                 </div>
               ))
