@@ -52,6 +52,7 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
   const [removePhoto, setRemovePhoto] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [subRegionId, setSubRegionId] = useState<string>("");
+  const isAutoFilling = useRef(false);
 
   const { register, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm<any>({
     resolver: zodResolver(wineSchema) as any,
