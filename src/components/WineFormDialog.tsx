@@ -98,11 +98,9 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     }, 0);
   };
 
-  const geoReady = countries.length > 0;
-
   useEffect(() => {
     if (!open) return;
-    if (wine && !geoReady) return; // wait for geo data before populating edit form
+    if (wine && countries.length === 0) return;
 
     if (wine) {
       // Resolve country_id / region_id from FK columns; fall back to legacy
@@ -159,7 +157,7 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     }
     setPhotoFile(null);
     setRemovePhoto(false);
-  }, [open, wine?.id, geoReady]);
+  }, [open, wine?.id, countries.length > 0]);
 
 
   const handlePhoto = (file: File) => {
