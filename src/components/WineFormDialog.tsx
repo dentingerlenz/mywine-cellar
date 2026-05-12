@@ -52,6 +52,8 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
   const [removePhoto, setRemovePhoto] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [subRegionId, setSubRegionId] = useState<string>("");
+
+  // Ref to suppress cascade-clear onValueChange handlers during programmatic autofill
   const isAutoFilling = useRef(false);
 
   const { register, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm<any>({
@@ -98,13 +100,19 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     }, 0);
   };
 
+  // Stable wine id and geo-ready flag as effect dependencies.
+  // Using wine?.id (not wine) prevents re-running when the parent passes a new
+  // object reference for the same wine. Using geoReady prevents running before
+  // geography data has loaded, which would resolve all IDs to "".
+  const wineId = wine?.id ?? null;
+  const geoReady = countries.length > 0 && allRegions.length > 0 && allSubRegions.length > 0;
+
   useEffect(() => {
     if (!open) return;
-    if (wine && countries.length === 0) return;
+    // For edit mode, wait until geography data is loaded so IDs resolve correctly.
+    if (wine && !geoReady) return;
 
     if (wine) {
-      // Resolve country_id / region_id from FK columns; fall back to legacy
-      // text matches if a wine hasn't been migrated yet.
       const initialCountryId =
         wine.country_id ??
         countries.find((c) => c.name === wine.country)?.id ??
@@ -114,6 +122,14 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
         allRegions.find(
           (r) => r.name === wine.region && r.country_id === initialCountryId,
         )?.id ??
+        "";
+      const initialSubRegionId =
+        (wine.sub_region &&
+          allSubRegions.find(
+            (s) =>
+              s.region_id === initialRegionId &&
+              s.name.toLowerCase() === wine.sub_region!.toLowerCase(),
+          )?.id) ||
         "";
       reset({
         producer: wine.producer ?? "",
@@ -139,15 +155,6 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
         drink_by: wine.drink_by ?? undefined,
         rating: wine.rating ?? undefined,
       });
-      // Resolve sub_region_id from the wine's text sub_region within the matched region.
-      const initialSubRegionId =
-        (wine.sub_region &&
-          allSubRegions.find(
-            (s) =>
-              s.region_id === initialRegionId &&
-              s.name.toLowerCase() === wine.sub_region!.toLowerCase(),
-          )?.id) ||
-        "";
       setSubRegionId(initialSubRegionId);
       setPhotoPreview(wine.label_photo_url ?? null);
     } else {
@@ -157,8 +164,7 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     }
     setPhotoFile(null);
     setRemovePhoto(false);
-  }, [open, wine?.id, countries.length > 0]);
-
+  }, [open, wineId, geoReady]);
 
   const handlePhoto = (file: File) => {
     if (file.size > MAX_PHOTO_SIZE) { toast.error("Photo must be under 5 MB"); return; }
@@ -202,8 +208,6 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     ? allSubRegions.filter((s) => s.region_id === regionId)
     : [];
 
-
-  // Country grouping by continent
   const CONTINENT_ORDER = ["Europe", "Americas", "Oceania", "Africa", "Asia"] as const;
   const continentGroups = (() => {
     const groups = new Map<string, typeof countries>();
@@ -229,6 +233,34 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     }
     return ordered;
   })();
+
+  const handleAutoFill = ({ countryId: cId, regionId: rId, subRegionId: srId, appellationName }: {
+    countryId: string;
+    regionId: string;
+    subRegionId: string;
+    appellationName: string;
+  }) => {
+    // Lock cascade clears so the Select onValueChange handlers do nothing
+    isAutoFilling.current = true;
+
+    // Tick 0: set country and appellation immediately
+    setValue("country_id", cId, { shouldValidate: false });
+    setValue("appellation", appellationName, { shouldValidate: false });
+
+    // Tick 1: country has re-rendered filteredRegions — now set region
+    setTimeout(() => {
+      setValue("region_id", rId, { shouldValidate: false });
+
+      // Tick 2: region has re-rendered filteredSubRegions — now set sub-region
+      setTimeout(() => {
+        const sr = srId ? allSubRegions.find((s) => s.id === srId) : null;
+        setSubRegionId(srId ?? "");
+        setValue("sub_region", sr?.name ?? "", { shouldValidate: false });
+        // Unlock cascade clears
+        isAutoFilling.current = false;
+      }, 0);
+    }, 0);
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -378,7 +410,6 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
                   if (isAutoFilling.current) return;
                   const next = v === "none" ? "" : v;
                   setValue("country_id", next, { shouldValidate: true });
-                  // Cascade clear
                   setValue("region_id", "", { shouldValidate: true });
                   setValue("sub_region", "", { shouldValidate: true });
                   setValue("appellation", "", { shouldValidate: true });
@@ -466,32 +497,12 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
                 countries={countries}
                 regions={allRegions}
                 subRegions={allSubRegions}
-                onAutoFill={({ countryId: cId, regionId: rId, subRegionId: srId, appellationName }) => {
-                  isAutoFilling.current = true;
-
-                  // Step 1: set country and appellation name immediately
-                  setValue("country_id", cId, { shouldValidate: false });
-                  setValue("appellation", appellationName, { shouldValidate: false });
-
-                  // Step 2: after one tick (country re-renders filtered regions), set region
-                  setTimeout(() => {
-                    setValue("region_id", rId, { shouldValidate: false });
-
-                    // Step 3: after another tick (region re-renders filtered sub-regions), set sub-region
-                    setTimeout(() => {
-                      const sr = srId ? allSubRegions.find((s) => s.id === srId) : null;
-                      setSubRegionId(srId ?? "");
-                      setValue("sub_region", sr?.name ?? "", { shouldValidate: false });
-                      isAutoFilling.current = false;
-                    }, 0);
-                  }, 0);
-                }}
+                onAutoFill={handleAutoFill}
                 placeholder="Type to search or pick"
                 disabled={false}
               />
             </div>
           </div>
-
 
           <div className="grid grid-cols-2 gap-3">
             <div>
