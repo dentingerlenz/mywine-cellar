@@ -375,6 +375,7 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
               <Select
                 value={countryId || "none"}
                 onValueChange={(v) => {
+                  if (isAutoFilling.current) return;
                   const next = v === "none" ? "" : v;
                   setValue("country_id", next, { shouldValidate: true });
                   // Cascade clear
@@ -405,6 +406,7 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
               <Select
                 value={regionId || "none"}
                 onValueChange={(v) => {
+                  if (isAutoFilling.current) return;
                   setValue("region_id", v === "none" ? "" : v, { shouldValidate: true });
                   setValue("sub_region", "", { shouldValidate: true });
                   setValue("appellation", "", { shouldValidate: true });
@@ -428,6 +430,7 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
               <Select
                 value={subRegionId || "none"}
                 onValueChange={(v) => {
+                  if (isAutoFilling.current) return;
                   if (v === "none") {
                     setSubRegionId("");
                     setValue("sub_region", "", { shouldValidate: true });
@@ -464,17 +467,23 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
                 regions={allRegions}
                 subRegions={allSubRegions}
                 onAutoFill={({ countryId: cId, regionId: rId, subRegionId: srId, appellationName }) => {
-                  const sr = srId ? allSubRegions.find((s) => s.id === srId) : null;
+                  isAutoFilling.current = true;
 
-                  setValue("country_id", cId, { shouldValidate: true });
-                  setValue("appellation", appellationName, { shouldValidate: true });
-                  setValue("sub_region", sr?.name ?? "", { shouldValidate: true });
-                  setSubRegionId(srId);
+                  // Step 1: set country and appellation name immediately
+                  setValue("country_id", cId, { shouldValidate: false });
+                  setValue("appellation", appellationName, { shouldValidate: false });
 
-                  // Set region_id in the next tick so the region Select re-renders
-                  // with the correct country's filtered list before the value is applied.
+                  // Step 2: after one tick (country re-renders filtered regions), set region
                   setTimeout(() => {
-                    setValue("region_id", rId, { shouldValidate: true });
+                    setValue("region_id", rId, { shouldValidate: false });
+
+                    // Step 3: after another tick (region re-renders filtered sub-regions), set sub-region
+                    setTimeout(() => {
+                      const sr = srId ? allSubRegions.find((s) => s.id === srId) : null;
+                      setSubRegionId(srId ?? "");
+                      setValue("sub_region", sr?.name ?? "", { shouldValidate: false });
+                      isAutoFilling.current = false;
+                    }, 0);
                   }, 0);
                 }}
                 placeholder="Type to search or pick"
