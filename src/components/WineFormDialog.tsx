@@ -1,21 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Wine,
-  WineInput,
-  wineSchema,
-  OCCASIONS,
-  OCCASION_LABEL,
-  CL_OPTIONS,
-} from "@/lib/wine";
+import { Wine, WineInput, wineSchema, OCCASIONS, OCCASION_LABEL, CL_OPTIONS } from "@/lib/wine";
 import { useWineColoursCtx } from "@/contexts/WineColoursContext";
-import {
-  useWineCountries,
-  useWineRegions,
-  useWineSubRegions,
-  useWineAppellations,
-} from "@/hooks/useWineGeography";
+import { useWineCountries, useWineRegions, useWineSubRegions, useWineAppellations } from "@/hooks/useWineGeography";
 import { AppellationCombobox } from "./AppellationCombobox";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -23,8 +11,13 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import {
-  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
-  SelectGroup, SelectLabel,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  SelectGroup,
+  SelectLabel,
 } from "@/components/ui/select";
 import { useUpsertWine, uploadLabelPhoto } from "@/hooks/useWines";
 import { useAuth } from "@/contexts/AuthContext";
@@ -55,8 +48,17 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
 
   // Ref to suppress cascade-clear onValueChange handlers during programmatic autofill
   const isAutoFilling = useRef(false);
+  // Stores pending sub-region to set once regionId has re-rendered
+  const pendingSubRegion = useRef<{ srId: string } | null>(null);
 
-  const { register, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm<any>({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<any>({
     resolver: zodResolver(wineSchema) as any,
     defaultValues: { quantity: 1, cl: 75 },
   });
@@ -86,7 +88,7 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     rating: "Rating",
   };
 
-  const errClass = (name: string) => (errors as any)[name] ? "border-destructive focus-visible:ring-destructive" : "";
+  const errClass = (name: string) => ((errors as any)[name] ? "border-destructive focus-visible:ring-destructive" : "");
   const errMsg = (name: string) => {
     const e = (errors as any)[name];
     return e?.message ? <p className="text-xs text-destructive mt-1">{String(e.message)}</p> : null;
@@ -100,35 +102,21 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     }, 0);
   };
 
-  // Stable wine id and geo-ready flag as effect dependencies.
-  // Using wine?.id (not wine) prevents re-running when the parent passes a new
-  // object reference for the same wine. Using geoReady prevents running before
-  // geography data has loaded, which would resolve all IDs to "".
   const wineId = wine?.id ?? null;
   const geoReady = countries.length > 0 && allRegions.length > 0 && allSubRegions.length > 0;
 
   useEffect(() => {
     if (!open) return;
-    // For edit mode, wait until geography data is loaded so IDs resolve correctly.
     if (wine && !geoReady) return;
 
     if (wine) {
-      const initialCountryId =
-        wine.country_id ??
-        countries.find((c) => c.name === wine.country)?.id ??
-        "";
+      const initialCountryId = wine.country_id ?? countries.find((c) => c.name === wine.country)?.id ?? "";
       const initialRegionId =
-        wine.region_id ??
-        allRegions.find(
-          (r) => r.name === wine.region && r.country_id === initialCountryId,
-        )?.id ??
-        "";
+        wine.region_id ?? allRegions.find((r) => r.name === wine.region && r.country_id === initialCountryId)?.id ?? "";
       const initialSubRegionId =
         (wine.sub_region &&
           allSubRegions.find(
-            (s) =>
-              s.region_id === initialRegionId &&
-              s.name.toLowerCase() === wine.sub_region!.toLowerCase(),
+            (s) => s.region_id === initialRegionId && s.name.toLowerCase() === wine.sub_region!.toLowerCase(),
           )?.id) ||
         "";
       reset({
@@ -166,9 +154,57 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     setRemovePhoto(false);
   }, [open, wineId, geoReady]);
 
+  const colour = watch("colour");
+  const occasion = watch("occasion");
+  const rating = watch("rating");
+  const cl = watch("cl");
+  const countryId = watch("country_id");
+  const regionId = watch("region_id");
+  const subRegionName = watch("sub_region");
+  const appellation = watch("appellation");
+
+  // Once regionId changes and we have a pending sub-region from autofill,
+  // set it now — filteredSubRegions is guaranteed to be populated at this point.
+  useEffect(() => {
+    if (!pendingSubRegion.current) return;
+    if (!regionId) return;
+    const { srId } = pendingSubRegion.current;
+    const sr = srId ? allSubRegions.find((s) => s.id === srId) : null;
+    setSubRegionId(srId ?? "");
+    setValue("sub_region", sr?.name ?? "", { shouldValidate: false });
+    pendingSubRegion.current = null;
+    isAutoFilling.current = false;
+  }, [regionId]);
+
+  const handleAutoFill = ({
+    countryId: cId,
+    regionId: rId,
+    subRegionId: srId,
+    appellationName,
+  }: {
+    countryId: string;
+    regionId: string;
+    subRegionId: string;
+    appellationName: string;
+  }) => {
+    isAutoFilling.current = true;
+    pendingSubRegion.current = { srId };
+    setValue("country_id", cId, { shouldValidate: false });
+    setValue("appellation", appellationName, { shouldValidate: false });
+    setTimeout(() => {
+      setValue("region_id", rId, { shouldValidate: false });
+    }, 0);
+  };
+
   const handlePhoto = (file: File) => {
-    if (file.size > MAX_PHOTO_SIZE) { toast.error("Photo must be under 5 MB"); return; }
-    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) { toast.error("Use JPEG or PNG"); return; }
+    if (file.size > MAX_PHOTO_SIZE) {
+      toast.error("Photo must be under 5 MB");
+      return;
+    }
+    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+      toast.error("Use JPEG or PNG");
+      return;
+    }
     setPhotoFile(file);
     setPhotoPreview(URL.createObjectURL(file));
     setRemovePhoto(false);
@@ -191,22 +227,9 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     }
   };
 
-  const colour = watch("colour");
-  const occasion = watch("occasion");
-  const rating = watch("rating");
-  const cl = watch("cl");
-  const countryId = watch("country_id");
-  const regionId = watch("region_id");
-  const subRegionName = watch("sub_region");
-  const appellation = watch("appellation");
-
   const selectedCountry = countries.find((c) => c.id === countryId);
-  const filteredRegions = selectedCountry
-    ? allRegions.filter((r) => r.country_id === selectedCountry.id)
-    : [];
-  const filteredSubRegions = regionId
-    ? allSubRegions.filter((s) => s.region_id === regionId)
-    : [];
+  const filteredRegions = selectedCountry ? allRegions.filter((r) => r.country_id === selectedCountry.id) : [];
+  const filteredSubRegions = regionId ? allSubRegions.filter((s) => s.region_id === regionId) : [];
 
   const CONTINENT_ORDER = ["Europe", "Americas", "Oceania", "Africa", "Asia"] as const;
   const continentGroups = (() => {
@@ -219,10 +242,11 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     const ordered: Array<{ continent: string; countries: typeof countries }> = [];
     for (const cont of CONTINENT_ORDER) {
       const list = groups.get(cont);
-      if (list && list.length) ordered.push({
-        continent: cont,
-        countries: [...list].sort((a, b) => a.name.localeCompare(b.name)),
-      });
+      if (list && list.length)
+        ordered.push({
+          continent: cont,
+          countries: [...list].sort((a, b) => a.name.localeCompare(b.name)),
+        });
       groups.delete(cont);
     }
     for (const [cont, list] of groups.entries()) {
@@ -233,34 +257,6 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     }
     return ordered;
   })();
-
-  const handleAutoFill = ({ countryId: cId, regionId: rId, subRegionId: srId, appellationName }: {
-    countryId: string;
-    regionId: string;
-    subRegionId: string;
-    appellationName: string;
-  }) => {
-    // Lock cascade clears so the Select onValueChange handlers do nothing
-    isAutoFilling.current = true;
-
-    // Tick 0: set country and appellation immediately
-    setValue("country_id", cId, { shouldValidate: false });
-    setValue("appellation", appellationName, { shouldValidate: false });
-
-    // Tick 1: country has re-rendered filteredRegions — now set region
-    setTimeout(() => {
-      setValue("region_id", rId, { shouldValidate: false });
-
-      // Tick 2: region has re-rendered filteredSubRegions — now set sub-region
-      setTimeout(() => {
-        const sr = srId ? allSubRegions.find((s) => s.id === srId) : null;
-        setSubRegionId(srId ?? "");
-        setValue("sub_region", sr?.name ?? "", { shouldValidate: false });
-        // Unlock cascade clears
-        isAutoFilling.current = false;
-      }, 0);
-    }, 0);
-  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -278,8 +274,15 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
                 {photoPreview ? (
                   <>
                     <img src={photoPreview} alt="" className="w-full h-full object-cover" />
-                    <button type="button" onClick={() => { setPhotoFile(null); setPhotoPreview(null); setRemovePhoto(true); }}
-                      className="absolute top-1 right-1 bg-background/80 rounded-full p-1 opacity-0 group-hover:opacity-100 transition">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setPhotoFile(null);
+                        setPhotoPreview(null);
+                        setRemovePhoto(true);
+                      }}
+                      className="absolute top-1 right-1 bg-background/80 rounded-full p-1 opacity-0 group-hover:opacity-100 transition"
+                    >
                       <X className="w-3 h-3" />
                     </button>
                   </>
@@ -287,39 +290,67 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
                   <label className="flex flex-col items-center justify-center w-full h-full cursor-pointer hover:bg-secondary/70 transition">
                     <Upload className="w-6 h-6 text-primary mb-1" />
                     <span className="text-[10px] text-muted-foreground text-center px-1">Label photo</span>
-                    <input type="file" accept="image/jpeg,image/png,image/webp" className="hidden"
-                      onChange={(e) => e.target.files?.[0] && handlePhoto(e.target.files[0])} />
+                    <input
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp"
+                      className="hidden"
+                      onChange={(e) => e.target.files?.[0] && handlePhoto(e.target.files[0])}
+                    />
                   </label>
                 )}
               </div>
               {photoPreview && (
                 <label className="block mt-2 text-xs text-center text-primary cursor-pointer hover:underline">
                   Replace
-                  <input type="file" accept="image/jpeg,image/png,image/webp" className="hidden"
-                    onChange={(e) => e.target.files?.[0] && handlePhoto(e.target.files[0])} />
+                  <input
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                    className="hidden"
+                    onChange={(e) => e.target.files?.[0] && handlePhoto(e.target.files[0])}
+                  />
                 </label>
               )}
             </div>
             <div className="flex-1 space-y-3">
               <div>
                 <Label>Producer *</Label>
-                <Input {...register("producer")} placeholder="e.g. Egly-Ouriet" aria-invalid={!!errors.producer} className={errClass("producer")} />
+                <Input
+                  {...register("producer")}
+                  placeholder="e.g. Egly-Ouriet"
+                  aria-invalid={!!errors.producer}
+                  className={errClass("producer")}
+                />
                 {errMsg("producer")}
               </div>
               <div>
                 <Label>Description</Label>
-                <Input {...register("description")} placeholder="e.g. Les Vignes de Vrigny Brut" aria-invalid={!!errors.description} className={errClass("description")} />
+                <Input
+                  {...register("description")}
+                  placeholder="e.g. Les Vignes de Vrigny Brut"
+                  aria-invalid={!!errors.description}
+                  className={errClass("description")}
+                />
                 {errMsg("description")}
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <Label>Vintage</Label>
-                  <Input {...register("vintage")} placeholder='NV, 2015, ~15 years…' aria-invalid={!!errors.vintage} className={errClass("vintage")} />
+                  <Input
+                    {...register("vintage")}
+                    placeholder="NV, 2015, ~15 years…"
+                    aria-invalid={!!errors.vintage}
+                    className={errClass("vintage")}
+                  />
                   {errMsg("vintage")}
                 </div>
                 <div>
                   <Label>Quantity *</Label>
-                  <Input type="number" {...register("quantity")} aria-invalid={!!errors.quantity} className={errClass("quantity")} />
+                  <Input
+                    type="number"
+                    {...register("quantity")}
+                    aria-invalid={!!errors.quantity}
+                    className={errClass("quantity")}
+                  />
                   {errMsg("quantity")}
                 </div>
               </div>
@@ -329,10 +360,19 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <div>
               <Label>Colour *</Label>
-              <Select value={colour ?? ""} onValueChange={(v) => setValue("colour", v as any, { shouldValidate: true })}>
-                <SelectTrigger aria-invalid={!!errors.colour} className={errClass("colour")}><SelectValue placeholder="Select" /></SelectTrigger>
+              <Select
+                value={colour ?? ""}
+                onValueChange={(v) => setValue("colour", v as any, { shouldValidate: true })}
+              >
+                <SelectTrigger aria-invalid={!!errors.colour} className={errClass("colour")}>
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
                 <SelectContent>
-                  {wineColours.map((c) => <SelectItem key={c.name} value={c.name}>{c.display_name}</SelectItem>)}
+                  {wineColours.map((c) => (
+                    <SelectItem key={c.name} value={c.name}>
+                      {c.display_name}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               {errMsg("colour")}
@@ -340,9 +380,15 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
             <div>
               <Label>Bottle (cl)</Label>
               <Select value={cl ? String(cl) : ""} onValueChange={(v) => setValue("cl", Number(v))}>
-                <SelectTrigger><SelectValue placeholder="cl" /></SelectTrigger>
+                <SelectTrigger>
+                  <SelectValue placeholder="cl" />
+                </SelectTrigger>
                 <SelectContent>
-                  {CL_OPTIONS.map((n) => <SelectItem key={n} value={String(n)}>{n} cl</SelectItem>)}
+                  {CL_OPTIONS.map((n) => (
+                    <SelectItem key={n} value={String(n)}>
+                      {n} cl
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
@@ -350,12 +396,20 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
               <Label>Occasion</Label>
               <Select
                 value={occasion ?? "none"}
-                onValueChange={(v) => setValue("occasion", v === "none" ? (undefined as any) : (v as any), { shouldValidate: true })}
+                onValueChange={(v) =>
+                  setValue("occasion", v === "none" ? (undefined as any) : (v as any), { shouldValidate: true })
+                }
               >
-                <SelectTrigger><SelectValue placeholder="—" /></SelectTrigger>
+                <SelectTrigger>
+                  <SelectValue placeholder="—" />
+                </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="none">None</SelectItem>
-                  {OCCASIONS.map((o) => <SelectItem key={o} value={o}>{OCCASION_LABEL[o]}</SelectItem>)}
+                  {OCCASIONS.map((o) => (
+                    <SelectItem key={o} value={o}>
+                      {OCCASION_LABEL[o]}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
@@ -363,12 +417,20 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
               <Label>Rating</Label>
               <Select
                 value={rating ? String(rating) : "none"}
-                onValueChange={(v) => setValue("rating", v === "none" ? (undefined as any) : (Number(v) as any), { shouldValidate: true })}
+                onValueChange={(v) =>
+                  setValue("rating", v === "none" ? (undefined as any) : (Number(v) as any), { shouldValidate: true })
+                }
               >
-                <SelectTrigger><SelectValue placeholder="—" /></SelectTrigger>
+                <SelectTrigger>
+                  <SelectValue placeholder="—" />
+                </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="none">No rating</SelectItem>
-                  {[1,2,3,4,5].map((n) => <SelectItem key={n} value={String(n)}>{"★".repeat(n)}</SelectItem>)}
+                  {[1, 2, 3, 4, 5].map((n) => (
+                    <SelectItem key={n} value={String(n)}>
+                      {"★".repeat(n)}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
@@ -416,7 +478,9 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
                   setSubRegionId("");
                 }}
               >
-                <SelectTrigger><SelectValue placeholder="Select country" /></SelectTrigger>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select country" />
+                </SelectTrigger>
                 <SelectContent className="max-h-72">
                   <SelectItem value="none">—</SelectItem>
                   {continentGroups.map((g) => (
@@ -425,7 +489,9 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
                         {g.continent}
                       </SelectLabel>
                       {g.countries.map((c) => (
-                        <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                        <SelectItem key={c.id} value={c.id}>
+                          {c.name}
+                        </SelectItem>
                       ))}
                     </SelectGroup>
                   ))}
@@ -451,7 +517,9 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
                 <SelectContent>
                   <SelectItem value="none">—</SelectItem>
                   {filteredRegions.map((r) => (
-                    <SelectItem key={r.id} value={r.id}>{r.name}</SelectItem>
+                    <SelectItem key={r.id} value={r.id}>
+                      {r.name}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -480,7 +548,9 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
                 <SelectContent>
                   <SelectItem value="none">—</SelectItem>
                   {filteredSubRegions.map((s) => (
-                    <SelectItem key={s.id} value={s.id}>{s.name}</SelectItem>
+                    <SelectItem key={s.id} value={s.id}>
+                      {s.name}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -527,13 +597,18 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
           {Object.keys(errors).length > 0 && (
             <div className="rounded-md border border-destructive/50 bg-destructive/10 px-3 py-2">
               <p className="text-xs text-destructive font-medium">
-                Please fix: {Object.keys(errors).map((k) => FIELD_LABELS[k] ?? k).join(", ")}
+                Please fix:{" "}
+                {Object.keys(errors)
+                  .map((k) => FIELD_LABELS[k] ?? k)
+                  .join(", ")}
               </p>
             </div>
           )}
 
           <DialogFooter>
-            <Button type="button" variant="ghost" onClick={() => onOpenChange(false)}>Cancel</Button>
+            <Button type="button" variant="ghost" onClick={() => onOpenChange(false)}>
+              Cancel
+            </Button>
             <Button type="submit" disabled={uploading || upsert.isPending}>
               {(uploading || upsert.isPending) && <Loader2 className="w-4 h-4 animate-spin" />}
               {wine ? "Save changes" : "Add to cellar"}
