@@ -146,12 +146,33 @@ export const AppellationCombobox = ({
     : [];
 
   const reverseGrouped = (() => {
+    // Deduplicate by country+region+name. If a name appears across multiple
+    // sub-regions of the same region, clear sub_region so autofill doesn't
+    // arbitrarily pick one.
+    const seen = new Map<string, { a: WineAppellationRow; ctx: ResolvedContext }>();
+    for (const a of reverseMatches) {
+      const ctx = resolveContext(a);
+      const dedupeKey = `${ctx.countryName ?? ""}|${ctx.regionId}|${a.name}`;
+      if (!seen.has(dedupeKey)) {
+        const subRegionCount = reverseMatches.filter((m) => {
+          const mCtx = resolveContext(m);
+          return m.name === a.name && mCtx.regionId === ctx.regionId;
+        }).length;
+        seen.set(dedupeKey, {
+          a,
+          ctx:
+            subRegionCount > 1
+              ? { ...ctx, subRegionId: "", subRegionName: null }
+              : ctx,
+        });
+      }
+    }
+
     const groups = new Map<
       string,
       { country: string | null; items: Array<{ a: WineAppellationRow; ctx: ResolvedContext }> }
     >();
-    for (const a of reverseMatches) {
-      const ctx = resolveContext(a);
+    for (const { a, ctx } of seen.values()) {
       const key = ctx.countryName ?? "Unknown";
       if (!groups.has(key)) groups.set(key, { country: ctx.countryName, items: [] });
       groups.get(key)!.items.push({ a, ctx });
