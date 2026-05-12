@@ -207,70 +207,66 @@ export const AppellationCombobox = ({
   );
 
   return (
-    <Popover open={shouldShowPopover} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Input
-          ref={inputRef}
-          value={value}
-          disabled={disabled}
-          placeholder={placeholder}
-          onChange={(e) => {
-            onChange(e.target.value);
-            setOpen(true);
-          }}
-          onFocus={() => setOpen(true)}
-          autoComplete="off"
-        />
-      </PopoverTrigger>
-      <PopoverContent
-        className="p-1 max-h-72 overflow-auto bg-popover gold-border"
-        align="start"
-        onOpenAutoFocus={(e) => e.preventDefault()}
-        style={{ width: "var(--radix-popover-trigger-width)" }}
-      >
-        {showReverse ? (
-          reverseGrouped.length > 0 ? (
-            reverseGrouped.map((g) => (
-              <div key={g.country ?? "unknown"}>
-                {renderHeader(g.country ?? "Unknown")}
-                {g.items.map(({ a, ctx }) => {
-                  const parts = [
-                    ctx.subRegionName,
-                    ctx.regionName,
-                    ctx.countryName,
-                  ].filter(Boolean);
-                  return renderItem(a, parts.join(" — "));
-                })}
+    <div className="relative">
+      <Input
+        ref={inputRef}
+        value={value}
+        disabled={disabled}
+        placeholder={placeholder ?? "Type appellation to search…"}
+        onChange={(e) => {
+          onChange(e.target.value);
+          setOpen(true);
+        }}
+        onFocus={() => setOpen(true)}
+        onBlur={() => setTimeout(() => setOpen(false), 150)}
+        autoComplete="off"
+      />
+      {shouldShowPopover && hasAnything && (
+        <div className="absolute z-50 left-0 right-0 top-full mt-1 max-h-72 overflow-auto rounded-md border bg-popover shadow-md gold-border p-1">
+          {showReverse ? (
+            reverseGrouped.length > 0 ? (
+              reverseGrouped.map((g) => (
+                <div key={g.country ?? "unknown"}>
+                  {renderHeader(g.country ?? "Unknown")}
+                  {g.items.map(({ a, ctx }) => {
+                    const parts = [
+                      ctx.subRegionName,
+                      ctx.regionName,
+                      ctx.countryName,
+                    ].filter(Boolean);
+                    return renderItem(a, parts.join(" — "));
+                  })}
+                </div>
+              ))
+            ) : (
+              <div className="px-2 py-1.5 text-sm text-muted-foreground">
+                No appellations found for &ldquo;{typed}&rdquo;
               </div>
-            ))
+            )
           ) : (
-            <div className="px-2 py-1.5 text-sm text-muted-foreground">
-              No appellations found for &ldquo;{typed}&rdquo;
-            </div>
-          )
-        ) : (
-          <>
-            {fTierAppellation.length > 0 && (
-              <>
-                {renderHeader("Appellation")}
-                {fTierAppellation.map((a) => renderItem(a))}
-              </>
-            )}
-            {fTierRegion.length > 0 && (
-              <>
-                {renderHeader("Regional")}
-                {fTierRegion.map((a) => renderItem(a))}
-              </>
-            )}
-            {fTierCountry.length > 0 && (
-              <>
-                {renderHeader("Country-wide")}
-                {fTierCountry.map((a) => renderItem(a))}
-              </>
-            )}
-          </>
-        )}
-      </PopoverContent>
-    </Popover>
+            <>
+              {fTierAppellation.length > 0 && (
+                <>
+                  {renderHeader("Appellation")}
+                  {fTierAppellation.map((a) => renderItem(a))}
+                </>
+              )}
+              {fTierRegion.length > 0 && (
+                <>
+                  {renderHeader("Regional")}
+                  {fTierRegion.map((a) => renderItem(a))}
+                </>
+              )}
+              {fTierCountry.length > 0 && (
+                <>
+                  {renderHeader("Country-wide")}
+                  {fTierCountry.map((a) => renderItem(a))}
+                </>
+              )}
+            </>
+          )}
+        </div>
+      )}
+    </div>
   );
 };
