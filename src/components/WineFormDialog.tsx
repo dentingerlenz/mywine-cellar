@@ -465,13 +465,18 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
                 regions={allRegions}
                 subRegions={allSubRegions}
                 onAutoFill={({ countryId: cId, regionId: rId, subRegionId: srId, appellationName }) => {
-                  // Set everything at once — no cascading clears.
-                  setValue("country_id", cId, { shouldValidate: true });
-                  setValue("region_id", rId, { shouldValidate: true });
                   const sr = srId ? allSubRegions.find((s) => s.id === srId) : null;
-                  setSubRegionId(srId);
-                  setValue("sub_region", sr?.name ?? "", { shouldValidate: true });
+
+                  setValue("country_id", cId, { shouldValidate: true });
                   setValue("appellation", appellationName, { shouldValidate: true });
+                  setValue("sub_region", sr?.name ?? "", { shouldValidate: true });
+                  setSubRegionId(srId);
+
+                  // Set region_id in the next tick so the region Select re-renders
+                  // with the correct country's filtered list before the value is applied.
+                  setTimeout(() => {
+                    setValue("region_id", rId, { shouldValidate: true });
+                  }, 0);
                 }}
                 placeholder="Type to search or pick"
                 disabled={false}
