@@ -97,65 +97,69 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     }, 0);
   };
 
+  const geoReady = countries.length > 0;
+
   useEffect(() => {
-    if (open) {
-      if (wine) {
-        // Resolve country_id / region_id from FK columns; fall back to legacy
-        // text matches if a wine hasn't been migrated yet.
-        const initialCountryId =
-          wine.country_id ??
-          countries.find((c) => c.name === wine.country)?.id ??
-          "";
-        const initialRegionId =
-          wine.region_id ??
-          allRegions.find(
-            (r) => r.name === wine.region && r.country_id === initialCountryId,
-          )?.id ??
-          "";
-        reset({
-          producer: wine.producer ?? "",
-          description: wine.description ?? "",
-          vintage: wine.vintage ?? "",
-          cl: wine.cl ?? undefined,
-          colour: wine.colour ?? undefined,
-          variety: wine.variety ?? "",
-          residual_sugar_gl: wine.residual_sugar_gl ?? undefined,
-          dosage: wine.dosage ?? "",
-          alcohol_pct: wine.alcohol_pct ?? undefined,
-          country_id: initialCountryId,
-          region_id: initialRegionId,
-          sub_region: wine.sub_region ?? "",
-          appellation: wine.appellation ?? "",
-          ausbau_terroir: wine.ausbau_terroir ?? "",
-          notes: wine.notes ?? "",
-          occasion: wine.occasion ?? undefined,
-          quantity: wine.quantity,
-          price_chf: wine.price_chf ?? undefined,
-          purchased_from: wine.purchased_from ?? "",
-          ready_from: wine.ready_from ?? undefined,
-          drink_by: wine.drink_by ?? undefined,
-          rating: wine.rating ?? undefined,
-        });
-        // Resolve sub_region_id from the wine's text sub_region within the matched region.
-        const initialSubRegionId =
-          (wine.sub_region &&
-            allSubRegions.find(
-              (s) =>
-                s.region_id === initialRegionId &&
-                s.name.toLowerCase() === wine.sub_region!.toLowerCase(),
-            )?.id) ||
-          "";
-        setSubRegionId(initialSubRegionId);
-        setPhotoPreview(wine.label_photo_url);
-      } else {
-        reset({ quantity: 1, cl: 75, rating: undefined, occasion: undefined });
-        setSubRegionId("");
-        setPhotoPreview(null);
-      }
-      setPhotoFile(null);
-      setRemovePhoto(false);
+    if (!open) return;
+    if (wine && !geoReady) return; // wait for geo data before populating edit form
+
+    if (wine) {
+      // Resolve country_id / region_id from FK columns; fall back to legacy
+      // text matches if a wine hasn't been migrated yet.
+      const initialCountryId =
+        wine.country_id ??
+        countries.find((c) => c.name === wine.country)?.id ??
+        "";
+      const initialRegionId =
+        wine.region_id ??
+        allRegions.find(
+          (r) => r.name === wine.region && r.country_id === initialCountryId,
+        )?.id ??
+        "";
+      reset({
+        producer: wine.producer ?? "",
+        description: wine.description ?? "",
+        vintage: wine.vintage ?? "",
+        cl: wine.cl ?? undefined,
+        colour: wine.colour ?? undefined,
+        variety: wine.variety ?? "",
+        residual_sugar_gl: wine.residual_sugar_gl ?? undefined,
+        dosage: wine.dosage ?? "",
+        alcohol_pct: wine.alcohol_pct ?? undefined,
+        country_id: initialCountryId,
+        region_id: initialRegionId,
+        sub_region: wine.sub_region ?? "",
+        appellation: wine.appellation ?? "",
+        ausbau_terroir: wine.ausbau_terroir ?? "",
+        notes: wine.notes ?? "",
+        occasion: wine.occasion ?? undefined,
+        quantity: wine.quantity,
+        price_chf: wine.price_chf ?? undefined,
+        purchased_from: wine.purchased_from ?? "",
+        ready_from: wine.ready_from ?? undefined,
+        drink_by: wine.drink_by ?? undefined,
+        rating: wine.rating ?? undefined,
+      });
+      // Resolve sub_region_id from the wine's text sub_region within the matched region.
+      const initialSubRegionId =
+        (wine.sub_region &&
+          allSubRegions.find(
+            (s) =>
+              s.region_id === initialRegionId &&
+              s.name.toLowerCase() === wine.sub_region!.toLowerCase(),
+          )?.id) ||
+        "";
+      setSubRegionId(initialSubRegionId);
+      setPhotoPreview(wine.label_photo_url ?? null);
+    } else {
+      reset({ quantity: 1, cl: 75, rating: undefined, occasion: undefined });
+      setSubRegionId("");
+      setPhotoPreview(null);
     }
-  }, [open, wine, reset, countries, allRegions, allSubRegions]);
+    setPhotoFile(null);
+    setRemovePhoto(false);
+  }, [open, wine?.id, geoReady]);
+
 
   const handlePhoto = (file: File) => {
     if (file.size > MAX_PHOTO_SIZE) { toast.error("Photo must be under 5 MB"); return; }
