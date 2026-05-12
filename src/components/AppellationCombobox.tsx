@@ -90,12 +90,12 @@ export const AppellationCombobox = ({
     };
   };
 
-  const pick = (a: WineAppellationRow) => {
-    const ctx = resolveContext(a);
+  const pick = (a: WineAppellationRow, ctx?: ResolvedContext) => {
+    const resolved = ctx ?? resolveContext(a);
     onAutoFill({
-      countryId: ctx.countryId,
-      regionId: ctx.regionId,
-      subRegionId: ctx.subRegionId,
+      countryId: resolved.countryId,
+      regionId: resolved.regionId,
+      subRegionId: resolved.subRegionId,
       appellationName: a.name,
     });
     setOpen(false);
