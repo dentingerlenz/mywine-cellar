@@ -206,14 +206,18 @@ export const AppellationCombobox = ({
     </div>
   );
 
-  const renderItem = (a: WineAppellationRow, contextLine?: string) => (
+  const renderItem = (
+    a: WineAppellationRow,
+    contextLine?: string,
+    ctx?: ResolvedContext,
+  ) => (
     <button
-      key={a.id}
+      key={a.id + (ctx?.subRegionId ?? "")}
       type="button"
       className={cn(
         "w-full text-left px-2 py-1.5 rounded-sm text-sm hover:bg-accent flex items-start justify-between gap-2",
       )}
-      onClick={() => pick(a)}
+      onClick={() => pick(a, ctx)}
     >
       <span className="flex flex-col min-w-0">
         <span className="truncate">{a.name}</span>
