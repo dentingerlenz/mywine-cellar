@@ -259,7 +259,7 @@ export const AppellationCombobox = ({
                       ctx.regionName,
                       ctx.countryName,
                     ].filter(Boolean);
-                    return renderItem(a, parts.join(" — "));
+                    return renderItem(a, parts.join(" — "), ctx);
                   })}
                 </div>
               ))
