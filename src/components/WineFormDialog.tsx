@@ -46,9 +46,7 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
   const [uploading, setUploading] = useState(false);
   const [subRegionId, setSubRegionId] = useState<string>("");
 
-  // Ref to suppress cascade-clear onValueChange handlers during programmatic autofill
   const isAutoFilling = useRef(false);
-  // Stores pending sub-region to set once regionId has re-rendered
 
   const {
     register,
@@ -153,27 +151,6 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     setRemovePhoto(false);
   }, [open, wineId, geoReady]);
 
-  const colour = watch("colour");
-  const occasion = watch("occasion");
-  const rating = watch("rating");
-  const cl = watch("cl");
-  const countryId = watch("country_id");
-  const regionId = watch("region_id");
-  const subRegionName = watch("sub_region");
-  const appellation = watch("appellation");
-
-  // Once regionId changes and we have a pending sub-region from autofill,
-  // set it now — filteredSubRegions is guaranteed to be populated at this point.
-  useEffect(() => {
-    if (!regionId) return;
-    const { srId } = pendingSubRegion.current;
-    const sr = srId ? allSubRegions.find((s) => s.id === srId) : null;
-    setSubRegionId(srId ?? "");
-    setValue("sub_region", sr?.name ?? "", { shouldValidate: false });
-    pendingSubRegion.current = null;
-    isAutoFilling.current = false;
-  }, [regionId]);
-
   const handleAutoFill = ({
     countryId: cId,
     regionId: rId,
@@ -188,10 +165,8 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     isAutoFilling.current = true;
     setValue("country_id", cId, { shouldValidate: false });
     setValue("appellation", appellationName, { shouldValidate: false });
-
     setTimeout(() => {
       setValue("region_id", rId, { shouldValidate: false });
-
       setTimeout(() => {
         if (srId) {
           const sr = allSubRegions.find((s) => s.id === srId);
@@ -233,6 +208,15 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
       setUploading(false);
     }
   };
+
+  const colour = watch("colour");
+  const occasion = watch("occasion");
+  const rating = watch("rating");
+  const cl = watch("cl");
+  const countryId = watch("country_id");
+  const regionId = watch("region_id");
+  const subRegionName = watch("sub_region");
+  const appellation = watch("appellation");
 
   const selectedCountry = countries.find((c) => c.id === countryId);
   const filteredRegions = selectedCountry ? allRegions.filter((r) => r.country_id === selectedCountry.id) : [];
@@ -545,7 +529,8 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
                     setSubRegionId(v);
                     setValue("sub_region", sr?.name ?? "", { shouldValidate: true });
                   }
-                  setValue("appellation", "", { shouldValidate: true });
+                  // Do NOT clear appellation here — user picking sub-region
+                  // manually should not wipe an already chosen appellation.
                 }}
                 disabled={!regionId}
               >
