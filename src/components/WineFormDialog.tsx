@@ -188,7 +188,7 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     appellationName: string;
   }) => {
     isAutoFilling.current = true;
-    pendingSubRegion.current = { srId };
+    pendingSubRegion.current = srId ? { srId } : null;
     setValue("country_id", cId, { shouldValidate: false });
     setValue("appellation", appellationName, { shouldValidate: false });
     setTimeout(() => {
