@@ -49,7 +49,6 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
   // Ref to suppress cascade-clear onValueChange handlers during programmatic autofill
   const isAutoFilling = useRef(false);
   // Stores pending sub-region to set once regionId has re-rendered
-  const pendingSubRegion = useRef<{ srId: string } | null>(null);
 
   const {
     register,
@@ -166,7 +165,6 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
   // Once regionId changes and we have a pending sub-region from autofill,
   // set it now — filteredSubRegions is guaranteed to be populated at this point.
   useEffect(() => {
-    if (!pendingSubRegion.current) return;
     if (!regionId) return;
     const { srId } = pendingSubRegion.current;
     const sr = srId ? allSubRegions.find((s) => s.id === srId) : null;
@@ -188,18 +186,21 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     appellationName: string;
   }) => {
     isAutoFilling.current = true;
-    pendingSubRegion.current = srId ? { srId } : null;
     setValue("country_id", cId, { shouldValidate: false });
     setValue("appellation", appellationName, { shouldValidate: false });
+
     setTimeout(() => {
       setValue("region_id", rId, { shouldValidate: false });
-      // If no sub-region to wait for, unlock immediately after region is set
-      if (!srId) {
-        setTimeout(() => {
-          isAutoFilling.current = false;
-        }, 0);
-      }
-    }, 0);
+
+      setTimeout(() => {
+        if (srId) {
+          const sr = allSubRegions.find((s) => s.id === srId);
+          setSubRegionId(srId);
+          setValue("sub_region", sr?.name ?? "", { shouldValidate: false });
+        }
+        isAutoFilling.current = false;
+      }, 50);
+    }, 50);
   };
 
   const handlePhoto = (file: File) => {
