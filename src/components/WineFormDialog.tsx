@@ -193,6 +193,12 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     setValue("appellation", appellationName, { shouldValidate: false });
     setTimeout(() => {
       setValue("region_id", rId, { shouldValidate: false });
+      // If no sub-region to wait for, unlock immediately after region is set
+      if (!srId) {
+        setTimeout(() => {
+          isAutoFilling.current = false;
+        }, 0);
+      }
     }, 0);
   };
 
