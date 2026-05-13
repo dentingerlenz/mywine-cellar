@@ -14,8 +14,26 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { Plus, LogOut, Wine as WineIcon, Upload, LayoutGrid, List, Settings as SettingsIcon, BookOpen } from "lucide-react";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import {
+  Plus,
+  LogOut,
+  Wine as WineIcon,
+  Upload,
+  LayoutGrid,
+  List,
+  Settings as SettingsIcon,
+  BookOpen,
+} from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 
 export default function Cellar() {
@@ -32,8 +50,15 @@ export default function Cellar() {
 
   const filtered = useMemo(() => applyFilters(wines, filters), [wines, filters]);
 
-  const onAdd = () => { setEditing(null); setFormOpen(true); };
-  const onEdit = (b: Wine) => { setDetail(null); setEditing(b); setFormOpen(true); };
+  const onAdd = () => {
+    setEditing(null);
+    setFormOpen(true);
+  };
+  const onEdit = (b: Wine) => {
+    setDetail(null);
+    setEditing(b);
+    setFormOpen(true);
+  };
   const onOpenDetail = (b: Wine) => setDetail(b);
 
   const confirmDelete = async () => {
@@ -53,22 +78,27 @@ export default function Cellar() {
       <header className="border-b border-primary/20 backdrop-blur bg-background/70 sticky top-0 z-40">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <WineIcon className="w-6 h-6 text-primary" strokeWidth={1.5} />
-            <h1 className="font-display text-2xl tracking-tight">Cave</h1>
+            <img src="/logo.png" alt="Cave" className="h-10 w-auto" />
           </div>
           <div className="flex items-center gap-2">
             <span className="hidden sm:inline text-xs text-muted-foreground italic">{user?.email}</span>
             <Button variant="ghost" size="sm" asChild>
-              <Link to="/history"><BookOpen className="w-4 h-4" /> History</Link>
+              <Link to="/history">
+                <BookOpen className="w-4 h-4" /> History
+              </Link>
             </Button>
             <Button variant="ghost" size="sm" asChild>
-              <Link to="/import"><Upload className="w-4 h-4" /> Import</Link>
+              <Link to="/import">
+                <Upload className="w-4 h-4" /> Import
+              </Link>
             </Button>
             <Button onClick={onAdd} size="sm">
               <Plus className="w-4 h-4" /> Add bottle
             </Button>
             <Button variant="ghost" size="icon" asChild title="Settings">
-              <Link to="/settings"><SettingsIcon className="w-4 h-4" /></Link>
+              <Link to="/settings">
+                <SettingsIcon className="w-4 h-4" />
+              </Link>
             </Button>
             <Button variant="ghost" size="icon" onClick={() => signOut()} title="Sign out">
               <LogOut className="w-4 h-4" />
@@ -89,10 +119,7 @@ export default function Cellar() {
 
         {wines.length > 0 && (
           <div className="flex justify-end items-center gap-2 mb-4">
-            <Select
-              value={filters.sort}
-              onValueChange={(v) => setFilters({ ...filters, sort: v as SortKey })}
-            >
+            <Select value={filters.sort} onValueChange={(v) => setFilters({ ...filters, sort: v as SortKey })}>
               <SelectTrigger className="w-[180px] bg-card/40">
                 <SelectValue placeholder="Sort" />
               </SelectTrigger>
@@ -110,10 +137,18 @@ export default function Cellar() {
               onValueChange={(v) => v && setView(v as "grid" | "list")}
               className="border border-primary/30 rounded-md bg-card/40"
             >
-              <ToggleGroupItem value="grid" aria-label="Grid view" className="data-[state=on]:bg-primary/20 data-[state=on]:text-primary">
+              <ToggleGroupItem
+                value="grid"
+                aria-label="Grid view"
+                className="data-[state=on]:bg-primary/20 data-[state=on]:text-primary"
+              >
                 <LayoutGrid className="w-4 h-4" />
               </ToggleGroupItem>
-              <ToggleGroupItem value="list" aria-label="List view" className="data-[state=on]:bg-primary/20 data-[state=on]:text-primary">
+              <ToggleGroupItem
+                value="list"
+                aria-label="List view"
+                className="data-[state=on]:bg-primary/20 data-[state=on]:text-primary"
+              >
                 <List className="w-4 h-4" />
               </ToggleGroupItem>
             </ToggleGroup>
@@ -132,8 +167,14 @@ export default function Cellar() {
             <h3 className="font-display text-2xl mb-2">Your cellar is empty</h3>
             <p className="text-muted-foreground italic mb-6">Time to stock up.</p>
             <div className="flex gap-2 justify-center">
-              <Button onClick={onAdd}><Plus className="w-4 h-4" /> Add a bottle</Button>
-              <Button variant="outline" asChild><Link to="/import"><Upload className="w-4 h-4" /> Import CSV</Link></Button>
+              <Button onClick={onAdd}>
+                <Plus className="w-4 h-4" /> Add a bottle
+              </Button>
+              <Button variant="outline" asChild>
+                <Link to="/import">
+                  <Upload className="w-4 h-4" /> Import CSV
+                </Link>
+              </Button>
             </div>
           </div>
         ) : filtered.length === 0 ? (
@@ -210,7 +251,9 @@ export default function Cellar() {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={confirmDelete} className="bg-destructive">Remove</AlertDialogAction>
+            <AlertDialogAction onClick={confirmDelete} className="bg-destructive">
+              Remove
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
