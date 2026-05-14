@@ -78,7 +78,8 @@ export default function Cellar() {
       <header className="border-b border-primary/20 backdrop-blur bg-background/70 sticky top-0 z-40">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img src="/Logo3.png" alt="Cave" className="h-[80px] w-auto" />
+            <img src="/LogoDesign1.png" alt="" className="h-[80px] w-auto" />
+            <img src="/LogoText.png" alt="Cave" className="h-[50fpx] w-auto" />
           </div>
           <div className="flex items-center gap-2">
             <span className="hidden sm:inline text-xs text-muted-foreground italic">{user?.email}</span>
