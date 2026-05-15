@@ -83,18 +83,18 @@ export default function Cellar() {
           </div>
           <div className="flex items-center gap-2">
             <span className="hidden sm:inline text-xs text-muted-foreground italic">{user?.email}</span>
-            <Button variant="ghost" size="sm" asChild>
+            <Button variant="ghost" size="icon" className="sm:size-auto sm:px-3" asChild title="History">
               <Link to="/history">
-                <BookOpen className="w-4 h-4" /> History
+                <BookOpen className="w-4 h-4" /> <span className="hidden sm:inline">History</span>
               </Link>
             </Button>
-            <Button variant="ghost" size="sm" asChild>
+            <Button variant="ghost" size="icon" className="sm:size-auto sm:px-3" asChild title="Import">
               <Link to="/import">
-                <Upload className="w-4 h-4" /> Import
+                <Upload className="w-4 h-4" /> <span className="hidden sm:inline">Import</span>
               </Link>
             </Button>
-            <Button onClick={onAdd} size="sm">
-              <Plus className="w-4 h-4" /> Add bottle
+            <Button onClick={onAdd} size="icon" className="sm:size-auto sm:px-3" title="Add bottle">
+              <Plus className="w-4 h-4" /> <span className="hidden sm:inline">Add bottle</span>
             </Button>
             <Button variant="ghost" size="icon" asChild title="Settings">
               <Link to="/settings">
