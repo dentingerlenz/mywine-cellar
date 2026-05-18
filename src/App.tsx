@@ -11,6 +11,7 @@ import ImportPage from "./pages/Import";
 import Settings from "./pages/Settings";
 import History from "./pages/History";
 import NotFound from "./pages/NotFound";
+import { supabase } from "@/integrations/supabase/client";
 
 const queryClient = new QueryClient();
 
