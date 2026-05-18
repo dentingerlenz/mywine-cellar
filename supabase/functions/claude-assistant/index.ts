@@ -29,8 +29,7 @@ When scanning a label, read visible text first, then use your wine knowledge to 
         messages: [{
           role: "user",
           content: [
-            { type: "image", source: { type: "base64", media_type: imageBase64.startsWith("/9j/") ? "image/jpeg" : "image/png", data: imageBase64 } },
-            { type: "text", text: "Scan this wine label. Read all visible text, then use your knowledge to complete any missing fields. Return only the JSON object." }
+{ type: "image", source: { type: "base64", media_type: ((): "image/jpeg" | "image/png" | "image/webp" => { if (imageBase64.startsWith("data:image/png") || imageBase64.includes("iVBORw0KGgo")) return "image/png"; if (imageBase64.startsWith("data:image/webp")) return "image/webp"; return "image/jpeg"; })(), data: imageBase64.replace(/^data:image\/\w+;base64,/, "") } },            { type: "text", text: "Scan this wine label. Read all visible text, then use your knowledge to complete any missing fields. Return only the JSON object." }
           ]
         }]
       });
