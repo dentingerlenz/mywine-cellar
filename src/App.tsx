@@ -15,9 +15,24 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 const Protected = ({ children }: { children: React.ReactNode }) => {
-  const { user, loading } = useAuth();
+  const { user, loading, approved } = useAuth();
   if (loading) return <div className="min-h-screen flex items-center justify-center text-muted-foreground italic">Pouring…</div>;
   if (!user) return <Navigate to="/auth" replace />;
+  if (!approved) return (
+    <div className="min-h-screen flex flex-col items-center justify-center gap-4 text-center px-6">
+      <div className="text-4xl">🍷</div>
+      <h1 className="text-2xl font-semibold">Your account is pending approval</h1>
+      <p className="text-muted-foreground max-w-sm">
+        Thanks for signing up! The cellar keeper will review your request and grant access shortly.
+      </p>
+      <button
+        onClick={() => supabase.auth.signOut()}
+        className="text-sm text-muted-foreground underline mt-4"
+      >
+        Sign out
+      </button>
+    </div>
+  );
   return <>{children}</>;
 };
 
