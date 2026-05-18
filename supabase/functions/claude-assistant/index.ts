@@ -87,7 +87,8 @@ Return ONLY raw JSON, no markdown code fences. For chat messages, respond conver
       });
     }
 
-    let content = response.content[0].type === "text" ? response.content[0].text : "";
+    const textBlocks = response.content.filter((b: any) => b.type === "text");
+    let content = textBlocks.length ? textBlocks[textBlocks.length - 1].text : "";
 
     if (type === "scan") {
       try {
