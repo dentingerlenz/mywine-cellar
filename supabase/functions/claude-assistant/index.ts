@@ -11,7 +11,7 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { type, message, imageBase64, cellarContext } = await req.json();
+    const { type, message, imageBase64, imageMediaType, cellarContext } = await req.json();
     const client = new Anthropic({ apiKey: Deno.env.get("cave_key") });
 
     const systemPrompt = `You are a knowledgeable wine cellar assistant built into "My Wine Cellar" app. You help the user manage their wine collection, suggest food pairings, identify wines from label photos, and give drinking window advice.
@@ -22,6 +22,7 @@ When scanning a label, read visible text first, then use your wine knowledge to 
     let response;
 
     if (type === "scan") {
+      const mediaType = (imageMediaType || "image/jpeg") as "image/jpeg" | "image/png" | "image/webp";
       response = await client.messages.create({
         model: "claude-sonnet-4-6",
         max_tokens: 2048,
@@ -29,7 +30,8 @@ When scanning a label, read visible text first, then use your wine knowledge to 
         messages: [{
           role: "user",
           content: [
-{ type: "image", source: { type: "base64", media_type: ((): "image/jpeg" | "image/png" | "image/webp" => { if (imageBase64.startsWith("data:image/png") || imageBase64.includes("iVBORw0KGgo")) return "image/png"; if (imageBase64.startsWith("data:image/webp")) return "image/webp"; return "image/jpeg"; })(), data: imageBase64.replace(/^data:image\/\w+;base64,/, "") } },            { type: "text", text: "Scan this wine label. Read all visible text, then use your knowledge to complete any missing fields. Return only the JSON object." }
+            { type: "image", source: { type: "base64", media_type: mediaType, data: imageBase64 } },
+            { type: "text", text: "Scan this wine label. Read all visible text, then use your knowledge to complete any missing fields. Return only the JSON object." }
           ]
         }]
       });
