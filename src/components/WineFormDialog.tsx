@@ -22,7 +22,8 @@ import {
 import { useUpsertWine, uploadLabelPhoto } from "@/hooks/useWines";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
-import { Loader2, Upload, X } from "lucide-react";
+import { Loader2, Upload, X, Sparkles } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 type Props = {
   open: boolean;
