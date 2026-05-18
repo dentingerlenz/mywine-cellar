@@ -68,6 +68,27 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          approved: boolean | null
+          created_at: string
+          email: string | null
+          id: string
+        }
+        Insert: {
+          approved?: boolean | null
+          created_at?: string
+          email?: string | null
+          id: string
+        }
+        Update: {
+          approved?: boolean | null
+          created_at?: string
+          email?: string | null
+          id?: string
+        }
+        Relationships: []
+      }
       wine_appellations: {
         Row: {
           appellation_type: string | null
