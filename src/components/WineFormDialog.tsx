@@ -349,15 +349,32 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
                 )}
               </div>
               {photoPreview && (
-                <label className="block mt-2 text-xs text-center text-primary cursor-pointer hover:underline">
-                  Replace
-                  <input
-                    type="file"
-                    accept="image/jpeg,image/png,image/webp"
-                    className="hidden"
-                    onChange={(e) => e.target.files?.[0] && handlePhoto(e.target.files[0])}
-                  />
-                </label>
+                <>
+                  <label className="block mt-2 text-xs text-center text-primary cursor-pointer hover:underline">
+                    Replace
+                    <input
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp"
+                      className="hidden"
+                      onChange={(e) => e.target.files?.[0] && handlePhoto(e.target.files[0])}
+                    />
+                  </label>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={handleScan}
+                    disabled={scanning}
+                    className="w-full mt-2 text-xs gap-1"
+                  >
+                    {scanning ? (
+                      <Loader2 className="w-3 h-3 animate-spin" />
+                    ) : (
+                      <Sparkles className="w-3 h-3" />
+                    )}
+                    Scan with AI 🍷
+                  </Button>
+                </>
               )}
             </div>
             <div className="flex-1 space-y-3">
