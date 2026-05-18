@@ -238,12 +238,22 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
         parsed = JSON.parse(cleaned);
       }
 
-      const fields = ["producer", "description", "variety", "alcohol_pct", "notes"] as const;
-      for (const f of fields) {
-        const v = parsed?.[f];
+      const setIfPresent = (field: string, v: any) => {
         if (v !== null && v !== undefined && v !== "") {
-          setValue(f as any, v, { shouldValidate: true });
+          setValue(field as any, v, { shouldValidate: true });
         }
+      };
+
+      setIfPresent("producer", parsed?.producer);
+      setIfPresent("vintage", parsed?.vintage);
+      setIfPresent("variety", parsed?.grape_varieties);
+      setIfPresent("dosage", parsed?.dosage);
+      setIfPresent("notes", parsed?.notes);
+
+      const alc = parsed?.alcohol;
+      if (alc !== null && alc !== undefined && alc !== "") {
+        const n = typeof alc === "number" ? alc : parseFloat(String(alc).replace(",", ".").replace(/[^\d.]/g, ""));
+        if (!Number.isNaN(n)) setValue("alcohol_pct" as any, n, { shouldValidate: true });
       }
       toast.success("Label scanned ✓");
     } catch (e: any) {
