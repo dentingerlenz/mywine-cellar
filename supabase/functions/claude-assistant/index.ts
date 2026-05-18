@@ -67,13 +67,14 @@ Return ONLY raw JSON, no markdown code fences. For chat messages, respond conver
     if (type === "scan") {
       response = await client.messages.create({
         model: "claude-sonnet-4-6",
-        max_tokens: 1024,
+        max_tokens: 4096,
         system: systemPrompt,
+        tools: [{ type: "web_search_20250305", name: "web_search" }],
         messages: [{
           role: "user",
           content: [
             { type: "image", source: { type: "base64", media_type: "image/jpeg", data: imageBase64 } },
-            { type: "text", text: "Please scan this wine label and extract all available information. Return a JSON object with the wine details." }
+            { type: "text", text: "Read all visible information from this wine label, then search the web to find any missing details about this wine including vintage, region, appellation, grape varieties, alcohol percentage, dosage, and drinking window. Return a complete JSON object with all fields filled in as accurately as possible." }
           ]
         }]
       });
@@ -86,7 +87,8 @@ Return ONLY raw JSON, no markdown code fences. For chat messages, respond conver
       });
     }
 
-    let content = response.content[0].type === "text" ? response.content[0].text : "";
+    const textBlocks = response.content.filter((b: any) => b.type === "text");
+    let content = textBlocks.length ? textBlocks[textBlocks.length - 1].text : "";
 
     if (type === "scan") {
       try {
