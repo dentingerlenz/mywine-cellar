@@ -199,7 +199,9 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     try {
       setScanning(true);
       let base64: string;
+      let mediaType: string;
       if (photoFile) {
+        mediaType = photoFile.type || "image/jpeg";
         base64 = await new Promise<string>((resolve, reject) => {
           const reader = new FileReader();
           reader.onload = () => {
@@ -212,6 +214,7 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
       } else {
         const res = await fetch(photoPreview!);
         const blob = await res.blob();
+        mediaType = blob.type || "image/jpeg";
         base64 = await new Promise<string>((resolve, reject) => {
           const reader = new FileReader();
           reader.onload = () => {
@@ -224,7 +227,7 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
       }
 
       const { data, error } = await supabase.functions.invoke("claude-assistant", {
-        body: { type: "scan", imageBase64: base64 },
+        body: { type: "scan", imageBase64: base64, imageMediaType: mediaType },
       });
       if (error) throw error;
       if (!data?.success) throw new Error(data?.error ?? "Scan failed");
