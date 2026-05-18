@@ -22,7 +22,8 @@ import {
 import { useUpsertWine, uploadLabelPhoto } from "@/hooks/useWines";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
-import { Loader2, Upload, X } from "lucide-react";
+import { Loader2, Upload, X, Sparkles } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 type Props = {
   open: boolean;
@@ -44,6 +45,7 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [removePhoto, setRemovePhoto] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [scanning, setScanning] = useState(false);
   const [subRegionId, setSubRegionId] = useState<string>("");
 
   const isAutoFilling = useRef(false);
@@ -192,6 +194,62 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     setRemovePhoto(false);
   };
 
+  const handleScan = async () => {
+    if (!photoFile && !photoPreview) return;
+    try {
+      setScanning(true);
+      let base64: string;
+      if (photoFile) {
+        base64 = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const result = reader.result as string;
+            resolve(result.split(",")[1] ?? result);
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(photoFile);
+        });
+      } else {
+        const res = await fetch(photoPreview!);
+        const blob = await res.blob();
+        base64 = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const result = reader.result as string;
+            resolve(result.split(",")[1] ?? result);
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        });
+      }
+
+      const { data, error } = await supabase.functions.invoke("claude-assistant", {
+        body: { type: "scan", imageBase64: base64 },
+      });
+      if (error) throw error;
+      if (!data?.success) throw new Error(data?.error ?? "Scan failed");
+
+      let parsed: any = data.content;
+      if (typeof parsed === "string") {
+        const cleaned = parsed.replace(/```json\s*|\s*```/g, "").trim();
+        parsed = JSON.parse(cleaned);
+      }
+
+      const fields = ["producer", "description", "variety", "alcohol_pct", "notes"] as const;
+      for (const f of fields) {
+        const v = parsed?.[f];
+        if (v !== null && v !== undefined && v !== "") {
+          setValue(f as any, v, { shouldValidate: true });
+        }
+      }
+      toast.success("Label scanned ✓");
+    } catch (e: any) {
+      toast.error(e.message ?? "Could not scan label");
+    } finally {
+      setScanning(false);
+    }
+  };
+
   const onSubmit = async (values: WineInput) => {
     if (!user) return;
     try {
@@ -291,15 +349,32 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
                 )}
               </div>
               {photoPreview && (
-                <label className="block mt-2 text-xs text-center text-primary cursor-pointer hover:underline">
-                  Replace
-                  <input
-                    type="file"
-                    accept="image/jpeg,image/png,image/webp"
-                    className="hidden"
-                    onChange={(e) => e.target.files?.[0] && handlePhoto(e.target.files[0])}
-                  />
-                </label>
+                <>
+                  <label className="block mt-2 text-xs text-center text-primary cursor-pointer hover:underline">
+                    Replace
+                    <input
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp"
+                      className="hidden"
+                      onChange={(e) => e.target.files?.[0] && handlePhoto(e.target.files[0])}
+                    />
+                  </label>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={handleScan}
+                    disabled={scanning}
+                    className="w-full mt-2 text-xs gap-1"
+                  >
+                    {scanning ? (
+                      <Loader2 className="w-3 h-3 animate-spin" />
+                    ) : (
+                      <Sparkles className="w-3 h-3" />
+                    )}
+                    Scan with AI 🍷
+                  </Button>
+                </>
               )}
             </div>
             <div className="flex-1 space-y-3">
