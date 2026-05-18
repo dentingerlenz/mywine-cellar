@@ -194,6 +194,62 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     setRemovePhoto(false);
   };
 
+  const handleScan = async () => {
+    if (!photoFile && !photoPreview) return;
+    try {
+      setScanning(true);
+      let base64: string;
+      if (photoFile) {
+        base64 = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const result = reader.result as string;
+            resolve(result.split(",")[1] ?? result);
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(photoFile);
+        });
+      } else {
+        const res = await fetch(photoPreview!);
+        const blob = await res.blob();
+        base64 = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const result = reader.result as string;
+            resolve(result.split(",")[1] ?? result);
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        });
+      }
+
+      const { data, error } = await supabase.functions.invoke("claude-assistant", {
+        body: { type: "scan", imageBase64: base64 },
+      });
+      if (error) throw error;
+      if (!data?.success) throw new Error(data?.error ?? "Scan failed");
+
+      let parsed: any = data.content;
+      if (typeof parsed === "string") {
+        const cleaned = parsed.replace(/```json\s*|\s*```/g, "").trim();
+        parsed = JSON.parse(cleaned);
+      }
+
+      const fields = ["producer", "description", "variety", "alcohol_pct", "notes"] as const;
+      for (const f of fields) {
+        const v = parsed?.[f];
+        if (v !== null && v !== undefined && v !== "") {
+          setValue(f as any, v, { shouldValidate: true });
+        }
+      }
+      toast.success("Label scanned ✓");
+    } catch (e: any) {
+      toast.error(e.message ?? "Could not scan label");
+    } finally {
+      setScanning(false);
+    }
+  };
+
   const onSubmit = async (values: WineInput) => {
     if (!user) return;
     try {
