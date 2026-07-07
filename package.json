@@ -12,7 +12,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "gen:types": "supabase gen types typescript --project-id yacrrwyvrswssqurfhun > src/integrations/supabase/types.ts",
-    "geo:build": "node scripts/geo/build-seed.js"
+    "geo:build": "node scripts/geo/build-seed.js",
+    "migrate:v1": "node scripts/migrate-v1-data.js"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

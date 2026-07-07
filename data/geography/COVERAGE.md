@@ -7,7 +7,7 @@
 > Frankreich ~360 · Italien ~280 (77 DOCG + Top-DOC) · Spanien ~80 ·
 > Deutschland (13 Anbaugebiete, Bereiche, VDP) · Schweiz ~65 · Portugal ~35.
 
-Stand: 2026-07-07 · **51 Länder · 875 Appellationen**
+Stand: 2026-07-07 · **51 Länder · 881 Appellationen**
 
 | Land | Regionen | Sub-Regionen | Appellationen | Status |
 |---|---|---|---|---|
@@ -29,7 +29,7 @@ Stand: 2026-07-07 · **51 Länder · 875 Appellationen**
 | Denmark | 3 | 0 | 0 | ⚠️ unverifiziert (v1-Übernahme / Modellwissen) |
 | England & Wales | 6 | 6 | 7 | ⚠️ unverifiziert (v1-Übernahme / Modellwissen) |
 | Ethiopia | 1 | 1 | 1 | ⚠️ unverifiziert (v1-Übernahme / Modellwissen) |
-| France | 12 | 43 | 160 | ⚠️ unverifiziert (v1-Übernahme / Modellwissen) |
+| France | 12 | 43 | 161 | ⚠️ unverifiziert (v1-Übernahme / Modellwissen) |
 | Georgia | 5 | 5 | 10 | ⚠️ unverifiziert (v1-Übernahme / Modellwissen) |
 | Germany | 13 | 19 | 31 | ⚠️ unverifiziert (v1-Übernahme / Modellwissen) |
 | Greece | 8 | 19 | 24 | ⚠️ unverifiziert (v1-Übernahme / Modellwissen) |
@@ -55,7 +55,7 @@ Stand: 2026-07-07 · **51 Länder · 875 Appellationen**
 | Slovenia | 3 | 9 | 10 | ⚠️ unverifiziert (v1-Übernahme / Modellwissen) |
 | South Africa | 3 | 13 | 17 | ⚠️ unverifiziert (v1-Übernahme / Modellwissen) |
 | Spain | 14 | 52 | 71 | ⚠️ unverifiziert (v1-Übernahme / Modellwissen) |
-| Switzerland | 11 | 20 | 23 | ⚠️ unverifiziert (v1-Übernahme / Modellwissen) |
+| Switzerland | 6 | 22 | 28 | ⚠️ unverifiziert (v1-Übernahme / Modellwissen) |
 | Thailand | 2 | 2 | 2 | ⚠️ unverifiziert (v1-Übernahme / Modellwissen) |
 | Tunisia | 3 | 3 | 3 | ⚠️ unverifiziert (v1-Übernahme / Modellwissen) |
 | Turkey | 5 | 5 | 5 | ⚠️ unverifiziert (v1-Übernahme / Modellwissen) |
@@ -63,4 +63,4 @@ Stand: 2026-07-07 · **51 Länder · 875 Appellationen**
 | United States | 7 | 18 | 64 | ⚠️ unverifiziert (v1-Übernahme / Modellwissen) |
 | Uruguay | 5 | 5 | 5 | ⚠️ unverifiziert (v1-Übernahme / Modellwissen) |
 
-| **Gesamt** | **266** | **528** | **875** | |
+| **Gesamt** | **261** | **530** | **881** | |

@@ -1,0 +1,52 @@
+{
+  "_hinweis": "Manuelle Zuordnungen für Geo-Namen, die der Resolver nicht trifft. Schlüssel: countries: 'RohText' → kanonischer Name; regions: 'Land|RohText' (RohText mit oder ohne Kürzel-Präfix); sub_regions: 'Land|Region|RohText'; appellations: 'RohText'. Nach Ergänzung Migration erneut laufen lassen (idempotent). Alle Einträge hier sind gegen die tatsächlichen Seed-Namen verifiziert (2026-07-07).",
+  "countries": {},
+  "regions": {
+    "France|Loire": "Vallee de la Loire",
+    "France|Rhône": "Vallee du Rhone",
+    "France|Südwest": "Sud-Ouest",
+    "France|Jura": "Savoie & Jura",
+    "France|Savoie": "Savoie & Jura",
+    "Italy|Südtirol": "Trentino-Alto Adige",
+    "Italy|Trentino": "Trentino-Alto Adige",
+    "Italy|Friuli": "Friuli-Venezia Giulia",
+    "Italy|Toskana": "Toscana",
+    "Germany|Mosel-Saar-Ruwer": "Mosel",
+    "Switzerland|Zürichsee": "Deutschschweiz",
+    "Spain|Penedès": "Cataluna",
+    "Poland|Wilków": "Dolny Śląsk",
+    "Denmark|Copenhagen": "Sjælland",
+    "New Zealand|Martinborough": "Wairarapa",
+    "Switzerland|Neuchatel": "Drei Seen",
+    "Portugal|Beira Atlântico": "Beiras",
+    "Portugal|Porto": "Douro",
+    "Greece|Kreta": "Kriti",
+    "South Africa|Franschhoek": "Western Cape",
+    "Spain|Valdepusa": "Castilla-La Mancha"
+  },
+  "sub_regions": {
+    "France|Bourgogne|Pouilly-Fuissé": "Maconnais",
+    "France|Bourgogne|AOC Chablis": "Chablis",
+    "France|Languedoc-Roussillon|Côtes Catalanes": "Roussillon",
+    "France|Languedoc-Roussillon|Corbières": "Languedoc",
+    "Switzerland|Vaud|Yvorne": "Chablais",
+    "New Zealand|Marlborough|Rapaura": "Wairau Valley",
+    "New Zealand|Marlborough|Conders Bend": "Wairau Valley",
+    "New Zealand|Marlborough|Conder's Bend": "Wairau Valley",
+    "New Zealand|Marlborough|Wither Hills": "Southern Valleys",
+    "Austria|Burgenland|Südburgenland": "Eisenberg",
+    "France|Champagne|Côte des Bar": "Aube (Cote des Bar)",
+    "France|Champagne|Côte des Blancs - Avize": "Cote des Blancs",
+    "France|Champagne|Massif de Saint Thierry": "Montagne de Reims",
+    "Germany|Mosel|Mosel - Pünderich": "Terrassenmosel",
+    "Germany|Mosel|Mosel - Bernkastel-Kues": "Mittelmosel",
+    "France|Savoie & Jura|Côtes du Jura": "Jura",
+    "Switzerland|Deutschschweiz|Zürichsee": "Zürich"
+  },
+  "appellations": {
+    "Douro DOC": "Douro",
+    "AOC Côtes de Bergerac": "Cotes de Bergerac",
+    "AOC Zürichsee": "Zürichsee",
+    "DOC Etna Bianco": "Etna"
+  }
+}
