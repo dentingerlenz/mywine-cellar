@@ -136,6 +136,9 @@ export default function Cellar() {
                 <Upload className="w-4 h-4" /> <span className="hidden sm:inline">Import</span>
               </Link>
             </Button>
+            <Button variant="ghost" size="icon" className="sm:size-auto sm:px-3" onClick={exportCsv} title="Export CSV">
+              <Download className="w-4 h-4" /> <span className="hidden sm:inline">Export CSV</span>
+            </Button>
             <Button onClick={onAdd} size="icon" className="sm:size-auto sm:px-3" title="Add bottle">
               <Plus className="w-4 h-4" /> <span className="hidden sm:inline">Add bottle</span>
             </Button>
