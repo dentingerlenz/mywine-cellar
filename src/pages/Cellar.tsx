@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
+import Papa from "papaparse";
 import { useAuth } from "@/contexts/AuthContext";
 import { useWines, useDeleteWine } from "@/hooks/useWines";
 import { Wine, wineTitle } from "@/lib/wine";
@@ -23,6 +24,7 @@ import {
   List,
   Settings as SettingsIcon,
   BookOpen,
+  Download,
 } from "lucide-react";
 import {
   AlertDialog,
