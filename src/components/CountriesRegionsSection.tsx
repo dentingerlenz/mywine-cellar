@@ -19,7 +19,6 @@ import { CSS } from "@dnd-kit/utilities";
 import {
   useWineCountries,
   useWineRegions,
-  useSeedGeographyFromWines,
   useAddWineCountry,
   useRenameWineCountry,
   useDeleteWineCountry,
@@ -384,8 +383,6 @@ const ContinentGroup = ({
 };
 
 export const CountriesRegionsSection = () => {
-  useSeedGeographyFromWines();
-
   const { data: countries = [], isLoading: countriesLoading } = useWineCountries();
   const { data: regions = [], isLoading: regionsLoading } = useWineRegions();
   const { data: wines = [] } = useWines();

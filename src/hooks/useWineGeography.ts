@@ -1,5 +1,4 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useWines } from "@/hooks/useWines";
@@ -127,18 +126,6 @@ export const useGeographyLookups = () => {
     w: { region_id?: string | null; region?: string | null },
   ) => (w.region_id && regionById.get(w.region_id)?.name) || w.region || null;
   return { countries, regions, countryById, regionById, countryNameFor, regionNameFor };
-};
-
-/**
- * Seeds wine_countries / wine_regions on first load by harvesting unique
- * country + region pairs from the user's existing wines. Runs once per session.
- */
-export const useSeedGeographyFromWines = () => {
-  // Permanently disabled: shared geography is now seeded via SQL migrations.
-  // This hook is kept as a no-op to preserve its import signature.
-  useEffect(() => {
-    return;
-  }, []);
 };
 
 // ─── Country mutations ───────────────────────────────────────────────────────
