@@ -455,8 +455,23 @@ JSON-Extraktion per Regex über Markdown-Fences.
 | `ready_from`/`drink_by` zu 99 %, `rating` zu 98 %, Fotos zu 96 % leer | Kein Migrationsaufwand; **V8 (KI-Trinkfenster) schließt die Lücke** künftig beim Erfassen |
 | 2 echte Duplikat-Paare (Produzent+Name+Jahrgang doppelt) | Bestätigt V3; im Migrations-Report ausweisen, User entscheidet Zusammenführung |
 
-**Noch offen für Phase 4:** Export von `people`, `drinking_log`, `wine_colours`
-(gleicher Weg übers Dashboard). Ohne sie können Phasen 1–3 trotzdem starten.
+**Zusatz-Exporte (2026-07-07) in `backup/`:** `profiles.csv`, `wine_colours.csv`,
+`drinking_log.csv`. Befunde:
+
+- **`drinking_log`: 21 Einträge, alle vom Haupt-User** (`624e5b7c…`). Alle 21
+  `wine_id` existieren im Weine-Export (Referenz-Integrität ok, inkl. leergetrunkener
+  Flaschen). Notizen mehrzeilig/deutsch — beim Import beachten.
+- **`wine_colours`: Haupt-User hat exakt die 6 Standardfarben** (sparkling/white/red/
+  rose/orange/dessert_fortified) → **Migration ist ein No-op**, der Trigger
+  `seed_cellar_defaults` legt sie beim Kelleranlegen ohnehin an. (Die Datei enthält
+  auch 3 weitere Test-User — irrelevant, deren Daten werden nicht migriert.)
+- **`profiles`: nur 1 Zeile** (Haupt-User, approved) → die v2-Migration befüllt
+  `profiles` beim Deploy automatisch aus `auth.users`, kein Import nötig.
+
+**Weiterhin OFFEN — einziger fehlender Export:** `people`. Der `drinking_log`
+referenziert **3 Personen-UUIDs** (`8f0ccec6…`, `87ee44fa…`, `72e818ff…`), deren
+Namen nur die `people`-Tabelle liefert. Ohne diesen Export kann Phase 4 die
+Trink-Historie-Begleiter nicht auflösen.
 
 ### 8.1 Strategie
 
@@ -610,6 +625,6 @@ erDiagram
 |---|---|---|
 | 2026-07-07 | **0 (teilweise)** | `wines`-Export liegt in `backup/cellar-export-2026-07-07.csv` (gitignored), Audit in §8.0. **Offen:** Export von `people`, `drinking_log`, `wine_colours` — nötig erst vor Phase 4. |
 | 2026-07-07 | **1 ✅** | lovable-tagger + `.lovable/` entfernt; Radix-Toast-Stack gelöscht (sonner bleibt); toter Seed-Hook raus; bun-Lockfiles raus (npm bleibt); `gen:types`- + `geo:build`-Scripts. Build ✓, Tests ✓, keine neuen Lint-Fehler (52 `any`-Altlasten dokumentiert). |
-| 2026-07-07 | **2 (geschrieben, unverifiziert)** | v1-Migrationen → `supabase/migrations_v1/` archiviert. Baseline: `supabase/migrations/20260707090000_v2_baseline.sql` (12 Tabellen, RLS, 4 RPCs, Trigger, Storage-Policies). **Offen:** lokale Verifikation (`supabase db reset`) + RLS-Testmatrix — braucht Supabase CLI + Docker (auf diesem Rechner nicht installiert). Live-Deploy sowieso erst in Phase 4 nach Sign-off. |
+| 2026-07-07 | **2 ✅ (lokal verifiziert)** | v1-Migrationen → `supabase/migrations_v1/` archiviert. Baseline: `supabase/migrations/20260707090000_v2_baseline.sql` (12 Tabellen, RLS, 4 RPCs, Trigger, Storage-Policies). Lokal via `supabase db reset` angewandt + RLS-Testmatrix (2 User / 2 Keller) bestanden: Keller-Isolation, „ein Keller pro User", Invite-Beitritt, geteilte Sichtbarkeit, Owner-only Invite-Regen, reorder-Whitelist, Geo-Ancestor-Trigger (Margaux→Médoc→Bordeaux→France). **Dabei 1 kritischer Bug gefunden & behoben:** Migration vergab keine Tabellen-`GRANT`s an die `authenticated`/`anon`-Rollen → jeder eingeloggte User hätte „permission denied" auf allen Tabellen bekommen (RLS filtert Zeilen, GRANT erlaubt Zugriff). Abschnitt 5b ergänzt. Supabase-CLI als devDependency + `supabase/config.toml` (Postgres 17) hinzugefügt. **Offen:** Live-Deploy erst in Phase 4 nach Sign-off. |
 | 2026-07-07 | **3 (Pipeline ✅, Tier 1 offen)** | Konverter + Generator laufen; 51 Länder / 875 Appellationen in `data/geography/*.json`; `supabase/seed.sql` + `COVERAGE.md` generiert. Zypern/Polen/Dänemark neu angelegt (unverifiziert). **Offen:** Tier-1-Vervollständigung Land für Land mit Register-Abgleich (FR ~360, IT DOCG komplett, CH komplett, …) — je Land eine eigene Session, `verified: true` + `sources` im JSON setzen. |
 | — | 4–9 | Nicht begonnen. Reihenfolge gemäß §9. |

@@ -361,6 +361,17 @@ create index idx_drinking_log_cellar   on public.drinking_log (cellar_id, date d
 create index idx_drinking_log_wine     on public.drinking_log (wine_id);
 create index idx_cellar_members_cellar on public.cellar_members (cellar_id);
 
+-- ─── 5b. Grants ──────────────────────────────────────────────────────────────
+-- RLS entscheidet, WELCHE Zeilen eine Rolle sieht; GRANT entscheidet, ob die
+-- Rolle die Tabelle überhaupt anfassen darf. Ohne diese Grants bekäme JEDER
+-- eingeloggte User „permission denied" auf allen Tabellen. Spiegelt die
+-- Standard-Grants, die Supabase für neue public-Objekte vergibt — hier explizit,
+-- damit das Schema unabhängig von Default-Privilege-Magie reproduzierbar ist.
+grant usage on schema public to anon, authenticated, service_role;
+grant all on all tables    in schema public to anon, authenticated, service_role;
+grant all on all routines  in schema public to anon, authenticated, service_role;
+grant all on all sequences in schema public to anon, authenticated, service_role;
+
 -- ─── 6. RLS ──────────────────────────────────────────────────────────────────
 
 alter table public.profiles            enable row level security;
