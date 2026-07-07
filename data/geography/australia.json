@@ -1,0 +1,462 @@
+{
+  "country": "Australia",
+  "code": "AU",
+  "continent": "Oceania",
+  "appellations": [
+    {
+      "name": "Australian Wine",
+      "type": "National"
+    }
+  ],
+  "regions": [
+    {
+      "name": "South Australia",
+      "appellations": [
+        {
+          "name": "South Eastern Australia",
+          "type": "Broad GI"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Barossa Valley",
+          "appellations": [
+            {
+              "name": "Barossa Valley",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Eden Valley",
+          "appellations": [
+            {
+              "name": "Eden Valley",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "McLaren Vale",
+          "appellations": [
+            {
+              "name": "McLaren Vale",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Currency Creek",
+          "appellations": [
+            {
+              "name": "Currency Creek",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Langhorne Creek",
+          "appellations": [
+            {
+              "name": "Langhorne Creek",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Kangaroo Island",
+          "appellations": [
+            {
+              "name": "Kangaroo Island",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Adelaide Hills",
+          "appellations": [
+            {
+              "name": "Adelaide Hills",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Clare Valley",
+          "appellations": [
+            {
+              "name": "Clare Valley",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Coonawarra",
+          "appellations": [
+            {
+              "name": "Coonawarra",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Padthaway",
+          "appellations": [
+            {
+              "name": "Padthaway",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Wrattonbully",
+          "appellations": [
+            {
+              "name": "Wrattonbully",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Robe",
+          "appellations": [
+            {
+              "name": "Robe",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Mount Benson",
+          "appellations": [
+            {
+              "name": "Mount Benson",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Mount Gambier",
+          "appellations": [
+            {
+              "name": "Mount Gambier",
+              "type": "GI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Victoria",
+      "appellations": [
+        {
+          "name": "South Eastern Australia",
+          "type": "Broad GI"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Yarra Valley",
+          "appellations": [
+            {
+              "name": "Yarra Valley",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Mornington Peninsula",
+          "appellations": [
+            {
+              "name": "Mornington Peninsula",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Macedon Ranges",
+          "appellations": [
+            {
+              "name": "Macedon Ranges",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Heathcote",
+          "appellations": [
+            {
+              "name": "Heathcote",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Grampians",
+          "appellations": [
+            {
+              "name": "Grampians",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Pyrenees",
+          "appellations": [
+            {
+              "name": "Pyrenees",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Beechworth",
+          "appellations": [
+            {
+              "name": "Beechworth",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Rutherglen",
+          "appellations": [
+            {
+              "name": "Rutherglen",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Goulburn Valley",
+          "appellations": [
+            {
+              "name": "Goulburn Valley",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "King Valley",
+          "appellations": [
+            {
+              "name": "King Valley",
+              "type": "GI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Western Australia",
+      "appellations": [
+        {
+          "name": "Western Australia",
+          "type": "Broad GI"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Margaret River",
+          "appellations": [
+            {
+              "name": "Margaret River",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Great Southern",
+          "appellations": [
+            {
+              "name": "Great Southern",
+              "type": "GI"
+            },
+            {
+              "name": "Albany",
+              "type": "GI"
+            },
+            {
+              "name": "Denmark",
+              "type": "GI"
+            },
+            {
+              "name": "Frankland River",
+              "type": "GI"
+            },
+            {
+              "name": "Mount Barker",
+              "type": "GI"
+            },
+            {
+              "name": "Porongurup",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Pemberton",
+          "appellations": [
+            {
+              "name": "Pemberton",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Manjimup",
+          "appellations": [
+            {
+              "name": "Manjimup",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Swan District",
+          "appellations": [
+            {
+              "name": "Swan District",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Perth Hills",
+          "appellations": [
+            {
+              "name": "Perth Hills",
+              "type": "GI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "New South Wales",
+      "appellations": [
+        {
+          "name": "South Eastern Australia",
+          "type": "Broad GI"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Hunter Valley",
+          "appellations": [
+            {
+              "name": "Hunter Valley",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Mudgee",
+          "appellations": [
+            {
+              "name": "Mudgee",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Orange",
+          "appellations": [
+            {
+              "name": "Orange",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Hilltops",
+          "appellations": [
+            {
+              "name": "Hilltops",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Canberra District",
+          "appellations": [
+            {
+              "name": "Canberra District",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Riverina",
+          "appellations": [
+            {
+              "name": "Riverina",
+              "type": "GI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tasmania",
+      "appellations": [
+        {
+          "name": "Tasmania",
+          "type": "Broad GI"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Tamar Valley",
+          "appellations": [
+            {
+              "name": "Tamar Valley",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Coal River Valley",
+          "appellations": [
+            {
+              "name": "Coal River Valley",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "East Coast",
+          "appellations": [
+            {
+              "name": "East Coast Tasmania",
+              "type": "GI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Queensland",
+      "subRegions": [
+        {
+          "name": "Granite Belt",
+          "appellations": [
+            {
+              "name": "Granite Belt",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "South Burnett",
+          "appellations": [
+            {
+              "name": "South Burnett",
+              "type": "GI"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

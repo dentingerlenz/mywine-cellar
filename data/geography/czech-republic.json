@@ -1,0 +1,77 @@
+{
+  "country": "Czech Republic",
+  "code": "CZ",
+  "continent": "Europe",
+  "appellations": [
+    {
+      "name": "Stolni Vino",
+      "type": "Table"
+    }
+  ],
+  "regions": [
+    {
+      "name": "Morava",
+      "subRegions": [
+        {
+          "name": "Znojemska",
+          "appellations": [
+            {
+              "name": "Znojemska",
+              "type": "CHOP"
+            }
+          ]
+        },
+        {
+          "name": "Mikulovska",
+          "appellations": [
+            {
+              "name": "Mikulovska",
+              "type": "CHOP"
+            }
+          ]
+        },
+        {
+          "name": "Velkopavlovicka",
+          "appellations": [
+            {
+              "name": "Velkopavlovicka",
+              "type": "CHOP"
+            }
+          ]
+        },
+        {
+          "name": "Slovacka",
+          "appellations": [
+            {
+              "name": "Slovacka",
+              "type": "CHOP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Cechy",
+      "subRegions": [
+        {
+          "name": "Melnická",
+          "appellations": [
+            {
+              "name": "Melnická",
+              "type": "CHOP"
+            }
+          ]
+        },
+        {
+          "name": "Litomericka",
+          "appellations": [
+            {
+              "name": "Litomericka",
+              "type": "CHOP"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

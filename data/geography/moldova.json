@@ -1,0 +1,69 @@
+{
+  "country": "Moldova",
+  "code": "MD",
+  "continent": "Europe",
+  "appellations": [
+    {
+      "name": "Vin de masa",
+      "type": "Table"
+    }
+  ],
+  "regions": [
+    {
+      "name": "Codru",
+      "subRegions": [
+        {
+          "name": "Codru",
+          "appellations": [
+            {
+              "name": "Codru",
+              "type": "DOC"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Valul lui Traian",
+      "subRegions": [
+        {
+          "name": "Valul lui Traian",
+          "appellations": [
+            {
+              "name": "Valul lui Traian",
+              "type": "DOC"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Stefan Voda",
+      "subRegions": [
+        {
+          "name": "Stefan Voda",
+          "appellations": [
+            {
+              "name": "Stefan Voda",
+              "type": "DOC"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Balti",
+      "subRegions": [
+        {
+          "name": "Balti",
+          "appellations": [
+            {
+              "name": "Balti",
+              "type": "DOC"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

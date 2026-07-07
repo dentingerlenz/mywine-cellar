@@ -1,0 +1,77 @@
+{
+  "country": "Uruguay",
+  "code": "UY",
+  "continent": "Americas",
+  "regions": [
+    {
+      "name": "Canelones",
+      "subRegions": [
+        {
+          "name": "Canelones",
+          "appellations": [
+            {
+              "name": "Canelones",
+              "type": "DOP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Maldonado",
+      "subRegions": [
+        {
+          "name": "Maldonado",
+          "appellations": [
+            {
+              "name": "Maldonado",
+              "type": "DOP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Colonia",
+      "subRegions": [
+        {
+          "name": "Colonia",
+          "appellations": [
+            {
+              "name": "Colonia",
+              "type": "DOP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Rivera",
+      "subRegions": [
+        {
+          "name": "Rivera",
+          "appellations": [
+            {
+              "name": "Rivera",
+              "type": "DOP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Montevideo",
+      "subRegions": [
+        {
+          "name": "Montevideo",
+          "appellations": [
+            {
+              "name": "Montevideo",
+              "type": "DOP"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

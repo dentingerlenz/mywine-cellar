@@ -1,0 +1,133 @@
+{
+  "country": "Romania",
+  "code": "RO",
+  "continent": "Europe",
+  "appellations": [
+    {
+      "name": "Vin fara Indicatie Geografica",
+      "type": "Table"
+    }
+  ],
+  "regions": [
+    {
+      "name": "Moldova",
+      "subRegions": [
+        {
+          "name": "Cotnari",
+          "appellations": [
+            {
+              "name": "Cotnari",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Iasi",
+          "appellations": [
+            {
+              "name": "Iasi",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Husi",
+          "appellations": [
+            {
+              "name": "Husi",
+              "type": "DOC"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Muntenia & Oltenia",
+      "subRegions": [
+        {
+          "name": "Dealu Mare",
+          "appellations": [
+            {
+              "name": "Dealu Mare",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Dragasani",
+          "appellations": [
+            {
+              "name": "Dragasani",
+              "type": "DOC"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Dobrogea",
+      "subRegions": [
+        {
+          "name": "Murfatlar",
+          "appellations": [
+            {
+              "name": "Murfatlar",
+              "type": "DOC"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Transylvania",
+      "subRegions": [
+        {
+          "name": "Tarnave",
+          "appellations": [
+            {
+              "name": "Tarnave",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Alba Iulia-Aiud",
+          "appellations": [
+            {
+              "name": "Alba Iulia-Aiud",
+              "type": "DOC"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Banat",
+      "subRegions": [
+        {
+          "name": "Recas",
+          "appellations": [
+            {
+              "name": "Recas",
+              "type": "DOC"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Crisana & Maramures",
+      "subRegions": [
+        {
+          "name": "Mini-Maderat",
+          "appellations": [
+            {
+              "name": "Mini-Maderat",
+              "type": "DOC"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

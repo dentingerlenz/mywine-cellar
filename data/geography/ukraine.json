@@ -1,0 +1,58 @@
+{
+  "country": "Ukraine",
+  "code": "UA",
+  "continent": "Europe",
+  "regions": [
+    {
+      "name": "Crimea",
+      "subRegions": [
+        {
+          "name": "Southern Coast",
+          "appellations": [
+            {
+              "name": "Yuzhnyi Bereg",
+              "type": "PDO"
+            }
+          ]
+        },
+        {
+          "name": "Sevastopol",
+          "appellations": [
+            {
+              "name": "Sevastopol",
+              "type": "PDO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Odessa",
+      "subRegions": [
+        {
+          "name": "Shabo",
+          "appellations": [
+            {
+              "name": "Shabo",
+              "type": "PDO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Zakarpattia",
+      "subRegions": [
+        {
+          "name": "Zakarpattia",
+          "appellations": [
+            {
+              "name": "Zakarpattia",
+              "type": "PGI"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

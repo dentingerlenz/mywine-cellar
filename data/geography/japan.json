@@ -1,0 +1,83 @@
+{
+  "country": "Japan",
+  "code": "JP",
+  "continent": "Asia",
+  "appellations": [
+    {
+      "name": "Japanese Wine",
+      "type": "National"
+    }
+  ],
+  "regions": [
+    {
+      "name": "Yamanashi",
+      "subRegions": [
+        {
+          "name": "Katsunuma / Isawa",
+          "appellations": [
+            {
+              "name": "Yamanashi",
+              "type": "GI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Nagano",
+      "subRegions": [
+        {
+          "name": "Chikumagawa / Obuse",
+          "appellations": [
+            {
+              "name": "Nagano",
+              "type": "GI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Hokkaido",
+      "subRegions": [
+        {
+          "name": "Yoichi / Furano",
+          "appellations": [
+            {
+              "name": "Hokkaido",
+              "type": "GI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Yamagata",
+      "subRegions": [
+        {
+          "name": "Takahata / Sagae",
+          "appellations": [
+            {
+              "name": "Yamagata",
+              "type": "GI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Osaka",
+      "subRegions": [
+        {
+          "name": "Ikeda",
+          "appellations": [
+            {
+              "name": "Osaka",
+              "type": "GI"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

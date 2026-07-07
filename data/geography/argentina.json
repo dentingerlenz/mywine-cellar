@@ -1,0 +1,181 @@
+{
+  "country": "Argentina",
+  "code": "AR",
+  "continent": "Americas",
+  "appellations": [
+    {
+      "name": "Vino de Argentina",
+      "type": "National"
+    }
+  ],
+  "regions": [
+    {
+      "name": "Mendoza",
+      "appellations": [
+        {
+          "name": "Mendoza Wine",
+          "type": "IG"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Lujan de Cuyo",
+          "appellations": [
+            {
+              "name": "Lujan de Cuyo",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Maipu",
+          "appellations": [
+            {
+              "name": "Maipu",
+              "type": "IG"
+            }
+          ]
+        },
+        {
+          "name": "Valle de Uco",
+          "appellations": [
+            {
+              "name": "Valle de Uco",
+              "type": "IG"
+            }
+          ]
+        },
+        {
+          "name": "San Rafael",
+          "appellations": [
+            {
+              "name": "San Rafael",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Este",
+          "appellations": [
+            {
+              "name": "Este de Mendoza",
+              "type": "IG"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "San Juan",
+      "subRegions": [
+        {
+          "name": "Tulum",
+          "appellations": [
+            {
+              "name": "Tulum",
+              "type": "IG"
+            }
+          ]
+        },
+        {
+          "name": "Ullum",
+          "appellations": [
+            {
+              "name": "Ullum",
+              "type": "IG"
+            }
+          ]
+        },
+        {
+          "name": "Calingasta",
+          "appellations": [
+            {
+              "name": "Calingasta",
+              "type": "IG"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Salta",
+      "subRegions": [
+        {
+          "name": "Valles Calchaquies",
+          "appellations": [
+            {
+              "name": "Cafayate",
+              "type": "IG"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "La Rioja",
+      "subRegions": [
+        {
+          "name": "Famatina",
+          "appellations": [
+            {
+              "name": "Famatina",
+              "type": "IG"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Catamarca",
+      "subRegions": [
+        {
+          "name": "Santa Maria / Fiambala",
+          "appellations": [
+            {
+              "name": "Catamarca",
+              "type": "IG"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Patagonia",
+      "appellations": [
+        {
+          "name": "Patagonia Wine",
+          "type": "IG"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Neuquen",
+          "appellations": [
+            {
+              "name": "San Patricio del Chanar",
+              "type": "IG"
+            }
+          ]
+        },
+        {
+          "name": "Rio Negro",
+          "appellations": [
+            {
+              "name": "Alto Valle of Rio Negro",
+              "type": "IG"
+            }
+          ]
+        },
+        {
+          "name": "Chubut",
+          "appellations": [
+            {
+              "name": "Chubut",
+              "type": "IG"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

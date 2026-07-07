@@ -1,0 +1,21 @@
+{
+  "country": "Netherlands",
+  "code": "NL",
+  "continent": "Europe",
+  "regions": [
+    {
+      "name": "Zuid-Limburg",
+      "subRegions": [
+        {
+          "name": "Maas Valley",
+          "appellations": [
+            {
+              "name": "Zuid-Limburg",
+              "type": "BGA"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

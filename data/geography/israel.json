@@ -1,0 +1,77 @@
+{
+  "country": "Israel",
+  "code": "IL",
+  "continent": "Asia",
+  "regions": [
+    {
+      "name": "Galil",
+      "subRegions": [
+        {
+          "name": "Upper Galilee / Golan Heights",
+          "appellations": [
+            {
+              "name": "Galil",
+              "type": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Shomron",
+      "subRegions": [
+        {
+          "name": "Carmel slopes",
+          "appellations": [
+            {
+              "name": "Shomron",
+              "type": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Shimshon",
+      "subRegions": [
+        {
+          "name": "Judean foothills",
+          "appellations": [
+            {
+              "name": "Shimshon",
+              "type": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Negev",
+      "subRegions": [
+        {
+          "name": "Ramat Arad / Mitzpe Ramon",
+          "appellations": [
+            {
+              "name": "Negev",
+              "type": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Judean Hills",
+      "subRegions": [
+        {
+          "name": "Jerusalem mountains",
+          "appellations": [
+            {
+              "name": "Judean Hills",
+              "type": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

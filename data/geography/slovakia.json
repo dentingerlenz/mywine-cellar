@@ -1,0 +1,97 @@
+{
+  "country": "Slovakia",
+  "code": "SK",
+  "continent": "Europe",
+  "appellations": [
+    {
+      "name": "Stolove Vino",
+      "type": "Table"
+    }
+  ],
+  "regions": [
+    {
+      "name": "Malokarpatska",
+      "subRegions": [
+        {
+          "name": "Male Karpaty",
+          "appellations": [
+            {
+              "name": "Malokarpatska",
+              "type": "CHOP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Juzno-slovenská",
+      "subRegions": [
+        {
+          "name": "Southern Slovakia",
+          "appellations": [
+            {
+              "name": "Juzno-slovenská",
+              "type": "CHOP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Nitrianska",
+      "subRegions": [
+        {
+          "name": "Nitra",
+          "appellations": [
+            {
+              "name": "Nitrianska",
+              "type": "CHOP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tokajská",
+      "subRegions": [
+        {
+          "name": "Slovak Tokaj",
+          "appellations": [
+            {
+              "name": "Tokajská",
+              "type": "CHOP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Stredoslovenská",
+      "subRegions": [
+        {
+          "name": "Central Slovakia",
+          "appellations": [
+            {
+              "name": "Stredoslovenská",
+              "type": "CHOP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Východoslovenská",
+      "subRegions": [
+        {
+          "name": "Eastern Slovakia",
+          "appellations": [
+            {
+              "name": "Východoslovenská",
+              "type": "CHOP"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

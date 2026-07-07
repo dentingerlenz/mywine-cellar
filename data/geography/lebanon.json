@@ -1,0 +1,35 @@
+{
+  "country": "Lebanon",
+  "code": "LB",
+  "continent": "Asia",
+  "regions": [
+    {
+      "name": "Bekaa Valley",
+      "subRegions": [
+        {
+          "name": "Zahle / Baalbek",
+          "appellations": [
+            {
+              "name": "Bekaa",
+              "type": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Mont-Liban",
+      "subRegions": [
+        {
+          "name": "Kesrouane / Batroun",
+          "appellations": [
+            {
+              "name": "Mont-Liban",
+              "type": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

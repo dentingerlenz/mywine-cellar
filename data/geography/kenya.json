@@ -1,0 +1,21 @@
+{
+  "country": "Kenya",
+  "code": "KE",
+  "continent": "Africa",
+  "regions": [
+    {
+      "name": "Rift Valley",
+      "subRegions": [
+        {
+          "name": "Naivasha",
+          "appellations": [
+            {
+              "name": "Lake Naivasha",
+              "type": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

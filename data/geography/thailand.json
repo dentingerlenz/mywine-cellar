@@ -1,0 +1,35 @@
+{
+  "country": "Thailand",
+  "code": "TH",
+  "continent": "Asia",
+  "regions": [
+    {
+      "name": "Nakhon Ratchasima",
+      "subRegions": [
+        {
+          "name": "Khao Yai",
+          "appellations": [
+            {
+              "name": "Khao Yai",
+              "type": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Prachuap Khiri Khan",
+      "subRegions": [
+        {
+          "name": "Hua Hin Hills",
+          "appellations": [
+            {
+              "name": "Hua Hin Hills",
+              "type": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

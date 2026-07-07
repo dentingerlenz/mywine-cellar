@@ -1,0 +1,61 @@
+{
+  "country": "Morocco",
+  "code": "MA",
+  "continent": "Africa",
+  "regions": [
+    {
+      "name": "Meknes-Fes",
+      "subRegions": [
+        {
+          "name": "Meknes",
+          "appellations": [
+            {
+              "name": "Guerrouane",
+              "type": "AOG"
+            },
+            {
+              "name": "Beni M’Tir",
+              "type": "AOG"
+            },
+            {
+              "name": "Zerhoune",
+              "type": "AOG"
+            },
+            {
+              "name": "Sais",
+              "type": "AOG"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Rabat-Casablanca",
+      "subRegions": [
+        {
+          "name": "Gharb / Chaouia",
+          "appellations": [
+            {
+              "name": "Zenata",
+              "type": "AOG"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Oriental",
+      "subRegions": [
+        {
+          "name": "Berkane / Angad",
+          "appellations": [
+            {
+              "name": "Angad",
+              "type": "AOG"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

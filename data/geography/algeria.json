@@ -1,0 +1,63 @@
+{
+  "country": "Algeria",
+  "code": "DZ",
+  "continent": "Africa",
+  "regions": [
+    {
+      "name": "Mascara",
+      "subRegions": [
+        {
+          "name": "Mascara",
+          "appellations": [
+            {
+              "name": "Coteaux de Mascara",
+              "type": "AOIG"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tlemcen",
+      "subRegions": [
+        {
+          "name": "Tlemcen",
+          "appellations": [
+            {
+              "name": "Coteaux de Tlemcen",
+              "type": "AOIG"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Medea",
+      "subRegions": [
+        {
+          "name": "Ain Bessem",
+          "appellations": [
+            {
+              "name": "Ain Bessem-Bouira",
+              "type": "AOIG"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Miliana",
+      "subRegions": [
+        {
+          "name": "Miliana",
+          "appellations": [
+            {
+              "name": "Coteaux du Zaccar",
+              "type": "AOIG"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

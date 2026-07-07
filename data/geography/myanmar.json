@@ -1,0 +1,21 @@
+{
+  "country": "Myanmar",
+  "code": "MM",
+  "continent": "Asia",
+  "regions": [
+    {
+      "name": "Shan State",
+      "subRegions": [
+        {
+          "name": "Inle Lake / Taunggyi",
+          "appellations": [
+            {
+              "name": "Aythaya",
+              "type": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

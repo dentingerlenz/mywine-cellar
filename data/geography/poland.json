@@ -1,0 +1,11 @@
+{
+  "country": "Poland",
+  "code": "PL",
+  "continent": "Europe",
+  "regions": [
+    { "name": "Dolny Śląsk" },
+    { "name": "Małopolska" },
+    { "name": "Podkarpacie" },
+    { "name": "Lubuskie" }
+  ]
+}

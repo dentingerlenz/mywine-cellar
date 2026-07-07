@@ -1,0 +1,97 @@
+{
+  "country": "England & Wales",
+  "code": "GB",
+  "continent": "Europe",
+  "appellations": [
+    {
+      "name": "English Wine / Welsh Wine",
+      "type": "National"
+    }
+  ],
+  "regions": [
+    {
+      "name": "Sussex",
+      "subRegions": [
+        {
+          "name": "West & East Sussex",
+          "appellations": [
+            {
+              "name": "Sussex",
+              "type": "PDO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kent",
+      "subRegions": [
+        {
+          "name": "Kent",
+          "appellations": [
+            {
+              "name": "English Wine",
+              "type": "PGI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Hampshire",
+      "subRegions": [
+        {
+          "name": "Hampshire",
+          "appellations": [
+            {
+              "name": "English Wine",
+              "type": "PGI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "East Anglia",
+      "subRegions": [
+        {
+          "name": "Essex / Suffolk / Norfolk",
+          "appellations": [
+            {
+              "name": "English Wine",
+              "type": "PGI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Wales",
+      "subRegions": [
+        {
+          "name": "Wales",
+          "appellations": [
+            {
+              "name": "Welsh Wine",
+              "type": "PDO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "South-West",
+      "subRegions": [
+        {
+          "name": "Cornwall & Devon",
+          "appellations": [
+            {
+              "name": "English Wine",
+              "type": "PGI"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

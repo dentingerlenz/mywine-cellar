@@ -1,0 +1,49 @@
+{
+  "country": "Serbia",
+  "code": "RS",
+  "continent": "Europe",
+  "regions": [
+    {
+      "name": "Fruska Gora",
+      "subRegions": [
+        {
+          "name": "Fruska Gora",
+          "appellations": [
+            {
+              "name": "Fruska Gora",
+              "type": "KGP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Zupa",
+      "subRegions": [
+        {
+          "name": "Zupa Aleksandrovacka",
+          "appellations": [
+            {
+              "name": "Zupa",
+              "type": "KGP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Timok",
+      "subRegions": [
+        {
+          "name": "Timoska krajina",
+          "appellations": [
+            {
+              "name": "Timok",
+              "type": "KGP"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "country": "Luxembourg",
+  "code": "LU",
+  "continent": "Europe",
+  "regions": [
+    {
+      "name": "Moselle Luxembourgeoise",
+      "subRegions": [
+        {
+          "name": "Moselle",
+          "appellations": [
+            {
+              "name": "Moselle Luxembourgeoise",
+              "type": "AOP"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

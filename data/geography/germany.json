@@ -1,0 +1,315 @@
+{
+  "country": "Germany",
+  "code": "DE",
+  "continent": "Europe",
+  "appellations": [
+    {
+      "name": "Deutscher Wein",
+      "type": "Tafelwein"
+    }
+  ],
+  "regions": [
+    {
+      "name": "Mosel",
+      "appellations": [
+        {
+          "name": "Landwein der Mosel",
+          "type": "Landwein"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Mittelmosel",
+          "appellations": [
+            {
+              "name": "Mosel",
+              "type": "Pradikatswein"
+            }
+          ]
+        },
+        {
+          "name": "Saar",
+          "appellations": [
+            {
+              "name": "Mosel",
+              "type": "Pradikatswein"
+            }
+          ]
+        },
+        {
+          "name": "Ruwer",
+          "appellations": [
+            {
+              "name": "Mosel",
+              "type": "Pradikatswein"
+            }
+          ]
+        },
+        {
+          "name": "Terrassenmosel",
+          "appellations": [
+            {
+              "name": "Mosel",
+              "type": "Pradikatswein"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Rheingau",
+      "appellations": [
+        {
+          "name": "Rheingauer Landwein",
+          "type": "Landwein"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Rheingau",
+          "appellations": [
+            {
+              "name": "Rheingau",
+              "type": "Pradikatswein"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Rheinhessen",
+      "appellations": [
+        {
+          "name": "Rheinischer Landwein",
+          "type": "Landwein"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Rheinhessen",
+          "appellations": [
+            {
+              "name": "Rheinhessen",
+              "type": "Pradikatswein"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Pfalz",
+      "appellations": [
+        {
+          "name": "Pfälzer Landwein",
+          "type": "Landwein"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Pfalz",
+          "appellations": [
+            {
+              "name": "Pfalz",
+              "type": "Pradikatswein"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Nahe",
+      "appellations": [
+        {
+          "name": "Nahegauer Landwein",
+          "type": "Landwein"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Nahe",
+          "appellations": [
+            {
+              "name": "Nahe",
+              "type": "Pradikatswein"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Franken",
+      "appellations": [
+        {
+          "name": "Fränkischer Landwein",
+          "type": "Landwein"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Franken",
+          "appellations": [
+            {
+              "name": "Franken",
+              "type": "Pradikatswein"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Baden",
+      "appellations": [
+        {
+          "name": "Badischer Landwein",
+          "type": "Landwein"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Kaiserstuhl",
+          "appellations": [
+            {
+              "name": "Baden",
+              "type": "Pradikatswein"
+            }
+          ]
+        },
+        {
+          "name": "Markgraflerland",
+          "appellations": [
+            {
+              "name": "Baden",
+              "type": "Pradikatswein"
+            }
+          ]
+        },
+        {
+          "name": "Ortenau",
+          "appellations": [
+            {
+              "name": "Baden",
+              "type": "Pradikatswein"
+            }
+          ]
+        },
+        {
+          "name": "Breisgau",
+          "appellations": [
+            {
+              "name": "Baden",
+              "type": "Pradikatswein"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Württemberg",
+      "appellations": [
+        {
+          "name": "Schwäbischer Landwein",
+          "type": "Landwein"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Württemberg",
+          "appellations": [
+            {
+              "name": "Württemberg",
+              "type": "Pradikatswein"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Mittelrhein",
+      "subRegions": [
+        {
+          "name": "Mittelrhein",
+          "appellations": [
+            {
+              "name": "Mittelrhein",
+              "type": "Pradikatswein"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ahr",
+      "appellations": [
+        {
+          "name": "Ahrer Landwein",
+          "type": "Landwein"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Ahr",
+          "appellations": [
+            {
+              "name": "Ahr",
+              "type": "Pradikatswein"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Saale-Unstrut",
+      "appellations": [
+        {
+          "name": "Mitteldeutscher Landwein",
+          "type": "Landwein"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Saale-Unstrut",
+          "appellations": [
+            {
+              "name": "Saale-Unstrut",
+              "type": "Pradikatswein"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Sachsen",
+      "appellations": [
+        {
+          "name": "Sächsischer Landwein",
+          "type": "Landwein"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Sachsen",
+          "appellations": [
+            {
+              "name": "Sachsen",
+              "type": "Pradikatswein"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Hessische Bergstrasse",
+      "subRegions": [
+        {
+          "name": "Hessische Bergstrasse",
+          "appellations": [
+            {
+              "name": "Hessische Bergstrasse",
+              "type": "Pradikatswein"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

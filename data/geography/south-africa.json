@@ -1,0 +1,159 @@
+{
+  "country": "South Africa",
+  "code": "ZA",
+  "continent": "Africa",
+  "appellations": [
+    {
+      "name": "Wine of Origin",
+      "type": "WO"
+    }
+  ],
+  "regions": [
+    {
+      "name": "Western Cape",
+      "appellations": [
+        {
+          "name": "Western Cape",
+          "type": "WO"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Stellenbosch",
+          "appellations": [
+            {
+              "name": "Stellenbosch",
+              "type": "WO District"
+            }
+          ]
+        },
+        {
+          "name": "Franschhoek",
+          "appellations": [
+            {
+              "name": "Franschhoek",
+              "type": "WO Ward"
+            }
+          ]
+        },
+        {
+          "name": "Paarl",
+          "appellations": [
+            {
+              "name": "Paarl",
+              "type": "WO District"
+            }
+          ]
+        },
+        {
+          "name": "Swartland",
+          "appellations": [
+            {
+              "name": "Swartland",
+              "type": "WO District"
+            }
+          ]
+        },
+        {
+          "name": "Constantia",
+          "appellations": [
+            {
+              "name": "Constantia",
+              "type": "WO Ward"
+            }
+          ]
+        },
+        {
+          "name": "Elgin",
+          "appellations": [
+            {
+              "name": "Elgin",
+              "type": "WO Ward"
+            }
+          ]
+        },
+        {
+          "name": "Walker Bay",
+          "appellations": [
+            {
+              "name": "Walker Bay",
+              "type": "WO District"
+            },
+            {
+              "name": "Hemel-en-Aarde Valley",
+              "type": "WO Ward"
+            }
+          ]
+        },
+        {
+          "name": "Overberg",
+          "appellations": [
+            {
+              "name": "Overberg",
+              "type": "WO District"
+            },
+            {
+              "name": "Elim",
+              "type": "WO Ward"
+            }
+          ]
+        },
+        {
+          "name": "Robertson",
+          "appellations": [
+            {
+              "name": "Robertson",
+              "type": "WO District"
+            }
+          ]
+        },
+        {
+          "name": "Worcester",
+          "appellations": [
+            {
+              "name": "Worcester",
+              "type": "WO District"
+            }
+          ]
+        },
+        {
+          "name": "Breedekloof",
+          "appellations": [
+            {
+              "name": "Breedekloof",
+              "type": "WO District"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Northern Cape",
+      "subRegions": [
+        {
+          "name": "Orange River",
+          "appellations": [
+            {
+              "name": "Orange River",
+              "type": "WO Region"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "KwaZulu-Natal",
+      "subRegions": [
+        {
+          "name": "KwaZulu-Natal",
+          "appellations": [
+            {
+              "name": "KwaZulu-Natal",
+              "type": "WO Geographical Unit"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

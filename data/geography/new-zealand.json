@@ -1,0 +1,273 @@
+{
+  "country": "New Zealand",
+  "code": "NZ",
+  "continent": "Oceania",
+  "appellations": [
+    {
+      "name": "New Zealand Wine",
+      "type": "National"
+    }
+  ],
+  "regions": [
+    {
+      "name": "Marlborough",
+      "appellations": [
+        {
+          "name": "Marlborough Wine",
+          "type": "GI"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Wairau Valley",
+          "appellations": [
+            {
+              "name": "Marlborough",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Awatere Valley",
+          "appellations": [
+            {
+              "name": "Marlborough",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Southern Valleys",
+          "appellations": [
+            {
+              "name": "Marlborough",
+              "type": "GI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Hawke’s Bay",
+      "subRegions": [
+        {
+          "name": "Gimblett Gravels",
+          "appellations": [
+            {
+              "name": "Hawke’s Bay",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Bridge Pa Triangle",
+          "appellations": [
+            {
+              "name": "Hawke’s Bay",
+              "type": "GI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Central Otago",
+      "appellations": [
+        {
+          "name": "Central Otago Wine",
+          "type": "GI"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Bannockburn",
+          "appellations": [
+            {
+              "name": "Central Otago",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Cromwell Basin",
+          "appellations": [
+            {
+              "name": "Central Otago",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Gibbston",
+          "appellations": [
+            {
+              "name": "Central Otago",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Wanaka",
+          "appellations": [
+            {
+              "name": "Central Otago",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Bendigo",
+          "appellations": [
+            {
+              "name": "Central Otago",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Alexandra",
+          "appellations": [
+            {
+              "name": "Central Otago",
+              "type": "GI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Canterbury",
+      "subRegions": [
+        {
+          "name": "Waipara Valley",
+          "appellations": [
+            {
+              "name": "Canterbury",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Christchurch Plains",
+          "appellations": [
+            {
+              "name": "Canterbury",
+              "type": "GI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Wairarapa",
+      "subRegions": [
+        {
+          "name": "Martinborough",
+          "appellations": [
+            {
+              "name": "Martinborough",
+              "type": "GI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Nelson",
+      "subRegions": [
+        {
+          "name": "Waimea Plains",
+          "appellations": [
+            {
+              "name": "Nelson",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Moutere Hills",
+          "appellations": [
+            {
+              "name": "Nelson",
+              "type": "GI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Waitaki Valley",
+      "subRegions": [
+        {
+          "name": "Waitaki Valley",
+          "appellations": [
+            {
+              "name": "Waitaki Valley",
+              "type": "GI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Gisborne",
+      "subRegions": [
+        {
+          "name": "Gisborne",
+          "appellations": [
+            {
+              "name": "Gisborne",
+              "type": "GI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Auckland",
+      "subRegions": [
+        {
+          "name": "Waiheke Island",
+          "appellations": [
+            {
+              "name": "Auckland",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Henderson",
+          "appellations": [
+            {
+              "name": "Auckland",
+              "type": "GI"
+            }
+          ]
+        },
+        {
+          "name": "Matakana",
+          "appellations": [
+            {
+              "name": "Auckland",
+              "type": "GI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Northland",
+      "subRegions": [
+        {
+          "name": "Northland",
+          "appellations": [
+            {
+              "name": "Northland",
+              "type": "GI"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

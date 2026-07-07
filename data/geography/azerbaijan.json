@@ -1,0 +1,35 @@
+{
+  "country": "Azerbaijan",
+  "code": "AZ",
+  "continent": "Asia",
+  "regions": [
+    {
+      "name": "Ganja-Gazakh",
+      "subRegions": [
+        {
+          "name": "Shamkhor / Tovuz",
+          "appellations": [
+            {
+              "name": "Ganja-Gazakh",
+              "type": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Shirvan",
+      "subRegions": [
+        {
+          "name": "Shamakhy / Goychay",
+          "appellations": [
+            {
+              "name": "Shirvan",
+              "type": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "country": "Brazil",
+  "code": "BR",
+  "continent": "Americas",
+  "regions": [
+    {
+      "name": "Rio Grande do Sul",
+      "subRegions": [
+        {
+          "name": "Serra Gaucha",
+          "appellations": [
+            {
+              "name": "Vale dos Vinhedos",
+              "type": "DO"
+            },
+            {
+              "name": "Pinto Bandeira",
+              "type": "IP"
+            },
+            {
+              "name": "Altos Montes",
+              "type": "IP"
+            }
+          ]
+        },
+        {
+          "name": "Campanha",
+          "appellations": [
+            {
+              "name": "Campanha Gaucha",
+              "type": "IP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Santa Catarina",
+      "subRegions": [
+        {
+          "name": "Serra Catarinense",
+          "appellations": [
+            {
+              "name": "Planalto Catarinense",
+              "type": "IP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Pernambuco / Bahia",
+      "subRegions": [
+        {
+          "name": "Vale do Sao Francisco",
+          "appellations": [
+            {
+              "name": "Vale do Sao Francisco",
+              "type": "IP"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

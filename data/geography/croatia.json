@@ -1,0 +1,90 @@
+{
+  "country": "Croatia",
+  "code": "HR",
+  "continent": "Europe",
+  "appellations": [
+    {
+      "name": "Stolno Vino",
+      "type": "Table"
+    }
+  ],
+  "regions": [
+    {
+      "name": "Primorska",
+      "subRegions": [
+        {
+          "name": "Istra",
+          "appellations": [
+            {
+              "name": "Istra",
+              "type": "KPN"
+            }
+          ]
+        },
+        {
+          "name": "Kvarner",
+          "appellations": [
+            {
+              "name": "Kvarner",
+              "type": "KPN"
+            }
+          ]
+        },
+        {
+          "name": "Sjeverna Dalmacija",
+          "appellations": [
+            {
+              "name": "Sjeverna Dalmacija",
+              "type": "KPN"
+            }
+          ]
+        },
+        {
+          "name": "Srednja i Juzna Dalmacija",
+          "appellations": [
+            {
+              "name": "Dingac",
+              "type": "KPN"
+            },
+            {
+              "name": "Postup",
+              "type": "KPN"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kontinentalna",
+      "subRegions": [
+        {
+          "name": "Slavonija",
+          "appellations": [
+            {
+              "name": "Slavonija",
+              "type": "KPN"
+            }
+          ]
+        },
+        {
+          "name": "Podunavlje",
+          "appellations": [
+            {
+              "name": "Podunavlje",
+              "type": "KPN"
+            }
+          ]
+        },
+        {
+          "name": "Plesivica",
+          "appellations": [
+            {
+              "name": "Plesivica",
+              "type": "KPN"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "country": "Ethiopia",
+  "code": "ET",
+  "continent": "Africa",
+  "regions": [
+    {
+      "name": "Rift Valley",
+      "subRegions": [
+        {
+          "name": "Ziway",
+          "appellations": [
+            {
+              "name": "Ziway",
+              "type": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "country": "Belgium",
+  "code": "BE",
+  "continent": "Europe",
+  "regions": [
+    {
+      "name": "Hageland",
+      "subRegions": [
+        {
+          "name": "Flemish Brabant",
+          "appellations": [
+            {
+              "name": "Hageland",
+              "type": "AOP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Haspengouw",
+      "subRegions": [
+        {
+          "name": "Limburg & Brabant",
+          "appellations": [
+            {
+              "name": "Haspengouw",
+              "type": "AOP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Coteaux de Sambre-et-Meuse",
+      "subRegions": [
+        {
+          "name": "Namur & Liege",
+          "appellations": [
+            {
+              "name": "Coteaux de Sambre-et-Meuse",
+              "type": "AOP"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

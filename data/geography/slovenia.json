@@ -1,0 +1,109 @@
+{
+  "country": "Slovenia",
+  "code": "SI",
+  "continent": "Europe",
+  "appellations": [
+    {
+      "name": "Namizno Vino",
+      "type": "Table"
+    }
+  ],
+  "regions": [
+    {
+      "name": "Primorska",
+      "subRegions": [
+        {
+          "name": "Goriska Brda",
+          "appellations": [
+            {
+              "name": "Goriska Brda",
+              "type": "ZGP"
+            }
+          ]
+        },
+        {
+          "name": "Kras",
+          "appellations": [
+            {
+              "name": "Kras",
+              "type": "ZGP"
+            }
+          ]
+        },
+        {
+          "name": "Koper",
+          "appellations": [
+            {
+              "name": "Koper",
+              "type": "ZGP"
+            }
+          ]
+        },
+        {
+          "name": "Vipavska dolina",
+          "appellations": [
+            {
+              "name": "Vipavska dolina",
+              "type": "ZGP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Podravje",
+      "subRegions": [
+        {
+          "name": "Stajerska Slovenija",
+          "appellations": [
+            {
+              "name": "Stajerska Slovenija",
+              "type": "ZGP"
+            }
+          ]
+        },
+        {
+          "name": "Prekmurje",
+          "appellations": [
+            {
+              "name": "Prekmurje",
+              "type": "ZGP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Posavje",
+      "subRegions": [
+        {
+          "name": "Bela Krajina",
+          "appellations": [
+            {
+              "name": "Bela Krajina",
+              "type": "ZGP"
+            }
+          ]
+        },
+        {
+          "name": "Bizeljsko-Sremic",
+          "appellations": [
+            {
+              "name": "Bizeljsko-Sremic",
+              "type": "ZGP"
+            }
+          ]
+        },
+        {
+          "name": "Dolenjska",
+          "appellations": [
+            {
+              "name": "Dolenjska",
+              "type": "ZGP"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

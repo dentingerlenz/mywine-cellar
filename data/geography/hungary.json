@@ -1,0 +1,139 @@
+{
+  "country": "Hungary",
+  "code": "HU",
+  "continent": "Europe",
+  "appellations": [
+    {
+      "name": "Bortermelo Orszag",
+      "type": "Table"
+    }
+  ],
+  "regions": [
+    {
+      "name": "Tokaj-Hegyalja",
+      "subRegions": [
+        {
+          "name": "Tokaj",
+          "appellations": [
+            {
+              "name": "Tokaj",
+              "type": "OEM"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Eger",
+      "subRegions": [
+        {
+          "name": "Eger",
+          "appellations": [
+            {
+              "name": "Egri Bikaver",
+              "type": "OEM"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Villany",
+      "subRegions": [
+        {
+          "name": "Villany",
+          "appellations": [
+            {
+              "name": "Villany",
+              "type": "OEM"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Szekszard",
+      "subRegions": [
+        {
+          "name": "Szekszard",
+          "appellations": [
+            {
+              "name": "Szekszard",
+              "type": "OEM"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Somlo",
+      "subRegions": [
+        {
+          "name": "Somlo",
+          "appellations": [
+            {
+              "name": "Somlo",
+              "type": "OEM"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Badacsony",
+      "subRegions": [
+        {
+          "name": "Badacsony",
+          "appellations": [
+            {
+              "name": "Badacsony",
+              "type": "OEM"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Balatonfured-Csopak",
+      "subRegions": [
+        {
+          "name": "Balatonfured-Csopak",
+          "appellations": [
+            {
+              "name": "Balatonfured-Csopak",
+              "type": "OEM"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Matra",
+      "subRegions": [
+        {
+          "name": "Matra",
+          "appellations": [
+            {
+              "name": "Matra",
+              "type": "OEM"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Etyek-Buda",
+      "subRegions": [
+        {
+          "name": "Etyek-Buda",
+          "appellations": [
+            {
+              "name": "Etyek-Buda",
+              "type": "OEM"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

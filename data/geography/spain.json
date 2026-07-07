@@ -1,0 +1,643 @@
+{
+  "country": "Spain",
+  "code": "ES",
+  "continent": "Europe",
+  "appellations": [
+    {
+      "name": "Vino de España",
+      "type": "VdlT"
+    }
+  ],
+  "regions": [
+    {
+      "name": "Rioja",
+      "appellations": [
+        {
+          "name": "Vino de la Tierra Castilla",
+          "type": "VdlT"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Rioja Alta",
+          "appellations": [
+            {
+              "name": "Rioja",
+              "type": "DOCa"
+            }
+          ]
+        },
+        {
+          "name": "Rioja Alavesa",
+          "appellations": [
+            {
+              "name": "Rioja",
+              "type": "DOCa"
+            }
+          ]
+        },
+        {
+          "name": "Rioja Oriental",
+          "appellations": [
+            {
+              "name": "Rioja",
+              "type": "DOCa"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Priorat",
+      "subRegions": [
+        {
+          "name": "Priorat",
+          "appellations": [
+            {
+              "name": "Priorat",
+              "type": "DOCa"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Cataluna",
+      "appellations": [
+        {
+          "name": "Vino de la Tierra Cataluna",
+          "type": "VdlT"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Penedes",
+          "appellations": [
+            {
+              "name": "Penedes",
+              "type": "DO"
+            },
+            {
+              "name": "Cava",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Montsant",
+          "appellations": [
+            {
+              "name": "Montsant",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Terra Alta",
+          "appellations": [
+            {
+              "name": "Terra Alta",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Costers del Segre",
+          "appellations": [
+            {
+              "name": "Costers del Segre",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Conca de Barbera",
+          "appellations": [
+            {
+              "name": "Conca de Barbera",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Alella",
+          "appellations": [
+            {
+              "name": "Alella",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Tarragona",
+          "appellations": [
+            {
+              "name": "Tarragona",
+              "type": "DO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Galicia",
+      "appellations": [
+        {
+          "name": "Vino de la Tierra Barbanza e Iria",
+          "type": "VdlT"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Rias Baixas",
+          "appellations": [
+            {
+              "name": "Rias Baixas",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Ribeiro",
+          "appellations": [
+            {
+              "name": "Ribeiro",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Ribeira Sacra",
+          "appellations": [
+            {
+              "name": "Ribeira Sacra",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Monterrei",
+          "appellations": [
+            {
+              "name": "Monterrei",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Valdeorras",
+          "appellations": [
+            {
+              "name": "Valdeorras",
+              "type": "DO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Castilla y Leon",
+      "appellations": [
+        {
+          "name": "Vino de la Tierra Castilla y Leon",
+          "type": "VdlT"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Ribera del Duero",
+          "appellations": [
+            {
+              "name": "Ribera del Duero",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Rueda",
+          "appellations": [
+            {
+              "name": "Rueda",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Toro",
+          "appellations": [
+            {
+              "name": "Toro",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Bierzo",
+          "appellations": [
+            {
+              "name": "Bierzo",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Cigales",
+          "appellations": [
+            {
+              "name": "Cigales",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Arribes",
+          "appellations": [
+            {
+              "name": "Arribes",
+              "type": "DO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Castilla-La Mancha",
+      "appellations": [
+        {
+          "name": "Vino de la Tierra Castilla-La Mancha",
+          "type": "VdlT"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "La Mancha",
+          "appellations": [
+            {
+              "name": "La Mancha",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Valdepenas",
+          "appellations": [
+            {
+              "name": "Valdepenas",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Jumilla",
+          "appellations": [
+            {
+              "name": "Jumilla",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Yecla",
+          "appellations": [
+            {
+              "name": "Yecla",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Almansa",
+          "appellations": [
+            {
+              "name": "Almansa",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Manchuela",
+          "appellations": [
+            {
+              "name": "Manchuela",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Ucles",
+          "appellations": [
+            {
+              "name": "Ucles",
+              "type": "DO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Valencia",
+      "appellations": [
+        {
+          "name": "Vino de la Tierra Valencia",
+          "type": "VdlT"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Valencia",
+          "appellations": [
+            {
+              "name": "Valencia",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Utiel-Requena",
+          "appellations": [
+            {
+              "name": "Utiel-Requena",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Alicante",
+          "appellations": [
+            {
+              "name": "Alicante",
+              "type": "DO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Aragon",
+      "appellations": [
+        {
+          "name": "Vino de la Tierra Bajo Aragon",
+          "type": "VdlT"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Campo de Borja",
+          "appellations": [
+            {
+              "name": "Campo de Borja",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Carinena",
+          "appellations": [
+            {
+              "name": "Carinena",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Calatayud",
+          "appellations": [
+            {
+              "name": "Calatayud",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Somontano",
+          "appellations": [
+            {
+              "name": "Somontano",
+              "type": "DO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Navarra",
+      "appellations": [
+        {
+          "name": "Vino de la Tierra Navarra",
+          "type": "VdlT"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Navarra",
+          "appellations": [
+            {
+              "name": "Navarra",
+              "type": "DO"
+            },
+            {
+              "name": "Pago de Arinzano",
+              "type": "VP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Pais Vasco",
+      "subRegions": [
+        {
+          "name": "Getaria",
+          "appellations": [
+            {
+              "name": "Txakoli de Getaria",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Bizkaia",
+          "appellations": [
+            {
+              "name": "Txakoli de Bizkaia",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Alava",
+          "appellations": [
+            {
+              "name": "Txakoli de Alava",
+              "type": "DO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Extremadura",
+      "appellations": [
+        {
+          "name": "Vino de la Tierra Extremadura",
+          "type": "VdlT"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Guadiana",
+          "appellations": [
+            {
+              "name": "Ribera del Guadiana",
+              "type": "DO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Andalucia",
+      "appellations": [
+        {
+          "name": "Vino de la Tierra Cadiz",
+          "type": "VdlT"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Jerez",
+          "appellations": [
+            {
+              "name": "Jerez-Xeres-Sherry",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Sanlucar",
+          "appellations": [
+            {
+              "name": "Manzanilla-Sanlucar de Barrameda",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Montilla",
+          "appellations": [
+            {
+              "name": "Montilla-Moriles",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Malaga",
+          "appellations": [
+            {
+              "name": "Malaga",
+              "type": "DO"
+            },
+            {
+              "name": "Sierras de Malaga",
+              "type": "DO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Islas Canarias",
+      "subRegions": [
+        {
+          "name": "El Hierro",
+          "appellations": [
+            {
+              "name": "El Hierro",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "La Palma",
+          "appellations": [
+            {
+              "name": "La Palma",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "La Gomera",
+          "appellations": [
+            {
+              "name": "La Gomera",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Tenerife",
+          "appellations": [
+            {
+              "name": "Abona",
+              "type": "DO"
+            },
+            {
+              "name": "Tacoronte-Acentejo",
+              "type": "DO"
+            },
+            {
+              "name": "Valle de Güimar",
+              "type": "DO"
+            },
+            {
+              "name": "Valle de la Orotava",
+              "type": "DO"
+            },
+            {
+              "name": "Ycoden-Daute-Isora",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Gran Canaria",
+          "appellations": [
+            {
+              "name": "Gran Canaria",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Lanzarote",
+          "appellations": [
+            {
+              "name": "Lanzarote",
+              "type": "DO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Islas Baleares",
+      "subRegions": [
+        {
+          "name": "Mallorca",
+          "appellations": [
+            {
+              "name": "Binissalem Mallorca",
+              "type": "DO"
+            },
+            {
+              "name": "Pla i Llevant",
+              "type": "DO"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

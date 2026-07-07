@@ -1,0 +1,398 @@
+{
+  "country": "United States",
+  "code": "US",
+  "continent": "Americas",
+  "appellations": [
+    {
+      "name": "American Wine",
+      "type": "National"
+    }
+  ],
+  "regions": [
+    {
+      "name": "California",
+      "appellations": [
+        {
+          "name": "California Wine",
+          "type": "State designation"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Napa Valley",
+          "appellations": [
+            {
+              "name": "Napa Valley",
+              "type": "AVA"
+            },
+            {
+              "name": "Rutherford",
+              "type": "AVA"
+            },
+            {
+              "name": "Oakville",
+              "type": "AVA"
+            },
+            {
+              "name": "Stags Leap District",
+              "type": "AVA"
+            },
+            {
+              "name": "Howell Mountain",
+              "type": "AVA"
+            },
+            {
+              "name": "Mt. Veeder",
+              "type": "AVA"
+            },
+            {
+              "name": "Spring Mountain District",
+              "type": "AVA"
+            },
+            {
+              "name": "Atlas Peak",
+              "type": "AVA"
+            },
+            {
+              "name": "Calistoga",
+              "type": "AVA"
+            },
+            {
+              "name": "Oak Knoll District",
+              "type": "AVA"
+            },
+            {
+              "name": "Carneros",
+              "type": "AVA"
+            }
+          ]
+        },
+        {
+          "name": "Sonoma County",
+          "appellations": [
+            {
+              "name": "Sonoma Coast",
+              "type": "AVA"
+            },
+            {
+              "name": "Russian River Valley",
+              "type": "AVA"
+            },
+            {
+              "name": "Alexander Valley",
+              "type": "AVA"
+            },
+            {
+              "name": "Dry Creek Valley",
+              "type": "AVA"
+            },
+            {
+              "name": "Chalk Hill",
+              "type": "AVA"
+            },
+            {
+              "name": "Green Valley of Russian River Valley",
+              "type": "AVA"
+            }
+          ]
+        },
+        {
+          "name": "Central Coast",
+          "appellations": [
+            {
+              "name": "Santa Cruz Mountains",
+              "type": "AVA"
+            },
+            {
+              "name": "Monterey",
+              "type": "AVA"
+            },
+            {
+              "name": "Santa Lucia Highlands",
+              "type": "AVA"
+            },
+            {
+              "name": "Paso Robles",
+              "type": "AVA"
+            },
+            {
+              "name": "Santa Ynez Valley",
+              "type": "AVA"
+            },
+            {
+              "name": "Sta. Rita Hills",
+              "type": "AVA"
+            },
+            {
+              "name": "Ballard Canyon",
+              "type": "AVA"
+            },
+            {
+              "name": "Happy Canyon of Santa Barbara",
+              "type": "AVA"
+            }
+          ]
+        },
+        {
+          "name": "Sierra Foothills",
+          "appellations": [
+            {
+              "name": "El Dorado",
+              "type": "AVA"
+            },
+            {
+              "name": "Amador County",
+              "type": "AVA"
+            },
+            {
+              "name": "Calaveras County",
+              "type": "AVA"
+            }
+          ]
+        },
+        {
+          "name": "Other AVAs",
+          "appellations": [
+            {
+              "name": "Livermore Valley",
+              "type": "AVA"
+            },
+            {
+              "name": "Lodi",
+              "type": "AVA"
+            },
+            {
+              "name": "Anderson Valley",
+              "type": "AVA"
+            },
+            {
+              "name": "Redwood Valley",
+              "type": "AVA"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Oregon",
+      "appellations": [
+        {
+          "name": "Oregon Wine",
+          "type": "State designation"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Willamette Valley",
+          "appellations": [
+            {
+              "name": "Willamette Valley",
+              "type": "AVA"
+            },
+            {
+              "name": "Dundee Hills",
+              "type": "AVA"
+            },
+            {
+              "name": "Chehalem Mountains",
+              "type": "AVA"
+            },
+            {
+              "name": "Ribbon Ridge",
+              "type": "AVA"
+            },
+            {
+              "name": "Yamhill-Carlton",
+              "type": "AVA"
+            },
+            {
+              "name": "Eola-Amity Hills",
+              "type": "AVA"
+            },
+            {
+              "name": "McMinnville",
+              "type": "AVA"
+            }
+          ]
+        },
+        {
+          "name": "Southern Oregon",
+          "appellations": [
+            {
+              "name": "Umpqua Valley",
+              "type": "AVA"
+            },
+            {
+              "name": "Rogue Valley",
+              "type": "AVA"
+            }
+          ]
+        },
+        {
+          "name": "Columbia Gorge",
+          "appellations": [
+            {
+              "name": "Columbia Gorge",
+              "type": "AVA"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Washington State",
+      "appellations": [
+        {
+          "name": "Washington Wine",
+          "type": "State designation"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Columbia Valley",
+          "appellations": [
+            {
+              "name": "Columbia Valley",
+              "type": "AVA"
+            },
+            {
+              "name": "Yakima Valley",
+              "type": "AVA"
+            },
+            {
+              "name": "Red Mountain",
+              "type": "AVA"
+            },
+            {
+              "name": "Horse Heaven Hills",
+              "type": "AVA"
+            },
+            {
+              "name": "Rattlesnake Hills",
+              "type": "AVA"
+            },
+            {
+              "name": "Wahluke Slope",
+              "type": "AVA"
+            },
+            {
+              "name": "Ancient Lakes",
+              "type": "AVA"
+            }
+          ]
+        },
+        {
+          "name": "Walla Walla",
+          "appellations": [
+            {
+              "name": "Walla Walla Valley",
+              "type": "AVA"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "New York State",
+      "appellations": [
+        {
+          "name": "New York Wine",
+          "type": "State designation"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Finger Lakes",
+          "appellations": [
+            {
+              "name": "Finger Lakes",
+              "type": "AVA"
+            }
+          ]
+        },
+        {
+          "name": "Long Island",
+          "appellations": [
+            {
+              "name": "North Fork of Long Island",
+              "type": "AVA"
+            },
+            {
+              "name": "The Hamptons, Long Island",
+              "type": "AVA"
+            }
+          ]
+        },
+        {
+          "name": "Hudson Valley",
+          "appellations": [
+            {
+              "name": "Hudson River Region",
+              "type": "AVA"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Virginia",
+      "subRegions": [
+        {
+          "name": "Central Virginia",
+          "appellations": [
+            {
+              "name": "Monticello",
+              "type": "AVA"
+            }
+          ]
+        },
+        {
+          "name": "Northern Virginia",
+          "appellations": [
+            {
+              "name": "Shenandoah Valley",
+              "type": "AVA"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Texas",
+      "subRegions": [
+        {
+          "name": "Texas Panhandle",
+          "appellations": [
+            {
+              "name": "Texas High Plains",
+              "type": "AVA"
+            }
+          ]
+        },
+        {
+          "name": "Central Texas",
+          "appellations": [
+            {
+              "name": "Texas Hill Country",
+              "type": "AVA"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Michigan",
+      "subRegions": [
+        {
+          "name": "Southwest Michigan",
+          "appellations": [
+            {
+              "name": "Lake Michigan Shore",
+              "type": "AVA"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

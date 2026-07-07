@@ -1,0 +1,137 @@
+{
+  "country": "Canada",
+  "code": "CA",
+  "continent": "Americas",
+  "regions": [
+    {
+      "name": "British Columbia",
+      "subRegions": [
+        {
+          "name": "Okanagan Valley",
+          "appellations": [
+            {
+              "name": "Okanagan Valley",
+              "type": "VQA GI"
+            },
+            {
+              "name": "Naramata Bench",
+              "type": "VQA GI"
+            },
+            {
+              "name": "Golden Mile Bench",
+              "type": "VQA GI"
+            }
+          ]
+        },
+        {
+          "name": "Similkameen Valley",
+          "appellations": [
+            {
+              "name": "Similkameen Valley",
+              "type": "VQA GI"
+            }
+          ]
+        },
+        {
+          "name": "Fraser Valley",
+          "appellations": [
+            {
+              "name": "Fraser Valley",
+              "type": "VQA GI"
+            }
+          ]
+        },
+        {
+          "name": "Vancouver Island",
+          "appellations": [
+            {
+              "name": "Vancouver Island",
+              "type": "VQA GI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ontario",
+      "subRegions": [
+        {
+          "name": "Niagara Peninsula",
+          "appellations": [
+            {
+              "name": "Niagara Peninsula",
+              "type": "VQA GI"
+            },
+            {
+              "name": "Niagara-on-the-Lake",
+              "type": "VQA GI"
+            },
+            {
+              "name": "Beamsville Bench",
+              "type": "VQA GI"
+            },
+            {
+              "name": "Twenty Mile Bench",
+              "type": "VQA GI"
+            }
+          ]
+        },
+        {
+          "name": "Prince Edward County",
+          "appellations": [
+            {
+              "name": "Prince Edward County",
+              "type": "VQA GI"
+            }
+          ]
+        },
+        {
+          "name": "Lake Erie North Shore",
+          "appellations": [
+            {
+              "name": "Lake Erie North Shore",
+              "type": "VQA GI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Quebec",
+      "subRegions": [
+        {
+          "name": "Cantons de l’Est",
+          "appellations": [
+            {
+              "name": "Cantons de l’Est",
+              "type": "Appellation Quebec"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Nova Scotia",
+      "subRegions": [
+        {
+          "name": "Annapolis Valley",
+          "appellations": [
+            {
+              "name": "Annapolis Valley",
+              "type": "Nova Scotia GI"
+            }
+          ]
+        },
+        {
+          "name": "Gaspereau Valley",
+          "appellations": [
+            {
+              "name": "Gaspereau Valley",
+              "type": "Nova Scotia GI"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

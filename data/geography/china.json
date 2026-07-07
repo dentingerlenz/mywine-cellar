@@ -1,0 +1,129 @@
+{
+  "country": "China",
+  "code": "CN",
+  "continent": "Asia",
+  "appellations": [
+    {
+      "name": "Putao Jiu",
+      "type": "National"
+    }
+  ],
+  "regions": [
+    {
+      "name": "Xinjiang",
+      "subRegions": [
+        {
+          "name": "Turpan / Yili / Yanqi",
+          "appellations": [
+            {
+              "name": "Xinjiang",
+              "type": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ningxia",
+      "subRegions": [
+        {
+          "name": "Helan Mountain East",
+          "appellations": [
+            {
+              "name": "Helan Mountain East Foothills",
+              "type": "GI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Shandong",
+      "subRegions": [
+        {
+          "name": "Penglai / Yantai",
+          "appellations": [
+            {
+              "name": "Penglai",
+              "type": null
+            }
+          ]
+        },
+        {
+          "name": "Changli",
+          "appellations": [
+            {
+              "name": "Changli",
+              "type": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Hebei",
+      "subRegions": [
+        {
+          "name": "Huailai / Changli",
+          "appellations": [
+            {
+              "name": "Huailai",
+              "type": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Yunnan",
+      "subRegions": [
+        {
+          "name": "Shangri-La (Deqin)",
+          "appellations": [
+            {
+              "name": "Shangri-La",
+              "type": null
+            }
+          ]
+        },
+        {
+          "name": "Mile",
+          "appellations": [
+            {
+              "name": "Mile",
+              "type": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Gansu",
+      "subRegions": [
+        {
+          "name": "Hexi Corridor",
+          "appellations": [
+            {
+              "name": "Hexi Corridor",
+              "type": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Shanxi",
+      "subRegions": [
+        {
+          "name": "Taiyuan",
+          "appellations": [
+            {
+              "name": "Shanxi",
+              "type": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

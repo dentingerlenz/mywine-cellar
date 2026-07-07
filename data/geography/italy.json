@@ -1,0 +1,916 @@
+{
+  "country": "Italy",
+  "code": "IT",
+  "continent": "Europe",
+  "appellations": [
+    {
+      "name": "Vino d'Italia",
+      "type": "IGT"
+    }
+  ],
+  "regions": [
+    {
+      "name": "Piemonte",
+      "appellations": [
+        {
+          "name": "IGT Langhe Fantasia",
+          "type": "IGT"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Piemonte",
+          "appellations": [
+            {
+              "name": "Barolo",
+              "type": "DOCG"
+            },
+            {
+              "name": "Barbaresco",
+              "type": "DOCG"
+            },
+            {
+              "name": "Barbera d’Asti",
+              "type": "DOCG"
+            },
+            {
+              "name": "Barbera d’Alba",
+              "type": "DOC"
+            },
+            {
+              "name": "Dolcetto d’Alba",
+              "type": "DOC"
+            },
+            {
+              "name": "Moscato d’Asti",
+              "type": "DOCG"
+            },
+            {
+              "name": "Asti Spumante",
+              "type": "DOCG"
+            },
+            {
+              "name": "Gavi",
+              "type": "DOCG"
+            },
+            {
+              "name": "Roero",
+              "type": "DOCG"
+            },
+            {
+              "name": "Langhe",
+              "type": "DOC"
+            },
+            {
+              "name": "Nebbiolo d’Alba",
+              "type": "DOC"
+            },
+            {
+              "name": "Dogliani",
+              "type": "DOCG"
+            },
+            {
+              "name": "Ghemme",
+              "type": "DOCG"
+            },
+            {
+              "name": "Gattinara",
+              "type": "DOCG"
+            },
+            {
+              "name": "Brachetto d’Acqui",
+              "type": "DOCG"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Valle d’Aosta",
+      "subRegions": [
+        {
+          "name": "Valle d’Aosta",
+          "appellations": [
+            {
+              "name": "Valle d’Aosta",
+              "type": "DOC"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Lombardia",
+      "appellations": [
+        {
+          "name": "IGT Lombardia",
+          "type": "IGT"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Lombardia",
+          "appellations": [
+            {
+              "name": "Franciacorta",
+              "type": "DOCG"
+            },
+            {
+              "name": "Lugana",
+              "type": "DOC"
+            },
+            {
+              "name": "Oltrepo Pavese",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Valtellina",
+          "appellations": [
+            {
+              "name": "Valtellina Superiore",
+              "type": "DOCG"
+            },
+            {
+              "name": "Sforzato di Valtellina",
+              "type": "DOCG"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Trentino-Alto Adige",
+      "appellations": [
+        {
+          "name": "IGT Delle Venezie",
+          "type": "IGT"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Alto Adige",
+          "appellations": [
+            {
+              "name": "Alto Adige",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Trentino",
+          "appellations": [
+            {
+              "name": "Trentino",
+              "type": "DOC"
+            },
+            {
+              "name": "Teroldego Rotaliano",
+              "type": "DOC"
+            },
+            {
+              "name": "Trento",
+              "type": "DOC"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Veneto",
+      "appellations": [
+        {
+          "name": "IGT Delle Venezie",
+          "type": "IGT"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Valpolicella",
+          "appellations": [
+            {
+              "name": "Amarone della Valpolicella",
+              "type": "DOCG"
+            },
+            {
+              "name": "Valpolicella",
+              "type": "DOC"
+            },
+            {
+              "name": "Valpolicella Ripasso",
+              "type": "DOC"
+            },
+            {
+              "name": "Recioto della Valpolicella",
+              "type": "DOCG"
+            }
+          ]
+        },
+        {
+          "name": "Soave",
+          "appellations": [
+            {
+              "name": "Soave",
+              "type": "DOC"
+            },
+            {
+              "name": "Soave Classico",
+              "type": "DOCG"
+            },
+            {
+              "name": "Recioto di Soave",
+              "type": "DOCG"
+            }
+          ]
+        },
+        {
+          "name": "Garda",
+          "appellations": [
+            {
+              "name": "Bardolino",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Prosecco",
+          "appellations": [
+            {
+              "name": "Conegliano Valdobbiadene Prosecco Superiore",
+              "type": "DOCG"
+            },
+            {
+              "name": "Prosecco",
+              "type": "DOC"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Friuli-Venezia Giulia",
+      "appellations": [
+        {
+          "name": "IGT Delle Venezie",
+          "type": "IGT"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Collio",
+          "appellations": [
+            {
+              "name": "Collio Goriziano",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Colli Orientali",
+          "appellations": [
+            {
+              "name": "Colli Orientali del Friuli",
+              "type": "DOC"
+            },
+            {
+              "name": "Ramandolo",
+              "type": "DOCG"
+            }
+          ]
+        },
+        {
+          "name": "Isonzo",
+          "appellations": [
+            {
+              "name": "Friuli Isonzo",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Grave",
+          "appellations": [
+            {
+              "name": "Friuli Grave",
+              "type": "DOC"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Liguria",
+      "subRegions": [
+        {
+          "name": "Liguria",
+          "appellations": [
+            {
+              "name": "Cinque Terre",
+              "type": "DOC"
+            },
+            {
+              "name": "Riviera Ligure di Ponente",
+              "type": "DOC"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Toscana",
+      "appellations": [
+        {
+          "name": "IGT Toscana",
+          "type": "IGT"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Montalcino",
+          "appellations": [
+            {
+              "name": "Brunello di Montalcino",
+              "type": "DOCG"
+            },
+            {
+              "name": "Rosso di Montalcino",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Chianti",
+          "appellations": [
+            {
+              "name": "Chianti",
+              "type": "DOCG"
+            },
+            {
+              "name": "Chianti Classico",
+              "type": "DOCG"
+            },
+            {
+              "name": "Vin Santo del Chianti Classico",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Montepulciano",
+          "appellations": [
+            {
+              "name": "Vino Nobile di Montepulciano",
+              "type": "DOCG"
+            }
+          ]
+        },
+        {
+          "name": "Maremma",
+          "appellations": [
+            {
+              "name": "Morellino di Scansano",
+              "type": "DOCG"
+            },
+            {
+              "name": "Maremma Toscana",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "San Gimignano",
+          "appellations": [
+            {
+              "name": "Vernaccia di San Gimignano",
+              "type": "DOCG"
+            }
+          ]
+        },
+        {
+          "name": "Bolgheri",
+          "appellations": [
+            {
+              "name": "Bolgheri",
+              "type": "DOC"
+            },
+            {
+              "name": "Bolgheri Sassicaia",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Carmignano",
+          "appellations": [
+            {
+              "name": "Carmignano",
+              "type": "DOCG"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Umbria",
+      "appellations": [
+        {
+          "name": "IGT Umbria",
+          "type": "IGT"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Montefalco",
+          "appellations": [
+            {
+              "name": "Sagrantino di Montefalco",
+              "type": "DOCG"
+            },
+            {
+              "name": "Montefalco Rosso",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Orvieto",
+          "appellations": [
+            {
+              "name": "Orvieto",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Torgiano",
+          "appellations": [
+            {
+              "name": "Torgiano Rosso Riserva",
+              "type": "DOCG"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Marche",
+      "appellations": [
+        {
+          "name": "IGT Marche",
+          "type": "IGT"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Castelli di Jesi",
+          "appellations": [
+            {
+              "name": "Verdicchio dei Castelli di Jesi",
+              "type": "DOC"
+            },
+            {
+              "name": "Verdicchio dei Castelli di Jesi Classico Superiore",
+              "type": "DOCG"
+            }
+          ]
+        },
+        {
+          "name": "Matelica",
+          "appellations": [
+            {
+              "name": "Verdicchio di Matelica",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Conero",
+          "appellations": [
+            {
+              "name": "Rosso Conero",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Offida",
+          "appellations": [
+            {
+              "name": "Offida",
+              "type": "DOCG"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Abruzzo",
+      "appellations": [
+        {
+          "name": "IGT Terre di Chieti",
+          "type": "IGT"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Abruzzo",
+          "appellations": [
+            {
+              "name": "Montepulciano d’Abruzzo",
+              "type": "DOC"
+            },
+            {
+              "name": "Montepulciano d’Abruzzo Colline Teramane",
+              "type": "DOCG"
+            },
+            {
+              "name": "Trebbiano d’Abruzzo",
+              "type": "DOC"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Molise",
+      "subRegions": [
+        {
+          "name": "Molise",
+          "appellations": [
+            {
+              "name": "Tintilia del Molise",
+              "type": "DOC"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Lazio",
+      "appellations": [
+        {
+          "name": "IGT Lazio",
+          "type": "IGT"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Castelli Romani",
+          "appellations": [
+            {
+              "name": "Frascati",
+              "type": "DOC"
+            },
+            {
+              "name": "Frascati Superiore",
+              "type": "DOCG"
+            }
+          ]
+        },
+        {
+          "name": "Montefiascone",
+          "appellations": [
+            {
+              "name": "Est! Est!! Est!!! di Montefiascone",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Ciociaria",
+          "appellations": [
+            {
+              "name": "Cesanese del Piglio",
+              "type": "DOCG"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Campania",
+      "appellations": [
+        {
+          "name": "IGT Campania",
+          "type": "IGT"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Irpinia",
+          "appellations": [
+            {
+              "name": "Taurasi",
+              "type": "DOCG"
+            },
+            {
+              "name": "Fiano di Avellino",
+              "type": "DOCG"
+            },
+            {
+              "name": "Greco di Tufo",
+              "type": "DOCG"
+            }
+          ]
+        },
+        {
+          "name": "Campi Flegrei",
+          "appellations": [
+            {
+              "name": "Campi Flegrei",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Sannio",
+          "appellations": [
+            {
+              "name": "Sannio",
+              "type": "DOC"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Basilicata",
+      "appellations": [
+        {
+          "name": "IGT Basilicata",
+          "type": "IGT"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Vulture",
+          "appellations": [
+            {
+              "name": "Aglianico del Vulture",
+              "type": "DOC"
+            },
+            {
+              "name": "Aglianico del Vulture Superiore",
+              "type": "DOCG"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Calabria",
+      "appellations": [
+        {
+          "name": "IGT Calabria",
+          "type": "IGT"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Ciro",
+          "appellations": [
+            {
+              "name": "Ciro",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Cosenza",
+          "appellations": [
+            {
+              "name": "Terre di Cosenza",
+              "type": "DOC"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Puglia",
+      "appellations": [
+        {
+          "name": "IGT Puglia",
+          "type": "IGT"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Manduria",
+          "appellations": [
+            {
+              "name": "Primitivo di Manduria",
+              "type": "DOC"
+            },
+            {
+              "name": "Primitivo di Manduria Dolce Naturale",
+              "type": "DOCG"
+            }
+          ]
+        },
+        {
+          "name": "Salento",
+          "appellations": [
+            {
+              "name": "Salice Salentino",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Castel del Monte",
+          "appellations": [
+            {
+              "name": "Castel del Monte",
+              "type": "DOC"
+            },
+            {
+              "name": "Castel del Monte Bombino Nero",
+              "type": "DOCG"
+            }
+          ]
+        },
+        {
+          "name": "Terra d’Otranto",
+          "appellations": [
+            {
+              "name": "Negroamaro di Terra d’Otranto",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Gioia del Colle",
+          "appellations": [
+            {
+              "name": "Gioia del Colle",
+              "type": "DOC"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Sicilia",
+      "appellations": [
+        {
+          "name": "IGT Terre Siciliane",
+          "type": "IGT"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Etna",
+          "appellations": [
+            {
+              "name": "Etna",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Trapani",
+          "appellations": [
+            {
+              "name": "Marsala",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Pantelleria",
+          "appellations": [
+            {
+              "name": "Passito di Pantelleria",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Ragusa",
+          "appellations": [
+            {
+              "name": "Cerasuolo di Vittoria",
+              "type": "DOCG"
+            }
+          ]
+        },
+        {
+          "name": "Sicilia",
+          "appellations": [
+            {
+              "name": "Sicilia",
+              "type": "DOC"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Sardegna",
+      "appellations": [
+        {
+          "name": "IGT Isola dei Nuraghi",
+          "type": "IGT"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Sardegna",
+          "appellations": [
+            {
+              "name": "Cannonau di Sardegna",
+              "type": "DOC"
+            },
+            {
+              "name": "Vermentino di Sardegna",
+              "type": "DOC"
+            },
+            {
+              "name": "Monica di Sardegna",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Gallura",
+          "appellations": [
+            {
+              "name": "Vermentino di Gallura",
+              "type": "DOCG"
+            }
+          ]
+        },
+        {
+          "name": "Sulcis",
+          "appellations": [
+            {
+              "name": "Carignano del Sulcis",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Planargia",
+          "appellations": [
+            {
+              "name": "Malvasia di Bosa",
+              "type": "DOC"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Emilia-Romagna",
+      "appellations": [
+        {
+          "name": "IGT Emilia",
+          "type": "IGT"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Modena",
+          "appellations": [
+            {
+              "name": "Lambrusco di Sorbara",
+              "type": "DOC"
+            },
+            {
+              "name": "Lambrusco Grasparossa di Castelvetro",
+              "type": "DOC"
+            },
+            {
+              "name": "Lambrusco Salamino di Santa Croce",
+              "type": "DOC"
+            }
+          ]
+        },
+        {
+          "name": "Romagna",
+          "appellations": [
+            {
+              "name": "Sangiovese di Romagna",
+              "type": "DOC"
+            },
+            {
+              "name": "Albana di Romagna",
+              "type": "DOCG"
+            }
+          ]
+        },
+        {
+          "name": "Bologna",
+          "appellations": [
+            {
+              "name": "Colli Bolognesi Pignoletto",
+              "type": "DOCG"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

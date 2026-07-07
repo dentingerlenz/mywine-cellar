@@ -1,0 +1,99 @@
+{
+  "country": "Georgia",
+  "code": "GE",
+  "continent": "Europe",
+  "appellations": [
+    {
+      "name": "Magrada Ghvino",
+      "type": "Table"
+    }
+  ],
+  "regions": [
+    {
+      "name": "Kakheti",
+      "subRegions": [
+        {
+          "name": "Alazani Valley",
+          "appellations": [
+            {
+              "name": "Tsinandali",
+              "type": "PDO"
+            },
+            {
+              "name": "Mukuzani",
+              "type": "PDO"
+            },
+            {
+              "name": "Kindzmarauli",
+              "type": "PDO"
+            },
+            {
+              "name": "Akhasheni",
+              "type": "PDO"
+            },
+            {
+              "name": "Gurjaani",
+              "type": "PDO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Racha-Lechkhumi",
+      "subRegions": [
+        {
+          "name": "Racha",
+          "appellations": [
+            {
+              "name": "Khvanchkara",
+              "type": "PDO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Imereti",
+      "subRegions": [
+        {
+          "name": "Imereti",
+          "appellations": [
+            {
+              "name": "Imereti",
+              "type": "PGI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kartli",
+      "subRegions": [
+        {
+          "name": "Kartli",
+          "appellations": [
+            {
+              "name": "Kartli",
+              "type": "PGI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Adjara",
+      "subRegions": [
+        {
+          "name": "Adjara",
+          "appellations": [
+            {
+              "name": "Adjara",
+              "type": "PGI"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

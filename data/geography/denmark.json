@@ -1,0 +1,10 @@
+{
+  "country": "Denmark",
+  "code": "DK",
+  "continent": "Europe",
+  "regions": [
+    { "name": "Sjælland" },
+    { "name": "Jylland" },
+    { "name": "Fyn" }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "country": "Turkey",
+  "code": "TR",
+  "continent": "Asia",
+  "regions": [
+    {
+      "name": "Trakya & Marmara",
+      "subRegions": [
+        {
+          "name": "Tekirdag / Bozcaada",
+          "appellations": [
+            {
+              "name": "Trakya",
+              "type": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ege",
+      "subRegions": [
+        {
+          "name": "Izmir / Manisa / Denizli",
+          "appellations": [
+            {
+              "name": "Ege",
+              "type": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ic Anadolu",
+      "subRegions": [
+        {
+          "name": "Cappadocia",
+          "appellations": [
+            {
+              "name": "Cappadocia",
+              "type": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Dogu Anadolu",
+      "subRegions": [
+        {
+          "name": "Elazig / Diyarbakir",
+          "appellations": [
+            {
+              "name": "Elazig",
+              "type": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Güneydogu Anadolu",
+      "subRegions": [
+        {
+          "name": "Gaziantep / Maras",
+          "appellations": [
+            {
+              "name": "Güneydogu Anadolu",
+              "type": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

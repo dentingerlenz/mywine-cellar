@@ -1,0 +1,58 @@
+{
+  "country": "India",
+  "code": "IN",
+  "continent": "Asia",
+  "regions": [
+    {
+      "name": "Maharashtra",
+      "subRegions": [
+        {
+          "name": "Nashik",
+          "appellations": [
+            {
+              "name": "Nashik",
+              "type": "State GI"
+            }
+          ]
+        },
+        {
+          "name": "Sangli / Baramati",
+          "appellations": [
+            {
+              "name": "Sangli",
+              "type": "State GI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Karnataka",
+      "subRegions": [
+        {
+          "name": "Nandi Hills",
+          "appellations": [
+            {
+              "name": "Nandi Hills",
+              "type": "State GI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Himachal Pradesh",
+      "subRegions": [
+        {
+          "name": "Kullu Valley",
+          "appellations": [
+            {
+              "name": "Kullu",
+              "type": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

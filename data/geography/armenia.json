@@ -1,0 +1,63 @@
+{
+  "country": "Armenia",
+  "code": "AM",
+  "continent": "Asia",
+  "regions": [
+    {
+      "name": "Ararat Valley",
+      "subRegions": [
+        {
+          "name": "Yerevan / Artashat",
+          "appellations": [
+            {
+              "name": "Ararat",
+              "type": "PDO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Vayots Dzor",
+      "subRegions": [
+        {
+          "name": "Areni",
+          "appellations": [
+            {
+              "name": "Areni",
+              "type": "PDO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tavush",
+      "subRegions": [
+        {
+          "name": "Dilijan / Ijevan",
+          "appellations": [
+            {
+              "name": "Tavush",
+              "type": "PGI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Aragatsotn",
+      "subRegions": [
+        {
+          "name": "Talish / Oshakan",
+          "appellations": [
+            {
+              "name": "Aragatsotn",
+              "type": "PGI"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

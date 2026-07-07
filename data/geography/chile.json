@@ -1,0 +1,193 @@
+{
+  "country": "Chile",
+  "code": "CL",
+  "continent": "Americas",
+  "appellations": [
+    {
+      "name": "Vino de Chile",
+      "type": "National"
+    }
+  ],
+  "regions": [
+    {
+      "name": "Atacama",
+      "subRegions": [
+        {
+          "name": "Copiapo",
+          "appellations": [
+            {
+              "name": "Copiapo",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Huasco",
+          "appellations": [
+            {
+              "name": "Huasco",
+              "type": "DO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Coquimbo",
+      "subRegions": [
+        {
+          "name": "Elqui",
+          "appellations": [
+            {
+              "name": "Elqui",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Limari",
+          "appellations": [
+            {
+              "name": "Limari",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Choapa",
+          "appellations": [
+            {
+              "name": "Choapa",
+              "type": "DO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Aconcagua",
+      "appellations": [
+        {
+          "name": "Aconcagua Wine",
+          "type": "DO"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Aconcagua",
+          "appellations": [
+            {
+              "name": "Aconcagua",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Casablanca",
+          "appellations": [
+            {
+              "name": "Casablanca",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "San Antonio",
+          "appellations": [
+            {
+              "name": "San Antonio",
+              "type": "DO"
+            },
+            {
+              "name": "Leyda",
+              "type": "DO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Valle Central",
+      "appellations": [
+        {
+          "name": "Valle Central Wine",
+          "type": "DO"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Maipo",
+          "appellations": [
+            {
+              "name": "Maipo",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Rapel",
+          "appellations": [
+            {
+              "name": "Cachapoal",
+              "type": "DO"
+            },
+            {
+              "name": "Colchagua",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Curico",
+          "appellations": [
+            {
+              "name": "Curico",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Maule",
+          "appellations": [
+            {
+              "name": "Maule",
+              "type": "DO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Sur",
+      "subRegions": [
+        {
+          "name": "Itata",
+          "appellations": [
+            {
+              "name": "Itata",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Bio Bio",
+          "appellations": [
+            {
+              "name": "Bio Bio",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Malleco",
+          "appellations": [
+            {
+              "name": "Malleco",
+              "type": "DO"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

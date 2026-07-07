@@ -1,0 +1,81 @@
+{
+  "country": "Mexico",
+  "code": "MX",
+  "continent": "Americas",
+  "regions": [
+    {
+      "name": "Baja California",
+      "subRegions": [
+        {
+          "name": "Valle de Guadalupe",
+          "appellations": [
+            {
+              "name": "Valle de Guadalupe",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Valle de San Vicente",
+          "appellations": [
+            {
+              "name": "Valle de San Vicente",
+              "type": "DO"
+            }
+          ]
+        },
+        {
+          "name": "Valle de Santo Tomas",
+          "appellations": [
+            {
+              "name": "Valle de Santo Tomas",
+              "type": "DO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Coahuila",
+      "subRegions": [
+        {
+          "name": "Parras de la Fuente",
+          "appellations": [
+            {
+              "name": "Parras de la Fuente",
+              "type": "DO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Queretaro",
+      "subRegions": [
+        {
+          "name": "Queretaro Highlands",
+          "appellations": [
+            {
+              "name": "Queretaro",
+              "type": "PGI"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Guanajuato",
+      "subRegions": [
+        {
+          "name": "Guanajuato",
+          "appellations": [
+            {
+              "name": "Guanajuato",
+              "type": "PGI"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

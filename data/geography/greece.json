@@ -1,0 +1,240 @@
+{
+  "country": "Greece",
+  "code": "GR",
+  "continent": "Europe",
+  "appellations": [
+    {
+      "name": "Epitrapezios Oinos",
+      "type": "Table"
+    }
+  ],
+  "regions": [
+    {
+      "name": "Makedonia",
+      "subRegions": [
+        {
+          "name": "Naoussa",
+          "appellations": [
+            {
+              "name": "Naoussa",
+              "type": "PDO"
+            }
+          ]
+        },
+        {
+          "name": "Amyndeon",
+          "appellations": [
+            {
+              "name": "Amyndeon",
+              "type": "PDO"
+            }
+          ]
+        },
+        {
+          "name": "Goumenissa",
+          "appellations": [
+            {
+              "name": "Goumenissa",
+              "type": "PDO"
+            }
+          ]
+        },
+        {
+          "name": "Halkidiki",
+          "appellations": [
+            {
+              "name": "Cotes de Meliton",
+              "type": "PDO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ipeiros",
+      "subRegions": [
+        {
+          "name": "Ioannina",
+          "appellations": [
+            {
+              "name": "Zitsa",
+              "type": "PDO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Thessalia",
+      "subRegions": [
+        {
+          "name": "Larissa",
+          "appellations": [
+            {
+              "name": "Rapsani",
+              "type": "PDO"
+            }
+          ]
+        },
+        {
+          "name": "Volos",
+          "appellations": [
+            {
+              "name": "Anchialos",
+              "type": "PDO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Attiki",
+      "subRegions": [
+        {
+          "name": "Attiki",
+          "appellations": [
+            {
+              "name": "Savatiano",
+              "type": "PDO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Peloponnisos",
+      "subRegions": [
+        {
+          "name": "Korinthia",
+          "appellations": [
+            {
+              "name": "Nemea",
+              "type": "PDO"
+            }
+          ]
+        },
+        {
+          "name": "Arkadia",
+          "appellations": [
+            {
+              "name": "Mantinia",
+              "type": "PDO"
+            }
+          ]
+        },
+        {
+          "name": "Achaia",
+          "appellations": [
+            {
+              "name": "Patras",
+              "type": "PDO"
+            },
+            {
+              "name": "Mavrodaphne of Patras",
+              "type": "PDO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Nisia Aigaiou",
+      "subRegions": [
+        {
+          "name": "Santorini",
+          "appellations": [
+            {
+              "name": "Santorini",
+              "type": "PDO"
+            }
+          ]
+        },
+        {
+          "name": "Limnos",
+          "appellations": [
+            {
+              "name": "Muscat of Limnos",
+              "type": "PDO"
+            }
+          ]
+        },
+        {
+          "name": "Rodos",
+          "appellations": [
+            {
+              "name": "Rodos",
+              "type": "PDO"
+            }
+          ]
+        },
+        {
+          "name": "Samos",
+          "appellations": [
+            {
+              "name": "Muscat of Samos",
+              "type": "PDO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ionia Nisia",
+      "subRegions": [
+        {
+          "name": "Kefalonia",
+          "appellations": [
+            {
+              "name": "Robola of Cephalonia",
+              "type": "PDO"
+            },
+            {
+              "name": "Mavrodaphne of Cephalonia",
+              "type": "PDO"
+            }
+          ]
+        },
+        {
+          "name": "Lefkada",
+          "appellations": [
+            {
+              "name": "Lefkada",
+              "type": "PDO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kriti",
+      "subRegions": [
+        {
+          "name": "Iraklio",
+          "appellations": [
+            {
+              "name": "Archanes",
+              "type": "PDO"
+            },
+            {
+              "name": "Peza",
+              "type": "PDO"
+            },
+            {
+              "name": "Dafnes",
+              "type": "PDO"
+            }
+          ]
+        },
+        {
+          "name": "Lasithi",
+          "appellations": [
+            {
+              "name": "Sitia",
+              "type": "PDO"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

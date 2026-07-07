@@ -1,0 +1,83 @@
+{
+  "country": "Bulgaria",
+  "code": "BG",
+  "continent": "Europe",
+  "appellations": [
+    {
+      "name": "Trpezno Vino",
+      "type": "Table"
+    }
+  ],
+  "regions": [
+    {
+      "name": "Dunav Plain",
+      "subRegions": [
+        {
+          "name": "Svishtov / Pleven",
+          "appellations": [
+            {
+              "name": "Danube Plain",
+              "type": "DGO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Thracian Valley",
+      "subRegions": [
+        {
+          "name": "Plovdiv / Stara Zagora",
+          "appellations": [
+            {
+              "name": "Thracian Valley",
+              "type": "DGO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Rose Valley",
+      "subRegions": [
+        {
+          "name": "Sungurlare / Sliven",
+          "appellations": [
+            {
+              "name": "Rose Valley",
+              "type": "DGO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Black Sea",
+      "subRegions": [
+        {
+          "name": "Shumen / Varna / Burgas",
+          "appellations": [
+            {
+              "name": "Black Sea",
+              "type": "DGO"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Struma Valley",
+      "subRegions": [
+        {
+          "name": "Melnik",
+          "appellations": [
+            {
+              "name": "Struma Valley",
+              "type": "DGO"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
