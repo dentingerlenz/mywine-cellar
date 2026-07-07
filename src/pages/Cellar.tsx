@@ -75,6 +75,47 @@ export default function Cellar() {
     setDeleteTarget(null);
   };
 
+  const exportCsv = () => {
+    const rows = wines.map((w) => ({
+      id: w.id,
+      colour: w.colour ?? "",
+      producer: w.producer ?? "",
+      description: w.description ?? "",
+      vintage: w.vintage ?? "",
+      cl: w.cl ?? "",
+      variety: w.variety ?? "",
+      residual_sugar_gl: w.residual_sugar_gl ?? "",
+      dosage: w.dosage ?? "",
+      alcohol_pct: w.alcohol_pct ?? "",
+      country: w.country ?? "",
+      region: w.region ?? "",
+      sub_region: w.sub_region ?? "",
+      appellation: w.appellation ?? "",
+      ausbau_terroir: w.ausbau_terroir ?? "",
+      notes: w.notes ?? "",
+      occasion: w.occasion ?? "",
+      quantity: w.quantity,
+      price_chf: w.price_chf ?? "",
+      purchased_from: w.purchased_from ?? "",
+      ready_from: w.ready_from ?? "",
+      drink_by: w.drink_by ?? "",
+      rating: w.rating ?? "",
+      label_photo_url: w.label_photo_url ?? "",
+      created_at: w.created_at,
+    }));
+    const csv = Papa.unparse(rows);
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `cellar-export-${new Date().toISOString().slice(0, 10)}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    toast.success("CSV exported");
+  };
+
   return (
     <div className="min-h-screen">
       <header className="border-b border-primary/20 backdrop-blur bg-background/70 sticky top-0 z-40">
