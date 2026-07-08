@@ -1,38 +1,22 @@
-import { Wine, getDrinkStatus, wineTitle } from "@/lib/wine";
-import { useWineColoursCtx, colourHexFor } from "@/contexts/WineColoursContext";
-import { useWineCountries } from "@/hooks/useWineGeography";
 import { Card } from "@/components/ui/card";
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from "recharts";
+import { type Wine, getDrinkStatus, wineTitle } from "../model";
+import { useColourLookup, colourHexFor } from "@/features/colours/queries";
+import { useCountries } from "@/features/geography/queries";
 
 export const Dashboard = ({ wines }: { wines: Wine[] }) => {
-  const { colours } = useWineColoursCtx();
-  const { data: countryRows = [] } = useWineCountries();
+  const { colours } = useColourLookup();
+  const { data: countryRows = [] } = useCountries();
   const inStock = wines.filter((b) => b.quantity > 0);
   const totalBottles = inStock.reduce((s, b) => s + b.quantity, 0);
   const totalValue = inStock.reduce((s, b) => s + (b.price_chf ?? 0) * b.quantity, 0);
   const labelCount = inStock.length;
   const drinkNow = inStock.filter((b) => getDrinkStatus(b) === "drink_now" && (b.ready_from || b.drink_by));
-  const layDown = inStock.filter((b) => b.occasion === "l");
+  const layDown = inStock.filter((b) => b.occasion === "lay_down");
 
-  // Build breakdown from user's defined categories, plus any "orphan" colour values
-  // present on bottles that are not in the user's category list.
-  const knownNames = new Set(colours.map((c) => c.name));
-  const orphanNames = Array.from(
-    new Set(
-      inStock
-        .map((b) => b.colour)
-        .filter((v): v is string => !!v && !knownNames.has(v)),
-    ),
-  );
-
-  const allCategories = [
-    ...colours.map((c) => ({ name: c.name, display_name: c.display_name })),
-    ...orphanNames.map((n) => ({ name: n, display_name: n })),
-  ];
-
-  const colourBreakdown = allCategories
+  const colourBreakdown = colours
     .map((c) => {
-      const items = inStock.filter((b) => b.colour === c.name);
+      const items = inStock.filter((b) => b.colour_id === c.id);
       return {
         colour: c.name,
         name: c.display_name,
@@ -46,26 +30,15 @@ export const Dashboard = ({ wines }: { wines: Wine[] }) => {
 
   const byColour = colourBreakdown.map((d) => ({ name: d.name, value: d.bottles, fill: d.fill }));
 
-  // Aggregate bottles by country, joining wines.country_id → wine_countries.
-  // Falls back to the legacy text column for any wine not yet linked by id.
   const countryById = new Map(countryRows.map((c) => [c.id, c]));
-  const countryByName = new Map(countryRows.map((c) => [c.name, c]));
   const countryTotals = inStock.reduce<Record<string, number>>((acc, b) => {
-    const linked = b.country_id ? countryById.get(b.country_id) : undefined;
-    const display = linked?.name ?? b.country ?? "Unknown";
+    const display = (b.country_id ? countryById.get(b.country_id)?.name : null) ?? "Unknown";
     acc[display] = (acc[display] || 0) + b.quantity;
     return acc;
   }, {});
   const byCountry = Object.entries(countryTotals)
-    .map(([name, value]) => ({
-      name,
-      value,
-      sort_order: countryByName.get(name)?.sort_order ?? Number.MAX_SAFE_INTEGER,
-    }))
-    .sort((a, b) => {
-      if (a.sort_order !== b.sort_order) return a.sort_order - b.sort_order;
-      return b.value - a.value;
-    })
+    .map(([name, value]) => ({ name, value }))
+    .sort((a, b) => b.value - a.value)
     .slice(0, 8);
 
   return (

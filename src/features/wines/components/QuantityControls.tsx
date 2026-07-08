@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { Wine } from "@/lib/wine";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus } from "lucide-react";
-import { useUpdateQuantity } from "@/hooks/useWines";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import type { Wine } from "../model";
+import { useUpdateQuantity } from "../queries";
 
 type Props = {
   wine: Wine;
@@ -36,8 +36,8 @@ export const QuantityControls = ({ wine, size = "md", className }: Props) => {
     try {
       await update.mutateAsync({ id: wine.id, quantity: safe });
       toast.success(`Quantity updated · ×${safe}`);
-    } catch (e: any) {
-      toast.error(e.message || "Could not update quantity");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Could not update quantity");
     }
   };
 

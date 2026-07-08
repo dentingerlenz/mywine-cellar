@@ -1,35 +1,29 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { format, parseISO } from "date-fns";
-import { BookOpen, CalendarIcon, Trash2, Wine as WineIcon, ArrowLeft, Loader2 } from "lucide-react";
-import { useDrinkingLog, useDeleteDrinkingLogEntry } from "@/hooks/useDrinkingLog";
-import { usePeople } from "@/hooks/usePeople";
-import { useWines } from "@/hooks/useWines";
-import { Wine, wineTitle } from "@/lib/wine";
-import { WineDetailDialog } from "@/components/WineDetailDialog";
-import { WineFormDialog } from "@/components/WineFormDialog";
+import { BookOpen, CalendarIcon, Star, Trash2, Wine as WineIcon, ArrowLeft, Loader2 } from "lucide-react";
+import { useDrinkingLog, useDeleteLogEntry } from "./queries";
+import { usePeople } from "@/features/people/queries";
+import { useWines } from "@/features/wines/queries";
+import { type Wine, wineTitle } from "@/features/wines/model";
+import { WineDetailDialog } from "@/features/wines/components/WineDetailDialog";
+import { WineFormDialog } from "@/features/wine-form/WineFormDialog";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
-export default function History() {
+export default function HistoryPage() {
   const { data: entries = [], isLoading } = useDrinkingLog();
   const { data: people = [] } = usePeople();
   const { data: wines = [] } = useWines();
-  const del = useDeleteDrinkingLogEntry();
+  const del = useDeleteLogEntry();
 
   const [personFilter, setPersonFilter] = useState<string | "all">("all");
   const [fromDate, setFromDate] = useState<Date | undefined>();
@@ -39,21 +33,15 @@ export default function History() {
   const [editing, setEditing] = useState<Wine | null>(null);
   const [formOpen, setFormOpen] = useState(false);
 
-  const wineById = useMemo(() => {
-    const m = new Map<string, Wine>();
-    wines.forEach((w) => m.set(w.id, w));
-    return m;
-  }, [wines]);
-
-  const personById = useMemo(() => {
-    const m = new Map<string, { name: string; avatar: string | null }>();
-    people.forEach((p) => m.set(p.id, { name: p.name, avatar: p.avatar }));
-    return m;
-  }, [people]);
+  const wineById = useMemo(() => new Map(wines.map((w) => [w.id, w])), [wines]);
+  const personById = useMemo(
+    () => new Map(people.map((p) => [p.id, { name: p.name, avatar: p.avatar }])),
+    [people],
+  );
 
   const filtered = useMemo(() => {
     return entries.filter((e) => {
-      if (personFilter !== "all" && !(e.people_ids ?? []).includes(personFilter)) return false;
+      if (personFilter !== "all" && !e.people_ids.includes(personFilter)) return false;
       const d = parseISO(e.date);
       if (fromDate && d < fromDate) return false;
       if (toDate) {
@@ -70,8 +58,8 @@ export default function History() {
     try {
       await del.mutateAsync(deleteId);
       toast.success("Entry removed");
-    } catch (e: any) {
-      toast.error(e.message);
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Could not delete");
     }
     setDeleteId(null);
   };
@@ -102,7 +90,6 @@ export default function History() {
           <p className="text-muted-foreground italic mt-1">Every cork that has been pulled.</p>
         </div>
 
-        {/* Filters */}
         <div className="gold-border rounded-lg bg-card/40 p-4 mb-6 flex flex-wrap items-end gap-4">
           <div className="flex-1 min-w-[180px]">
             <Label className="mb-1.5 block text-[10px] uppercase tracking-widest text-muted-foreground">Person</Label>
@@ -166,9 +153,8 @@ export default function History() {
           <ul className="space-y-3">
             {filtered.map((entry) => {
               const wine = entry.wine_id ? wineById.get(entry.wine_id) : null;
-              const wineLabel = wine
-                ? wineTitle(wine)
-                : "Wine no longer in cellar";
+              // v2: Snapshot rettet den Namen, auch wenn der Wein gelöscht wurde
+              const wineLabel = wine ? wineTitle(wine) : entry.wine_label ?? "Wine no longer in cellar";
               return (
                 <li
                   key={entry.id}
@@ -194,7 +180,15 @@ export default function History() {
                       </div>
                     )}
 
-                    {(entry.people_ids?.length ?? 0) > 0 && (
+                    {entry.rating != null && (
+                      <span className="flex items-center gap-0.5">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <Star key={i} className={cn("w-3.5 h-3.5", i < (entry.rating ?? 0) ? "fill-primary text-primary" : "text-muted")} />
+                        ))}
+                      </span>
+                    )}
+
+                    {entry.people_ids.length > 0 && (
                       <div className="flex flex-wrap gap-1.5">
                         {entry.people_ids.map((pid) => {
                           const p = personById.get(pid);
@@ -240,7 +234,7 @@ export default function History() {
         open={!!detailWine}
         onOpenChange={(o) => !o && setDetailWine(null)}
         onEdit={(w) => { setDetailWine(null); setEditing(w); setFormOpen(true); }}
-        onDelete={() => { /* no-op from history */ }}
+        onDelete={() => { /* kein Löschen aus der Historie */ }}
       />
 
       <WineFormDialog open={formOpen} onOpenChange={setFormOpen} wine={editing} />

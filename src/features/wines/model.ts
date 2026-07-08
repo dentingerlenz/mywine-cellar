@@ -85,6 +85,16 @@ export const DRINK_LABEL: Record<DrinkStatus, string> = {
 export const wineTitle = (w: Pick<Wine, "producer" | "name">) =>
   [w.producer, w.name].filter(Boolean).join(" — ") || "Untitled bottle";
 
+// occasion kommt aus der DB als string|null — Helpers kapseln das Narrowing.
+export const occasionLabel = (o: string | null | undefined): string | null =>
+  o && o in OCCASION_LABEL ? OCCASION_LABEL[o as Occasion] : null;
+
+export const occasionClass = (o: string | null | undefined): string =>
+  o && o in OCCASION_CLASS ? OCCASION_CLASS[o as Occasion] : "";
+
+export const formatSize = (size_ml: number | null | undefined): string | null =>
+  size_ml == null ? null : `${size_ml % 10 === 0 ? size_ml / 10 : (size_ml / 10).toFixed(1)} cl`;
+
 const dupNorm = (s: string | null | undefined) => (s ?? "").trim().toLowerCase();
 
 /** V3 — Duplikat-Warnung: gleicher Produzent + Name + Jahrgang im Bestand. */

@@ -139,6 +139,25 @@ export const useUpdatePrice = () => {
   });
 };
 
+/** CSV-Import: ein Insert für alle Zeilen (Payloads inkl. aufgelöster Geo-IDs). */
+export const useBulkInsertWines = () => {
+  const qc = useQueryClient();
+  const { cellarId } = useCellar();
+  return useMutation({
+    mutationFn: async (rows: WineInput[]) => {
+      const { data: userData } = await supabase.auth.getUser();
+      const payload = rows.map((v) => ({
+        ...toPayload(v),
+        cellar_id: cellarId,
+        created_by: userData.user?.id ?? null,
+      }));
+      const { error } = await supabase.from("wines").insert(payload);
+      if (error) throw error;
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: qk.wines }),
+  });
+};
+
 // ── Label-Fotos: Storage-PFAD in der DB, URL wird abgeleitet ────────────────
 export const labelPhotoUrl = (path: string | null | undefined): string | null =>
   path ? supabase.storage.from("wine-photos").getPublicUrl(path).data.publicUrl : null;

@@ -1,14 +1,15 @@
-import { Wine, OCCASION_CLASS, OCCASION_LABEL, wineTitle } from "@/lib/wine";
-import { useWineColoursCtx, colourClassFor } from "@/contexts/WineColoursContext";
-import { useGeographyLookups } from "@/hooks/useWineGeography";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Pencil, Trash2, Star, Wine as WineIcon, MapPin } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { type Wine, wineTitle, occasionLabel, occasionClass } from "../model";
+import { labelPhotoUrl } from "../queries";
+import { useColourLookup } from "@/features/colours/queries";
+import { useGeoLookups } from "@/features/geography/queries";
 import { BottlePlaceholder } from "./BottlePlaceholder";
-import { Pencil, Trash2, Star, Wine as WineIcon } from "lucide-react";
 import { QuantityControls } from "./QuantityControls";
 import { PriceControl } from "./PriceControl";
-import { cn } from "@/lib/utils";
 
 type Props = {
   wine: Wine;
@@ -19,19 +20,27 @@ type Props = {
 };
 
 export const WineCard = ({ wine, onOpen, onEdit, onDelete, onOpenBottle }: Props) => {
-  const { labelFor } = useWineColoursCtx();
-  const { regionNameFor } = useGeographyLookups();
-  const regionName = regionNameFor(wine);
-  const geoExtra = [wine.sub_region, wine.appellation].filter(Boolean).join(" · ");
+  const colours = useColourLookup();
+  const geo = useGeoLookups();
+  const photo = labelPhotoUrl(wine.label_photo_path);
+  const regionName = wine.region_id ? geo.regionById.get(wine.region_id)?.name : null;
+  const geoExtra = [
+    wine.sub_region_id ? geo.subRegionById.get(wine.sub_region_id)?.name : null,
+    wine.appellation_id ? geo.appellationById.get(wine.appellation_id)?.name : null,
+  ]
+    .filter(Boolean)
+    .join(" · ");
+  const occLabel = occasionLabel(wine.occasion);
+
   return (
     <Card
       onClick={() => onOpen(wine)}
       className="group overflow-hidden gold-border shadow-card hover:shadow-warm transition-all duration-300 bg-card/80 backdrop-blur cursor-pointer"
     >
       <div className="aspect-[4/3] relative overflow-hidden">
-        {wine.label_photo_url ? (
+        {photo ? (
           <img
-            src={wine.label_photo_url}
+            src={photo}
             alt={wineTitle(wine)}
             loading="lazy"
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -39,17 +48,17 @@ export const WineCard = ({ wine, onOpen, onEdit, onDelete, onOpenBottle }: Props
         ) : (
           <BottlePlaceholder className="w-full h-full" />
         )}
-        {wine.colour && (
-          <Badge className={cn("absolute top-2 left-2 font-body text-[9px] uppercase tracking-wider px-1.5 py-0", colourClassFor(wine.colour))}>
-            {labelFor(wine.colour)}
+        {wine.colour_id && (
+          <Badge className={cn("absolute top-2 left-2 font-body text-[9px] uppercase tracking-wider px-1.5 py-0", colours.classFor(wine.colour_id))}>
+            {colours.labelFor(wine.colour_id)}
           </Badge>
         )}
         <div className="absolute top-2 right-2">
           <QuantityControls wine={wine} size="sm" />
         </div>
-        {wine.occasion && (
-          <Badge variant="outline" className={cn("absolute bottom-2 left-2 font-body text-[9px] uppercase tracking-wider px-1.5 py-0", OCCASION_CLASS[wine.occasion])}>
-            {OCCASION_LABEL[wine.occasion]}
+        {occLabel && (
+          <Badge variant="outline" className={cn("absolute bottom-2 left-2 font-body text-[9px] uppercase tracking-wider px-1.5 py-0", occasionClass(wine.occasion))}>
+            {occLabel}
           </Badge>
         )}
       </div>
@@ -58,8 +67,8 @@ export const WineCard = ({ wine, onOpen, onEdit, onDelete, onOpenBottle }: Props
           <h3 className="font-display text-base leading-tight text-foreground line-clamp-2">
             {wine.producer || <span className="italic text-muted-foreground">Unknown producer</span>}
           </h3>
-          {wine.description && (
-            <p className="text-[11px] text-muted-foreground italic line-clamp-1">{wine.description}</p>
+          {wine.name && (
+            <p className="text-[11px] text-muted-foreground italic line-clamp-1">{wine.name}</p>
           )}
         </div>
         <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
@@ -69,10 +78,15 @@ export const WineCard = ({ wine, onOpen, onEdit, onDelete, onOpenBottle }: Props
         {geoExtra && (
           <p className="text-[10px] text-muted-foreground italic truncate">{geoExtra}</p>
         )}
+        {wine.storage_location && (
+          <p className="text-[10px] text-muted-foreground truncate flex items-center gap-1">
+            <MapPin className="w-2.5 h-2.5 shrink-0" /> {wine.storage_location}
+          </p>
+        )}
         {wine.rating && (
           <div className="flex gap-0.5">
             {Array.from({ length: 5 }).map((_, i) => (
-              <Star key={i} className={cn("w-3 h-3", i < wine.rating! ? "fill-primary text-primary" : "text-muted")} />
+              <Star key={i} className={cn("w-3 h-3", i < (wine.rating ?? 0) ? "fill-primary text-primary" : "text-muted")} />
             ))}
           </div>
         )}

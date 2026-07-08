@@ -1,44 +1,36 @@
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
-import { useWines, useDeleteWine } from "@/hooks/useWines";
-import { Wine, wineTitle } from "@/lib/wine";
-import { WineCard } from "@/components/WineCard";
-import { WineListRow } from "@/components/WineListRow";
-import { WineFormDialog } from "@/components/WineFormDialog";
-import { WineDetailDialog } from "@/components/WineDetailDialog";
-import { OpenBottleDialog } from "@/components/OpenBottleDialog";
-import { Dashboard } from "@/components/Dashboard";
-import { FilterBar, applyFilters, emptyFilters, Filters, SortKey } from "@/components/FilterBar";
+import { useAuth } from "@/features/auth/AuthContext";
+import { useCellar } from "@/features/cellar/CellarContext";
+import { useWines, useDeleteWine } from "./queries";
+import { type Wine, wineTitle } from "./model";
+import { useGeoLookups } from "@/features/geography/queries";
+import { WineCard } from "./components/WineCard";
+import { WineListRow } from "./components/WineListRow";
+import { WineDetailDialog } from "./components/WineDetailDialog";
+import { OpenBottleDialog } from "./components/OpenBottleDialog";
+import { Dashboard } from "./components/Dashboard";
+import { FilterBar, applyFilters, emptyFilters, type Filters, type SortKey, type GeoNames } from "./components/FilterBar";
+import { WineFormDialog } from "@/features/wine-form/WineFormDialog";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import {
-  Plus,
-  LogOut,
-  Wine as WineIcon,
-  Upload,
-  LayoutGrid,
-  List,
-  Settings as SettingsIcon,
-  BookOpen,
+  Plus, LogOut, Wine as WineIcon, Upload, LayoutGrid, List,
+  Settings as SettingsIcon, BookOpen,
 } from "lucide-react";
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 
-export default function Cellar() {
+export default function CellarPage() {
   const { user, signOut } = useAuth();
+  const { cellarName } = useCellar();
   const { data: wines = [], isLoading } = useWines();
+  const geo = useGeoLookups();
   const del = useDeleteWine();
   const [filters, setFilters] = useState<Filters>(emptyFilters);
   const [view, setView] = useState<"grid" | "list">("grid");
@@ -48,7 +40,28 @@ export default function Cellar() {
   const [deleteTarget, setDeleteTarget] = useState<Wine | null>(null);
   const [openingBottle, setOpeningBottle] = useState<Wine | null>(null);
 
-  const filtered = useMemo(() => applyFilters(wines, filters), [wines, filters]);
+  const geoNames: GeoNames = useMemo(
+    () => ({
+      regionName: (w) => (w.region_id ? geo.regionById.get(w.region_id)?.name ?? "" : ""),
+      searchText: (w) =>
+        [
+          w.producer, w.name, w.variety, w.notes, w.terroir_notes, w.storage_location,
+          w.country_id ? geo.countryById.get(w.country_id)?.name : null,
+          w.region_id ? geo.regionById.get(w.region_id)?.name : null,
+          w.sub_region_id ? geo.subRegionById.get(w.sub_region_id)?.name : null,
+          w.appellation_id ? geo.appellationById.get(w.appellation_id)?.name : null,
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase(),
+    }),
+    [geo],
+  );
+
+  const filtered = useMemo(
+    () => applyFilters(wines, filters, geoNames),
+    [wines, filters, geoNames],
+  );
 
   const onAdd = () => {
     setEditing(null);
@@ -67,8 +80,8 @@ export default function Cellar() {
       await del.mutateAsync(deleteTarget.id);
       toast.success("Bottle removed");
       setDetail(null);
-    } catch (e: any) {
-      toast.error(e.message);
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Could not delete");
     }
     setDeleteTarget(null);
   };
@@ -82,7 +95,9 @@ export default function Cellar() {
             <img src="/LogoText.png" alt="Cave" className="h-6 sm:h-[40px] w-auto object-scale-down" />
           </div>
           <div className="flex items-center gap-2">
-            <span className="hidden sm:inline text-xs text-muted-foreground italic">{user?.email}</span>
+            <span className="hidden sm:inline text-xs text-muted-foreground italic">
+              {cellarName} · {user?.email}
+            </span>
             <Button variant="ghost" size="icon" className="sm:size-auto sm:px-3" asChild title="History">
               <Link to="/history">
                 <BookOpen className="w-4 h-4" /> <span className="hidden sm:inline">History</span>
@@ -200,10 +215,11 @@ export default function Cellar() {
                 <TableRow className="border-primary/20 hover:bg-transparent">
                   <TableHead>Colour</TableHead>
                   <TableHead>Producer</TableHead>
-                  <TableHead>Description</TableHead>
+                  <TableHead>Name</TableHead>
                   <TableHead>Vintage</TableHead>
                   <TableHead>Region</TableHead>
                   <TableHead>Variety</TableHead>
+                  <TableHead>Storage</TableHead>
                   <TableHead className="text-center">Qty</TableHead>
                   <TableHead className="text-right">Price</TableHead>
                   <TableHead className="w-12"></TableHead>

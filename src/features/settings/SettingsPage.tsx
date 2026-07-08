@@ -1,50 +1,40 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useWines } from "@/hooks/useWines";
+import { useWines } from "@/features/wines/queries";
 import {
-  useWineColours,
-  useAddWineColour,
-  useRenameWineColour,
-  useDeleteWineColour,
-  WineColourRow,
-} from "@/hooks/useWineColours";
-import { colourClassFor } from "@/contexts/WineColoursContext";
+  useColours, useAddColour, useRenameColour, useDeleteColour,
+  colourClassFor, type WineColour,
+} from "@/features/colours/queries";
+import { MembersSection } from "@/features/cellar/MembersSection";
+import { GeographySection } from "@/features/geography/GeographySection";
+import { PeopleSection } from "@/features/people/PeopleSection";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { ArrowLeft, Pencil, Trash2, Plus, Check, X, Settings as SettingsIcon, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import { CountriesRegionsSection } from "@/components/CountriesRegionsSection";
-import { PeopleSection } from "@/components/PeopleSection";
 
-export default function Settings() {
-  const { data: colours = [], isLoading } = useWineColours();
+export default function SettingsPage() {
+  const { data: colours = [], isLoading } = useColours();
   const { data: wines = [] } = useWines();
-  const addMut = useAddWineColour();
-  const renameMut = useRenameWineColour();
-  const deleteMut = useDeleteWineColour();
+  const addMut = useAddColour();
+  const renameMut = useRenameColour();
+  const deleteMut = useDeleteColour();
 
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingValue, setEditingValue] = useState("");
   const [newName, setNewName] = useState("");
-  const [deleteTarget, setDeleteTarget] = useState<WineColourRow | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<WineColour | null>(null);
 
-  const countFor = (name: string) =>
-    wines.filter((w) => w.colour === name).length;
+  const countFor = (id: string) => wines.filter((w) => w.colour_id === id).length;
 
-  const startEdit = (c: WineColourRow) => {
+  const startEdit = (c: WineColour) => {
     setEditingId(c.id);
     setEditingValue(c.display_name);
   };
@@ -65,8 +55,8 @@ export default function Settings() {
       await renameMut.mutateAsync({ id: editingId, display_name: trimmed });
       toast.success("Category renamed");
       cancelEdit();
-    } catch (e: any) {
-      toast.error(e.message ?? "Could not rename");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Could not rename");
     }
   };
 
@@ -77,8 +67,8 @@ export default function Settings() {
       await addMut.mutateAsync(trimmed);
       toast.success("Category added");
       setNewName("");
-    } catch (e: any) {
-      toast.error(e.message ?? "Could not add category");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Could not add category");
     }
   };
 
@@ -87,13 +77,13 @@ export default function Settings() {
     try {
       await deleteMut.mutateAsync(deleteTarget.id);
       toast.success("Category removed");
-    } catch (e: any) {
-      toast.error(e.message ?? "Could not remove category");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Could not remove category");
     }
     setDeleteTarget(null);
   };
 
-  const deleteAffected = deleteTarget ? countFor(deleteTarget.name) : 0;
+  const deleteAffected = deleteTarget ? countFor(deleteTarget.id) : 0;
 
   return (
     <div className="min-h-screen">
@@ -115,10 +105,14 @@ export default function Settings() {
           <p className="text-muted-foreground italic mt-1">Tailor your cellar's vocabulary.</p>
         </div>
 
-        <Card className="p-6 gold-border bg-card/80 shadow-card">
+        <MembersSection />
+
+        <Card className="p-6 gold-border bg-card/80 shadow-card mt-6">
           <div className="flex items-center justify-between mb-1">
             <h3 className="font-display text-2xl">Wine categories</h3>
-            <span className="text-xs text-muted-foreground">{colours.length} {colours.length === 1 ? "category" : "categories"}</span>
+            <span className="text-xs text-muted-foreground">
+              {colours.length} {colours.length === 1 ? "category" : "categories"}
+            </span>
           </div>
           <p className="text-sm text-muted-foreground italic mb-6">
             Rename, add, or remove colour categories. Changes apply across cards, filters and the dashboard.
@@ -131,7 +125,7 @@ export default function Settings() {
           ) : (
             <ul className="divide-y divide-primary/15 border border-primary/15 rounded-md">
               {colours.map((c) => {
-                const count = countFor(c.name);
+                const count = countFor(c.id);
                 const isEditing = editingId === c.id;
                 return (
                   <li key={c.id} className="flex items-center gap-3 px-4 py-3">
@@ -218,7 +212,7 @@ export default function Settings() {
         </Card>
 
         <div className="mt-6">
-          <CountriesRegionsSection />
+          <GeographySection />
         </div>
 
         <div className="mt-6">

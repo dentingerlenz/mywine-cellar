@@ -89,16 +89,38 @@ ${colorConfig
 
 const ChartTooltip = RechartsPrimitive.Tooltip;
 
+type ChartTooltipItem = {
+  dataKey?: string | number;
+  name?: string | number;
+  value?: number | string;
+  color?: string;
+  payload?: Record<string, unknown> & { fill?: string };
+};
+
+type ChartTooltipContentProps = React.ComponentProps<"div"> & {
+  active?: boolean;
+  payload?: ChartTooltipItem[];
+  label?: React.ReactNode;
+  labelFormatter?: (label: React.ReactNode, payload: ChartTooltipItem[]) => React.ReactNode;
+  labelClassName?: string;
+  formatter?: (
+    value: number | string,
+    name: string | number,
+    item: ChartTooltipItem,
+    index: number,
+    itemPayload: Record<string, unknown>,
+  ) => React.ReactNode;
+  color?: string;
+  hideLabel?: boolean;
+  hideIndicator?: boolean;
+  indicator?: "line" | "dot" | "dashed";
+  nameKey?: string;
+  labelKey?: string;
+};
+
 const ChartTooltipContent = React.forwardRef<
   HTMLDivElement,
-  React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
-    React.ComponentProps<"div"> & {
-      hideLabel?: boolean;
-      hideIndicator?: boolean;
-      indicator?: "line" | "dot" | "dashed";
-      nameKey?: string;
-      labelKey?: string;
-    }
+  ChartTooltipContentProps
 >(
   (
     {
@@ -115,7 +137,7 @@ const ChartTooltipContent = React.forwardRef<
       color,
       nameKey,
       labelKey,
-    }: any,
+    },
     ref,
   ) => {
     const { config } = useChart();
@@ -230,7 +252,7 @@ const ChartLegend = RechartsPrimitive.Legend;
 const ChartLegendContent = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div"> & {
-    payload?: any;
+    payload?: { value?: string | number; dataKey?: string | number; color?: string }[];
     verticalAlign?: "top" | "bottom" | "middle";
     hideIcon?: boolean;
     nameKey?: string;

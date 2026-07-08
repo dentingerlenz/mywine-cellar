@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { Wine } from "@/lib/wine";
-import { useUpdatePrice } from "@/hooks/useWines";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import type { Wine } from "../model";
+import { useUpdatePrice } from "../queries";
 
 type Props = {
   wine: Wine;
@@ -14,9 +14,7 @@ type Props = {
 export const PriceControl = ({ wine, size = "sm", align = "left", className }: Props) => {
   const update = useUpdatePrice();
   const [editing, setEditing] = useState(false);
-  const [draft, setDraft] = useState(
-    wine.price_chf != null ? String(wine.price_chf) : "",
-  );
+  const [draft, setDraft] = useState(wine.price_chf != null ? String(wine.price_chf) : "");
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -36,8 +34,8 @@ export const PriceControl = ({ wine, size = "sm", align = "left", className }: P
     try {
       await update.mutateAsync({ id: wine.id, price_chf: next });
       toast.success(next == null ? "Price cleared" : `Price updated · ${next.toFixed(0)} CHF`);
-    } catch (e: any) {
-      toast.error(e.message || "Could not update price");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Could not update price");
     }
   };
 

@@ -1,14 +1,14 @@
-import { Wine } from "@/lib/wine";
-import { useWineColoursCtx, colourClassFor } from "@/contexts/WineColoursContext";
-import { useGeographyLookups } from "@/hooks/useWineGeography";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal, Pencil, Trash2, Wine as WineIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import type { Wine } from "../model";
+import { useColourLookup } from "@/features/colours/queries";
+import { useGeoLookups } from "@/features/geography/queries";
 import { QuantityControls } from "./QuantityControls";
 import { PriceControl } from "./PriceControl";
-import { cn } from "@/lib/utils";
 
 type Props = {
   wine: Wine;
@@ -19,17 +19,22 @@ type Props = {
 };
 
 export const WineListRow = ({ wine, onOpen, onEdit, onDelete, onOpenBottle }: Props) => {
-  const { labelFor } = useWineColoursCtx();
-  const { regionNameFor } = useGeographyLookups();
+  const colours = useColourLookup();
+  const geo = useGeoLookups();
+  const regionName = wine.region_id ? geo.regionById.get(wine.region_id)?.name : null;
+  const geoExtra = [
+    wine.sub_region_id ? geo.subRegionById.get(wine.sub_region_id)?.name : null,
+    wine.appellation_id ? geo.appellationById.get(wine.appellation_id)?.name : null,
+  ]
+    .filter(Boolean)
+    .join(" · ");
+
   return (
-    <TableRow
-      onClick={() => onOpen(wine)}
-      className="cursor-pointer hover:bg-card/60"
-    >
+    <TableRow onClick={() => onOpen(wine)} className="cursor-pointer hover:bg-card/60">
       <TableCell>
-        {wine.colour ? (
-          <Badge className={cn("font-body text-[10px] uppercase tracking-wider", colourClassFor(wine.colour))}>
-            {labelFor(wine.colour)}
+        {wine.colour_id ? (
+          <Badge className={cn("font-body text-[10px] uppercase tracking-wider", colours.classFor(wine.colour_id))}>
+            {colours.labelFor(wine.colour_id)}
           </Badge>
         ) : (
           <span className="text-muted-foreground">—</span>
@@ -39,18 +44,19 @@ export const WineListRow = ({ wine, onOpen, onEdit, onDelete, onOpenBottle }: Pr
         {wine.producer || <span className="italic text-muted-foreground">Unknown</span>}
       </TableCell>
       <TableCell className="text-muted-foreground italic max-w-[220px] truncate">
-        {wine.description || "—"}
+        {wine.name || "—"}
       </TableCell>
       <TableCell className="text-primary font-display">{wine.vintage || "—"}</TableCell>
       <TableCell className="text-sm">
-        <div className="truncate max-w-[200px]">{regionNameFor(wine) || "—"}</div>
-        {(wine.sub_region || wine.appellation) && (
+        <div className="truncate max-w-[200px]">{regionName || "—"}</div>
+        {geoExtra && (
           <div className="text-[10px] text-muted-foreground italic truncate max-w-[200px]">
-            {[wine.sub_region, wine.appellation].filter(Boolean).join(" · ")}
+            {geoExtra}
           </div>
         )}
       </TableCell>
       <TableCell className="text-sm max-w-[180px] truncate">{wine.variety || "—"}</TableCell>
+      <TableCell className="text-sm max-w-[120px] truncate">{wine.storage_location || "—"}</TableCell>
       <TableCell className="text-center"><QuantityControls wine={wine} size="sm" /></TableCell>
       <TableCell className="text-right whitespace-nowrap">
         <PriceControl wine={wine} size="sm" align="right" />

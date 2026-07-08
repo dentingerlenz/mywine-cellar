@@ -6,6 +6,11 @@ import type { Tables } from "@/integrations/supabase/types";
 
 export type Person = Tables<"people">;
 
+export const PERSON_EMOJI_OPTIONS = [
+  "👤", "👨", "👩", "🧑", "👴", "👵", "🧔", "👱‍♀️",
+  "🥂", "🍷", "🍾", "🧑‍🍳", "❤️", "🎉", "🐶", "🌟",
+] as const;
+
 export const usePeople = () => {
   const { cellarId } = useCellar();
   return useQuery({

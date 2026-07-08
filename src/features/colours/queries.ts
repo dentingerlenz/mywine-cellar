@@ -6,21 +6,33 @@ import type { Tables } from "@/integrations/supabase/types";
 
 export type WineColour = Tables<"wine_colours">;
 
-// Eingebautes Styling, gekeyt über den Slug (name); Custom-Farben → Fallback.
-export const COLOUR_STYLE: Record<string, { dot: string; badge: string }> = {
-  sparkling: { dot: "bg-amber-200", badge: "bg-amber-100/80 text-amber-900 border-amber-300" },
-  white: { dot: "bg-yellow-100", badge: "bg-yellow-50 text-yellow-900 border-yellow-200" },
-  red: { dot: "bg-red-800", badge: "bg-red-100/80 text-red-900 border-red-300" },
-  rose: { dot: "bg-pink-300", badge: "bg-pink-100/80 text-pink-900 border-pink-300" },
-  orange: { dot: "bg-orange-400", badge: "bg-orange-100/80 text-orange-900 border-orange-300" },
-  dessert_fortified: { dot: "bg-amber-700", badge: "bg-amber-100/80 text-amber-900 border-amber-400" },
+// Eingebautes Styling (aus v1 übernommen), gekeyt über den Slug (name);
+// Custom-Farben bekommen den neutralen Fallback.
+export const COLOUR_CLASS_BY_NAME: Record<string, string> = {
+  sparkling: "bg-wine-sparkling text-background",
+  white: "bg-wine-white text-background",
+  red: "bg-wine-red text-foreground",
+  rose: "bg-wine-rose text-background",
+  dessert_fortified: "bg-wine-dessert text-background",
+  orange: "bg-wine-orange text-background",
 };
-export const FALLBACK_COLOUR_STYLE = {
-  dot: "bg-muted-foreground",
-  badge: "bg-secondary text-foreground border-primary/30",
+export const FALLBACK_COLOUR_CLASS = "bg-secondary text-foreground border border-primary/30";
+
+export const COLOUR_HEX_BY_NAME: Record<string, string> = {
+  sparkling: "#c9a84c",
+  white: "hsl(48, 55%, 75%)",
+  red: "hsl(350, 70%, 35%)",
+  rose: "#e8a0a0",
+  dessert_fortified: "#c4956a",
+  orange: "#e07b39",
 };
-export const colourStyle = (slug: string | null | undefined) =>
-  (slug && COLOUR_STYLE[slug]) || FALLBACK_COLOUR_STYLE;
+export const FALLBACK_COLOUR_HEX = "hsl(44, 53%, 54%)";
+
+export const colourClassFor = (slug: string | null | undefined): string =>
+  (slug && COLOUR_CLASS_BY_NAME[slug]) || FALLBACK_COLOUR_CLASS;
+
+export const colourHexFor = (slug: string | null | undefined): string =>
+  (slug && COLOUR_HEX_BY_NAME[slug]) || FALLBACK_COLOUR_HEX;
 
 export const useColours = () => {
   const { cellarId } = useCellar();
@@ -36,6 +48,21 @@ export const useColours = () => {
       return data ?? [];
     },
   });
+};
+
+/** Lookup über colour_id — die eine Quelle für Label/Styling in Cards, Listen, Charts. */
+export const useColourLookup = () => {
+  const { data: colours = [], isLoading } = useColours();
+  const byId = new Map(colours.map((c) => [c.id, c]));
+  const slugFor = (id: string | null | undefined) => (id ? byId.get(id)?.name ?? null : null);
+  return {
+    colours,
+    loading: isLoading,
+    byId,
+    labelFor: (id: string | null | undefined) => (id ? byId.get(id)?.display_name ?? "—" : "—"),
+    classFor: (id: string | null | undefined) => colourClassFor(slugFor(id)),
+    hexFor: (id: string | null | undefined) => colourHexFor(slugFor(id)),
+  };
 };
 
 const slugify = (s: string) =>
