@@ -1,5 +1,8 @@
 {
-  "_hinweis": "Manuelle Zuordnungen für Geo-Namen, die der Resolver nicht trifft. Schlüssel: countries: 'RohText' → kanonischer Name; regions: 'Land|RohText' (RohText mit oder ohne Kürzel-Präfix); sub_regions: 'Land|Region|RohText'; appellations: 'RohText'. Nach Ergänzung Migration erneut laufen lassen (idempotent). Alle Einträge hier sind gegen die tatsächlichen Seed-Namen verifiziert (2026-07-07).",
+  "_hinweis": "Manuelle Zuordnungen für Geo-Namen, die der Resolver nicht trifft. Schlüssel: countries: 'RohText' → kanonischer Name; regions: 'Land|RohText' (RohText mit oder ohne Kürzel-Präfix); sub_regions: 'Land|Region|RohText' ODER 'Land|RohText'; appellations: 'RohText'; producers: 'RohText' → korrekt. Nach Ergänzung Migration erneut laufen lassen (idempotent). Alle Einträge sind gegen die tatsächlichen Seed-Namen verifiziert (2026-07-08).",
+  "producers": {
+    "Domaina Zuria": "Domaine Zuria"
+  },
   "countries": {},
   "regions": {
     "France|Loire": "Vallee de la Loire",
@@ -41,12 +44,14 @@
     "Germany|Mosel|Mosel - Pünderich": "Terrassenmosel",
     "Germany|Mosel|Mosel - Bernkastel-Kues": "Mittelmosel",
     "France|Savoie & Jura|Côtes du Jura": "Jura",
-    "Switzerland|Deutschschweiz|Zürichsee": "Zürich"
+    "Switzerland|Deutschschweiz|Zürichsee": "Zürich",
+    "France|Corse|Bonificio": "Bonifacio"
   },
   "appellations": {
     "Douro DOC": "Douro",
     "AOC Côtes de Bergerac": "Cotes de Bergerac",
     "AOC Zürichsee": "Zürichsee",
-    "DOC Etna Bianco": "Etna"
+    "DOC Etna Bianco": "Etna",
+    "Bordeaux Supérior": "Bordeaux Supérieur"
   }
 }

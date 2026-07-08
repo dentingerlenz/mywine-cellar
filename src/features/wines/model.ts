@@ -37,20 +37,59 @@ const optionalUuid = z.preprocess(
   z.string().uuid().nullable()
 );
 
+// Dosage-Stufen (Schaumwein), von trocken nach süß.
+export const DOSAGE_LEVELS = [
+  "Brut Nature", "Extra Brut", "Brut", "Extra Dry", "Sec", "Demi-Sec", "Doux",
+] as const;
+
+// Freitext-Jahrgang → strukturierte Felder (geteilt von Import & Scan).
+export const parseVintageInput = (raw: string | number | null | undefined) => {
+  const v = String(raw ?? "").trim();
+  const empty = { vintage: null as number | null, is_non_vintage: false, base_vintage: null as number | null, aging_indication: "" };
+  if (!v) return empty;
+  if (/^\d{4}$/.test(v)) return { ...empty, vintage: Number(v) };
+  if (/^NV/i.test(v)) {
+    const base = v.match(/(\d{4})/);
+    return { ...empty, is_non_vintage: true, base_vintage: base ? Number(base[1]) : null };
+  }
+  // Solera / Reife-/Alters-Angabe
+  return { ...empty, is_non_vintage: true, aging_indication: v };
+};
+
+const DOSAGE_LEVEL_ALIASES: Record<string, string> = {
+  "brut nature": "Brut Nature", "non dosé": "Brut Nature", "zero dosage": "Brut Nature", "pas dosé": "Brut Nature",
+  "extra brut": "Extra Brut", "brut": "Brut", "extra dry": "Extra Dry", "extra sec": "Extra Dry",
+  "sec": "Sec", "demi-sec": "Demi-Sec", "doux": "Doux",
+};
+export const parseDosageInput = (raw: string | number | null | undefined) => {
+  const v = String(raw ?? "").trim();
+  if (!v) return { dosage_level: "", dosage_gl: null as number | null };
+  const n = Number(v.replace(",", "."));
+  if (Number.isFinite(n)) return { dosage_level: "", dosage_gl: n };
+  return { dosage_level: DOSAGE_LEVEL_ALIASES[v.toLowerCase()] ?? v, dosage_gl: null };
+};
+
 export const wineSchema = z.object({
   producer: z.string().trim().min(1, "Producer is required").max(200),
   name: z.string().trim().max(300).optional().or(z.literal("")),
-  vintage: z.string().trim().max(60).optional().or(z.literal("")),
+  // Jahrgang als Jahreszahl (Stillweine / echte Jahrgangsweine).
+  vintage: optionalNum(z.coerce.number().int().min(1800).max(2100)),
+  is_non_vintage: z.coerce.boolean().default(false),
+  base_vintage: optionalNum(z.coerce.number().int().min(1800).max(2100)),
+  aging_indication: z.string().trim().max(120).optional().or(z.literal("")),
   colour_id: z.string().uuid({ message: "Colour is required" }),
   variety: z.string().trim().max(200).optional().or(z.literal("")),
+  classification: z.string().trim().max(120).optional().or(z.literal("")),
   size_ml: optionalNum(z.coerce.number().int().min(10).max(99999)),
   alcohol_pct: optionalNum(z.coerce.number().min(0).max(99)),
   residual_sugar_gl: optionalNum(z.coerce.number().min(0).max(999)),
-  dosage: z.string().trim().max(60).optional().or(z.literal("")),
+  dosage_level: z.string().trim().max(40).optional().or(z.literal("")),
+  dosage_gl: optionalNum(z.coerce.number().min(0).max(999)),
   country_id: optionalUuid,
   region_id: optionalUuid,
   sub_region_id: optionalUuid,
   appellation_id: optionalUuid,
+  location: z.string().trim().max(160).optional().or(z.literal("")),
   terroir_notes: z.string().max(2000).optional().or(z.literal("")),
   notes: z.string().max(2000).optional().or(z.literal("")),
   occasion: z.enum(["anytime", "special", "lay_down", "top"]).nullable().optional(),
@@ -95,12 +134,31 @@ export const occasionClass = (o: string | null | undefined): string =>
 export const formatSize = (size_ml: number | null | undefined): string | null =>
   size_ml == null ? null : `${size_ml % 10 === 0 ? size_ml / 10 : (size_ml / 10).toFixed(1)} cl`;
 
-const dupNorm = (s: string | null | undefined) => (s ?? "").trim().toLowerCase();
+/** Anzeige des Jahrgangs je nach Weinart: Jahr | „NV" (+ Basisjahr) | Reifeangabe. */
+export const vintageDisplay = (
+  w: Pick<Wine, "vintage" | "is_non_vintage" | "base_vintage" | "aging_indication">
+): string | null => {
+  if (w.vintage != null) return String(w.vintage);
+  if (w.aging_indication) return w.aging_indication;
+  if (w.is_non_vintage) return w.base_vintage ? `NV · ${w.base_vintage}` : "NV";
+  return null;
+};
 
-/** V3 — Duplikat-Warnung: gleicher Produzent + Name + Jahrgang im Bestand. */
+/** Dosage kompakt: Stufe (+ g/L) oder nur g/L. */
+export const dosageDisplay = (
+  w: Pick<Wine, "dosage_level" | "dosage_gl">
+): string | null => {
+  const parts = [w.dosage_level, w.dosage_gl != null ? `${w.dosage_gl} g/L` : null].filter(Boolean);
+  return parts.length ? parts.join(" · ") : null;
+};
+
+const dupNorm = (s: string | null | number | undefined) =>
+  (s ?? "").toString().trim().toLowerCase();
+
+/** V3 — Duplikat-Warnung: gleicher Produzent + Name + Jahrgang + Flaschengröße. */
 export const findDuplicates = (
-  wines: readonly Pick<Wine, "id" | "producer" | "name" | "vintage" | "quantity">[],
-  input: { producer?: string | null; name?: string | null; vintage?: string | null },
+  wines: readonly Pick<Wine, "id" | "producer" | "name" | "vintage" | "size_ml" | "quantity">[],
+  input: { producer?: string | null; name?: string | null; vintage?: number | null; size_ml?: number | null },
   excludeId?: string
 ) =>
   wines.filter(
@@ -109,5 +167,6 @@ export const findDuplicates = (
       dupNorm(w.producer) === dupNorm(input.producer) &&
       dupNorm(w.name) === dupNorm(input.name) &&
       dupNorm(w.vintage) === dupNorm(input.vintage) &&
+      dupNorm(w.size_ml) === dupNorm(input.size_ml) &&
       dupNorm(input.producer) !== ""
   );

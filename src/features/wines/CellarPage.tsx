@@ -46,6 +46,7 @@ export default function CellarPage() {
       searchText: (w) =>
         [
           w.producer, w.name, w.variety, w.notes, w.terroir_notes, w.storage_location,
+          w.classification, w.location,
           w.country_id ? geo.countryById.get(w.country_id)?.name : null,
           w.region_id ? geo.regionById.get(w.region_id)?.name : null,
           w.sub_region_id ? geo.subRegionById.get(w.sub_region_id)?.name : null,

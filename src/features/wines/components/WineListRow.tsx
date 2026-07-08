@@ -4,7 +4,7 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal, Pencil, Trash2, Wine as WineIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { Wine } from "../model";
+import { type Wine, vintageDisplay } from "../model";
 import { useColourLookup } from "@/features/colours/queries";
 import { useGeoLookups } from "@/features/geography/queries";
 import { QuantityControls } from "./QuantityControls";
@@ -23,8 +23,9 @@ export const WineListRow = ({ wine, onOpen, onEdit, onDelete, onOpenBottle }: Pr
   const geo = useGeoLookups();
   const regionName = wine.region_id ? geo.regionById.get(wine.region_id)?.name : null;
   const geoExtra = [
-    wine.sub_region_id ? geo.subRegionById.get(wine.sub_region_id)?.name : null,
     wine.appellation_id ? geo.appellationById.get(wine.appellation_id)?.name : null,
+    wine.sub_region_id ? geo.subRegionById.get(wine.sub_region_id)?.name : null,
+    wine.location,
   ]
     .filter(Boolean)
     .join(" · ");
@@ -46,7 +47,7 @@ export const WineListRow = ({ wine, onOpen, onEdit, onDelete, onOpenBottle }: Pr
       <TableCell className="text-muted-foreground italic max-w-[220px] truncate">
         {wine.name || "—"}
       </TableCell>
-      <TableCell className="text-primary font-display">{wine.vintage || "—"}</TableCell>
+      <TableCell className="text-primary font-display">{vintageDisplay(wine) || "—"}</TableCell>
       <TableCell className="text-sm">
         <div className="truncate max-w-[200px]">{regionName || "—"}</div>
         {geoExtra && (

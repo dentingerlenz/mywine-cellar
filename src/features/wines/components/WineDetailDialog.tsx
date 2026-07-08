@@ -5,7 +5,7 @@ import { Pencil, Trash2, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   type Wine, wineTitle, getDrinkStatus, DRINK_LABEL,
-  occasionLabel, occasionClass, formatSize,
+  occasionLabel, occasionClass, formatSize, vintageDisplay, dosageDisplay,
 } from "../model";
 import { labelPhotoUrl } from "../queries";
 import { useColourLookup } from "@/features/colours/queries";
@@ -74,17 +74,19 @@ export const WineDetailDialog = ({ wine, open, onOpenChange, onEdit, onDelete }:
               )}
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-3">
-              <Field label="Vintage" value={wine.vintage} />
+              <Field label={wine.aging_indication ? "Aging" : wine.is_non_vintage ? "Vintage" : "Vintage"} value={vintageDisplay(wine)} />
               <Field label="Quantity" value={`× ${wine.quantity}`} />
               <Field label="Bottle" value={formatSize(wine.size_ml)} />
+              <Field label="Classification" value={wine.classification} />
               <Field label="Variety" value={wine.variety} />
               <Field label="Alcohol" value={wine.alcohol_pct != null ? `${wine.alcohol_pct} %` : null} />
               <Field label="Residual sugar" value={wine.residual_sugar_gl != null ? `${wine.residual_sugar_gl} g/L` : null} />
-              <Field label="Dosage" value={wine.dosage} />
+              <Field label="Dosage" value={dosageDisplay(wine)} />
               <Field label="Country" value={wine.country_id ? geo.countryById.get(wine.country_id)?.name : null} />
               <Field label="Region" value={wine.region_id ? geo.regionById.get(wine.region_id)?.name : null} />
               <Field label="Sub-region" value={wine.sub_region_id ? geo.subRegionById.get(wine.sub_region_id)?.name : null} />
               <Field label="Appellation" value={wine.appellation_id ? geo.appellationById.get(wine.appellation_id)?.name : null} />
+              <Field label="Location" value={wine.location} />
               <Field label="Storage location" value={wine.storage_location} />
               <Field label="Ready from" value={wine.ready_from} />
               <Field label="Drink by" value={wine.drink_by} />

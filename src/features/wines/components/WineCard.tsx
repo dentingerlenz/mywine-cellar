@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Pencil, Trash2, Star, Wine as WineIcon, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { type Wine, wineTitle, occasionLabel, occasionClass } from "../model";
+import { type Wine, wineTitle, occasionLabel, occasionClass, vintageDisplay } from "../model";
 import { labelPhotoUrl } from "../queries";
 import { useColourLookup } from "@/features/colours/queries";
 import { useGeoLookups } from "@/features/geography/queries";
@@ -25,12 +25,15 @@ export const WineCard = ({ wine, onOpen, onEdit, onDelete, onOpenBottle }: Props
   const photo = labelPhotoUrl(wine.label_photo_path);
   const regionName = wine.region_id ? geo.regionById.get(wine.region_id)?.name : null;
   const geoExtra = [
-    wine.sub_region_id ? geo.subRegionById.get(wine.sub_region_id)?.name : null,
     wine.appellation_id ? geo.appellationById.get(wine.appellation_id)?.name : null,
+    wine.sub_region_id ? geo.subRegionById.get(wine.sub_region_id)?.name : null,
+    wine.location,
+    wine.classification,
   ]
     .filter(Boolean)
     .join(" · ");
   const occLabel = occasionLabel(wine.occasion);
+  const vint = vintageDisplay(wine);
 
   return (
     <Card
@@ -72,7 +75,7 @@ export const WineCard = ({ wine, onOpen, onEdit, onDelete, onOpenBottle }: Props
           )}
         </div>
         <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-          {wine.vintage && <span className="text-primary font-display text-sm">{wine.vintage}</span>}
+          {vint && <span className="text-primary font-display text-sm">{vint}</span>}
           {regionName && <span className="truncate">· {regionName}</span>}
         </div>
         {geoExtra && (

@@ -6,6 +6,14 @@ import type { Tables } from "@/integrations/supabase/types";
 
 export type WineColour = Tables<"wine_colours">;
 
+// Weinart steuert die weinart-spezifischen Formularfelder.
+export type WineKind = "still" | "sparkling" | "sweet_fortified";
+export const WINE_KIND_LABEL: Record<WineKind, string> = {
+  still: "Still",
+  sparkling: "Sparkling",
+  sweet_fortified: "Sweet / Fortified",
+};
+
 // Eingebautes Styling (aus v1 übernommen), gekeyt über den Slug (name);
 // Custom-Farben bekommen den neutralen Fallback.
 export const COLOUR_CLASS_BY_NAME: Record<string, string> = {
@@ -50,7 +58,7 @@ export const useColours = () => {
   });
 };
 
-/** Lookup über colour_id — die eine Quelle für Label/Styling in Cards, Listen, Charts. */
+/** Lookup über colour_id — die eine Quelle für Label/Styling/Weinart in der UI. */
 export const useColourLookup = () => {
   const { data: colours = [], isLoading } = useColours();
   const byId = new Map(colours.map((c) => [c.id, c]));
@@ -62,6 +70,8 @@ export const useColourLookup = () => {
     labelFor: (id: string | null | undefined) => (id ? byId.get(id)?.display_name ?? "—" : "—"),
     classFor: (id: string | null | undefined) => colourClassFor(slugFor(id)),
     hexFor: (id: string | null | undefined) => colourHexFor(slugFor(id)),
+    kindFor: (id: string | null | undefined): WineKind =>
+      (id ? (byId.get(id)?.kind as WineKind | undefined) : undefined) ?? "still",
   };
 };
 
@@ -73,7 +83,7 @@ export const useAddColour = () => {
   const qc = useQueryClient();
   const { cellarId } = useCellar();
   return useMutation({
-    mutationFn: async (displayName: string) => {
+    mutationFn: async ({ displayName, kind = "still" }: { displayName: string; kind?: WineKind }) => {
       const display_name = displayName.trim();
       if (!display_name) throw new Error("Name is required");
       const { data: existing } = await supabase
@@ -85,8 +95,20 @@ export const useAddColour = () => {
         cellar_id: cellarId,
         name: slugify(display_name),
         display_name,
+        kind,
         sort_order: (existing?.[0]?.sort_order ?? -1) + 1,
       });
+      if (error) throw error;
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: qk.colours }),
+  });
+};
+
+export const useUpdateColourKind = () => {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, kind }: { id: string; kind: WineKind }) => {
+      const { error } = await supabase.from("wine_colours").update({ kind }).eq("id", id);
       if (error) throw error;
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: qk.colours }),

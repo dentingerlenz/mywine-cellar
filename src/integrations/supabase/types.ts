@@ -416,6 +416,7 @@ export type Database = {
           created_at: string
           display_name: string
           id: string
+          kind: string
           name: string
           sort_order: number
           updated_at: string
@@ -425,6 +426,7 @@ export type Database = {
           created_at?: string
           display_name: string
           id?: string
+          kind?: string
           name: string
           sort_order?: number
           updated_at?: string
@@ -434,6 +436,7 @@ export type Database = {
           created_at?: string
           display_name?: string
           id?: string
+          kind?: string
           name?: string
           sort_order?: number
           updated_at?: string
@@ -450,17 +453,23 @@ export type Database = {
       }
       wines: {
         Row: {
+          aging_indication: string | null
           alcohol_pct: number | null
           appellation_id: string | null
+          base_vintage: number | null
           cellar_id: string
+          classification: string | null
           colour_id: string | null
           country_id: string | null
           created_at: string
           created_by: string | null
-          dosage: string | null
+          dosage_gl: number | null
+          dosage_level: string | null
           drink_by: number | null
           id: string
+          is_non_vintage: boolean
           label_photo_path: string | null
+          location: string | null
           name: string | null
           notes: string | null
           occasion: string | null
@@ -478,20 +487,26 @@ export type Database = {
           terroir_notes: string | null
           updated_at: string
           variety: string | null
-          vintage: string | null
+          vintage: number | null
         }
         Insert: {
+          aging_indication?: string | null
           alcohol_pct?: number | null
           appellation_id?: string | null
+          base_vintage?: number | null
           cellar_id: string
+          classification?: string | null
           colour_id?: string | null
           country_id?: string | null
           created_at?: string
           created_by?: string | null
-          dosage?: string | null
+          dosage_gl?: number | null
+          dosage_level?: string | null
           drink_by?: number | null
           id?: string
+          is_non_vintage?: boolean
           label_photo_path?: string | null
+          location?: string | null
           name?: string | null
           notes?: string | null
           occasion?: string | null
@@ -509,20 +524,26 @@ export type Database = {
           terroir_notes?: string | null
           updated_at?: string
           variety?: string | null
-          vintage?: string | null
+          vintage?: number | null
         }
         Update: {
+          aging_indication?: string | null
           alcohol_pct?: number | null
           appellation_id?: string | null
+          base_vintage?: number | null
           cellar_id?: string
+          classification?: string | null
           colour_id?: string | null
           country_id?: string | null
           created_at?: string
           created_by?: string | null
-          dosage?: string | null
+          dosage_gl?: number | null
+          dosage_level?: string | null
           drink_by?: number | null
           id?: string
+          is_non_vintage?: boolean
           label_photo_path?: string | null
+          location?: string | null
           name?: string | null
           notes?: string | null
           occasion?: string | null
@@ -540,7 +561,7 @@ export type Database = {
           terroir_notes?: string | null
           updated_at?: string
           variety?: string | null
-          vintage?: string | null
+          vintage?: number | null
         }
         Relationships: [
           {

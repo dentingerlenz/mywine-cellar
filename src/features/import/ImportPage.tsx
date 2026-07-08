@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { supabase } from "@/integrations/supabase/client";
-import { wineSchema, type WineInput, OCCASIONS } from "@/features/wines/model";
+import { wineSchema, type WineInput, OCCASIONS, parseVintageInput, parseDosageInput } from "@/features/wines/model";
 import { useBulkInsertWines } from "@/features/wines/queries";
 import { useColours } from "@/features/colours/queries";
 import { useGeoLookups } from "@/features/geography/queries";
@@ -90,20 +90,26 @@ export default function ImportPage() {
             geo,
           );
           const cl = num(raw.cl);
+          // Nicht aufgelöste Sub-Region/Appellation verlustfrei ins Freitext-`location`
+          const unresolvedPlace = resolved.unresolved
+            .filter((u) => u.field === "sub_region" || u.field === "appellation")
+            .map((u) => u.value)[0];
           const candidate = {
             producer: raw.producer,
             name: raw.name ?? raw.description,
-            vintage: raw.vintage ? String(raw.vintage) : undefined,
+            ...parseVintageInput(raw.vintage),
             colour_id,
             variety: raw.variety,
+            classification: raw.classification,
             size_ml: num(raw.size_ml) ?? (cl != null ? Math.round(cl * 10) : undefined),
             residual_sugar_gl: num(raw.residual_sugar_gl ?? raw.residual_sugar),
-            dosage: raw.dosage,
+            ...parseDosageInput(raw.dosage),
             alcohol_pct: num(raw.alcohol_pct ?? raw.alcohol),
             country_id: resolved.country_id,
             region_id: resolved.region_id,
             sub_region_id: resolved.sub_region_id,
             appellation_id: resolved.appellation_id,
+            location: raw.location ?? unresolvedPlace,
             terroir_notes: raw.terroir_notes ?? raw.ausbau_terroir ?? raw.ausbau,
             notes: raw.notes,
             occasion: normaliseOccasion(raw.occasion),

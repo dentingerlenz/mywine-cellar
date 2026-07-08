@@ -10,6 +10,19 @@
   ],
   "regions": [
     {
+      "name": "Auvergne",
+      "appellations": [
+        { "name": "Côtes d'Auvergne", "type": "AOC" },
+        { "name": "Saint-Pourçain", "type": "AOC" }
+      ]
+    },
+    {
+      "name": "Normandy",
+      "appellations": [
+        { "name": "Domfront", "type": "AOC" }
+      ]
+    },
+    {
       "name": "Bordeaux",
       "appellations": [
         {

@@ -10,14 +10,15 @@ import { Button } from "@/components/ui/button";
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import { AlertTriangle, Loader2 } from "lucide-react";
 import {
   type Wine, type WineInput, wineSchema, OCCASIONS, OCCASION_LABEL,
-  SIZE_ML_OPTIONS, findDuplicates,
+  SIZE_ML_OPTIONS, DOSAGE_LEVELS, findDuplicates,
 } from "@/features/wines/model";
 import { useUpsertWine, useWines, uploadLabelPhoto, labelPhotoUrl } from "@/features/wines/queries";
-import { useColours } from "@/features/colours/queries";
+import { useColours, useColourLookup } from "@/features/colours/queries";
 import { useCellar } from "@/features/cellar/CellarContext";
 import { useGeoLookups } from "@/features/geography/queries";
 import { GeographyPicker, type GeoSelection } from "@/features/geography/GeographyPicker";
@@ -60,8 +61,19 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
   const { cellarId } = useCellar();
   const upsert = useUpsertWine();
   const { data: colours = [] } = useColours();
+  const { kindFor } = useColourLookup();
   const { data: wines = [] } = useWines();
   const geo = useGeoLookups();
+
+  // Vorschlagslisten für die Freitext-Felder (aus dem Bestand).
+  const classificationOptions = useMemo(
+    () => Array.from(new Set(wines.map((w) => w.classification).filter(Boolean) as string[])).sort(),
+    [wines],
+  );
+  const locationOptions = useMemo(
+    () => Array.from(new Set(wines.map((w) => w.location).filter(Boolean) as string[])).sort(),
+    [wines],
+  );
   const [photo, setPhoto] = useState<PhotoState>(emptyPhotoState);
   const [uploading, setUploading] = useState(false);
 
@@ -98,17 +110,23 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
       reset({
         producer: wine.producer ?? "",
         name: wine.name ?? "",
-        vintage: wine.vintage ?? "",
+        vintage: wine.vintage ?? null,
+        is_non_vintage: wine.is_non_vintage ?? false,
+        base_vintage: wine.base_vintage ?? null,
+        aging_indication: wine.aging_indication ?? "",
         size_ml: wine.size_ml ?? null,
         colour_id: wine.colour_id ?? undefined,
         variety: wine.variety ?? "",
+        classification: wine.classification ?? "",
         residual_sugar_gl: wine.residual_sugar_gl ?? null,
-        dosage: wine.dosage ?? "",
+        dosage_level: wine.dosage_level ?? "",
+        dosage_gl: wine.dosage_gl ?? null,
         alcohol_pct: wine.alcohol_pct ?? null,
         country_id: wine.country_id,
         region_id: wine.region_id,
         sub_region_id: wine.sub_region_id,
         appellation_id: wine.appellation_id,
+        location: wine.location ?? "",
         terroir_notes: wine.terroir_notes ?? "",
         notes: wine.notes ?? "",
         occasion: (wine.occasion as WineInput["occasion"]) ?? null,
@@ -122,7 +140,7 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
       });
       setPhoto({ file: null, preview: labelPhotoUrl(wine.label_photo_path), remove: false });
     } else {
-      reset({ quantity: 1, size_ml: 750, occasion: null, rating: null });
+      reset({ quantity: 1, size_ml: 750, is_non_vintage: false, occasion: null, rating: null });
       setPhoto(emptyPhotoState);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -136,9 +154,13 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     };
     setIfPresent("producer", parsed.producer);
     setIfPresent("name", parsed.name);
-    setIfPresent("vintage", parsed.vintage);
+    if (parsed.vintage && /^\d{4}$/.test(String(parsed.vintage))) {
+      setIfPresent("vintage", Number(parsed.vintage));
+    } else if (parsed.vintage && /^nv/i.test(String(parsed.vintage))) {
+      setValue("is_non_vintage", true);
+    }
     setIfPresent("variety", parsed.grape_varieties);
-    setIfPresent("dosage", parsed.dosage);
+    setIfPresent("dosage_level", parsed.dosage);
     setIfPresent("notes", parsed.notes);
     setIfPresent("ready_from", parsed.ready_from); // V8 — ab Edge Function v2
     setIfPresent("drink_by", parsed.drink_by);
@@ -187,9 +209,12 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
   };
 
   const colourId = watch("colour_id");
+  const kind = kindFor(colourId);
   const occasion = watch("occasion");
   const rating = watch("rating") as number | null | undefined;
   const sizeMl = watch("size_ml") as number | null | undefined;
+  const isNonVintage = !!watch("is_non_vintage");
+  const dosageLevel = watch("dosage_level") as string | undefined;
   const geoSelection: GeoSelection = {
     country_id: (watch("country_id") as string | null | undefined) ?? null,
     region_id: (watch("region_id") as string | null | undefined) ?? null,
@@ -197,13 +222,27 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     appellation_id: (watch("appellation_id") as string | null | undefined) ?? null,
   };
 
-  // V3 — Duplikat-Warnung live während der Eingabe
+  // V3 — Duplikat-Warnung live (inkl. Flaschengröße)
   const producer = watch("producer");
   const name = watch("name");
-  const vintage = watch("vintage");
+  const vintage = watch("vintage") as number | null | undefined;
   const duplicates = useMemo(
-    () => findDuplicates(wines, { producer, name, vintage }, wine?.id),
-    [wines, producer, name, vintage, wine?.id],
+    () => findDuplicates(wines, { producer, name, vintage: vintage ?? null, size_ml: sizeMl ?? null }, wine?.id),
+    [wines, producer, name, vintage, sizeMl, wine?.id],
+  );
+
+  // Weinart-spezifische Trinkfenster-/Jahrgang-Zeile (wiederverwendet je kind)
+  const readyDrink = (
+    <>
+      <div>
+        <Label>Ready from (year)</Label>
+        <Input type="number" {...register("ready_from")} placeholder="2025" />
+      </div>
+      <div>
+        <Label>Drink by (year)</Label>
+        <Input type="number" {...register("drink_by")} placeholder="2040" />
+      </div>
+    </>
   );
 
   return (
@@ -239,27 +278,15 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
                 />
                 {errMsg("name")}
               </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <Label>Vintage</Label>
-                  <Input
-                    {...register("vintage")}
-                    placeholder="NV, 2015…"
-                    aria-invalid={!!errors.vintage}
-                    className={errClass("vintage")}
-                  />
-                  {errMsg("vintage")}
-                </div>
-                <div>
-                  <Label>Quantity *</Label>
-                  <Input
-                    type="number"
-                    {...register("quantity")}
-                    aria-invalid={!!errors.quantity}
-                    className={errClass("quantity")}
-                  />
-                  {errMsg("quantity")}
-                </div>
+              <div>
+                <Label>Quantity *</Label>
+                <Input
+                  type="number"
+                  {...register("quantity")}
+                  aria-invalid={!!errors.quantity}
+                  className={errClass("quantity")}
+                />
+                {errMsg("quantity")}
               </div>
             </div>
           </div>
@@ -269,9 +296,9 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
               <AlertTriangle className="w-4 h-4 text-primary shrink-0 mt-0.5" />
               <p className="text-xs text-foreground">
                 Already in your cellar: <strong>{duplicates.length}</strong>{" "}
-                {duplicates.length === 1 ? "entry" : "entries"} with the same producer, name and
-                vintage (stock: {duplicates.reduce((s, d) => s + d.quantity, 0)}). Consider
-                increasing its quantity instead of adding a duplicate.
+                {duplicates.length === 1 ? "entry" : "entries"} with the same producer, name,
+                vintage and bottle size (stock: {duplicates.reduce((s, d) => s + d.quantity, 0)}).
+                Consider increasing its quantity instead of adding a duplicate.
               </p>
             </div>
           )}
@@ -344,19 +371,109 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+          {/* Weinart-spezifische Felder (aus der Farbkategorie abgeleitet) */}
+          <div className="rounded-md border border-primary/15 bg-secondary/20 p-3 space-y-3">
+            {kind === "sparkling" ? (
+              <>
+                <div className="flex items-center gap-2">
+                  <Switch
+                    id="nv"
+                    checked={isNonVintage}
+                    onCheckedChange={(v) => {
+                      setValue("is_non_vintage", v);
+                      if (v) setValue("vintage", null);
+                      else setValue("base_vintage", null);
+                    }}
+                  />
+                  <Label htmlFor="nv" className="cursor-pointer">Non-vintage (NV)</Label>
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  {isNonVintage ? (
+                    <div>
+                      <Label>Base vintage</Label>
+                      <Input type="number" {...register("base_vintage")} placeholder="2020" />
+                    </div>
+                  ) : (
+                    <div>
+                      <Label>Vintage</Label>
+                      <Input type="number" {...register("vintage")} placeholder="2018" />
+                    </div>
+                  )}
+                  <div>
+                    <Label>Dosage</Label>
+                    <Select
+                      value={dosageLevel || "none"}
+                      onValueChange={(v) => setValue("dosage_level", v === "none" ? "" : v)}
+                    >
+                      <SelectTrigger><SelectValue placeholder="—" /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="none">—</SelectItem>
+                        {DOSAGE_LEVELS.map((d) => <SelectItem key={d} value={d}>{d}</SelectItem>)}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <Label>Dosage (g/L)</Label>
+                    <Input type="number" step="0.1" {...register("dosage_gl")} placeholder="e.g. 3" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-3">{readyDrink}</div>
+              </>
+            ) : kind === "sweet_fortified" ? (
+              <>
+                <div className="flex items-center gap-2">
+                  <Switch
+                    id="solera"
+                    checked={isNonVintage}
+                    onCheckedChange={(v) => {
+                      setValue("is_non_vintage", v);
+                      if (v) setValue("vintage", null);
+                      else setValue("aging_indication", "");
+                    }}
+                  />
+                  <Label htmlFor="solera" className="cursor-pointer">Solera / non-vintage</Label>
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  {isNonVintage ? (
+                    <div className="md:col-span-2">
+                      <Label>Aging indication</Label>
+                      <Input {...register("aging_indication")} placeholder="~25 years · Solera 2013+ · VORS" />
+                    </div>
+                  ) : (
+                    <div>
+                      <Label>Vintage</Label>
+                      <Input type="number" {...register("vintage")} placeholder="1979" />
+                    </div>
+                  )}
+                  <div>
+                    <Label>Residual sugar (g/L)</Label>
+                    <Input type="number" step="0.1" {...register("residual_sugar_gl")} />
+                  </div>
+                  {readyDrink}
+                </div>
+              </>
+            ) : (
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                <div>
+                  <Label>Vintage</Label>
+                  <Input type="number" {...register("vintage")} placeholder="2019" />
+                </div>
+                {readyDrink}
+              </div>
+            )}
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <div>
               <Label>Variety / Grape</Label>
               <Input {...register("variety")} placeholder="Pinot Noir" />
             </div>
-            <div>
-              <Label>Dosage (sparkling)</Label>
-              <Input {...register("dosage")} placeholder="Brut Nature" />
-            </div>
-            <div>
-              <Label>Residual sugar (g/L)</Label>
-              <Input type="number" step="0.1" {...register("residual_sugar_gl")} />
-            </div>
+            {kind !== "sweet_fortified" && (
+              <div>
+                <Label>Residual sugar (g/L)</Label>
+                <Input type="number" step="0.1" {...register("residual_sugar_gl")} />
+              </div>
+            )}
             <div>
               <Label>Alcohol (%)</Label>
               <Input type="number" step="0.1" {...register("alcohol_pct")} placeholder="12.5" />
@@ -383,16 +500,30 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             <div>
+              <Label>Classification</Label>
+              <Input
+                {...register("classification")}
+                list="classification-options"
+                placeholder="AOC · DOCG · VDP.Grosse Lage · Grand Cru"
+              />
+              <datalist id="classification-options">
+                {classificationOptions.map((o) => <option key={o} value={o} />)}
+              </datalist>
+            </div>
+            <div>
+              <Label>Location (village / vineyard)</Label>
+              <Input
+                {...register("location")}
+                list="location-options"
+                placeholder="e.g. Ambonnay"
+              />
+              <datalist id="location-options">
+                {locationOptions.map((o) => <option key={o} value={o} />)}
+              </datalist>
+            </div>
+            <div>
               <Label>Storage location</Label>
               <Input {...register("storage_location")} placeholder="e.g. Rack B / Shelf 3" />
-            </div>
-            <div>
-              <Label>Ready from (year)</Label>
-              <Input type="number" {...register("ready_from")} placeholder="2025" />
-            </div>
-            <div>
-              <Label>Drink by (year)</Label>
-              <Input type="number" {...register("drink_by")} placeholder="2040" />
             </div>
           </div>
 

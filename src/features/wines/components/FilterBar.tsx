@@ -137,11 +137,6 @@ export const FilterBar = ({
   );
 };
 
-const parseVintageYear = (v: string | null): number | null => {
-  if (!v) return null;
-  const m = v.match(/(\d{4})/);
-  return m ? Number(m[1]) : null;
-};
 
 /** Namen für Suche/Sortierung liefert der Aufrufer (aus useGeoLookups). */
 export type GeoNames = {
@@ -161,18 +156,19 @@ export const applyFilters = (wines: Wine[], f: Filters, geo: GeoNames): Wine[] =
     if (f.storage && b.storage_location !== f.storage) return false;
     if (f.occasion !== "all" && b.occasion !== f.occasion) return false;
     if (f.inStockOnly && b.quantity <= 0) return false;
-    const y = parseVintageYear(b.vintage);
+    const y = b.vintage ?? b.base_vintage; // Jahrgang oder Basisjahr (NV)
     if (f.vintageMin) { if (y == null || y < Number(f.vintageMin)) return false; }
     if (f.vintageMax) { if (y == null || y > Number(f.vintageMax)) return false; }
     return true;
   });
 
+  const yearOf = (w: Wine) => w.vintage ?? w.base_vintage ?? 0;
   const sorted = [...list];
   switch (f.sort) {
     case "producer":
       sorted.sort((a, b) => (a.producer ?? "").localeCompare(b.producer ?? "")); break;
     case "vintage":
-      sorted.sort((a, b) => (parseVintageYear(b.vintage) ?? 0) - (parseVintageYear(a.vintage) ?? 0)); break;
+      sorted.sort((a, b) => yearOf(b) - yearOf(a)); break;
     case "region":
       sorted.sort((a, b) => geo.regionName(a).localeCompare(geo.regionName(b))); break;
     case "price":

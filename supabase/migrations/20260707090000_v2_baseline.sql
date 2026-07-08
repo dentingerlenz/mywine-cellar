@@ -203,6 +203,10 @@ create table public.wine_colours (
   cellar_id     uuid not null references public.cellars(id) on delete cascade,
   name          text not null,          -- Slug, Key fürs eingebaute Styling
   display_name  text not null,
+  -- Weinart steuert die weinart-spezifischen Formularfelder (Jahrgang/NV/
+  -- Basisjahr/Dosage vs. Reifeangabe). Custom-Farben starten als 'still'.
+  kind          text not null default 'still'
+                  check (kind in ('still', 'sparkling', 'sweet_fortified')),
   sort_order    int not null default 0,
   created_at    timestamptz not null default now(),
   updated_at    timestamptz not null default now(),
@@ -220,13 +224,13 @@ language plpgsql
 security definer set search_path = public
 as $$
 begin
-  insert into public.wine_colours (cellar_id, name, display_name, sort_order) values
-    (new.id, 'sparkling',         'Sparkling',           0),
-    (new.id, 'white',             'White',               1),
-    (new.id, 'red',               'Red',                 2),
-    (new.id, 'rose',              'Rosé',                3),
-    (new.id, 'orange',            'Orange',              4),
-    (new.id, 'dessert_fortified', 'Dessert / Fortified', 5);
+  insert into public.wine_colours (cellar_id, name, display_name, kind, sort_order) values
+    (new.id, 'sparkling',         'Sparkling',           'sparkling',       0),
+    (new.id, 'white',             'White',               'still',           1),
+    (new.id, 'red',               'Red',                 'still',           2),
+    (new.id, 'rose',              'Rosé',                'still',           3),
+    (new.id, 'orange',            'Orange',              'still',           4),
+    (new.id, 'dessert_fortified', 'Dessert / Fortified', 'sweet_fortified', 5);
   return new;
 end;
 $$;
@@ -242,19 +246,27 @@ create table public.wines (
   -- Identität
   producer           text,
   name               text,               -- v1: `description` (Cuvée-/Weinname)
-  vintage            text,               -- text wegen 'NV', 'Soléra 2013+' etc.
+  -- Jahrgang als Zahl (Stillweine / echte Jahrgangsweine). NV-Schaumweine und
+  -- Solera-/Reifeweine lassen vintage NULL und nutzen die drei Felder darunter.
+  vintage            int check (vintage is null or (vintage between 1800 and 2100)),
+  is_non_vintage     boolean not null default false,
+  base_vintage       int check (base_vintage is null or (base_vintage between 1800 and 2100)),
+  aging_indication   text,               -- Süß/Likör: '~25 years', 'Solera 2013+', 'VORS', '3 Puttonyos'
   colour_id          uuid references public.wine_colours(id) on delete set null,
   variety            text,
+  classification     text,               -- Qualitätsstufe: AOC, DOCG, VDP.Grosse Lage, GG, Grand Cru, DAC …
   -- Kennzahlen
   size_ml            int check (size_ml is null or size_ml > 0),   -- v1: cl (integer)
   alcohol_pct        numeric check (alcohol_pct is null or (alcohol_pct >= 0 and alcohol_pct < 100)),
   residual_sugar_gl  numeric check (residual_sugar_gl is null or residual_sugar_gl >= 0),
-  dosage             text,
-  -- Geografie: NUR FKs. Tiefste gesetzte Ebene zählt, Trigger füllt Vorfahren.
+  dosage_level       text,               -- Schaumwein-Stufe: Brut Nature, Extra Brut, Brut, Extra Dry, Sec, Demi-Sec, Doux
+  dosage_gl          numeric check (dosage_gl is null or dosage_gl >= 0),
+  -- Geografie: FKs + Freitext-`location` für Orte ohne offizielle Appellation.
   country_id         uuid references public.countries(id)    on delete set null,
   region_id          uuid references public.regions(id)      on delete set null,
   sub_region_id      uuid references public.sub_regions(id)  on delete set null,
   appellation_id     uuid references public.appellations(id) on delete set null,
+  location           text,               -- Dorf/Lage/Cru, wenn keine eigene AOC (z. B. Ambonnay)
   -- Freitexte
   terroir_notes      text,               -- v1: ausbau_terroir
   notes              text,

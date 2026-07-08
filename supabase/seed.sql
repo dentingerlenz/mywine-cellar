@@ -1,7 +1,7 @@
 -- ═══════════════════════════════════════════════════════════════════════
 -- GENERIERT von scripts/geo/build-seed.js — NICHT von Hand editieren!
 -- Quelle: data/geography/*.json  ·  Neu erzeugen: npm run geo:build
--- Stand: 2026-07-07 · 51 Länder
+-- Stand: 2026-07-08 · 51 Länder
 -- Idempotent: kann beliebig oft ausgeführt werden.
 -- ═══════════════════════════════════════════════════════════════════════
 
@@ -2970,7 +2970,39 @@ from public.countries c where c.name = 'France'
     where a.name = 'Vin de France' and a.level = 'country' and a.country_id = c.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Bordeaux', 0 from public.countries c where c.name = 'France'
+select c.id, 'Auvergne', 0 from public.countries c where c.name = 'France'
+on conflict (country_id, name) do update set sort_order = excluded.sort_order;
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Côtes d''Auvergne', 'AOC', 0
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'France' and r.name = 'Auvergne'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Côtes d''Auvergne' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Saint-Pourçain', 'AOC', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'France' and r.name = 'Auvergne'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Saint-Pourçain' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.regions (country_id, name, sort_order)
+select c.id, 'Normandy', 1 from public.countries c where c.name = 'France'
+on conflict (country_id, name) do update set sort_order = excluded.sort_order;
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Domfront', 'AOC', 0
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'France' and r.name = 'Normandy'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Domfront' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.regions (country_id, name, sort_order)
+select c.id, 'Bordeaux', 2 from public.countries c where c.name = 'France'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
@@ -3230,7 +3262,7 @@ from public.sub_regions s
     where a.name = 'Entre-Deux-Mers' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Bourgogne', 1 from public.countries c where c.name = 'France'
+select c.id, 'Bourgogne', 3 from public.countries c where c.name = 'France'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
@@ -3539,7 +3571,7 @@ from public.sub_regions s
     where a.name = 'Bourgogne Aligote' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Champagne', 2 from public.countries c where c.name = 'France'
+select c.id, 'Champagne', 4 from public.countries c where c.name = 'France'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
@@ -3626,7 +3658,7 @@ from public.sub_regions s
     where a.name = 'Champagne' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Alsace', 3 from public.countries c where c.name = 'France'
+select c.id, 'Alsace', 5 from public.countries c where c.name = 'France'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
@@ -3671,7 +3703,7 @@ from public.sub_regions s
     where a.name = 'Cremant d’Alsace' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Vallee du Rhone', 4 from public.countries c where c.name = 'France'
+select c.id, 'Vallee du Rhone', 6 from public.countries c where c.name = 'France'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
@@ -3883,7 +3915,7 @@ from public.sub_regions s
     where a.name = 'Cotes du Rhone Villages' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Vallee de la Loire', 5 from public.countries c where c.name = 'France'
+select c.id, 'Vallee de la Loire', 7 from public.countries c where c.name = 'France'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
@@ -4090,7 +4122,7 @@ from public.sub_regions s
     where a.name = 'Reuilly' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Provence', 6 from public.countries c where c.name = 'France'
+select c.id, 'Provence', 8 from public.countries c where c.name = 'France'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
@@ -4171,7 +4203,7 @@ from public.sub_regions s
     where a.name = 'Coteaux Varois en Provence' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Languedoc-Roussillon', 7 from public.countries c where c.name = 'France'
+select c.id, 'Languedoc-Roussillon', 9 from public.countries c where c.name = 'France'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
@@ -4339,7 +4371,7 @@ from public.sub_regions s
     where a.name = 'Muscat de Rivesaltes' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Sud-Ouest', 8 from public.countries c where c.name = 'France'
+select c.id, 'Sud-Ouest', 10 from public.countries c where c.name = 'France'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
@@ -4474,7 +4506,7 @@ from public.sub_regions s
     where a.name = 'Marcillac' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Savoie & Jura', 9 from public.countries c where c.name = 'France'
+select c.id, 'Savoie & Jura', 11 from public.countries c where c.name = 'France'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.sub_regions (region_id, name, sort_order)
@@ -4535,7 +4567,7 @@ from public.sub_regions s
     where a.name = 'Cotes du Jura' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Beaujolais', 10 from public.countries c where c.name = 'France'
+select c.id, 'Beaujolais', 12 from public.countries c where c.name = 'France'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
@@ -4667,7 +4699,7 @@ from public.sub_regions s
     where a.name = 'Chiroubles' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Corse', 11 from public.countries c where c.name = 'France'
+select c.id, 'Corse', 13 from public.countries c where c.name = 'France'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.sub_regions (region_id, name, sort_order)

@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from "recharts";
-import { type Wine, getDrinkStatus, wineTitle } from "../model";
+import { type Wine, getDrinkStatus, wineTitle, vintageDisplay } from "../model";
 import { useColourLookup, colourHexFor } from "@/features/colours/queries";
 import { useCountries } from "@/features/geography/queries";
 
@@ -137,7 +137,7 @@ export const Dashboard = ({ wines }: { wines: Wine[] }) => {
               {drinkNow.slice(0, 8).map((w) => (
                 <li key={w.id} className="flex justify-between text-sm gap-3">
                   <span className="truncate">{wineTitle(w)}</span>
-                  <span className="text-primary shrink-0">{w.vintage}</span>
+                  <span className="text-primary shrink-0">{vintageDisplay(w)}</span>
                 </li>
               ))}
             </ul>

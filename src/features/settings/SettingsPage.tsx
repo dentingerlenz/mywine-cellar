@@ -2,9 +2,10 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useWines } from "@/features/wines/queries";
 import {
-  useColours, useAddColour, useRenameColour, useDeleteColour,
-  colourClassFor, type WineColour,
+  useColours, useAddColour, useRenameColour, useDeleteColour, useUpdateColourKind,
+  colourClassFor, WINE_KIND_LABEL, type WineColour, type WineKind,
 } from "@/features/colours/queries";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { MembersSection } from "@/features/cellar/MembersSection";
 import { GeographySection } from "@/features/geography/GeographySection";
 import { PeopleSection } from "@/features/people/PeopleSection";
@@ -26,6 +27,7 @@ export default function SettingsPage() {
   const addMut = useAddColour();
   const renameMut = useRenameColour();
   const deleteMut = useDeleteColour();
+  const kindMut = useUpdateColourKind();
 
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editingValue, setEditingValue] = useState("");
@@ -64,7 +66,7 @@ export default function SettingsPage() {
     const trimmed = newName.trim();
     if (!trimmed) return;
     try {
-      await addMut.mutateAsync(trimmed);
+      await addMut.mutateAsync({ displayName: trimmed });
       toast.success("Category added");
       setNewName("");
     } catch (e) {
@@ -153,6 +155,19 @@ export default function SettingsPage() {
                         </div>
                       )}
                     </div>
+                    <Select
+                      value={(c.kind as WineKind) ?? "still"}
+                      onValueChange={(v) => kindMut.mutate({ id: c.id, kind: v as WineKind })}
+                    >
+                      <SelectTrigger className="h-8 w-[150px] shrink-0 text-xs bg-input/40" title="Wine type — drives the form fields">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {(Object.keys(WINE_KIND_LABEL) as WineKind[]).map((k) => (
+                          <SelectItem key={k} value={k}>{WINE_KIND_LABEL[k]}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     <div className="flex items-center gap-1 shrink-0">
                       {isEditing ? (
                         <>

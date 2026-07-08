@@ -110,6 +110,68 @@ const ov = (map, key) => map?.[key] ?? map?.[norm(key)] ?? null;
 
 const OCCASION = { a: "anytime", t: "special", l: "lay_down", T: "top" };
 
+// ── Weinart-Feld-Routing (Zwischen-Plan) ─────────────────────────────────────
+const applyProducerFix = (p) => (p ? overrides.producers?.[p.trim()] ?? p.trim() : p);
+
+// Jahrgang-Freitext → Zahl | NV(+Basisjahr) | Reife-/Solera-Angabe
+const parseVintage = (raw) => {
+  const v = (raw ?? "").trim();
+  if (!v) return { vintage: null, is_non_vintage: false, base_vintage: null, aging_indication: null };
+  if (/^\d{4}$/.test(v)) return { vintage: Number(v), is_non_vintage: false, base_vintage: null, aging_indication: null };
+  if (/^NV/i.test(v)) {
+    const base = v.match(/(\d{4})/);
+    return { vintage: null, is_non_vintage: true, base_vintage: base ? Number(base[1]) : null, aging_indication: null };
+  }
+  // Solera / Reife-/Alters-Angaben ("Soléra 2013+", "~25 years", "> 12 years", "2-4 years", "VORS")
+  return { vintage: null, is_non_vintage: true, base_vintage: null, aging_indication: v };
+};
+
+// Dosage-Freitext → Stufe (benannt) ODER g/L (Zahl)
+const DOSAGE_LEVELS = {
+  "brut nature": "Brut Nature", "non dosé": "Brut Nature", "zero dosage": "Brut Nature", "pas dosé": "Brut Nature",
+  "extra brut": "Extra Brut", "brut": "Brut", "extra dry": "Extra Dry", "extra sec": "Extra Dry",
+  "sec": "Sec", "demi-sec": "Demi-Sec", "doux": "Doux",
+};
+const parseDosage = (raw) => {
+  const v = (raw ?? "").trim();
+  if (!v) return { dosage_level: null, dosage_gl: null };
+  const n = Number(v.replace(",", "."));
+  if (Number.isFinite(n)) return { dosage_level: null, dosage_gl: n };
+  return { dosage_level: DOSAGE_LEVELS[v.toLowerCase()] ?? v, dosage_gl: null };
+};
+
+// Klassifizierungs-Token aus dem Appellations-Feld herauslösen → { classification, place }
+const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const CLASS_TOKENS = [
+  { t: "VDP.Grosse Lage, GG", b: false }, { t: "VDP.Grosse Lage", b: false },
+  { t: "VDP.Erste Lage", b: false }, { t: "VDP.Ortswein", b: false },
+  { t: "VDP.Gutswein", b: false }, { t: "VDP.Prädikatswein", b: false },
+  { t: "Alsace Grand Cru", b: false }, { t: "Grand Cru", b: false },
+  { t: "Premier Cru", b: false }, { t: "1er Cru", b: false }, { t: "Gran Reserva", b: false },
+  { t: "V.T. de Cadiz", b: false }, { t: "Vino de la Tierra", b: false },
+  { t: "Burgenländischer Landwein", b: false }, { t: "Vin de France", b: false },
+  { t: "vino bianco", b: false }, { t: "Riserva", b: true }, { t: "Reserva", b: true },
+  { t: "Superiore", b: true }, { t: "Supérieur", b: true }, { t: "Superior", b: true },
+  { t: "Landwein", b: true }, { t: "Tafelwein", b: true }, { t: "DOCG", b: true },
+  { t: "DOCa", b: true }, { t: "DOC", b: true }, { t: "DOP", b: true }, { t: "IGT", b: true },
+  { t: "IGP", b: true }, { t: "AOP", b: true }, { t: "AOC", b: true }, { t: "DAC", b: true },
+  { t: "GG", b: true }, { t: "DO", b: true }, { t: "AC", b: true },
+];
+const isVinification = (v) => /biodyn|vergoren|amphore|barrique|tonneau|maische|monate|einfluss/i.test(v);
+const splitClassification = (raw) => {
+  let place = " " + raw + " ";
+  const found = [];
+  for (const { t, b } of CLASS_TOKENS) {
+    const pat = b ? `(?<=[\\s(,.])${esc(t)}(?=[\\s),.])` : esc(t);
+    if (new RegExp(pat, "i").test(place)) {
+      found.push(t);
+      place = place.replace(new RegExp(pat, "ig"), " ");
+    }
+  }
+  place = place.replace(/[\s,]{2,}/g, " ").replace(/^[\s,]+|[\s,]+$/g, "").trim();
+  return { classification: found.length ? found.join(", ") : null, place: place || null };
+};
+
 const photoPath = (url) => {
   if (blank(url)) return null;
   const i = url.indexOf("/wine-photos/");
@@ -203,7 +265,10 @@ async function main() {
   }
 
   const resolveGeo = (w) => {
-    const out = { country_id: null, region_id: null, sub_region_id: null, appellation_id: null };
+    const out = {
+      country_id: null, region_id: null, sub_region_id: null, appellation_id: null,
+      classification: null, location: null, terroir_extra: null,
+    };
 
     // Land: Override → DE/EN-Alias → exakter (normalisierter) Match
     let cRaw = txt(w.country);
@@ -237,78 +302,100 @@ async function main() {
       miss("regions", `(Land unaufgelöst) | ${rRaw}`, w);
     }
 
-    // Sub-Region (nur mit aufgelöster Region)
+    // Sub-Region: geseedet → FK; sonst Freitext → location (Dorf/Lage/Cru).
+    // Tippfehler-Overrides greifen mit und ohne Region-Kontext.
     let sRaw = txt(w.sub_region);
     let subRow = null;
-    if (sRaw && out.region_id) {
-      const key = `${countries.find((c) => c.id === out.country_id)?.name}|${regionRow?.name}|${sRaw}`;
-      const o = ov(overrides.sub_regions, key);
-      subRow = subsByRegion.get(out.region_id)?.get(norm(o ?? sRaw)) ?? null;
+    if (sRaw) {
+      const cName = countries.find((c) => c.id === out.country_id)?.name;
+      const oSub =
+        ov(overrides.sub_regions, `${cName}|${regionRow?.name}|${sRaw}`) ??
+        ov(overrides.sub_regions, `${cName}|${sRaw}`);
+      const cand = oSub ?? sRaw;
+      subRow = out.region_id ? subsByRegion.get(out.region_id)?.get(norm(cand)) ?? null : null;
       if (subRow) out.sub_region_id = subRow.id;
-      else miss("sub_regions", `${regionRow?.name} | ${sRaw}`, w);
+      else out.location = cand; // nicht geseedet → verlustfrei ins Freitext-Feld
     }
 
-    // Appellation: erst Sub-Ebene, dann alle Subs der Region, dann Region-,
-    // dann Land-Ebene. Ist die Region unaufgelöst, landesweit suchen — der
-    // Geo-Trigger in der DB füllt Region/Land aus dem Treffer automatisch auf.
+    // Appellations-Feld-Routing: Ausbau-Notiz → terroir; Klassifizierungs-Token →
+    // classification; verbleibender Ortsname → offizielle Appellation (FK) oder
+    // sonst Freitext-location. Geo-Trigger füllt Vorfahren aus einem Appellations-Treffer.
     let aRaw = txt(w.appellation);
     if (aRaw) {
-      const key = norm(ov(overrides.appellations, aRaw) ?? aRaw);
-      let hit = null;
-      if (subRow) hit = appsBySub.get(subRow.id)?.get(key) ?? null;
-      if (!hit && out.region_id)
-        for (const sid of subIdsOfRegion.get(out.region_id) ?? []) {
-          hit = appsBySub.get(sid)?.get(key) ?? null;
-          if (hit) break;
-        }
-      if (!hit && out.region_id) hit = appsByRegion.get(out.region_id)?.get(key) ?? null;
-      if (!hit && !out.region_id && out.country_id) {
-        const countryRegions = regions.filter((r) => r.country_id === out.country_id);
-        for (const r of countryRegions) {
-          hit = appsByRegion.get(r.id)?.get(key) ?? null;
-          if (!hit)
-            for (const sid of subIdsOfRegion.get(r.id) ?? []) {
-              hit = appsBySub.get(sid)?.get(key) ?? null;
-              if (hit) break;
+      if (isVinification(aRaw)) {
+        out.terroir_extra = aRaw;
+      } else {
+        const { classification, place } = splitClassification(aRaw);
+        if (classification) out.classification = classification;
+        if (place) {
+          const key = norm(ov(overrides.appellations, place) ?? place);
+          const resolveApp = () => {
+            if (subRow) { const h = appsBySub.get(subRow.id)?.get(key); if (h) return h; }
+            if (out.region_id) {
+              for (const sid of subIdsOfRegion.get(out.region_id) ?? []) {
+                const h = appsBySub.get(sid)?.get(key); if (h) return h;
+              }
+              const h = appsByRegion.get(out.region_id)?.get(key); if (h) return h;
             }
-          if (hit) break;
+            if (!out.region_id && out.country_id) {
+              for (const r of regions.filter((r) => r.country_id === out.country_id)) {
+                const h = appsByRegion.get(r.id)?.get(key); if (h) return h;
+                for (const sid of subIdsOfRegion.get(r.id) ?? []) {
+                  const h2 = appsBySub.get(sid)?.get(key); if (h2) return h2;
+                }
+              }
+            }
+            if (out.country_id) { const h = appsByCountry.get(out.country_id)?.get(key); if (h) return h; }
+            return null;
+          };
+          const hit = resolveApp();
+          if (hit) out.appellation_id = hit.id;
+          else if (!out.location) out.location = place; // Ort nicht (noch) geseedet → Freitext
         }
       }
-      if (!hit && out.country_id) hit = appsByCountry.get(out.country_id)?.get(key) ?? null;
-      if (hit) out.appellation_id = hit.id;
-      else miss("appellations", `${txt(w.region) ?? "?"} | ${aRaw}`, w);
     }
     return out;
   };
 
   // 4. Weine transformieren
   const seen = new Map();
+  report.counts.routing = { classification: 0, location: 0, non_vintage: 0, aging: 0, terroir_from_appellation: 0 };
   const winePayload = wines.map((w) => {
-    const dupKey = `${norm(w.producer)}|${norm(w.description)}|${norm(w.vintage)}`;
+    // Duplikat-Schlüssel inkl. Flaschengröße (Magnum ≠ 0,75 l)
+    const dupKey = `${norm(w.producer)}|${norm(w.description)}|${norm(w.vintage)}|${num(w.cl) ?? ""}`;
     if (seen.has(dupKey)) report.duplicates.push(dupKey);
     seen.set(dupKey, true);
 
-    const v = txt(w.vintage);
-    if (v && !/^\d{4}$/.test(v)) report.odd_vintages.push(`${w.producer}: "${v}"`);
-
     const colourId = colourByName.get(txt(w.colour)) ?? null;
     const cl = num(w.cl);
+    const { terroir_extra, ...geo } = resolveGeo(w);
+    const vintageFields = parseVintage(w.vintage);
+    if (geo.classification) report.counts.routing.classification++;
+    if (geo.location) report.counts.routing.location++;
+    if (vintageFields.is_non_vintage) report.counts.routing.non_vintage++;
+    if (vintageFields.aging_indication) report.counts.routing.aging++;
+    if (terroir_extra) report.counts.routing.terroir_from_appellation++;
 
     return {
       id: w.id,
       cellar_id: cellarId,
       created_by: MAIN_USER_ID,
-      producer: txt(w.producer),
+      producer: applyProducerFix(txt(w.producer)),
       name: txt(w.description),
-      vintage: v,
+      ...vintageFields,
       colour_id: colourId,
       variety: txt(w.variety),
+      classification: geo.classification,
       size_ml: cl == null ? null : Math.round(cl * 10),
       alcohol_pct: num(w.alcohol_pct),
       residual_sugar_gl: num(w.residual_sugar_gl),
-      dosage: txt(w.dosage),
-      ...resolveGeo(w),
-      terroir_notes: txt(w.ausbau_terroir),
+      ...parseDosage(w.dosage),
+      country_id: geo.country_id,
+      region_id: geo.region_id,
+      sub_region_id: geo.sub_region_id,
+      appellation_id: geo.appellation_id,
+      location: geo.location,
+      terroir_notes: [txt(w.ausbau_terroir), terroir_extra].filter(Boolean).join(" · ") || null,
       notes: txt(w.notes),
       occasion: OCCASION[txt(w.occasion)] ?? null,
       quantity: int(w.quantity) ?? 0,
@@ -366,15 +453,22 @@ async function main() {
     appellation: `${resolved("appellation_id")}/${withText("appellation")}`,
   };
   report.counts.colour_unresolved = winePayload.filter((w) => !w.colour_id).length;
+  // Weinart-Feld-Routing: nach der Umstellung darf im vintage-Feld nur noch
+  // eine Zahl oder null stehen — alles andere ist in eigene Felder gewandert.
+  report.counts.vintage_int = winePayload.filter((w) => w.vintage != null).length;
+  report.counts.dosage_level = winePayload.filter((w) => w.dosage_level).length;
+  report.counts.dosage_gl = winePayload.filter((w) => w.dosage_gl != null).length;
+  report.counts.geo.location_used = winePayload.filter((w) => w.location).length;
   report.finished_at = new Date().toISOString();
   writeFileSync(join(BACKUP, "migration-report.json"), JSON.stringify(report, null, 2));
 
+  const r = report.counts.routing;
   console.log("\n── Ergebnis ──────────────────────────────────");
   console.log(`Weine: ${report.counts.wines} · People: ${report.counts.people} · Log: ${report.counts.drinking_log} (+${report.counts.drinking_log_people} Junction)`);
-  console.log(`Geo aufgelöst — Land: ${report.counts.geo.country}, Region: ${report.counts.geo.region}, Sub: ${report.counts.geo.sub_region}, Appellation: ${report.counts.geo.appellation}`);
-  console.log(`Farbe unaufgelöst: ${report.counts.colour_unresolved}`);
-  const nMiss = (b) => Object.keys(report.unresolved[b]).length;
-  console.log(`Unaufgelöste distinct Namen — Land: ${nMiss("countries")}, Region: ${nMiss("regions")}, Sub: ${nMiss("sub_regions")}, App: ${nMiss("appellations")}`);
+  console.log(`Geo — Land: ${report.counts.geo.country}, Region: ${report.counts.geo.region}, Sub(FK): ${report.counts.geo.sub_region}, Appellation(FK): ${report.counts.geo.appellation}, Location(Freitext): ${report.counts.geo.location_used}`);
+  console.log(`Weinart-Felder — NV: ${r.non_vintage}, Reifeangabe: ${r.aging}, Klassifizierung: ${r.classification}, Ausbau→terroir: ${r.terroir_from_appellation}`);
+  console.log(`Dosage — Stufe: ${report.counts.dosage_level}, g/L: ${report.counts.dosage_gl}`);
+  console.log(`Duplikate (mit Größe): ${report.duplicates.length} · Farbe unaufgelöst: ${report.counts.colour_unresolved}`);
   console.log(`Report: backup/migration-report.json`);
 }
 
