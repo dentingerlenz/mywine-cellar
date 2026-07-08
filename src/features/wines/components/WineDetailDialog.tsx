@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import {
   type Wine, wineTitle, getDrinkStatus, DRINK_LABEL,
   occasionLabel, occasionClass, formatSize, vintageDisplay, dosageDisplay,
+  formatMonthYear, monthsOnLees,
 } from "../model";
 import { labelPhotoUrl } from "../queries";
 import { useColourLookup } from "@/features/colours/queries";
@@ -82,6 +83,15 @@ export const WineDetailDialog = ({ wine, open, onOpenChange, onEdit, onDelete }:
               <Field label="Alcohol" value={wine.alcohol_pct != null ? `${wine.alcohol_pct} %` : null} />
               <Field label="Residual sugar" value={wine.residual_sugar_gl != null ? `${wine.residual_sugar_gl} g/L` : null} />
               <Field label="Dosage" value={dosageDisplay(wine)} />
+              <Field label="Tirage" value={formatMonthYear(wine.tirage_date)} />
+              <Field label="Disgorgement" value={formatMonthYear(wine.disgorgement_date)} />
+              <Field
+                label="On lees"
+                value={(() => {
+                  const m = monthsOnLees(wine.tirage_date, wine.disgorgement_date);
+                  return m != null ? `${m} months` : null;
+                })()}
+              />
               <Field label="Country" value={wine.country_id ? geo.countryById.get(wine.country_id)?.name : null} />
               <Field label="Region" value={wine.region_id ? geo.regionById.get(wine.region_id)?.name : null} />
               <Field label="Sub-region" value={wine.sub_region_id ? geo.subRegionById.get(wine.sub_region_id)?.name : null} />

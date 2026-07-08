@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useCellar } from "@/features/cellar/CellarContext";
 import { qk } from "@/lib/queryKeys";
-import type { Wine, WineInput } from "./model";
+import { type Wine, type WineInput, monthYearToDate } from "./model";
 
 const toPayload = (v: WineInput) => ({
   producer: v.producer || null,
@@ -19,6 +19,8 @@ const toPayload = (v: WineInput) => ({
   residual_sugar_gl: v.residual_sugar_gl ?? null,
   dosage_level: v.dosage_level || null,
   dosage_gl: v.dosage_gl ?? null,
+  tirage_date: monthYearToDate(v.tirage_date),
+  disgorgement_date: monthYearToDate(v.disgorgement_date),
   country_id: v.country_id ?? null,
   region_id: v.region_id ?? null,
   sub_region_id: v.sub_region_id ?? null,

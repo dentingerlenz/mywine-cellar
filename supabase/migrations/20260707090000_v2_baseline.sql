@@ -261,6 +261,9 @@ create table public.wines (
   residual_sugar_gl  numeric check (residual_sugar_gl is null or residual_sugar_gl >= 0),
   dosage_level       text,               -- Schaumwein-Stufe: Brut Nature, Extra Brut, Brut, Extra Dry, Sec, Demi-Sec, Doux
   dosage_gl          numeric check (dosage_gl is null or dosage_gl >= 0),
+  -- Schaumwein (optional): Monat/Jahr als Datum (Tag = 01). Differenz = Zeit auf der Hefe.
+  tirage_date        date,               -- Fülldatum / Beginn Hefelager
+  disgorgement_date  date,               -- Dégorgement / Ende Hefelager
   -- Geografie: FKs + Freitext-`location` für Orte ohne offizielle Appellation.
   country_id         uuid references public.countries(id)    on delete set null,
   region_id          uuid references public.regions(id)      on delete set null,

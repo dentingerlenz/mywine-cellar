@@ -463,6 +463,7 @@ export type Database = {
           country_id: string | null
           created_at: string
           created_by: string | null
+          disgorgement_date: string | null
           dosage_gl: number | null
           dosage_level: string | null
           drink_by: number | null
@@ -485,6 +486,7 @@ export type Database = {
           storage_location: string | null
           sub_region_id: string | null
           terroir_notes: string | null
+          tirage_date: string | null
           updated_at: string
           variety: string | null
           vintage: number | null
@@ -500,6 +502,7 @@ export type Database = {
           country_id?: string | null
           created_at?: string
           created_by?: string | null
+          disgorgement_date?: string | null
           dosage_gl?: number | null
           dosage_level?: string | null
           drink_by?: number | null
@@ -522,6 +525,7 @@ export type Database = {
           storage_location?: string | null
           sub_region_id?: string | null
           terroir_notes?: string | null
+          tirage_date?: string | null
           updated_at?: string
           variety?: string | null
           vintage?: number | null
@@ -537,6 +541,7 @@ export type Database = {
           country_id?: string | null
           created_at?: string
           created_by?: string | null
+          disgorgement_date?: string | null
           dosage_gl?: number | null
           dosage_level?: string | null
           drink_by?: number | null
@@ -559,6 +564,7 @@ export type Database = {
           storage_location?: string | null
           sub_region_id?: string | null
           terroir_notes?: string | null
+          tirage_date?: string | null
           updated_at?: string
           variety?: string | null
           vintage?: number | null

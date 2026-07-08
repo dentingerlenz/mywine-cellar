@@ -15,7 +15,7 @@ import { toast } from "sonner";
 import { AlertTriangle, Loader2 } from "lucide-react";
 import {
   type Wine, type WineInput, wineSchema, OCCASIONS, OCCASION_LABEL,
-  SIZE_ML_OPTIONS, DOSAGE_LEVELS, findDuplicates,
+  SIZE_ML_OPTIONS, DOSAGE_LEVELS, findDuplicates, dateToMonthYear, monthsOnLees,
 } from "@/features/wines/model";
 import { useUpsertWine, useWines, uploadLabelPhoto, labelPhotoUrl } from "@/features/wines/queries";
 import { useColours, useColourLookup } from "@/features/colours/queries";
@@ -121,6 +121,8 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
         residual_sugar_gl: wine.residual_sugar_gl ?? null,
         dosage_level: wine.dosage_level ?? "",
         dosage_gl: wine.dosage_gl ?? null,
+        tirage_date: dateToMonthYear(wine.tirage_date),
+        disgorgement_date: dateToMonthYear(wine.disgorgement_date),
         alcohol_pct: wine.alcohol_pct ?? null,
         country_id: wine.country_id,
         region_id: wine.region_id,
@@ -215,6 +217,7 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
   const sizeMl = watch("size_ml") as number | null | undefined;
   const isNonVintage = !!watch("is_non_vintage");
   const dosageLevel = watch("dosage_level") as string | undefined;
+  const lees = monthsOnLees(watch("tirage_date"), watch("disgorgement_date"));
   const geoSelection: GeoSelection = {
     country_id: (watch("country_id") as string | null | undefined) ?? null,
     region_id: (watch("region_id") as string | null | undefined) ?? null,
@@ -416,6 +419,21 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
                     <Label>Dosage (g/L)</Label>
                     <Input type="number" step="0.1" {...register("dosage_gl")} placeholder="e.g. 3" />
                   </div>
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 items-end">
+                  <div>
+                    <Label>Tirage (month)</Label>
+                    <Input type="month" {...register("tirage_date")} />
+                  </div>
+                  <div>
+                    <Label>Disgorgement (month)</Label>
+                    <Input type="month" {...register("disgorgement_date")} />
+                  </div>
+                  {lees != null && (
+                    <p className="text-xs text-muted-foreground pb-2 md:col-span-2">
+                      ≈ <span className="text-primary font-display">{lees}</span> months on lees
+                    </p>
+                  )}
                 </div>
                 <div className="grid grid-cols-2 gap-3">{readyDrink}</div>
               </>

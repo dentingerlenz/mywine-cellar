@@ -85,6 +85,9 @@ export const wineSchema = z.object({
   residual_sugar_gl: optionalNum(z.coerce.number().min(0).max(999)),
   dosage_level: z.string().trim().max(40).optional().or(z.literal("")),
   dosage_gl: optionalNum(z.coerce.number().min(0).max(999)),
+  // Schaumwein: Monat/Jahr im Formularformat "YYYY-MM" (leer = keine Angabe).
+  tirage_date: z.string().regex(/^\d{4}-\d{2}$/, "Use month/year").optional().or(z.literal("")),
+  disgorgement_date: z.string().regex(/^\d{4}-\d{2}$/, "Use month/year").optional().or(z.literal("")),
   country_id: optionalUuid,
   region_id: optionalUuid,
   sub_region_id: optionalUuid,
@@ -150,6 +153,29 @@ export const dosageDisplay = (
 ): string | null => {
   const parts = [w.dosage_level, w.dosage_gl != null ? `${w.dosage_gl} g/L` : null].filter(Boolean);
   return parts.length ? parts.join(" · ") : null;
+};
+
+// Monat/Jahr-Konvertierung zwischen DB-Datum (YYYY-MM-01) und Formular (YYYY-MM).
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+export const monthYearToDate = (s: string | null | undefined) =>
+  s && /^\d{4}-\d{2}$/.test(s) ? `${s}-01` : null;
+export const dateToMonthYear = (d: string | null | undefined) =>
+  d && d.length >= 7 ? d.slice(0, 7) : "";
+export const formatMonthYear = (d: string | null | undefined): string | null => {
+  if (!d || d.length < 7) return null;
+  const [y, m] = d.split("-");
+  return `${MONTHS[Number(m) - 1] ?? m} ${y}`;
+};
+/** Monate auf der Hefe zwischen Tirage und Dégorgement (beide YYYY-MM[-DD]). */
+export const monthsOnLees = (
+  tirage: string | null | undefined,
+  disgorgement: string | null | undefined
+): number | null => {
+  if (!tirage || !disgorgement) return null;
+  const [ty, tm] = tirage.split("-").map(Number);
+  const [dy, dm] = disgorgement.split("-").map(Number);
+  const n = (dy - ty) * 12 + (dm - tm);
+  return n >= 0 ? n : null;
 };
 
 const dupNorm = (s: string | null | number | undefined) =>

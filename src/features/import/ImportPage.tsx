@@ -104,6 +104,8 @@ export default function ImportPage() {
             size_ml: num(raw.size_ml) ?? (cl != null ? Math.round(cl * 10) : undefined),
             residual_sugar_gl: num(raw.residual_sugar_gl ?? raw.residual_sugar),
             ...parseDosageInput(raw.dosage),
+            tirage_date: raw.tirage_date ?? raw.tirage,
+            disgorgement_date: raw.disgorgement_date ?? raw.disgorgement ?? raw.degorgement,
             alcohol_pct: num(raw.alcohol_pct ?? raw.alcohol),
             country_id: resolved.country_id,
             region_id: resolved.region_id,
