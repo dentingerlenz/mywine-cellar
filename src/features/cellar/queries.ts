@@ -17,10 +17,14 @@ export type CellarMember = {
   email: string | null;
 };
 
-const fetchMembership = async (): Promise<Membership | null> => {
+// Auf die EIGENE Zeile einschränken: die RLS-Policy zeigt alle Mitglieder des
+// eigenen Kellers, daher würde `.maybeSingle()` bei Kellern mit >1 Mitglied
+// mehrere Zeilen bekommen und fehlschlagen (→ App bliebe im Onboarding hängen).
+const fetchMembership = async (userId: string): Promise<Membership | null> => {
   const { data, error } = await supabase
     .from("cellar_members")
     .select("role, cellars ( id, name, invite_code )")
+    .eq("user_id", userId)
     .maybeSingle();
   if (error) throw error;
   if (!data?.cellars) return null;
@@ -37,7 +41,7 @@ export const useMembership = () => {
   return useQuery({
     queryKey: qk.membership(user?.id),
     enabled: !!user,
-    queryFn: fetchMembership,
+    queryFn: () => fetchMembership(user!.id),
   });
 };
 
