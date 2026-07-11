@@ -96,16 +96,29 @@ export const useGeoLookups = () => {
     region_id?: string | null;
     sub_region_id?: string | null;
   }) => {
+    // Landesweite Appellationen (z. B. Vin de France, English Wine) bleiben
+    // auch bei gewählter Region/Sub-Region wählbar.
+    const countryLevel = (countryId: string | null | undefined) =>
+      countryId
+        ? appellations.filter((a) => a.level === "country" && a.country_id === countryId)
+        : [];
     if (sel.sub_region_id) {
+      const sub = subRegionById.get(sel.sub_region_id);
+      const regionId = sel.region_id ?? sub?.region_id ?? null;
+      const region = regionId ? regionById.get(regionId) : undefined;
       const subLevel = appellations.filter((a) => a.sub_region_id === sel.sub_region_id);
-      const regionLevel = appellations.filter((a) => a.region_id === sel.region_id);
-      return [...subLevel, ...regionLevel];
+      const regionLevel = regionId ? appellations.filter((a) => a.region_id === regionId) : [];
+      return [...subLevel, ...regionLevel, ...countryLevel(region?.country_id ?? sel.country_id)];
     }
     if (sel.region_id) {
+      const region = regionById.get(sel.region_id);
       const subIds = new Set(subRegionsByRegion(sel.region_id).map((s) => s.id));
-      return appellations.filter(
-        (a) => a.region_id === sel.region_id || (a.sub_region_id && subIds.has(a.sub_region_id))
-      );
+      return [
+        ...appellations.filter(
+          (a) => a.region_id === sel.region_id || (a.sub_region_id && subIds.has(a.sub_region_id))
+        ),
+        ...countryLevel(region?.country_id ?? sel.country_id),
+      ];
     }
     if (sel.country_id) {
       const regionIds = new Set(regionsByCountry(sel.country_id).map((r) => r.id));

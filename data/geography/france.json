@@ -5,32 +5,41 @@
   "appellations": [
     {
       "name": "Vin de France",
-      "type": "AOC"
+      "type": null
     }
   ],
   "regions": [
     {
       "name": "Auvergne",
       "appellations": [
-        { "name": "Côtes d'Auvergne", "type": "AOC" },
-        { "name": "Saint-Pourçain", "type": "AOC" }
+        {
+          "name": "Cotes d'Auvergne",
+          "type": "AOC"
+        },
+        {
+          "name": "Saint-Pourcain",
+          "type": "AOC"
+        }
       ]
     },
     {
       "name": "Normandy",
       "appellations": [
-        { "name": "Domfront", "type": "AOC" }
+        {
+          "name": "Domfront",
+          "type": "AOC"
+        }
       ]
     },
     {
       "name": "Bordeaux",
       "appellations": [
         {
-          "name": "AOC Bordeaux",
+          "name": "Bordeaux",
           "type": "AOC"
         },
         {
-          "name": "IGP Atlantique",
+          "name": "Atlantique",
           "type": "IGP"
         }
       ],
@@ -171,7 +180,7 @@
       "name": "Bourgogne",
       "appellations": [
         {
-          "name": "AOC Bourgogne",
+          "name": "Bourgogne",
           "type": "AOC"
         }
       ],
@@ -328,55 +337,25 @@
       "name": "Champagne",
       "appellations": [
         {
-          "name": "AOC Champagne",
+          "name": "Champagne",
           "type": "AOC"
         }
       ],
       "subRegions": [
         {
-          "name": "Montagne de Reims",
-          "appellations": [
-            {
-              "name": "Champagne",
-              "type": "AOC"
-            }
-          ]
+          "name": "Montagne de Reims"
         },
         {
-          "name": "Vallee de la Marne",
-          "appellations": [
-            {
-              "name": "Champagne",
-              "type": "AOC"
-            }
-          ]
+          "name": "Vallee de la Marne"
         },
         {
-          "name": "Cote des Blancs",
-          "appellations": [
-            {
-              "name": "Champagne",
-              "type": "AOC"
-            }
-          ]
+          "name": "Cote des Blancs"
         },
         {
-          "name": "Cote de Sezanne",
-          "appellations": [
-            {
-              "name": "Champagne",
-              "type": "AOC"
-            }
-          ]
+          "name": "Cote de Sezanne"
         },
         {
-          "name": "Aube (Cote des Bar)",
-          "appellations": [
-            {
-              "name": "Champagne",
-              "type": "AOC"
-            }
-          ]
+          "name": "Aube (Cote des Bar)"
         }
       ]
     },
@@ -384,7 +363,7 @@
       "name": "Alsace",
       "appellations": [
         {
-          "name": "AOC Alsace",
+          "name": "Alsace",
           "type": "AOC"
         }
       ],
@@ -401,7 +380,7 @@
               "type": "AOC"
             },
             {
-              "name": "Cremant d’Alsace",
+              "name": "Cremant d'Alsace",
               "type": "AOC"
             }
           ]
@@ -412,11 +391,11 @@
       "name": "Vallee du Rhone",
       "appellations": [
         {
-          "name": "IGP Mediterranee",
+          "name": "Mediterranee",
           "type": "IGP"
         },
         {
-          "name": "AOC Cotes du Rhone",
+          "name": "Cotes du Rhone",
           "type": "AOC"
         }
       ],
@@ -517,7 +496,7 @@
       "name": "Vallee de la Loire",
       "appellations": [
         {
-          "name": "IGP Val de Loire",
+          "name": "Val de Loire",
           "type": "IGP"
         }
       ],
@@ -624,7 +603,7 @@
       "name": "Provence",
       "appellations": [
         {
-          "name": "IGP Mediterranee",
+          "name": "Mediterranee",
           "type": "IGP"
         }
       ],
@@ -633,7 +612,7 @@
           "name": "Provence",
           "appellations": [
             {
-              "name": "Coteaux d’Aix-en-Provence",
+              "name": "Coteaux d'Aix-en-Provence",
               "type": "AOC"
             },
             {
@@ -668,7 +647,7 @@
       "name": "Languedoc-Roussillon",
       "appellations": [
         {
-          "name": "IGP Pays d'Oc",
+          "name": "Pays d'Oc",
           "type": "IGP"
         }
       ],
@@ -753,7 +732,7 @@
       "name": "Sud-Ouest",
       "appellations": [
         {
-          "name": "IGP Comtes Tolosan",
+          "name": "Comtes Tolosan",
           "type": "IGP"
         }
       ],
@@ -855,7 +834,7 @@
               "type": "AOC"
             },
             {
-              "name": "L’Etoile",
+              "name": "L'Etoile",
               "type": "AOC"
             },
             {
@@ -868,12 +847,6 @@
     },
     {
       "name": "Beaujolais",
-      "appellations": [
-        {
-          "name": "IGP Vin de Pays d'Oc",
-          "type": "IGP"
-        }
-      ],
       "subRegions": [
         {
           "name": "Beaujolais",

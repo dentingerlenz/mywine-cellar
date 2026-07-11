@@ -100,10 +100,10 @@
       "name": "Quebec",
       "subRegions": [
         {
-          "name": "Cantons de l’Est",
+          "name": "Cantons de l'Est",
           "appellations": [
             {
-              "name": "Cantons de l’Est",
+              "name": "Cantons de l'Est",
               "type": "Appellation Quebec"
             }
           ]

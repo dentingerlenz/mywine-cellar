@@ -6,17 +6,15 @@
     {
       "name": "Australian Wine",
       "type": "National"
+    },
+    {
+      "name": "South Eastern Australia",
+      "type": "Broad GI"
     }
   ],
   "regions": [
     {
       "name": "South Australia",
-      "appellations": [
-        {
-          "name": "South Eastern Australia",
-          "type": "Broad GI"
-        }
-      ],
       "subRegions": [
         {
           "name": "Barossa Valley",
@@ -148,12 +146,6 @@
     },
     {
       "name": "Victoria",
-      "appellations": [
-        {
-          "name": "South Eastern Australia",
-          "type": "Broad GI"
-        }
-      ],
       "subRegions": [
         {
           "name": "Yarra Valley",
@@ -334,12 +326,6 @@
     },
     {
       "name": "New South Wales",
-      "appellations": [
-        {
-          "name": "South Eastern Australia",
-          "type": "Broad GI"
-        }
-      ],
       "subRegions": [
         {
           "name": "Hunter Valley",

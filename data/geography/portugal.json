@@ -15,35 +15,21 @@
         {
           "name": "Vinho Regional Transmontano",
           "type": "Vinho Regional"
+        },
+        {
+          "name": "Douro",
+          "type": "DOC"
         }
       ],
       "subRegions": [
         {
-          "name": "Douro Superior",
-          "appellations": [
-            {
-              "name": "Douro",
-              "type": "DOC"
-            }
-          ]
+          "name": "Douro Superior"
         },
         {
-          "name": "Cima Corgo",
-          "appellations": [
-            {
-              "name": "Douro",
-              "type": "DOC"
-            }
-          ]
+          "name": "Cima Corgo"
         },
         {
-          "name": "Baixo Corgo",
-          "appellations": [
-            {
-              "name": "Douro",
-              "type": "DOC"
-            }
-          ]
+          "name": "Baixo Corgo"
         },
         {
           "name": "Douro",
@@ -62,26 +48,18 @@
         {
           "name": "Vinho Regional Minho",
           "type": "Vinho Regional"
+        },
+        {
+          "name": "Vinho Verde",
+          "type": "DOC"
         }
       ],
       "subRegions": [
         {
-          "name": "Minho",
-          "appellations": [
-            {
-              "name": "Vinho Verde",
-              "type": "DOC"
-            }
-          ]
+          "name": "Minho"
         },
         {
-          "name": "Moncao e Melgaco",
-          "appellations": [
-            {
-              "name": "Vinho Verde",
-              "type": "DOC"
-            }
-          ]
+          "name": "Moncao e Melgaco"
         }
       ]
     },

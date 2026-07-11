@@ -15,35 +15,21 @@
         {
           "name": "Vino de la Tierra Castilla",
           "type": "VdlT"
+        },
+        {
+          "name": "Rioja",
+          "type": "DOCa"
         }
       ],
       "subRegions": [
         {
-          "name": "Rioja Alta",
-          "appellations": [
-            {
-              "name": "Rioja",
-              "type": "DOCa"
-            }
-          ]
+          "name": "Rioja Alta"
         },
         {
-          "name": "Rioja Alavesa",
-          "appellations": [
-            {
-              "name": "Rioja",
-              "type": "DOCa"
-            }
-          ]
+          "name": "Rioja Alavesa"
         },
         {
-          "name": "Rioja Oriental",
-          "appellations": [
-            {
-              "name": "Rioja",
-              "type": "DOCa"
-            }
-          ]
+          "name": "Rioja Oriental"
         }
       ]
     },

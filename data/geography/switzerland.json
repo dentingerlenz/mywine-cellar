@@ -3,56 +3,157 @@
   "code": "CH",
   "continent": "Europe",
   "appellations": [
-    { "name": "Vin de Table / Tafelwein", "type": "Tafelwein" }
+    {
+      "name": "Vin de Table / Tafelwein",
+      "type": "Tafelwein"
+    }
   ],
   "regions": [
     {
       "name": "Valais",
       "subRegions": [
-        { "name": "Sion & Zentralwallis", "appellations": [{ "name": "Valais", "type": "AOC Valais" }] },
-        { "name": "Leytron / Chamoson / Fully", "appellations": [{ "name": "Valais", "type": "AOC Valais" }] },
-        { "name": "Visperterminen", "appellations": [{ "name": "Valais", "type": "AOC Valais" }] }
+        {
+          "name": "Sion & Zentralwallis"
+        },
+        {
+          "name": "Leytron / Chamoson / Fully"
+        },
+        {
+          "name": "Visperterminen"
+        }
+      ],
+      "appellations": [
+        {
+          "name": "Valais",
+          "type": "AOC"
+        }
       ]
     },
     {
       "name": "Vaud",
       "subRegions": [
-        { "name": "La Cote", "appellations": [{ "name": "La Cote", "type": "AOC Vaud" }] },
+        {
+          "name": "La Cote",
+          "appellations": [
+            {
+              "name": "La Cote",
+              "type": "AOC"
+            }
+          ]
+        },
         {
           "name": "Lavaux",
           "appellations": [
-            { "name": "Lavaux", "type": "AOC Vaud" },
-            { "name": "Dezaley", "type": "AOC Vaud" },
-            { "name": "Calamin", "type": "AOC Vaud" }
+            {
+              "name": "Lavaux",
+              "type": "AOC"
+            },
+            {
+              "name": "Dezaley",
+              "type": "AOC"
+            },
+            {
+              "name": "Calamin",
+              "type": "AOC"
+            }
           ]
         },
         {
           "name": "Chablais",
           "appellations": [
-            { "name": "Chablais", "type": "AOC Vaud" },
-            { "name": "Yvorne", "type": "AOC Vaud" },
-            { "name": "Aigle", "type": "AOC Vaud" }
+            {
+              "name": "Chablais",
+              "type": "AOC"
+            },
+            {
+              "name": "Yvorne",
+              "type": "AOC"
+            },
+            {
+              "name": "Aigle",
+              "type": "AOC"
+            }
           ]
         },
-        { "name": "Cotes de l’Orbe", "appellations": [{ "name": "Cotes de l’Orbe", "type": "AOC Vaud" }] },
-        { "name": "Bonvillars", "appellations": [{ "name": "Bonvillars", "type": "AOC Vaud" }] },
-        { "name": "Vully (vaudois)", "appellations": [{ "name": "Vully", "type": "AOC Vaud" }] }
+        {
+          "name": "Cotes de l'Orbe",
+          "appellations": [
+            {
+              "name": "Cotes de l'Orbe",
+              "type": "AOC"
+            }
+          ]
+        },
+        {
+          "name": "Bonvillars",
+          "appellations": [
+            {
+              "name": "Bonvillars",
+              "type": "AOC"
+            }
+          ]
+        },
+        {
+          "name": "Vully (vaudois)",
+          "appellations": [
+            {
+              "name": "Vully",
+              "type": "AOC"
+            }
+          ]
+        }
       ]
     },
     {
       "name": "Genève",
       "subRegions": [
-        { "name": "Mandement", "appellations": [{ "name": "Geneve", "type": "AOC Geneve" }] },
-        { "name": "Arve-et-Lac", "appellations": [{ "name": "Geneve", "type": "AOC Geneve" }] },
-        { "name": "Arve-et-Rhone", "appellations": [{ "name": "Geneve", "type": "AOC Geneve" }] }
+        {
+          "name": "Mandement"
+        },
+        {
+          "name": "Arve-et-Lac"
+        },
+        {
+          "name": "Arve-et-Rhone"
+        }
+      ],
+      "appellations": [
+        {
+          "name": "Geneve",
+          "type": "AOC"
+        }
       ]
     },
     {
       "name": "Drei Seen",
       "subRegions": [
-        { "name": "Neuchâtel", "appellations": [{ "name": "Neuchatel", "type": "AOC Neuchatel" }] },
-        { "name": "Vully (fribourgeois)", "appellations": [{ "name": "Vully", "type": "AOC Fribourg" }] },
-        { "name": "Bielersee", "appellations": [{ "name": "Bielersee", "type": "AOC" }] }
+        {
+          "name": "Neuchâtel",
+          "appellations": [
+            {
+              "name": "Neuchatel",
+              "type": "AOC"
+            }
+          ]
+        },
+        {
+          "name": "Vully (fribourgeois)",
+          "appellations": [
+            {
+              "name": "Vully",
+              "type": "AOC"
+            }
+          ]
+        },
+        {
+          "name": "Bielersee",
+          "appellations": [
+            {
+              "name": "Bielersee",
+              "type": "AOC"
+            }
+          ]
+        }
       ]
     },
     {
@@ -61,21 +162,69 @@
         {
           "name": "Zürich",
           "appellations": [
-            { "name": "Zurich", "type": "AOC Zurich" },
-            { "name": "Zürichsee", "type": "AOC Zurich" }
+            {
+              "name": "Zurich",
+              "type": "AOC"
+            },
+            {
+              "name": "Zürichsee",
+              "type": "AOC"
+            }
           ]
         },
-        { "name": "Schaffhausen", "appellations": [{ "name": "Schaffhausen", "type": "AOC Schaffhausen" }] },
-        { "name": "Thurgau", "appellations": [{ "name": "Thurgau", "type": "AOC Thurgau" }] },
-        { "name": "Aargau", "appellations": [{ "name": "Aargau", "type": "AOC Aargau" }] },
-        { "name": "Graubünden", "appellations": [{ "name": "Bündner Herrschaft", "type": "AOC Graubünden" }] }
+        {
+          "name": "Schaffhausen",
+          "appellations": [
+            {
+              "name": "Schaffhausen",
+              "type": "AOC"
+            }
+          ]
+        },
+        {
+          "name": "Thurgau",
+          "appellations": [
+            {
+              "name": "Thurgau",
+              "type": "AOC"
+            }
+          ]
+        },
+        {
+          "name": "Aargau",
+          "appellations": [
+            {
+              "name": "Aargau",
+              "type": "AOC"
+            }
+          ]
+        },
+        {
+          "name": "Graubünden",
+          "appellations": [
+            {
+              "name": "Bündner Herrschaft",
+              "type": "AOC"
+            }
+          ]
+        }
       ]
     },
     {
       "name": "Ticino",
       "subRegions": [
-        { "name": "Sopraceneri", "appellations": [{ "name": "Ticino", "type": "DOC Ticino" }] },
-        { "name": "Sottoceneri", "appellations": [{ "name": "Ticino", "type": "DOC Ticino" }] }
+        {
+          "name": "Sopraceneri"
+        },
+        {
+          "name": "Sottoceneri"
+        }
+      ],
+      "appellations": [
+        {
+          "name": "Ticino",
+          "type": "DOC"
+        }
       ]
     }
   ]

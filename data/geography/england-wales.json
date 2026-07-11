@@ -6,6 +6,10 @@
     {
       "name": "English Wine / Welsh Wine",
       "type": "National"
+    },
+    {
+      "name": "English Wine",
+      "type": "PGI"
     }
   ],
   "regions": [
@@ -27,13 +31,7 @@
       "name": "Kent",
       "subRegions": [
         {
-          "name": "Kent",
-          "appellations": [
-            {
-              "name": "English Wine",
-              "type": "PGI"
-            }
-          ]
+          "name": "Kent"
         }
       ]
     },
@@ -41,13 +39,7 @@
       "name": "Hampshire",
       "subRegions": [
         {
-          "name": "Hampshire",
-          "appellations": [
-            {
-              "name": "English Wine",
-              "type": "PGI"
-            }
-          ]
+          "name": "Hampshire"
         }
       ]
     },
@@ -55,13 +47,7 @@
       "name": "East Anglia",
       "subRegions": [
         {
-          "name": "Essex / Suffolk / Norfolk",
-          "appellations": [
-            {
-              "name": "English Wine",
-              "type": "PGI"
-            }
-          ]
+          "name": "Essex / Suffolk / Norfolk"
         }
       ]
     },
@@ -83,13 +69,7 @@
       "name": "South-West",
       "subRegions": [
         {
-          "name": "Cornwall & Devon",
-          "appellations": [
-            {
-              "name": "English Wine",
-              "type": "PGI"
-            }
-          ]
+          "name": "Cornwall & Devon"
         }
       ]
     }

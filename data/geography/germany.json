@@ -15,44 +15,24 @@
         {
           "name": "Landwein der Mosel",
           "type": "Landwein"
+        },
+        {
+          "name": "Mosel",
+          "type": "Pradikatswein"
         }
       ],
       "subRegions": [
         {
-          "name": "Mittelmosel",
-          "appellations": [
-            {
-              "name": "Mosel",
-              "type": "Pradikatswein"
-            }
-          ]
+          "name": "Mittelmosel"
         },
         {
-          "name": "Saar",
-          "appellations": [
-            {
-              "name": "Mosel",
-              "type": "Pradikatswein"
-            }
-          ]
+          "name": "Saar"
         },
         {
-          "name": "Ruwer",
-          "appellations": [
-            {
-              "name": "Mosel",
-              "type": "Pradikatswein"
-            }
-          ]
+          "name": "Ruwer"
         },
         {
-          "name": "Terrassenmosel",
-          "appellations": [
-            {
-              "name": "Mosel",
-              "type": "Pradikatswein"
-            }
-          ]
+          "name": "Terrassenmosel"
         }
       ]
     },
@@ -162,44 +142,24 @@
         {
           "name": "Badischer Landwein",
           "type": "Landwein"
+        },
+        {
+          "name": "Baden",
+          "type": "Pradikatswein"
         }
       ],
       "subRegions": [
         {
-          "name": "Kaiserstuhl",
-          "appellations": [
-            {
-              "name": "Baden",
-              "type": "Pradikatswein"
-            }
-          ]
+          "name": "Kaiserstuhl"
         },
         {
-          "name": "Markgraflerland",
-          "appellations": [
-            {
-              "name": "Baden",
-              "type": "Pradikatswein"
-            }
-          ]
+          "name": "Markgraflerland"
         },
         {
-          "name": "Ortenau",
-          "appellations": [
-            {
-              "name": "Baden",
-              "type": "Pradikatswein"
-            }
-          ]
+          "name": "Ortenau"
         },
         {
-          "name": "Breisgau",
-          "appellations": [
-            {
-              "name": "Baden",
-              "type": "Pradikatswein"
-            }
-          ]
+          "name": "Breisgau"
         }
       ]
     },

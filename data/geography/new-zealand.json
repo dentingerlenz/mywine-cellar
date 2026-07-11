@@ -15,58 +15,38 @@
         {
           "name": "Marlborough Wine",
           "type": "GI"
+        },
+        {
+          "name": "Marlborough",
+          "type": "GI"
         }
       ],
       "subRegions": [
         {
-          "name": "Wairau Valley",
-          "appellations": [
-            {
-              "name": "Marlborough",
-              "type": "GI"
-            }
-          ]
+          "name": "Wairau Valley"
         },
         {
-          "name": "Awatere Valley",
-          "appellations": [
-            {
-              "name": "Marlborough",
-              "type": "GI"
-            }
-          ]
+          "name": "Awatere Valley"
         },
         {
-          "name": "Southern Valleys",
-          "appellations": [
-            {
-              "name": "Marlborough",
-              "type": "GI"
-            }
-          ]
+          "name": "Southern Valleys"
         }
       ]
     },
     {
-      "name": "Hawke’s Bay",
+      "name": "Hawke's Bay",
       "subRegions": [
         {
-          "name": "Gimblett Gravels",
-          "appellations": [
-            {
-              "name": "Hawke’s Bay",
-              "type": "GI"
-            }
-          ]
+          "name": "Gimblett Gravels"
         },
         {
-          "name": "Bridge Pa Triangle",
-          "appellations": [
-            {
-              "name": "Hawke’s Bay",
-              "type": "GI"
-            }
-          ]
+          "name": "Bridge Pa Triangle"
+        }
+      ],
+      "appellations": [
+        {
+          "name": "Hawke's Bay",
+          "type": "GI"
         }
       ]
     },
@@ -76,62 +56,30 @@
         {
           "name": "Central Otago Wine",
           "type": "GI"
+        },
+        {
+          "name": "Central Otago",
+          "type": "GI"
         }
       ],
       "subRegions": [
         {
-          "name": "Bannockburn",
-          "appellations": [
-            {
-              "name": "Central Otago",
-              "type": "GI"
-            }
-          ]
+          "name": "Bannockburn"
         },
         {
-          "name": "Cromwell Basin",
-          "appellations": [
-            {
-              "name": "Central Otago",
-              "type": "GI"
-            }
-          ]
+          "name": "Cromwell Basin"
         },
         {
-          "name": "Gibbston",
-          "appellations": [
-            {
-              "name": "Central Otago",
-              "type": "GI"
-            }
-          ]
+          "name": "Gibbston"
         },
         {
-          "name": "Wanaka",
-          "appellations": [
-            {
-              "name": "Central Otago",
-              "type": "GI"
-            }
-          ]
+          "name": "Wanaka"
         },
         {
-          "name": "Bendigo",
-          "appellations": [
-            {
-              "name": "Central Otago",
-              "type": "GI"
-            }
-          ]
+          "name": "Bendigo"
         },
         {
-          "name": "Alexandra",
-          "appellations": [
-            {
-              "name": "Central Otago",
-              "type": "GI"
-            }
-          ]
+          "name": "Alexandra"
         }
       ]
     },
@@ -139,22 +87,16 @@
       "name": "Canterbury",
       "subRegions": [
         {
-          "name": "Waipara Valley",
-          "appellations": [
-            {
-              "name": "Canterbury",
-              "type": "GI"
-            }
-          ]
+          "name": "Waipara Valley"
         },
         {
-          "name": "Christchurch Plains",
-          "appellations": [
-            {
-              "name": "Canterbury",
-              "type": "GI"
-            }
-          ]
+          "name": "Christchurch Plains"
+        }
+      ],
+      "appellations": [
+        {
+          "name": "Canterbury",
+          "type": "GI"
         }
       ]
     },
@@ -176,22 +118,16 @@
       "name": "Nelson",
       "subRegions": [
         {
-          "name": "Waimea Plains",
-          "appellations": [
-            {
-              "name": "Nelson",
-              "type": "GI"
-            }
-          ]
+          "name": "Waimea Plains"
         },
         {
-          "name": "Moutere Hills",
-          "appellations": [
-            {
-              "name": "Nelson",
-              "type": "GI"
-            }
-          ]
+          "name": "Moutere Hills"
+        }
+      ],
+      "appellations": [
+        {
+          "name": "Nelson",
+          "type": "GI"
         }
       ]
     },
@@ -227,31 +163,19 @@
       "name": "Auckland",
       "subRegions": [
         {
-          "name": "Waiheke Island",
-          "appellations": [
-            {
-              "name": "Auckland",
-              "type": "GI"
-            }
-          ]
+          "name": "Waiheke Island"
         },
         {
-          "name": "Henderson",
-          "appellations": [
-            {
-              "name": "Auckland",
-              "type": "GI"
-            }
-          ]
+          "name": "Henderson"
         },
         {
-          "name": "Matakana",
-          "appellations": [
-            {
-              "name": "Auckland",
-              "type": "GI"
-            }
-          ]
+          "name": "Matakana"
+        }
+      ],
+      "appellations": [
+        {
+          "name": "Auckland",
+          "type": "GI"
         }
       ]
     },

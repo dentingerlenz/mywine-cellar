@@ -6,29 +6,53 @@
     {
       "name": "Pafos",
       "appellations": [
-        { "name": "PGI Pafos", "type": "PGI" },
-        { "name": "Laona Akamas", "type": "PDO" },
-        { "name": "Vouni Panagias – Ampelitis", "type": "PDO" }
+        {
+          "name": "Pafos",
+          "type": "PGI"
+        },
+        {
+          "name": "Laona Akamas",
+          "type": "PDO"
+        },
+        {
+          "name": "Vouni Panagias – Ampelitis",
+          "type": "PDO"
+        }
       ]
     },
     {
       "name": "Lemesos",
       "appellations": [
-        { "name": "Commandaria", "type": "PDO" },
-        { "name": "Krasochoria Lemesou", "type": "PDO" },
-        { "name": "PGI Lemesos", "type": "PGI" }
+        {
+          "name": "Commandaria",
+          "type": "PDO"
+        },
+        {
+          "name": "Krasochoria Lemesou",
+          "type": "PDO"
+        },
+        {
+          "name": "Lemesos",
+          "type": "PGI"
+        }
       ]
     },
     {
       "name": "Larnaka",
       "appellations": [
-        { "name": "PGI Larnaka", "type": "PGI" }
+        {
+          "name": "Larnaka",
+          "type": "PGI"
+        }
       ]
     },
     {
       "name": "Lefkosia",
       "appellations": [
-        { "name": "PGI Lefkosia", "type": "PGI" }
+        {
+          "name": "Lefkosia",
+          "type": "PGI"
+        }
       ]
     }
   ]

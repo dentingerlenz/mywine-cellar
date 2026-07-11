@@ -30,19 +30,19 @@
               "type": "DOCG"
             },
             {
-              "name": "Barbera d’Asti",
+              "name": "Barbera d'Asti",
               "type": "DOCG"
             },
             {
-              "name": "Barbera d’Alba",
+              "name": "Barbera d'Alba",
               "type": "DOC"
             },
             {
-              "name": "Dolcetto d’Alba",
+              "name": "Dolcetto d'Alba",
               "type": "DOC"
             },
             {
-              "name": "Moscato d’Asti",
+              "name": "Moscato d'Asti",
               "type": "DOCG"
             },
             {
@@ -62,7 +62,7 @@
               "type": "DOC"
             },
             {
-              "name": "Nebbiolo d’Alba",
+              "name": "Nebbiolo d'Alba",
               "type": "DOC"
             },
             {
@@ -78,7 +78,7 @@
               "type": "DOCG"
             },
             {
-              "name": "Brachetto d’Acqui",
+              "name": "Brachetto d'Acqui",
               "type": "DOCG"
             }
           ]
@@ -86,13 +86,13 @@
       ]
     },
     {
-      "name": "Valle d’Aosta",
+      "name": "Valle d'Aosta",
       "subRegions": [
         {
-          "name": "Valle d’Aosta",
+          "name": "Valle d'Aosta",
           "appellations": [
             {
-              "name": "Valle d’Aosta",
+              "name": "Valle d'Aosta",
               "type": "DOC"
             }
           ]
@@ -517,15 +517,15 @@
           "name": "Abruzzo",
           "appellations": [
             {
-              "name": "Montepulciano d’Abruzzo",
+              "name": "Montepulciano d'Abruzzo",
               "type": "DOC"
             },
             {
-              "name": "Montepulciano d’Abruzzo Colline Teramane",
+              "name": "Montepulciano d'Abruzzo Colline Teramane",
               "type": "DOCG"
             },
             {
-              "name": "Trebbiano d’Abruzzo",
+              "name": "Trebbiano d'Abruzzo",
               "type": "DOC"
             }
           ]
@@ -732,10 +732,10 @@
           ]
         },
         {
-          "name": "Terra d’Otranto",
+          "name": "Terra d'Otranto",
           "appellations": [
             {
-              "name": "Negroamaro di Terra d’Otranto",
+              "name": "Negroamaro di Terra d'Otranto",
               "type": "DOC"
             }
           ]
