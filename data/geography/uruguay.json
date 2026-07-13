@@ -5,71 +5,46 @@
   "regions": [
     {
       "name": "Canelones",
-      "subRegions": [
+      "appellations": [
         {
           "name": "Canelones",
-          "appellations": [
-            {
-              "name": "Canelones",
-              "type": "DOP"
-            }
-          ]
+          "type": "DOP"
         }
       ]
     },
     {
       "name": "Maldonado",
-      "subRegions": [
+      "appellations": [
         {
           "name": "Maldonado",
-          "appellations": [
-            {
-              "name": "Maldonado",
-              "type": "DOP"
-            }
-          ]
+          "type": "DOP"
         }
       ]
     },
     {
       "name": "Colonia",
-      "subRegions": [
+      "appellations": [
         {
           "name": "Colonia",
-          "appellations": [
-            {
-              "name": "Colonia",
-              "type": "DOP"
-            }
-          ]
+          "type": "DOP"
         }
       ]
     },
     {
       "name": "Rivera",
-      "subRegions": [
+      "appellations": [
         {
           "name": "Rivera",
-          "appellations": [
-            {
-              "name": "Rivera",
-              "type": "DOP"
-            }
-          ]
+          "type": "DOP"
         }
       ]
     },
     {
       "name": "Montevideo",
-      "subRegions": [
+      "appellations": [
         {
           "name": "Montevideo",
-          "appellations": [
-            {
-              "name": "Montevideo",
-              "type": "DOP"
-            }
-          ]
+          "type": "DOP"
         }
       ]
     }

@@ -5,15 +5,10 @@
   "regions": [
     {
       "name": "Fruska Gora",
-      "subRegions": [
+      "appellations": [
         {
           "name": "Fruska Gora",
-          "appellations": [
-            {
-              "name": "Fruska Gora",
-              "type": "KGP"
-            }
-          ]
+          "type": "KGP"
         }
       ]
     },

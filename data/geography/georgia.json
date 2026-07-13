@@ -2,12 +2,6 @@
   "country": "Georgia",
   "code": "GE",
   "continent": "Europe",
-  "appellations": [
-    {
-      "name": "Magrada Ghvino",
-      "type": "Table"
-    }
-  ],
   "regions": [
     {
       "name": "Kakheti",
@@ -55,43 +49,28 @@
     },
     {
       "name": "Imereti",
-      "subRegions": [
+      "appellations": [
         {
           "name": "Imereti",
-          "appellations": [
-            {
-              "name": "Imereti",
-              "type": "PGI"
-            }
-          ]
+          "type": "PGI"
         }
       ]
     },
     {
       "name": "Kartli",
-      "subRegions": [
+      "appellations": [
         {
           "name": "Kartli",
-          "appellations": [
-            {
-              "name": "Kartli",
-              "type": "PGI"
-            }
-          ]
+          "type": "PGI"
         }
       ]
     },
     {
       "name": "Adjara",
-      "subRegions": [
+      "appellations": [
         {
           "name": "Adjara",
-          "appellations": [
-            {
-              "name": "Adjara",
-              "type": "PGI"
-            }
-          ]
+          "type": "PGI"
         }
       ]
     }

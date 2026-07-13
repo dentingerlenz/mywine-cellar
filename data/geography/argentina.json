@@ -2,12 +2,6 @@
   "country": "Argentina",
   "code": "AR",
   "continent": "Americas",
-  "appellations": [
-    {
-      "name": "Vino de Argentina",
-      "type": "National"
-    }
-  ],
   "regions": [
     {
       "name": "Mendoza",

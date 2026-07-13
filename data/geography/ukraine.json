@@ -42,15 +42,10 @@
     },
     {
       "name": "Zakarpattia",
-      "subRegions": [
+      "appellations": [
         {
           "name": "Zakarpattia",
-          "appellations": [
-            {
-              "name": "Zakarpattia",
-              "type": "PGI"
-            }
-          ]
+          "type": "PGI"
         }
       ]
     }

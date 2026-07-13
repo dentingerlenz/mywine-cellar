@@ -13,10 +13,6 @@
       "name": "Rioja",
       "appellations": [
         {
-          "name": "Vino de la Tierra Castilla",
-          "type": "VdlT"
-        },
-        {
           "name": "Rioja",
           "type": "DOCa"
         }
@@ -35,15 +31,10 @@
     },
     {
       "name": "Priorat",
-      "subRegions": [
+      "appellations": [
         {
           "name": "Priorat",
-          "appellations": [
-            {
-              "name": "Priorat",
-              "type": "DOCa"
-            }
-          ]
+          "type": "DOCa"
         }
       ]
     },
@@ -51,7 +42,7 @@
       "name": "Cataluna",
       "appellations": [
         {
-          "name": "Vino de la Tierra Cataluna",
+          "name": "Cataluna",
           "type": "VdlT"
         }
       ],
@@ -129,7 +120,7 @@
       "name": "Galicia",
       "appellations": [
         {
-          "name": "Vino de la Tierra Barbanza e Iria",
+          "name": "Barbanza e Iria",
           "type": "VdlT"
         }
       ],
@@ -185,7 +176,7 @@
       "name": "Castilla y Leon",
       "appellations": [
         {
-          "name": "Vino de la Tierra Castilla y Leon",
+          "name": "Castilla y Leon",
           "type": "VdlT"
         }
       ],
@@ -248,12 +239,6 @@
     },
     {
       "name": "Castilla-La Mancha",
-      "appellations": [
-        {
-          "name": "Vino de la Tierra Castilla-La Mancha",
-          "type": "VdlT"
-        }
-      ],
       "subRegions": [
         {
           "name": "La Mancha",
@@ -318,26 +303,17 @@
             }
           ]
         }
+      ],
+      "appellations": [
+        {
+          "name": "Castilla",
+          "type": "VdlT"
+        }
       ]
     },
     {
       "name": "Valencia",
-      "appellations": [
-        {
-          "name": "Vino de la Tierra Valencia",
-          "type": "VdlT"
-        }
-      ],
       "subRegions": [
-        {
-          "name": "Valencia",
-          "appellations": [
-            {
-              "name": "Valencia",
-              "type": "DO"
-            }
-          ]
-        },
         {
           "name": "Utiel-Requena",
           "appellations": [
@@ -356,13 +332,19 @@
             }
           ]
         }
+      ],
+      "appellations": [
+        {
+          "name": "Valencia",
+          "type": "DO"
+        }
       ]
     },
     {
       "name": "Aragon",
       "appellations": [
         {
-          "name": "Vino de la Tierra Bajo Aragon",
+          "name": "Bajo Aragon",
           "type": "VdlT"
         }
       ],
@@ -409,23 +391,12 @@
       "name": "Navarra",
       "appellations": [
         {
-          "name": "Vino de la Tierra Navarra",
-          "type": "VdlT"
-        }
-      ],
-      "subRegions": [
-        {
           "name": "Navarra",
-          "appellations": [
-            {
-              "name": "Navarra",
-              "type": "DO"
-            },
-            {
-              "name": "Pago de Arinzano",
-              "type": "VP"
-            }
-          ]
+          "type": "DO"
+        },
+        {
+          "name": "Pago de Arinzano",
+          "type": "VP"
         }
       ]
     },
@@ -465,7 +436,7 @@
       "name": "Extremadura",
       "appellations": [
         {
-          "name": "Vino de la Tierra Extremadura",
+          "name": "Extremadura",
           "type": "VdlT"
         }
       ],
@@ -485,7 +456,7 @@
       "name": "Andalucia",
       "appellations": [
         {
-          "name": "Vino de la Tierra Cadiz",
+          "name": "Cadiz",
           "type": "VdlT"
         }
       ],

@@ -65,15 +65,10 @@
     },
     {
       "name": "Guanajuato",
-      "subRegions": [
+      "appellations": [
         {
           "name": "Guanajuato",
-          "appellations": [
-            {
-              "name": "Guanajuato",
-              "type": "PGI"
-            }
-          ]
+          "type": "PGI"
         }
       ]
     }

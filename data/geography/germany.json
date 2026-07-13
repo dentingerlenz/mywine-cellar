@@ -18,7 +18,7 @@
         },
         {
           "name": "Mosel",
-          "type": "Pradikatswein"
+          "type": "Anbaugebiet"
         }
       ],
       "subRegions": [
@@ -42,17 +42,10 @@
         {
           "name": "Rheingauer Landwein",
           "type": "Landwein"
-        }
-      ],
-      "subRegions": [
+        },
         {
           "name": "Rheingau",
-          "appellations": [
-            {
-              "name": "Rheingau",
-              "type": "Pradikatswein"
-            }
-          ]
+          "type": "Anbaugebiet"
         }
       ]
     },
@@ -62,17 +55,10 @@
         {
           "name": "Rheinischer Landwein",
           "type": "Landwein"
-        }
-      ],
-      "subRegions": [
+        },
         {
           "name": "Rheinhessen",
-          "appellations": [
-            {
-              "name": "Rheinhessen",
-              "type": "Pradikatswein"
-            }
-          ]
+          "type": "Anbaugebiet"
         }
       ]
     },
@@ -82,17 +68,10 @@
         {
           "name": "Pfälzer Landwein",
           "type": "Landwein"
-        }
-      ],
-      "subRegions": [
+        },
         {
           "name": "Pfalz",
-          "appellations": [
-            {
-              "name": "Pfalz",
-              "type": "Pradikatswein"
-            }
-          ]
+          "type": "Anbaugebiet"
         }
       ]
     },
@@ -102,17 +81,10 @@
         {
           "name": "Nahegauer Landwein",
           "type": "Landwein"
-        }
-      ],
-      "subRegions": [
+        },
         {
           "name": "Nahe",
-          "appellations": [
-            {
-              "name": "Nahe",
-              "type": "Pradikatswein"
-            }
-          ]
+          "type": "Anbaugebiet"
         }
       ]
     },
@@ -122,17 +94,10 @@
         {
           "name": "Fränkischer Landwein",
           "type": "Landwein"
-        }
-      ],
-      "subRegions": [
+        },
         {
           "name": "Franken",
-          "appellations": [
-            {
-              "name": "Franken",
-              "type": "Pradikatswein"
-            }
-          ]
+          "type": "Anbaugebiet"
         }
       ]
     },
@@ -145,7 +110,7 @@
         },
         {
           "name": "Baden",
-          "type": "Pradikatswein"
+          "type": "Anbaugebiet"
         }
       ],
       "subRegions": [
@@ -169,31 +134,19 @@
         {
           "name": "Schwäbischer Landwein",
           "type": "Landwein"
-        }
-      ],
-      "subRegions": [
+        },
         {
           "name": "Württemberg",
-          "appellations": [
-            {
-              "name": "Württemberg",
-              "type": "Pradikatswein"
-            }
-          ]
+          "type": "Anbaugebiet"
         }
       ]
     },
     {
       "name": "Mittelrhein",
-      "subRegions": [
+      "appellations": [
         {
           "name": "Mittelrhein",
-          "appellations": [
-            {
-              "name": "Mittelrhein",
-              "type": "Pradikatswein"
-            }
-          ]
+          "type": "Anbaugebiet"
         }
       ]
     },
@@ -203,17 +156,10 @@
         {
           "name": "Ahrer Landwein",
           "type": "Landwein"
-        }
-      ],
-      "subRegions": [
+        },
         {
           "name": "Ahr",
-          "appellations": [
-            {
-              "name": "Ahr",
-              "type": "Pradikatswein"
-            }
-          ]
+          "type": "Anbaugebiet"
         }
       ]
     },
@@ -223,17 +169,10 @@
         {
           "name": "Mitteldeutscher Landwein",
           "type": "Landwein"
-        }
-      ],
-      "subRegions": [
+        },
         {
           "name": "Saale-Unstrut",
-          "appellations": [
-            {
-              "name": "Saale-Unstrut",
-              "type": "Pradikatswein"
-            }
-          ]
+          "type": "Anbaugebiet"
         }
       ]
     },
@@ -243,31 +182,19 @@
         {
           "name": "Sächsischer Landwein",
           "type": "Landwein"
-        }
-      ],
-      "subRegions": [
+        },
         {
           "name": "Sachsen",
-          "appellations": [
-            {
-              "name": "Sachsen",
-              "type": "Pradikatswein"
-            }
-          ]
+          "type": "Anbaugebiet"
         }
       ]
     },
     {
       "name": "Hessische Bergstrasse",
-      "subRegions": [
+      "appellations": [
         {
           "name": "Hessische Bergstrasse",
-          "appellations": [
-            {
-              "name": "Hessische Bergstrasse",
-              "type": "Pradikatswein"
-            }
-          ]
+          "type": "Anbaugebiet"
         }
       ]
     }

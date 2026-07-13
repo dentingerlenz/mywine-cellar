@@ -23,7 +23,7 @@
           "appellations": [
             {
               "name": "Wachau",
-              "type": "Qualitätswein"
+              "type": "DAC"
             }
           ]
         },
@@ -86,7 +86,7 @@
           "appellations": [
             {
               "name": "Thermenregion",
-              "type": "Qualitätswein"
+              "type": "DAC"
             }
           ]
         }
@@ -98,17 +98,10 @@
         {
           "name": "Wiener Landwein",
           "type": "Landwein"
-        }
-      ],
-      "subRegions": [
+        },
         {
           "name": "Wien",
-          "appellations": [
-            {
-              "name": "Wien",
-              "type": "DAC"
-            }
-          ]
+          "type": "DAC"
         }
       ]
     },
@@ -161,8 +154,8 @@
           "name": "Rust",
           "appellations": [
             {
-              "name": "Rust Ausbruch",
-              "type": "Pradikat"
+              "name": "Ruster Ausbruch",
+              "type": "DAC"
             }
           ]
         }

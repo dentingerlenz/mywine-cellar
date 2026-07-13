@@ -2,12 +2,6 @@
   "country": "Slovenia",
   "code": "SI",
   "continent": "Europe",
-  "appellations": [
-    {
-      "name": "Namizno Vino",
-      "type": "Table"
-    }
-  ],
   "regions": [
     {
       "name": "Primorska",

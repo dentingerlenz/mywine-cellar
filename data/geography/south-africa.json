@@ -143,15 +143,10 @@
     },
     {
       "name": "KwaZulu-Natal",
-      "subRegions": [
+      "appellations": [
         {
           "name": "KwaZulu-Natal",
-          "appellations": [
-            {
-              "name": "KwaZulu-Natal",
-              "type": "WO Geographical Unit"
-            }
-          ]
+          "type": "WO Geographical Unit"
         }
       ]
     }

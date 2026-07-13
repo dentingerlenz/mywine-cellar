@@ -2,12 +2,6 @@
   "country": "Slovakia",
   "code": "SK",
   "continent": "Europe",
-  "appellations": [
-    {
-      "name": "Stolove Vino",
-      "type": "Table"
-    }
-  ],
   "regions": [
     {
       "name": "Malokarpatska",

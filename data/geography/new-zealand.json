@@ -2,12 +2,6 @@
   "country": "New Zealand",
   "code": "NZ",
   "continent": "Oceania",
-  "appellations": [
-    {
-      "name": "New Zealand Wine",
-      "type": "National"
-    }
-  ],
   "regions": [
     {
       "name": "Marlborough",
@@ -133,29 +127,19 @@
     },
     {
       "name": "Waitaki Valley",
-      "subRegions": [
+      "appellations": [
         {
           "name": "Waitaki Valley",
-          "appellations": [
-            {
-              "name": "Waitaki Valley",
-              "type": "GI"
-            }
-          ]
+          "type": "GI"
         }
       ]
     },
     {
       "name": "Gisborne",
-      "subRegions": [
+      "appellations": [
         {
           "name": "Gisborne",
-          "appellations": [
-            {
-              "name": "Gisborne",
-              "type": "GI"
-            }
-          ]
+          "type": "GI"
         }
       ]
     },
@@ -181,15 +165,10 @@
     },
     {
       "name": "Northland",
-      "subRegions": [
+      "appellations": [
         {
           "name": "Northland",
-          "appellations": [
-            {
-              "name": "Northland",
-              "type": "GI"
-            }
-          ]
+          "type": "GI"
         }
       ]
     }

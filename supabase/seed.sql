@@ -1,7 +1,7 @@
 -- ═══════════════════════════════════════════════════════════════════════
 -- GENERIERT von scripts/geo/build-seed.js — NICHT von Hand editieren!
 -- Quelle: data/geography/*.json  ·  Neu erzeugen: npm run geo:build
--- Stand: 2026-07-11 · 51 Länder
+-- Stand: 2026-07-13 · 51 Länder
 -- Idempotent: kann beliebig oft ausgeführt werden.
 -- ═══════════════════════════════════════════════════════════════════════
 
@@ -16,39 +16,25 @@ insert into public.regions (country_id, name, sort_order)
 select c.id, 'Mascara', 0 from public.countries c where c.name = 'Algeria'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Mascara', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Algeria' and r.name = 'Mascara'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Coteaux de Mascara', 'AOIG', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Coteaux de Mascara', 'AOIG', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Algeria' and r.name = 'Mascara' and s.name = 'Mascara'
+  where c.name = 'Algeria' and r.name = 'Mascara'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Coteaux de Mascara' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Coteaux de Mascara' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Tlemcen', 1 from public.countries c where c.name = 'Algeria'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Tlemcen', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Algeria' and r.name = 'Tlemcen'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Coteaux de Tlemcen', 'AOIG', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Coteaux de Tlemcen', 'AOIG', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Algeria' and r.name = 'Tlemcen' and s.name = 'Tlemcen'
+  where c.name = 'Algeria' and r.name = 'Tlemcen'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Coteaux de Tlemcen' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Coteaux de Tlemcen' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Medea', 2 from public.countries c where c.name = 'Algeria'
@@ -73,31 +59,18 @@ insert into public.regions (country_id, name, sort_order)
 select c.id, 'Miliana', 3 from public.countries c where c.name = 'Algeria'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Miliana', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Algeria' and r.name = 'Miliana'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Coteaux du Zaccar', 'AOIG', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Coteaux du Zaccar', 'AOIG', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Algeria' and r.name = 'Miliana' and s.name = 'Miliana'
+  where c.name = 'Algeria' and r.name = 'Miliana'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Coteaux du Zaccar' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Coteaux du Zaccar' and a.level = 'region' and a.region_id = r.id);
 
 -- ── Argentina ─────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
 values ('Argentina', 'AR', 'Americas', 1)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
-
-insert into public.appellations (level, country_id, name, type, sort_order)
-select 'country', c.id, 'Vino de Argentina', 'National', 0
-from public.countries c where c.name = 'Argentina'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Vino de Argentina' and a.level = 'country' and a.country_id = c.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Mendoza', 0 from public.countries c where c.name = 'Argentina'
@@ -436,13 +409,7 @@ values ('Australia', 'AU', 'Oceania', 3)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.appellations (level, country_id, name, type, sort_order)
-select 'country', c.id, 'Australian Wine', 'National', 0
-from public.countries c where c.name = 'Australia'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Australian Wine' and a.level = 'country' and a.country_id = c.id);
-
-insert into public.appellations (level, country_id, name, type, sort_order)
-select 'country', c.id, 'South Eastern Australia', 'Broad GI', 1
+select 'country', c.id, 'South Eastern Australia', 'GI', 0
 from public.countries c where c.name = 'Australia'
   and not exists (select 1 from public.appellations a
     where a.name = 'South Eastern Australia' and a.level = 'country' and a.country_id = c.id);
@@ -820,7 +787,7 @@ select c.id, 'Western Australia', 2 from public.countries c where c.name = 'Aust
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Western Australia', 'Broad GI', 0
+select 'region', r.id, 'Western Australia', 'GI', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Australia' and r.name = 'Western Australia'
@@ -1061,7 +1028,7 @@ select c.id, 'Tasmania', 4 from public.countries c where c.name = 'Australia'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Tasmania', 'Broad GI', 0
+select 'region', r.id, 'Tasmania', 'GI', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Australia' and r.name = 'Tasmania'
@@ -1177,7 +1144,7 @@ where c.name = 'Austria' and r.name = 'Niederösterreich'
 on conflict (region_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Wachau', 'Qualitätswein', 0
+select 'sub_region', s.id, 'Wachau', 'DAC', 0
 from public.sub_regions s
   join public.regions r on r.id = s.region_id
   join public.countries c on c.id = r.country_id
@@ -1282,7 +1249,7 @@ where c.name = 'Austria' and r.name = 'Niederösterreich'
 on conflict (region_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Thermenregion', 'Qualitätswein', 0
+select 'sub_region', s.id, 'Thermenregion', 'DAC', 0
 from public.sub_regions s
   join public.regions r on r.id = s.region_id
   join public.countries c on c.id = r.country_id
@@ -1302,20 +1269,13 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Wiener Landwein' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Wien', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Austria' and r.name = 'Wien'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Wien', 'DAC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Wien', 'DAC', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Austria' and r.name = 'Wien' and s.name = 'Wien'
+  where c.name = 'Austria' and r.name = 'Wien'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Wien' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Wien' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Burgenland', 2 from public.countries c where c.name = 'Austria'
@@ -1396,13 +1356,13 @@ where c.name = 'Austria' and r.name = 'Burgenland'
 on conflict (region_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Rust Ausbruch', 'Pradikat', 0
+select 'sub_region', s.id, 'Ruster Ausbruch', 'DAC', 0
 from public.sub_regions s
   join public.regions r on r.id = s.region_id
   join public.countries c on c.id = r.country_id
   where c.name = 'Austria' and r.name = 'Burgenland' and s.name = 'Rust'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Rust Ausbruch' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Ruster Ausbruch' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Steiermark', 3 from public.countries c where c.name = 'Austria'
@@ -1665,12 +1625,6 @@ from public.sub_regions s
 insert into public.countries (name, code, continent, sort_order)
 values ('Bulgaria', 'BG', 'Europe', 8)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
-
-insert into public.appellations (level, country_id, name, type, sort_order)
-select 'country', c.id, 'Trpezno Vino', 'Table', 0
-from public.countries c where c.name = 'Bulgaria'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Trpezno Vino' and a.level = 'country' and a.country_id = c.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Dunav Plain', 0 from public.countries c where c.name = 'Bulgaria'
@@ -1988,12 +1942,6 @@ insert into public.countries (name, code, continent, sort_order)
 values ('Chile', 'CL', 'Americas', 10)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
-insert into public.appellations (level, country_id, name, type, sort_order)
-select 'country', c.id, 'Vino de Chile', 'National', 0
-from public.countries c where c.name = 'Chile'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Vino de Chile' and a.level = 'country' and a.country_id = c.id);
-
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Atacama', 0 from public.countries c where c.name = 'Chile'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
@@ -2089,23 +2037,16 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Aconcagua Wine' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Aconcagua', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Chile' and r.name = 'Aconcagua'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Aconcagua', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Aconcagua', 'DO', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Chile' and r.name = 'Aconcagua' and s.name = 'Aconcagua'
+  where c.name = 'Chile' and r.name = 'Aconcagua'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Aconcagua' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Aconcagua' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Casablanca', 1
+select r.id, 'Casablanca', 0
 from public.regions r join public.countries c on c.id = r.country_id
 where c.name = 'Chile' and r.name = 'Aconcagua'
 on conflict (region_id, name) do update set sort_order = excluded.sort_order;
@@ -2120,7 +2061,7 @@ from public.sub_regions s
     where a.name = 'Casablanca' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'San Antonio', 2
+select r.id, 'San Antonio', 1
 from public.regions r join public.countries c on c.id = r.country_id
 where c.name = 'Chile' and r.name = 'Aconcagua'
 on conflict (region_id, name) do update set sort_order = excluded.sort_order;
@@ -2277,12 +2218,6 @@ from public.sub_regions s
 insert into public.countries (name, code, continent, sort_order)
 values ('China', 'CN', 'Asia', 11)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
-
-insert into public.appellations (level, country_id, name, type, sort_order)
-select 'country', c.id, 'Putao Jiu', 'National', 0
-from public.countries c where c.name = 'China'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Putao Jiu' and a.level = 'country' and a.country_id = c.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Xinjiang', 0 from public.countries c where c.name = 'China'
@@ -2451,12 +2386,6 @@ from public.sub_regions s
 insert into public.countries (name, code, continent, sort_order)
 values ('Croatia', 'HR', 'Europe', 12)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
-
-insert into public.appellations (level, country_id, name, type, sort_order)
-select 'country', c.id, 'Stolno Vino', 'Table', 0
-from public.countries c where c.name = 'Croatia'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Stolno Vino' and a.level = 'country' and a.country_id = c.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Primorska', 0 from public.countries c where c.name = 'Croatia'
@@ -2670,12 +2599,6 @@ insert into public.countries (name, code, continent, sort_order)
 values ('Czech Republic', 'CZ', 'Europe', 14)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
-insert into public.appellations (level, country_id, name, type, sort_order)
-select 'country', c.id, 'Stolni Vino', 'Table', 0
-from public.countries c where c.name = 'Czech Republic'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Stolni Vino' and a.level = 'country' and a.country_id = c.id);
-
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Morava', 0 from public.countries c where c.name = 'Czech Republic'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
@@ -2797,13 +2720,7 @@ values ('England & Wales', 'GB', 'Europe', 16)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.appellations (level, country_id, name, type, sort_order)
-select 'country', c.id, 'English Wine / Welsh Wine', 'National', 0
-from public.countries c where c.name = 'England & Wales'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'English Wine / Welsh Wine' and a.level = 'country' and a.country_id = c.id);
-
-insert into public.appellations (level, country_id, name, type, sort_order)
-select 'country', c.id, 'English Wine', 'PGI', 1
+select 'country', c.id, 'English Wine', 'PGI', 0
 from public.countries c where c.name = 'England & Wales'
   and not exists (select 1 from public.appellations a
     where a.name = 'English Wine' and a.level = 'country' and a.country_id = c.id);
@@ -2831,21 +2748,9 @@ insert into public.regions (country_id, name, sort_order)
 select c.id, 'Kent', 1 from public.countries c where c.name = 'England & Wales'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Kent', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'England & Wales' and r.name = 'Kent'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Hampshire', 2 from public.countries c where c.name = 'England & Wales'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Hampshire', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'England & Wales' and r.name = 'Hampshire'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'East Anglia', 3 from public.countries c where c.name = 'England & Wales'
@@ -2861,20 +2766,13 @@ insert into public.regions (country_id, name, sort_order)
 select c.id, 'Wales', 4 from public.countries c where c.name = 'England & Wales'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Wales', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'England & Wales' and r.name = 'Wales'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Welsh Wine', 'PDO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Welsh Wine', 'PDO', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'England & Wales' and r.name = 'Wales' and s.name = 'Wales'
+  where c.name = 'England & Wales' and r.name = 'Wales'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Welsh Wine' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Welsh Wine' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'South-West', 5 from public.countries c where c.name = 'England & Wales'
@@ -3042,23 +2940,17 @@ from public.sub_regions s
   and not exists (select 1 from public.appellations a
     where a.name = 'Listrac-Medoc' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Haut-Medoc', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'France' and r.name = 'Bordeaux'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
 insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Haut-Medoc', 'AOC', 0
+select 'sub_region', s.id, 'Haut-Medoc', 'AOC', 7
 from public.sub_regions s
   join public.regions r on r.id = s.region_id
   join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Bordeaux' and s.name = 'Haut-Medoc'
+  where c.name = 'France' and r.name = 'Bordeaux' and s.name = 'Medoc'
   and not exists (select 1 from public.appellations a
     where a.name = 'Haut-Medoc' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Graves', 2
+select r.id, 'Graves', 1
 from public.regions r join public.countries c on c.id = r.country_id
 where c.name = 'France' and r.name = 'Bordeaux'
 on conflict (region_id, name) do update set sort_order = excluded.sort_order;
@@ -3082,7 +2974,7 @@ from public.sub_regions s
     where a.name = 'Pessac-Leognan' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Sauternes', 3
+select r.id, 'Sauternes', 2
 from public.regions r join public.countries c on c.id = r.country_id
 where c.name = 'France' and r.name = 'Bordeaux'
 on conflict (region_id, name) do update set sort_order = excluded.sort_order;
@@ -3106,7 +2998,7 @@ from public.sub_regions s
     where a.name = 'Barsac' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Saint-Emilion', 4
+select r.id, 'Saint-Emilion', 3
 from public.regions r join public.countries c on c.id = r.country_id
 where c.name = 'France' and r.name = 'Bordeaux'
 on conflict (region_id, name) do update set sort_order = excluded.sort_order;
@@ -3130,7 +3022,7 @@ from public.sub_regions s
     where a.name = 'Saint-Emilion Grand Cru' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Pomerol', 5
+select r.id, 'Pomerol', 4
 from public.regions r join public.countries c on c.id = r.country_id
 where c.name = 'France' and r.name = 'Bordeaux'
 on conflict (region_id, name) do update set sort_order = excluded.sort_order;
@@ -3145,7 +3037,7 @@ from public.sub_regions s
     where a.name = 'Pomerol' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Fronsac', 6
+select r.id, 'Fronsac', 5
 from public.regions r join public.countries c on c.id = r.country_id
 where c.name = 'France' and r.name = 'Bordeaux'
 on conflict (region_id, name) do update set sort_order = excluded.sort_order;
@@ -3169,7 +3061,7 @@ from public.sub_regions s
     where a.name = 'Canon-Fronsac' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Bourg', 7
+select r.id, 'Bourg', 6
 from public.regions r join public.countries c on c.id = r.country_id
 where c.name = 'France' and r.name = 'Bordeaux'
 on conflict (region_id, name) do update set sort_order = excluded.sort_order;
@@ -3184,7 +3076,7 @@ from public.sub_regions s
     where a.name = 'Cotes de Bourg' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Blaye', 8
+select r.id, 'Blaye', 7
 from public.regions r join public.countries c on c.id = r.country_id
 where c.name = 'France' and r.name = 'Bordeaux'
 on conflict (region_id, name) do update set sort_order = excluded.sort_order;
@@ -3199,7 +3091,7 @@ from public.sub_regions s
     where a.name = 'Blaye Cotes de Bordeaux' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Entre-Deux-Mers', 9
+select r.id, 'Entre-Deux-Mers', 8
 from public.regions r join public.countries c on c.id = r.country_id
 where c.name = 'France' and r.name = 'Bordeaux'
 on conflict (region_id, name) do update set sort_order = excluded.sort_order;
@@ -3224,6 +3116,14 @@ from public.regions r
   where c.name = 'France' and r.name = 'Bourgogne'
   and not exists (select 1 from public.appellations a
     where a.name = 'Bourgogne' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bourgogne Aligote', 'AOC', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'France' and r.name = 'Bourgogne'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Bourgogne Aligote' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Chablis', 0
@@ -3490,37 +3390,13 @@ from public.sub_regions s
     where a.name = 'Saint-Veran' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Viire-Clesse', 'AOC', 4
+select 'sub_region', s.id, 'Vire-Clesse', 'AOC', 4
 from public.sub_regions s
   join public.regions r on r.id = s.region_id
   join public.countries c on c.id = r.country_id
   where c.name = 'France' and r.name = 'Bourgogne' and s.name = 'Maconnais'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Viire-Clesse' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Regional', 5
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'France' and r.name = 'Bourgogne'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Bourgogne', 'AOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Bourgogne' and s.name = 'Regional'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Bourgogne' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Bourgogne Aligote', 'AOC', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Bourgogne' and s.name = 'Regional'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Bourgogne Aligote' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Vire-Clesse' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Champagne', 4 from public.countries c where c.name = 'France'
@@ -3576,38 +3452,21 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Alsace' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Alsace', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'France' and r.name = 'Alsace'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Alsace', 'AOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Alsace Grand Cru', 'AOC', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Alsace' and s.name = 'Alsace'
+  where c.name = 'France' and r.name = 'Alsace'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Alsace' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Alsace Grand Cru' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Alsace Grand Cru', 'AOC', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cremant d''Alsace', 'AOC', 2
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Alsace' and s.name = 'Alsace'
+  where c.name = 'France' and r.name = 'Alsace'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Alsace Grand Cru' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Cremant d''Alsace', 'AOC', 2
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Alsace' and s.name = 'Alsace'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Cremant d''Alsace' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Cremant d''Alsace' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Vallee du Rhone', 6 from public.countries c where c.name = 'France'
@@ -3804,16 +3663,7 @@ from public.sub_regions s
     where a.name = 'Grignan-les-Adhemar' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Cotes du Rhone', 'AOC', 10
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Vallee du Rhone' and s.name = 'Rhone Sud'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Cotes du Rhone' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Cotes du Rhone Villages', 'AOC', 11
+select 'sub_region', s.id, 'Cotes du Rhone Villages', 'AOC', 10
 from public.sub_regions s
   join public.regions r on r.id = s.region_id
   join public.countries c on c.id = r.country_id
@@ -4040,74 +3890,61 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Mediterranee' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Provence', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'France' and r.name = 'Provence'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Coteaux d''Aix-en-Provence', 'AOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Coteaux d''Aix-en-Provence', 'AOC', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Provence' and s.name = 'Provence'
+  where c.name = 'France' and r.name = 'Provence'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Coteaux d''Aix-en-Provence' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Coteaux d''Aix-en-Provence' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Les Baux-de-Provence', 'AOC', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Les Baux-de-Provence', 'AOC', 2
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Provence' and s.name = 'Provence'
+  where c.name = 'France' and r.name = 'Provence'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Les Baux-de-Provence' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Les Baux-de-Provence' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Cotes de Provence', 'AOC', 2
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cotes de Provence', 'AOC', 3
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Provence' and s.name = 'Provence'
+  where c.name = 'France' and r.name = 'Provence'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Cotes de Provence' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Cotes de Provence' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Bandol', 'AOC', 3
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bandol', 'AOC', 4
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Provence' and s.name = 'Provence'
+  where c.name = 'France' and r.name = 'Provence'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Bandol' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Bandol' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Cassis', 'AOC', 4
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cassis', 'AOC', 5
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Provence' and s.name = 'Provence'
+  where c.name = 'France' and r.name = 'Provence'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Cassis' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Cassis' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Palette', 'AOC', 5
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Palette', 'AOC', 6
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Provence' and s.name = 'Provence'
+  where c.name = 'France' and r.name = 'Provence'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Palette' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Palette' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Coteaux Varois en Provence', 'AOC', 6
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Coteaux Varois en Provence', 'AOC', 7
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Provence' and s.name = 'Provence'
+  where c.name = 'France' and r.name = 'Provence'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Coteaux Varois en Provence' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Coteaux Varois en Provence' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Languedoc-Roussillon', 9 from public.countries c where c.name = 'France'
@@ -4477,32 +4314,24 @@ insert into public.regions (country_id, name, sort_order)
 select c.id, 'Beaujolais', 12 from public.countries c where c.name = 'France'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Beaujolais', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'France' and r.name = 'Beaujolais'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Beaujolais', 'AOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Beaujolais', 'AOC', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Beaujolais' and s.name = 'Beaujolais'
+  where c.name = 'France' and r.name = 'Beaujolais'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Beaujolais' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Beaujolais' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Beaujolais-Villages', 'AOC', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Beaujolais-Villages', 'AOC', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Beaujolais' and s.name = 'Beaujolais'
+  where c.name = 'France' and r.name = 'Beaujolais'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Beaujolais-Villages' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Beaujolais-Villages' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Beaujolais Crus', 1
+select r.id, 'Crus du Beaujolais', 0
 from public.regions r join public.countries c on c.id = r.country_id
 where c.name = 'France' and r.name = 'Beaujolais'
 on conflict (region_id, name) do update set sort_order = excluded.sort_order;
@@ -4512,7 +4341,7 @@ select 'sub_region', s.id, 'Moulin-a-Vent', 'AOC', 0
 from public.sub_regions s
   join public.regions r on r.id = s.region_id
   join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Beaujolais' and s.name = 'Beaujolais Crus'
+  where c.name = 'France' and r.name = 'Beaujolais' and s.name = 'Crus du Beaujolais'
   and not exists (select 1 from public.appellations a
     where a.name = 'Moulin-a-Vent' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
@@ -4521,7 +4350,7 @@ select 'sub_region', s.id, 'Fleurie', 'AOC', 1
 from public.sub_regions s
   join public.regions r on r.id = s.region_id
   join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Beaujolais' and s.name = 'Beaujolais Crus'
+  where c.name = 'France' and r.name = 'Beaujolais' and s.name = 'Crus du Beaujolais'
   and not exists (select 1 from public.appellations a
     where a.name = 'Fleurie' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
@@ -4530,7 +4359,7 @@ select 'sub_region', s.id, 'Morgon', 'AOC', 2
 from public.sub_regions s
   join public.regions r on r.id = s.region_id
   join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Beaujolais' and s.name = 'Beaujolais Crus'
+  where c.name = 'France' and r.name = 'Beaujolais' and s.name = 'Crus du Beaujolais'
   and not exists (select 1 from public.appellations a
     where a.name = 'Morgon' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
@@ -4539,7 +4368,7 @@ select 'sub_region', s.id, 'Brouilly', 'AOC', 3
 from public.sub_regions s
   join public.regions r on r.id = s.region_id
   join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Beaujolais' and s.name = 'Beaujolais Crus'
+  where c.name = 'France' and r.name = 'Beaujolais' and s.name = 'Crus du Beaujolais'
   and not exists (select 1 from public.appellations a
     where a.name = 'Brouilly' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
@@ -4548,7 +4377,7 @@ select 'sub_region', s.id, 'Cote de Brouilly', 'AOC', 4
 from public.sub_regions s
   join public.regions r on r.id = s.region_id
   join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Beaujolais' and s.name = 'Beaujolais Crus'
+  where c.name = 'France' and r.name = 'Beaujolais' and s.name = 'Crus du Beaujolais'
   and not exists (select 1 from public.appellations a
     where a.name = 'Cote de Brouilly' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
@@ -4557,7 +4386,7 @@ select 'sub_region', s.id, 'Julienas', 'AOC', 5
 from public.sub_regions s
   join public.regions r on r.id = s.region_id
   join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Beaujolais' and s.name = 'Beaujolais Crus'
+  where c.name = 'France' and r.name = 'Beaujolais' and s.name = 'Crus du Beaujolais'
   and not exists (select 1 from public.appellations a
     where a.name = 'Julienas' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
@@ -4566,7 +4395,7 @@ select 'sub_region', s.id, 'Saint-Amour', 'AOC', 6
 from public.sub_regions s
   join public.regions r on r.id = s.region_id
   join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Beaujolais' and s.name = 'Beaujolais Crus'
+  where c.name = 'France' and r.name = 'Beaujolais' and s.name = 'Crus du Beaujolais'
   and not exists (select 1 from public.appellations a
     where a.name = 'Saint-Amour' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
@@ -4575,7 +4404,7 @@ select 'sub_region', s.id, 'Chenas', 'AOC', 7
 from public.sub_regions s
   join public.regions r on r.id = s.region_id
   join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Beaujolais' and s.name = 'Beaujolais Crus'
+  where c.name = 'France' and r.name = 'Beaujolais' and s.name = 'Crus du Beaujolais'
   and not exists (select 1 from public.appellations a
     where a.name = 'Chenas' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
@@ -4584,7 +4413,7 @@ select 'sub_region', s.id, 'Regnie', 'AOC', 8
 from public.sub_regions s
   join public.regions r on r.id = s.region_id
   join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Beaujolais' and s.name = 'Beaujolais Crus'
+  where c.name = 'France' and r.name = 'Beaujolais' and s.name = 'Crus du Beaujolais'
   and not exists (select 1 from public.appellations a
     where a.name = 'Regnie' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
@@ -4593,7 +4422,7 @@ select 'sub_region', s.id, 'Chiroubles', 'AOC', 9
 from public.sub_regions s
   join public.regions r on r.id = s.region_id
   join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Beaujolais' and s.name = 'Beaujolais Crus'
+  where c.name = 'France' and r.name = 'Beaujolais' and s.name = 'Crus du Beaujolais'
   and not exists (select 1 from public.appellations a
     where a.name = 'Chiroubles' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
@@ -4601,49 +4430,34 @@ insert into public.regions (country_id, name, sort_order)
 select c.id, 'Corse', 13 from public.countries c where c.name = 'France'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Corse', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'France' and r.name = 'Corse'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Patrimonio', 'AOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Patrimonio', 'AOC', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Corse' and s.name = 'Corse'
+  where c.name = 'France' and r.name = 'Corse'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Patrimonio' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Patrimonio' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Ajaccio', 'AOC', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ajaccio', 'AOC', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Corse' and s.name = 'Corse'
+  where c.name = 'France' and r.name = 'Corse'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Ajaccio' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Ajaccio' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Vin de Corse', 'AOC', 2
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vin de Corse', 'AOC', 2
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Corse' and s.name = 'Corse'
+  where c.name = 'France' and r.name = 'Corse'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Vin de Corse' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Vin de Corse' and a.level = 'region' and a.region_id = r.id);
 
 -- ── Georgia ───────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
 values ('Georgia', 'GE', 'Europe', 19)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
-
-insert into public.appellations (level, country_id, name, type, sort_order)
-select 'country', c.id, 'Magrada Ghvino', 'Table', 0
-from public.countries c where c.name = 'Georgia'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Magrada Ghvino' and a.level = 'country' and a.country_id = c.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Kakheti', 0 from public.countries c where c.name = 'Georgia'
@@ -4723,58 +4537,37 @@ insert into public.regions (country_id, name, sort_order)
 select c.id, 'Imereti', 2 from public.countries c where c.name = 'Georgia'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Imereti', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Georgia' and r.name = 'Imereti'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Imereti', 'PGI', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Imereti', 'PGI', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Georgia' and r.name = 'Imereti' and s.name = 'Imereti'
+  where c.name = 'Georgia' and r.name = 'Imereti'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Imereti' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Imereti' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Kartli', 3 from public.countries c where c.name = 'Georgia'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Kartli', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Georgia' and r.name = 'Kartli'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Kartli', 'PGI', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Kartli', 'PGI', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Georgia' and r.name = 'Kartli' and s.name = 'Kartli'
+  where c.name = 'Georgia' and r.name = 'Kartli'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Kartli' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Kartli' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Adjara', 4 from public.countries c where c.name = 'Georgia'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Adjara', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Georgia' and r.name = 'Adjara'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Adjara', 'PGI', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Adjara', 'PGI', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Georgia' and r.name = 'Adjara' and s.name = 'Adjara'
+  where c.name = 'Georgia' and r.name = 'Adjara'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Adjara' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Adjara' and a.level = 'region' and a.region_id = r.id);
 
 -- ── Germany ───────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
@@ -4800,7 +4593,7 @@ from public.regions r
     where a.name = 'Landwein der Mosel' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Mosel', 'Pradikatswein', 1
+select 'region', r.id, 'Mosel', 'Anbaugebiet', 1
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Germany' and r.name = 'Mosel'
@@ -4843,20 +4636,13 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Rheingauer Landwein' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Rheingau', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Germany' and r.name = 'Rheingau'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Rheingau', 'Pradikatswein', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rheingau', 'Anbaugebiet', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Germany' and r.name = 'Rheingau' and s.name = 'Rheingau'
+  where c.name = 'Germany' and r.name = 'Rheingau'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Rheingau' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Rheingau' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Rheinhessen', 2 from public.countries c where c.name = 'Germany'
@@ -4870,20 +4656,13 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Rheinischer Landwein' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Rheinhessen', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Germany' and r.name = 'Rheinhessen'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Rheinhessen', 'Pradikatswein', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rheinhessen', 'Anbaugebiet', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Germany' and r.name = 'Rheinhessen' and s.name = 'Rheinhessen'
+  where c.name = 'Germany' and r.name = 'Rheinhessen'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Rheinhessen' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Rheinhessen' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Pfalz', 3 from public.countries c where c.name = 'Germany'
@@ -4897,20 +4676,13 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Pfälzer Landwein' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Pfalz', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Germany' and r.name = 'Pfalz'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Pfalz', 'Pradikatswein', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Pfalz', 'Anbaugebiet', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Germany' and r.name = 'Pfalz' and s.name = 'Pfalz'
+  where c.name = 'Germany' and r.name = 'Pfalz'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Pfalz' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Pfalz' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Nahe', 4 from public.countries c where c.name = 'Germany'
@@ -4924,20 +4696,13 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Nahegauer Landwein' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Nahe', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Germany' and r.name = 'Nahe'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Nahe', 'Pradikatswein', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Nahe', 'Anbaugebiet', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Germany' and r.name = 'Nahe' and s.name = 'Nahe'
+  where c.name = 'Germany' and r.name = 'Nahe'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Nahe' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Nahe' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Franken', 5 from public.countries c where c.name = 'Germany'
@@ -4951,20 +4716,13 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Fränkischer Landwein' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Franken', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Germany' and r.name = 'Franken'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Franken', 'Pradikatswein', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Franken', 'Anbaugebiet', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Germany' and r.name = 'Franken' and s.name = 'Franken'
+  where c.name = 'Germany' and r.name = 'Franken'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Franken' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Franken' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Baden', 6 from public.countries c where c.name = 'Germany'
@@ -4979,7 +4737,7 @@ from public.regions r
     where a.name = 'Badischer Landwein' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Baden', 'Pradikatswein', 1
+select 'region', r.id, 'Baden', 'Anbaugebiet', 1
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Germany' and r.name = 'Baden'
@@ -5022,39 +4780,25 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Schwäbischer Landwein' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Württemberg', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Germany' and r.name = 'Württemberg'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Württemberg', 'Pradikatswein', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Württemberg', 'Anbaugebiet', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Germany' and r.name = 'Württemberg' and s.name = 'Württemberg'
+  where c.name = 'Germany' and r.name = 'Württemberg'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Württemberg' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Württemberg' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Mittelrhein', 8 from public.countries c where c.name = 'Germany'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Mittelrhein', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Germany' and r.name = 'Mittelrhein'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Mittelrhein', 'Pradikatswein', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Mittelrhein', 'Anbaugebiet', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Germany' and r.name = 'Mittelrhein' and s.name = 'Mittelrhein'
+  where c.name = 'Germany' and r.name = 'Mittelrhein'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Mittelrhein' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Mittelrhein' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Ahr', 9 from public.countries c where c.name = 'Germany'
@@ -5068,20 +4812,13 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Ahrer Landwein' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Ahr', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Germany' and r.name = 'Ahr'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Ahr', 'Pradikatswein', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ahr', 'Anbaugebiet', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Germany' and r.name = 'Ahr' and s.name = 'Ahr'
+  where c.name = 'Germany' and r.name = 'Ahr'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Ahr' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Ahr' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Saale-Unstrut', 10 from public.countries c where c.name = 'Germany'
@@ -5095,20 +4832,13 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Mitteldeutscher Landwein' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Saale-Unstrut', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Germany' and r.name = 'Saale-Unstrut'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Saale-Unstrut', 'Pradikatswein', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Saale-Unstrut', 'Anbaugebiet', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Germany' and r.name = 'Saale-Unstrut' and s.name = 'Saale-Unstrut'
+  where c.name = 'Germany' and r.name = 'Saale-Unstrut'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Saale-Unstrut' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Saale-Unstrut' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Sachsen', 11 from public.countries c where c.name = 'Germany'
@@ -5122,50 +4852,30 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Sächsischer Landwein' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Sachsen', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Germany' and r.name = 'Sachsen'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Sachsen', 'Pradikatswein', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Sachsen', 'Anbaugebiet', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Germany' and r.name = 'Sachsen' and s.name = 'Sachsen'
+  where c.name = 'Germany' and r.name = 'Sachsen'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Sachsen' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Sachsen' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Hessische Bergstrasse', 12 from public.countries c where c.name = 'Germany'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Hessische Bergstrasse', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Germany' and r.name = 'Hessische Bergstrasse'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Hessische Bergstrasse', 'Pradikatswein', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Hessische Bergstrasse', 'Anbaugebiet', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Germany' and r.name = 'Hessische Bergstrasse' and s.name = 'Hessische Bergstrasse'
+  where c.name = 'Germany' and r.name = 'Hessische Bergstrasse'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Hessische Bergstrasse' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Hessische Bergstrasse' and a.level = 'region' and a.region_id = r.id);
 
 -- ── Greece ────────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
 values ('Greece', 'GR', 'Europe', 21)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
-
-insert into public.appellations (level, country_id, name, type, sort_order)
-select 'country', c.id, 'Epitrapezios Oinos', 'Table', 0
-from public.countries c where c.name = 'Greece'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Epitrapezios Oinos' and a.level = 'country' and a.country_id = c.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Makedonia', 0 from public.countries c where c.name = 'Greece'
@@ -5288,20 +4998,13 @@ insert into public.regions (country_id, name, sort_order)
 select c.id, 'Attiki', 3 from public.countries c where c.name = 'Greece'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Attiki', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Greece' and r.name = 'Attiki'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Savatiano', 'PDO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Savatiano', 'PDO', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Greece' and r.name = 'Attiki' and s.name = 'Attiki'
+  where c.name = 'Greece' and r.name = 'Attiki'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Savatiano' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Savatiano' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Peloponnisos', 4 from public.countries c where c.name = 'Greece'
@@ -5525,12 +5228,6 @@ insert into public.countries (name, code, continent, sort_order)
 values ('Hungary', 'HU', 'Europe', 22)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
-insert into public.appellations (level, country_id, name, type, sort_order)
-select 'country', c.id, 'Bortermelo Orszag', 'Table', 0
-from public.countries c where c.name = 'Hungary'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Bortermelo Orszag' and a.level = 'country' and a.country_id = c.id);
-
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Tokaj-Hegyalja', 0 from public.countries c where c.name = 'Hungary'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
@@ -5554,153 +5251,97 @@ insert into public.regions (country_id, name, sort_order)
 select c.id, 'Eger', 1 from public.countries c where c.name = 'Hungary'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Eger', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Hungary' and r.name = 'Eger'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Egri Bikaver', 'OEM', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Egri Bikaver', 'OEM', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Hungary' and r.name = 'Eger' and s.name = 'Eger'
+  where c.name = 'Hungary' and r.name = 'Eger'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Egri Bikaver' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Egri Bikaver' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Villany', 2 from public.countries c where c.name = 'Hungary'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Villany', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Hungary' and r.name = 'Villany'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Villany', 'OEM', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Villany', 'OEM', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Hungary' and r.name = 'Villany' and s.name = 'Villany'
+  where c.name = 'Hungary' and r.name = 'Villany'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Villany' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Villany' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Szekszard', 3 from public.countries c where c.name = 'Hungary'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Szekszard', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Hungary' and r.name = 'Szekszard'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Szekszard', 'OEM', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Szekszard', 'OEM', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Hungary' and r.name = 'Szekszard' and s.name = 'Szekszard'
+  where c.name = 'Hungary' and r.name = 'Szekszard'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Szekszard' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Szekszard' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Somlo', 4 from public.countries c where c.name = 'Hungary'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Somlo', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Hungary' and r.name = 'Somlo'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Somlo', 'OEM', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Somlo', 'OEM', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Hungary' and r.name = 'Somlo' and s.name = 'Somlo'
+  where c.name = 'Hungary' and r.name = 'Somlo'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Somlo' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Somlo' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Badacsony', 5 from public.countries c where c.name = 'Hungary'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Badacsony', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Hungary' and r.name = 'Badacsony'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Badacsony', 'OEM', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Badacsony', 'OEM', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Hungary' and r.name = 'Badacsony' and s.name = 'Badacsony'
+  where c.name = 'Hungary' and r.name = 'Badacsony'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Badacsony' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Badacsony' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Balatonfured-Csopak', 6 from public.countries c where c.name = 'Hungary'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Balatonfured-Csopak', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Hungary' and r.name = 'Balatonfured-Csopak'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Balatonfured-Csopak', 'OEM', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Balatonfured-Csopak', 'OEM', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Hungary' and r.name = 'Balatonfured-Csopak' and s.name = 'Balatonfured-Csopak'
+  where c.name = 'Hungary' and r.name = 'Balatonfured-Csopak'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Balatonfured-Csopak' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Balatonfured-Csopak' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Matra', 7 from public.countries c where c.name = 'Hungary'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Matra', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Hungary' and r.name = 'Matra'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Matra', 'OEM', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Matra', 'OEM', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Hungary' and r.name = 'Matra' and s.name = 'Matra'
+  where c.name = 'Hungary' and r.name = 'Matra'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Matra' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Matra' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Etyek-Buda', 8 from public.countries c where c.name = 'Hungary'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Etyek-Buda', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Hungary' and r.name = 'Etyek-Buda'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Etyek-Buda', 'OEM', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Etyek-Buda', 'OEM', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Hungary' and r.name = 'Etyek-Buda' and s.name = 'Etyek-Buda'
+  where c.name = 'Hungary' and r.name = 'Etyek-Buda'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Etyek-Buda' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Etyek-Buda' and a.level = 'region' and a.region_id = r.id);
 
 -- ── India ─────────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
@@ -5895,220 +5536,175 @@ select c.id, 'Piemonte', 0 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'IGT Langhe Fantasia', 'IGT', 0
+select 'region', r.id, 'Barolo', 'DOCG', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Piemonte'
   and not exists (select 1 from public.appellations a
-    where a.name = 'IGT Langhe Fantasia' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Barolo' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Piemonte', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Piemonte'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Barolo', 'DOCG', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Barbaresco', 'DOCG', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Piemonte' and s.name = 'Piemonte'
+  where c.name = 'Italy' and r.name = 'Piemonte'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Barolo' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Barbaresco' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Barbaresco', 'DOCG', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Barbera d''Asti', 'DOCG', 2
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Piemonte' and s.name = 'Piemonte'
+  where c.name = 'Italy' and r.name = 'Piemonte'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Barbaresco' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Barbera d''Asti' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Barbera d''Asti', 'DOCG', 2
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Barbera d''Alba', 'DOC', 3
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Piemonte' and s.name = 'Piemonte'
+  where c.name = 'Italy' and r.name = 'Piemonte'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Barbera d''Asti' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Barbera d''Alba' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Barbera d''Alba', 'DOC', 3
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Dolcetto d''Alba', 'DOC', 4
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Piemonte' and s.name = 'Piemonte'
+  where c.name = 'Italy' and r.name = 'Piemonte'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Barbera d''Alba' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Dolcetto d''Alba' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Dolcetto d''Alba', 'DOC', 4
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Moscato d''Asti', 'DOCG', 5
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Piemonte' and s.name = 'Piemonte'
+  where c.name = 'Italy' and r.name = 'Piemonte'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Dolcetto d''Alba' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Moscato d''Asti' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Moscato d''Asti', 'DOCG', 5
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Asti Spumante', 'DOCG', 6
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Piemonte' and s.name = 'Piemonte'
+  where c.name = 'Italy' and r.name = 'Piemonte'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Moscato d''Asti' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Asti Spumante' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Asti Spumante', 'DOCG', 6
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Gavi', 'DOCG', 7
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Piemonte' and s.name = 'Piemonte'
+  where c.name = 'Italy' and r.name = 'Piemonte'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Asti Spumante' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Gavi' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Gavi', 'DOCG', 7
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Roero', 'DOCG', 8
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Piemonte' and s.name = 'Piemonte'
+  where c.name = 'Italy' and r.name = 'Piemonte'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Gavi' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Roero' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Roero', 'DOCG', 8
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Langhe', 'DOC', 9
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Piemonte' and s.name = 'Piemonte'
+  where c.name = 'Italy' and r.name = 'Piemonte'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Roero' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Langhe' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Langhe', 'DOC', 9
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Nebbiolo d''Alba', 'DOC', 10
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Piemonte' and s.name = 'Piemonte'
+  where c.name = 'Italy' and r.name = 'Piemonte'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Langhe' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Nebbiolo d''Alba' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Nebbiolo d''Alba', 'DOC', 10
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Dogliani', 'DOCG', 11
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Piemonte' and s.name = 'Piemonte'
+  where c.name = 'Italy' and r.name = 'Piemonte'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Nebbiolo d''Alba' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Dogliani' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Dogliani', 'DOCG', 11
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ghemme', 'DOCG', 12
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Piemonte' and s.name = 'Piemonte'
+  where c.name = 'Italy' and r.name = 'Piemonte'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Dogliani' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Ghemme' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Ghemme', 'DOCG', 12
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Gattinara', 'DOCG', 13
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Piemonte' and s.name = 'Piemonte'
+  where c.name = 'Italy' and r.name = 'Piemonte'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Ghemme' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Gattinara' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Gattinara', 'DOCG', 13
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Brachetto d''Acqui', 'DOCG', 14
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Piemonte' and s.name = 'Piemonte'
+  where c.name = 'Italy' and r.name = 'Piemonte'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Gattinara' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Brachetto d''Acqui', 'DOCG', 14
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Piemonte' and s.name = 'Piemonte'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Brachetto d''Acqui' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Brachetto d''Acqui' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Valle d''Aosta', 1 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Valle d''Aosta', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Valle d''Aosta'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Valle d''Aosta', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Valle d''Aosta', 'DOC', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Valle d''Aosta' and s.name = 'Valle d''Aosta'
+  where c.name = 'Italy' and r.name = 'Valle d''Aosta'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Valle d''Aosta' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Valle d''Aosta' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Lombardia', 2 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'IGT Lombardia', 'IGT', 0
+select 'region', r.id, 'Lombardia', 'IGT', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Lombardia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'IGT Lombardia' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Lombardia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Franciacorta', 'DOCG', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Franciacorta' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Lugana', 'DOC', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Lugana' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Oltrepo Pavese', 'DOC', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Oltrepo Pavese' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Lombardia', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Lombardia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Franciacorta', 'DOCG', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Lombardia' and s.name = 'Lombardia'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Franciacorta' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Lugana', 'DOC', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Lombardia' and s.name = 'Lombardia'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Lugana' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Oltrepo Pavese', 'DOC', 2
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Lombardia' and s.name = 'Lombardia'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Oltrepo Pavese' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Valtellina', 1
+select r.id, 'Valtellina', 0
 from public.regions r join public.countries c on c.id = r.country_id
 where c.name = 'Italy' and r.name = 'Lombardia'
 on conflict (region_id, name) do update set sort_order = excluded.sort_order;
@@ -6136,12 +5732,12 @@ select c.id, 'Trentino-Alto Adige', 3 from public.countries c where c.name = 'It
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'IGT Delle Venezie', 'IGT', 0
+select 'region', r.id, 'Delle Venezie', 'IGT', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Trentino-Alto Adige'
   and not exists (select 1 from public.appellations a
-    where a.name = 'IGT Delle Venezie' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Delle Venezie' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Alto Adige', 0
@@ -6196,12 +5792,12 @@ select c.id, 'Veneto', 4 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'IGT Delle Venezie', 'IGT', 0
+select 'region', r.id, 'Delle Venezie', 'IGT', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Veneto'
   and not exists (select 1 from public.appellations a
-    where a.name = 'IGT Delle Venezie' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Delle Venezie' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Valpolicella', 0
@@ -6322,12 +5918,12 @@ select c.id, 'Friuli-Venezia Giulia', 5 from public.countries c where c.name = '
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'IGT Delle Venezie', 'IGT', 0
+select 'region', r.id, 'Delle Venezie', 'IGT', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'IGT Delle Venezie' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Delle Venezie' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Collio', 0
@@ -6402,41 +5998,33 @@ insert into public.regions (country_id, name, sort_order)
 select c.id, 'Liguria', 6 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Liguria', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Liguria'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Cinque Terre', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cinque Terre', 'DOC', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Liguria' and s.name = 'Liguria'
+  where c.name = 'Italy' and r.name = 'Liguria'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Cinque Terre' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Cinque Terre' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Riviera Ligure di Ponente', 'DOC', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Riviera Ligure di Ponente', 'DOC', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Liguria' and s.name = 'Liguria'
+  where c.name = 'Italy' and r.name = 'Liguria'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Riviera Ligure di Ponente' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Riviera Ligure di Ponente' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Toscana', 7 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'IGT Toscana', 'IGT', 0
+select 'region', r.id, 'Toscana', 'IGT', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Toscana'
   and not exists (select 1 from public.appellations a
-    where a.name = 'IGT Toscana' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Toscana' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Montalcino', 0
@@ -6593,12 +6181,12 @@ select c.id, 'Umbria', 8 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'IGT Umbria', 'IGT', 0
+select 'region', r.id, 'Umbria', 'IGT', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Umbria'
   and not exists (select 1 from public.appellations a
-    where a.name = 'IGT Umbria' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Umbria' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Montefalco', 0
@@ -6659,12 +6247,12 @@ select c.id, 'Marche', 9 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'IGT Marche', 'IGT', 0
+select 'region', r.id, 'Marche', 'IGT', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Marche'
   and not exists (select 1 from public.appellations a
-    where a.name = 'IGT Marche' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Marche' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Castelli di Jesi', 0
@@ -6740,76 +6328,60 @@ select c.id, 'Abruzzo', 10 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'IGT Terre di Chieti', 'IGT', 0
+select 'region', r.id, 'Terre di Chieti', 'IGT', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Abruzzo'
   and not exists (select 1 from public.appellations a
-    where a.name = 'IGT Terre di Chieti' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Terre di Chieti' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Abruzzo', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Abruzzo'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Montepulciano d''Abruzzo', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Montepulciano d''Abruzzo', 'DOC', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Abruzzo' and s.name = 'Abruzzo'
+  where c.name = 'Italy' and r.name = 'Abruzzo'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Montepulciano d''Abruzzo' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Montepulciano d''Abruzzo' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Montepulciano d''Abruzzo Colline Teramane', 'DOCG', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Montepulciano d''Abruzzo Colline Teramane', 'DOCG', 2
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Abruzzo' and s.name = 'Abruzzo'
+  where c.name = 'Italy' and r.name = 'Abruzzo'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Montepulciano d''Abruzzo Colline Teramane' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Montepulciano d''Abruzzo Colline Teramane' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Trebbiano d''Abruzzo', 'DOC', 2
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Trebbiano d''Abruzzo', 'DOC', 3
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Abruzzo' and s.name = 'Abruzzo'
+  where c.name = 'Italy' and r.name = 'Abruzzo'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Trebbiano d''Abruzzo' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Trebbiano d''Abruzzo' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Molise', 11 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Molise', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Molise'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Tintilia del Molise', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Tintilia del Molise', 'DOC', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Molise' and s.name = 'Molise'
+  where c.name = 'Italy' and r.name = 'Molise'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Tintilia del Molise' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Tintilia del Molise' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Lazio', 12 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'IGT Lazio', 'IGT', 0
+select 'region', r.id, 'Lazio', 'IGT', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Lazio'
   and not exists (select 1 from public.appellations a
-    where a.name = 'IGT Lazio' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Lazio' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Castelli Romani', 0
@@ -6870,12 +6442,12 @@ select c.id, 'Campania', 13 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'IGT Campania', 'IGT', 0
+select 'region', r.id, 'Campania', 'IGT', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Campania'
   and not exists (select 1 from public.appellations a
-    where a.name = 'IGT Campania' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Campania' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Irpinia', 0
@@ -6945,12 +6517,12 @@ select c.id, 'Basilicata', 14 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'IGT Basilicata', 'IGT', 0
+select 'region', r.id, 'Basilicata', 'IGT', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Basilicata'
   and not exists (select 1 from public.appellations a
-    where a.name = 'IGT Basilicata' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Basilicata' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Vulture', 0
@@ -6981,12 +6553,12 @@ select c.id, 'Calabria', 15 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'IGT Calabria', 'IGT', 0
+select 'region', r.id, 'Calabria', 'IGT', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Calabria'
   and not exists (select 1 from public.appellations a
-    where a.name = 'IGT Calabria' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Calabria' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Ciro', 0
@@ -7023,12 +6595,12 @@ select c.id, 'Puglia', 16 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'IGT Puglia', 'IGT', 0
+select 'region', r.id, 'Puglia', 'IGT', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Puglia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'IGT Puglia' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Puglia' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Manduria', 0
@@ -7128,12 +6700,20 @@ select c.id, 'Sicilia', 17 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'IGT Terre Siciliane', 'IGT', 0
+select 'region', r.id, 'Terre Siciliane', 'IGT', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Sicilia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'IGT Terre Siciliane' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Terre Siciliane' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Sicilia', 'DOC', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Sicilia' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Etna', 0
@@ -7195,68 +6775,44 @@ from public.sub_regions s
   and not exists (select 1 from public.appellations a
     where a.name = 'Cerasuolo di Vittoria' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Sicilia', 4
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Sicilia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Sicilia', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Sicilia' and s.name = 'Sicilia'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Sicilia' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Sardegna', 18 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'IGT Isola dei Nuraghi', 'IGT', 0
+select 'region', r.id, 'Isola dei Nuraghi', 'IGT', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Sardegna'
   and not exists (select 1 from public.appellations a
-    where a.name = 'IGT Isola dei Nuraghi' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Isola dei Nuraghi' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cannonau di Sardegna', 'DOC', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Cannonau di Sardegna' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vermentino di Sardegna', 'DOC', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Vermentino di Sardegna' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Monica di Sardegna', 'DOC', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Monica di Sardegna' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Sardegna', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Sardegna'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Cannonau di Sardegna', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Sardegna' and s.name = 'Sardegna'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Cannonau di Sardegna' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Vermentino di Sardegna', 'DOC', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Sardegna' and s.name = 'Sardegna'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Vermentino di Sardegna' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Monica di Sardegna', 'DOC', 2
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Sardegna' and s.name = 'Sardegna'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Monica di Sardegna' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Gallura', 1
+select r.id, 'Gallura', 0
 from public.regions r join public.countries c on c.id = r.country_id
 where c.name = 'Italy' and r.name = 'Sardegna'
 on conflict (region_id, name) do update set sort_order = excluded.sort_order;
@@ -7271,7 +6827,7 @@ from public.sub_regions s
     where a.name = 'Vermentino di Gallura' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Sulcis', 2
+select r.id, 'Sulcis', 1
 from public.regions r join public.countries c on c.id = r.country_id
 where c.name = 'Italy' and r.name = 'Sardegna'
 on conflict (region_id, name) do update set sort_order = excluded.sort_order;
@@ -7286,7 +6842,7 @@ from public.sub_regions s
     where a.name = 'Carignano del Sulcis' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Planargia', 3
+select r.id, 'Planargia', 2
 from public.regions r join public.countries c on c.id = r.country_id
 where c.name = 'Italy' and r.name = 'Sardegna'
 on conflict (region_id, name) do update set sort_order = excluded.sort_order;
@@ -7305,12 +6861,12 @@ select c.id, 'Emilia-Romagna', 19 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'IGT Emilia', 'IGT', 0
+select 'region', r.id, 'Emilia', 'IGT', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Emilia-Romagna'
   and not exists (select 1 from public.appellations a
-    where a.name = 'IGT Emilia' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Emilia' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Modena', 0
@@ -7388,12 +6944,6 @@ from public.sub_regions s
 insert into public.countries (name, code, continent, sort_order)
 values ('Japan', 'JP', 'Asia', 26)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
-
-insert into public.appellations (level, country_id, name, type, sort_order)
-select 'country', c.id, 'Japanese Wine', 'National', 0
-from public.countries c where c.name = 'Japan'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Japanese Wine' and a.level = 'country' and a.country_id = c.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Yamanashi', 0 from public.countries c where c.name = 'Japan'
@@ -7677,107 +7227,66 @@ insert into public.regions (country_id, name, sort_order)
 select c.id, 'Guanajuato', 3 from public.countries c where c.name = 'Mexico'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Guanajuato', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Mexico' and r.name = 'Guanajuato'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Guanajuato', 'PGI', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Guanajuato', 'PGI', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Mexico' and r.name = 'Guanajuato' and s.name = 'Guanajuato'
+  where c.name = 'Mexico' and r.name = 'Guanajuato'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Guanajuato' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Guanajuato' and a.level = 'region' and a.region_id = r.id);
 
 -- ── Moldova ───────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
 values ('Moldova', 'MD', 'Europe', 31)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
-insert into public.appellations (level, country_id, name, type, sort_order)
-select 'country', c.id, 'Vin de masa', 'Table', 0
-from public.countries c where c.name = 'Moldova'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Vin de masa' and a.level = 'country' and a.country_id = c.id);
-
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Codru', 0 from public.countries c where c.name = 'Moldova'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Codru', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Moldova' and r.name = 'Codru'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Codru', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Codru', 'DOC', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Moldova' and r.name = 'Codru' and s.name = 'Codru'
+  where c.name = 'Moldova' and r.name = 'Codru'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Codru' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Codru' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Valul lui Traian', 1 from public.countries c where c.name = 'Moldova'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Valul lui Traian', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Moldova' and r.name = 'Valul lui Traian'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Valul lui Traian', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Valul lui Traian', 'DOC', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Moldova' and r.name = 'Valul lui Traian' and s.name = 'Valul lui Traian'
+  where c.name = 'Moldova' and r.name = 'Valul lui Traian'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Valul lui Traian' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Valul lui Traian' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Stefan Voda', 2 from public.countries c where c.name = 'Moldova'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Stefan Voda', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Moldova' and r.name = 'Stefan Voda'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Stefan Voda', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Stefan Voda', 'DOC', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Moldova' and r.name = 'Stefan Voda' and s.name = 'Stefan Voda'
+  where c.name = 'Moldova' and r.name = 'Stefan Voda'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Stefan Voda' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Stefan Voda' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Balti', 3 from public.countries c where c.name = 'Moldova'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Balti', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Moldova' and r.name = 'Balti'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Balti', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Balti', 'DOC', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Moldova' and r.name = 'Balti' and s.name = 'Balti'
+  where c.name = 'Moldova' and r.name = 'Balti'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Balti' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Balti' and a.level = 'region' and a.region_id = r.id);
 
 -- ── Morocco ───────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
@@ -7920,12 +7429,6 @@ from public.sub_regions s
 insert into public.countries (name, code, continent, sort_order)
 values ('New Zealand', 'NZ', 'Oceania', 35)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
-
-insert into public.appellations (level, country_id, name, type, sort_order)
-select 'country', c.id, 'New Zealand Wine', 'National', 0
-from public.countries c where c.name = 'New Zealand'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'New Zealand Wine' and a.level = 'country' and a.country_id = c.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Marlborough', 0 from public.countries c where c.name = 'New Zealand'
@@ -8116,39 +7619,25 @@ insert into public.regions (country_id, name, sort_order)
 select c.id, 'Waitaki Valley', 6 from public.countries c where c.name = 'New Zealand'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Waitaki Valley', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'New Zealand' and r.name = 'Waitaki Valley'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Waitaki Valley', 'GI', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Waitaki Valley', 'GI', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'New Zealand' and r.name = 'Waitaki Valley' and s.name = 'Waitaki Valley'
+  where c.name = 'New Zealand' and r.name = 'Waitaki Valley'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Waitaki Valley' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Waitaki Valley' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Gisborne', 7 from public.countries c where c.name = 'New Zealand'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Gisborne', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'New Zealand' and r.name = 'Gisborne'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Gisborne', 'GI', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Gisborne', 'GI', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'New Zealand' and r.name = 'Gisborne' and s.name = 'Gisborne'
+  where c.name = 'New Zealand' and r.name = 'Gisborne'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Gisborne' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Gisborne' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Auckland', 8 from public.countries c where c.name = 'New Zealand'
@@ -8184,20 +7673,13 @@ insert into public.regions (country_id, name, sort_order)
 select c.id, 'Northland', 9 from public.countries c where c.name = 'New Zealand'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Northland', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'New Zealand' and r.name = 'Northland'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Northland', 'GI', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Northland', 'GI', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'New Zealand' and r.name = 'Northland' and s.name = 'Northland'
+  where c.name = 'New Zealand' and r.name = 'Northland'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Northland' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Northland' and a.level = 'region' and a.region_id = r.id);
 
 -- ── Poland ────────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
@@ -8236,20 +7718,20 @@ select c.id, 'Douro', 0 from public.countries c where c.name = 'Portugal'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Vinho Regional Transmontano', 'Vinho Regional', 0
-from public.regions r
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Portugal' and r.name = 'Douro'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Vinho Regional Transmontano' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Douro', 'DOC', 1
+select 'region', r.id, 'Douro', 'DOC', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Portugal' and r.name = 'Douro'
   and not exists (select 1 from public.appellations a
     where a.name = 'Douro' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vinho do Porto', 'DOC', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Portugal' and r.name = 'Douro'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Vinho do Porto' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Douro Superior', 0
@@ -8269,32 +7751,17 @@ from public.regions r join public.countries c on c.id = r.country_id
 where c.name = 'Portugal' and r.name = 'Douro'
 on conflict (region_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Douro', 3
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Portugal' and r.name = 'Douro'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Vinho do Porto', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Portugal' and r.name = 'Douro' and s.name = 'Douro'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Vinho do Porto' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Vinho Verde', 1 from public.countries c where c.name = 'Portugal'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Vinho Regional Minho', 'Vinho Regional', 0
+select 'region', r.id, 'Minho', 'VR', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Portugal' and r.name = 'Vinho Verde'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Vinho Regional Minho' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Minho' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
 select 'region', r.id, 'Vinho Verde', 'DOC', 1
@@ -8321,93 +7788,72 @@ select c.id, 'Dao', 2 from public.countries c where c.name = 'Portugal'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Vinho Regional Beiras', 'Vinho Regional', 0
+select 'region', r.id, 'Beiras', 'VR', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Portugal' and r.name = 'Dao'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Vinho Regional Beiras' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Beiras' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Dao', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Portugal' and r.name = 'Dao'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Dao', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Dao', 'DOC', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Portugal' and r.name = 'Dao' and s.name = 'Dao'
+  where c.name = 'Portugal' and r.name = 'Dao'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Dao' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Dao' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Bairrada', 3 from public.countries c where c.name = 'Portugal'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Vinho Regional Beiras', 'Vinho Regional', 0
+select 'region', r.id, 'Beiras', 'VR', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Portugal' and r.name = 'Bairrada'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Vinho Regional Beiras' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Beiras' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Bairrada', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Portugal' and r.name = 'Bairrada'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Bairrada', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bairrada', 'DOC', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Portugal' and r.name = 'Bairrada' and s.name = 'Bairrada'
+  where c.name = 'Portugal' and r.name = 'Bairrada'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Bairrada' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Bairrada' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Alentejo', 4 from public.countries c where c.name = 'Portugal'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Vinho Regional Alentejano', 'Vinho Regional', 0
+select 'region', r.id, 'Alentejano', 'VR', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Portugal' and r.name = 'Alentejo'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Vinho Regional Alentejano' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Alentejano' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Alentejo', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Portugal' and r.name = 'Alentejo'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Alentejo', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Alentejo', 'DOC', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Portugal' and r.name = 'Alentejo' and s.name = 'Alentejo'
+  where c.name = 'Portugal' and r.name = 'Alentejo'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Alentejo' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Alentejo' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Peninsula de Setubal', 5 from public.countries c where c.name = 'Portugal'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Vinho Regional Peninsula de Setubal', 'Vinho Regional', 0
+select 'region', r.id, 'Peninsula de Setubal', 'VR', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Portugal' and r.name = 'Peninsula de Setubal'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Vinho Regional Peninsula de Setubal' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Peninsula de Setubal' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Palmela', 0
@@ -8453,12 +7899,12 @@ select c.id, 'Lisboa', 6 from public.countries c where c.name = 'Portugal'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Vinho Regional Lisboa', 'Vinho Regional', 0
+select 'region', r.id, 'Lisboa', 'VR', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Portugal' and r.name = 'Lisboa'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Vinho Regional Lisboa' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Lisboa' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Bucelas', 0
@@ -8505,101 +7951,61 @@ from public.sub_regions s
   and not exists (select 1 from public.appellations a
     where a.name = 'Carcavelos' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Lisboa', 3
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Portugal' and r.name = 'Lisboa'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Lisboa', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Portugal' and r.name = 'Lisboa' and s.name = 'Lisboa'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Lisboa' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Tejo', 7 from public.countries c where c.name = 'Portugal'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Vinho Regional Tejo', 'Vinho Regional', 0
+select 'region', r.id, 'Tejo', 'VR', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Portugal' and r.name = 'Tejo'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Vinho Regional Tejo' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Tejo', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Portugal' and r.name = 'Tejo'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Tejo', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Portugal' and r.name = 'Tejo' and s.name = 'Tejo'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Tejo' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Tejo' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Algarve', 8 from public.countries c where c.name = 'Portugal'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Vinho Regional Algarve', 'Vinho Regional', 0
+select 'region', r.id, 'Algarve', 'VR', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Portugal' and r.name = 'Algarve'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Vinho Regional Algarve' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Algarve' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Algarve', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Portugal' and r.name = 'Algarve'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Lagos', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Lagos', 'DOC', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Portugal' and r.name = 'Algarve' and s.name = 'Algarve'
+  where c.name = 'Portugal' and r.name = 'Algarve'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Lagos' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Lagos' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Portimao', 'DOC', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Portimao', 'DOC', 2
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Portugal' and r.name = 'Algarve' and s.name = 'Algarve'
+  where c.name = 'Portugal' and r.name = 'Algarve'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Portimao' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Portimao' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Lagoa', 'DOC', 2
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Lagoa', 'DOC', 3
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Portugal' and r.name = 'Algarve' and s.name = 'Algarve'
+  where c.name = 'Portugal' and r.name = 'Algarve'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Lagoa' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Lagoa' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Tavira', 'DOC', 3
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Tavira', 'DOC', 4
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Portugal' and r.name = 'Algarve' and s.name = 'Algarve'
+  where c.name = 'Portugal' and r.name = 'Algarve'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Tavira' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Tavira' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Beiras', 9 from public.countries c where c.name = 'Portugal'
@@ -8624,39 +8030,33 @@ insert into public.regions (country_id, name, sort_order)
 select c.id, 'Tras-os-Montes', 10 from public.countries c where c.name = 'Portugal'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Tras-os-Montes', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Portugal' and r.name = 'Tras-os-Montes'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Tras-os-Montes', 'IG', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Transmontano', 'VR', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Portugal' and r.name = 'Tras-os-Montes' and s.name = 'Tras-os-Montes'
+  where c.name = 'Portugal' and r.name = 'Tras-os-Montes'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Tras-os-Montes' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Transmontano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Tras-os-Montes', 'IG', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Portugal' and r.name = 'Tras-os-Montes'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Tras-os-Montes' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Madeira', 11 from public.countries c where c.name = 'Portugal'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Madeira', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Portugal' and r.name = 'Madeira'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Vinho da Madeira', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vinho da Madeira', 'DOC', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Portugal' and r.name = 'Madeira' and s.name = 'Madeira'
+  where c.name = 'Portugal' and r.name = 'Madeira'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Vinho da Madeira' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Vinho da Madeira' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Acores', 12 from public.countries c where c.name = 'Portugal'
@@ -8901,20 +8301,13 @@ insert into public.regions (country_id, name, sort_order)
 select c.id, 'Fruska Gora', 0 from public.countries c where c.name = 'Serbia'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Fruska Gora', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Serbia' and r.name = 'Fruska Gora'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Fruska Gora', 'KGP', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Fruska Gora', 'KGP', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Serbia' and r.name = 'Fruska Gora' and s.name = 'Fruska Gora'
+  where c.name = 'Serbia' and r.name = 'Fruska Gora'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Fruska Gora' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Fruska Gora' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Zupa', 1 from public.countries c where c.name = 'Serbia'
@@ -8958,12 +8351,6 @@ from public.sub_regions s
 insert into public.countries (name, code, continent, sort_order)
 values ('Slovakia', 'SK', 'Europe', 40)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
-
-insert into public.appellations (level, country_id, name, type, sort_order)
-select 'country', c.id, 'Stolove Vino', 'Table', 0
-from public.countries c where c.name = 'Slovakia'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Stolove Vino' and a.level = 'country' and a.country_id = c.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Malokarpatska', 0 from public.countries c where c.name = 'Slovakia'
@@ -9083,12 +8470,6 @@ from public.sub_regions s
 insert into public.countries (name, code, continent, sort_order)
 values ('Slovenia', 'SI', 'Europe', 41)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
-
-insert into public.appellations (level, country_id, name, type, sort_order)
-select 'country', c.id, 'Namizno Vino', 'Table', 0
-from public.countries c where c.name = 'Slovenia'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Namizno Vino' and a.level = 'country' and a.country_id = c.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Primorska', 0 from public.countries c where c.name = 'Slovenia'
@@ -9466,20 +8847,13 @@ insert into public.regions (country_id, name, sort_order)
 select c.id, 'KwaZulu-Natal', 2 from public.countries c where c.name = 'South Africa'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'KwaZulu-Natal', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'South Africa' and r.name = 'KwaZulu-Natal'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'KwaZulu-Natal', 'WO Geographical Unit', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'KwaZulu-Natal', 'WO Geographical Unit', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'South Africa' and r.name = 'KwaZulu-Natal' and s.name = 'KwaZulu-Natal'
+  where c.name = 'South Africa' and r.name = 'KwaZulu-Natal'
   and not exists (select 1 from public.appellations a
-    where a.name = 'KwaZulu-Natal' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'KwaZulu-Natal' and a.level = 'region' and a.region_id = r.id);
 
 -- ── Spain ─────────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
@@ -9497,15 +8871,7 @@ select c.id, 'Rioja', 0 from public.countries c where c.name = 'Spain'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Vino de la Tierra Castilla', 'VdlT', 0
-from public.regions r
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Rioja'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Vino de la Tierra Castilla' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Rioja', 'DOCa', 1
+select 'region', r.id, 'Rioja', 'DOCa', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Spain' and r.name = 'Rioja'
@@ -9534,32 +8900,25 @@ insert into public.regions (country_id, name, sort_order)
 select c.id, 'Priorat', 1 from public.countries c where c.name = 'Spain'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Priorat', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Priorat'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Priorat', 'DOCa', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Priorat', 'DOCa', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Priorat' and s.name = 'Priorat'
+  where c.name = 'Spain' and r.name = 'Priorat'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Priorat' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Priorat' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Cataluna', 2 from public.countries c where c.name = 'Spain'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Vino de la Tierra Cataluna', 'VdlT', 0
+select 'region', r.id, 'Cataluna', 'VdlT', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Spain' and r.name = 'Cataluna'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Vino de la Tierra Cataluna' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Cataluna' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Penedes', 0
@@ -9680,12 +9039,12 @@ select c.id, 'Galicia', 3 from public.countries c where c.name = 'Spain'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Vino de la Tierra Barbanza e Iria', 'VdlT', 0
+select 'region', r.id, 'Barbanza e Iria', 'VdlT', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Spain' and r.name = 'Galicia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Vino de la Tierra Barbanza e Iria' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Barbanza e Iria' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Rias Baixas', 0
@@ -9767,12 +9126,12 @@ select c.id, 'Castilla y Leon', 4 from public.countries c where c.name = 'Spain'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Vino de la Tierra Castilla y Leon', 'VdlT', 0
+select 'region', r.id, 'Castilla y Leon', 'VdlT', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Spain' and r.name = 'Castilla y Leon'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Vino de la Tierra Castilla y Leon' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Castilla y Leon' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Ribera del Duero', 0
@@ -9869,12 +9228,12 @@ select c.id, 'Castilla-La Mancha', 5 from public.countries c where c.name = 'Spa
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Vino de la Tierra Castilla-La Mancha', 'VdlT', 0
+select 'region', r.id, 'Castilla', 'VdlT', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Vino de la Tierra Castilla-La Mancha' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Castilla' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'La Mancha', 0
@@ -9986,30 +9345,15 @@ select c.id, 'Valencia', 6 from public.countries c where c.name = 'Spain'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Vino de la Tierra Valencia', 'VdlT', 0
+select 'region', r.id, 'Valencia', 'DO', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Spain' and r.name = 'Valencia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Vino de la Tierra Valencia' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Valencia' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Valencia', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Valencia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Valencia', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Valencia' and s.name = 'Valencia'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Valencia' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Utiel-Requena', 1
+select r.id, 'Utiel-Requena', 0
 from public.regions r join public.countries c on c.id = r.country_id
 where c.name = 'Spain' and r.name = 'Valencia'
 on conflict (region_id, name) do update set sort_order = excluded.sort_order;
@@ -10024,7 +9368,7 @@ from public.sub_regions s
     where a.name = 'Utiel-Requena' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Alicante', 2
+select r.id, 'Alicante', 1
 from public.regions r join public.countries c on c.id = r.country_id
 where c.name = 'Spain' and r.name = 'Valencia'
 on conflict (region_id, name) do update set sort_order = excluded.sort_order;
@@ -10043,12 +9387,12 @@ select c.id, 'Aragon', 7 from public.countries c where c.name = 'Spain'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Vino de la Tierra Bajo Aragon', 'VdlT', 0
+select 'region', r.id, 'Bajo Aragon', 'VdlT', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Spain' and r.name = 'Aragon'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Vino de la Tierra Bajo Aragon' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Bajo Aragon' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Campo de Borja', 0
@@ -10115,36 +9459,20 @@ select c.id, 'Navarra', 8 from public.countries c where c.name = 'Spain'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Vino de la Tierra Navarra', 'VdlT', 0
+select 'region', r.id, 'Navarra', 'DO', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Spain' and r.name = 'Navarra'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Vino de la Tierra Navarra' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Navarra' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Navarra', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Navarra'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Navarra', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Pago de Arinzano', 'VP', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Navarra' and s.name = 'Navarra'
+  where c.name = 'Spain' and r.name = 'Navarra'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Navarra' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Pago de Arinzano', 'VP', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Navarra' and s.name = 'Navarra'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Pago de Arinzano' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Pago de Arinzano' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Pais Vasco', 9 from public.countries c where c.name = 'Spain'
@@ -10200,12 +9528,12 @@ select c.id, 'Extremadura', 10 from public.countries c where c.name = 'Spain'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Vino de la Tierra Extremadura', 'VdlT', 0
+select 'region', r.id, 'Extremadura', 'VdlT', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Spain' and r.name = 'Extremadura'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Vino de la Tierra Extremadura' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Extremadura' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Guadiana', 0
@@ -10227,12 +9555,12 @@ select c.id, 'Andalucia', 11 from public.countries c where c.name = 'Spain'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Vino de la Tierra Cadiz', 'VdlT', 0
+select 'region', r.id, 'Cadiz', 'VdlT', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Spain' and r.name = 'Andalucia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Vino de la Tierra Cadiz' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Cadiz' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Jerez', 0
@@ -10633,33 +9961,33 @@ from public.sub_regions s
     where a.name = 'Vully' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Genève', 2 from public.countries c where c.name = 'Switzerland'
+select c.id, 'Geneve', 2 from public.countries c where c.name = 'Switzerland'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
 select 'region', r.id, 'Geneve', 'AOC', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Switzerland' and r.name = 'Genève'
+  where c.name = 'Switzerland' and r.name = 'Geneve'
   and not exists (select 1 from public.appellations a
     where a.name = 'Geneve' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Mandement', 0
 from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Switzerland' and r.name = 'Genève'
+where c.name = 'Switzerland' and r.name = 'Geneve'
 on conflict (region_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Arve-et-Lac', 1
 from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Switzerland' and r.name = 'Genève'
+where c.name = 'Switzerland' and r.name = 'Geneve'
 on conflict (region_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Arve-et-Rhone', 2
 from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Switzerland' and r.name = 'Genève'
+where c.name = 'Switzerland' and r.name = 'Geneve'
 on conflict (region_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -10667,7 +9995,7 @@ select c.id, 'Drei Seen', 3 from public.countries c where c.name = 'Switzerland'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Neuchâtel', 0
+select r.id, 'Neuchatel', 0
 from public.regions r join public.countries c on c.id = r.country_id
 where c.name = 'Switzerland' and r.name = 'Drei Seen'
 on conflict (region_id, name) do update set sort_order = excluded.sort_order;
@@ -10677,7 +10005,7 @@ select 'sub_region', s.id, 'Neuchatel', 'AOC', 0
 from public.sub_regions s
   join public.regions r on r.id = s.region_id
   join public.countries c on c.id = r.country_id
-  where c.name = 'Switzerland' and r.name = 'Drei Seen' and s.name = 'Neuchâtel'
+  where c.name = 'Switzerland' and r.name = 'Drei Seen' and s.name = 'Neuchatel'
   and not exists (select 1 from public.appellations a
     where a.name = 'Neuchatel' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
@@ -10722,13 +10050,13 @@ where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
 on conflict (region_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Zurich', 'AOC', 0
+select 'sub_region', s.id, 'Zürich', 'AOC', 0
 from public.sub_regions s
   join public.regions r on r.id = s.region_id
   join public.countries c on c.id = r.country_id
   where c.name = 'Switzerland' and r.name = 'Deutschschweiz' and s.name = 'Zürich'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Zurich' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Zürich' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.appellations (level, sub_region_id, name, type, sort_order)
 select 'sub_region', s.id, 'Zürichsee', 'AOC', 1
@@ -11090,20 +10418,13 @@ insert into public.regions (country_id, name, sort_order)
 select c.id, 'Zakarpattia', 2 from public.countries c where c.name = 'Ukraine'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Zakarpattia', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Ukraine' and r.name = 'Zakarpattia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Zakarpattia', 'PGI', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Zakarpattia', 'PGI', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Ukraine' and r.name = 'Zakarpattia' and s.name = 'Zakarpattia'
+  where c.name = 'Ukraine' and r.name = 'Zakarpattia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Zakarpattia' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Zakarpattia' and a.level = 'region' and a.region_id = r.id);
 
 -- ── United States ─────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
@@ -11111,10 +10432,10 @@ values ('United States', 'US', 'Americas', 49)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.appellations (level, country_id, name, type, sort_order)
-select 'country', c.id, 'American Wine', 'National', 0
+select 'country', c.id, 'American', 'National', 0
 from public.countries c where c.name = 'United States'
   and not exists (select 1 from public.appellations a
-    where a.name = 'American Wine' and a.level = 'country' and a.country_id = c.id);
+    where a.name = 'American' and a.level = 'country' and a.country_id = c.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'California', 0 from public.countries c where c.name = 'United States'
@@ -11824,95 +11145,60 @@ insert into public.regions (country_id, name, sort_order)
 select c.id, 'Canelones', 0 from public.countries c where c.name = 'Uruguay'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Canelones', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Uruguay' and r.name = 'Canelones'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Canelones', 'DOP', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Canelones', 'DOP', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Uruguay' and r.name = 'Canelones' and s.name = 'Canelones'
+  where c.name = 'Uruguay' and r.name = 'Canelones'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Canelones' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Canelones' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Maldonado', 1 from public.countries c where c.name = 'Uruguay'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Maldonado', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Uruguay' and r.name = 'Maldonado'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Maldonado', 'DOP', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Maldonado', 'DOP', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Uruguay' and r.name = 'Maldonado' and s.name = 'Maldonado'
+  where c.name = 'Uruguay' and r.name = 'Maldonado'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Maldonado' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Maldonado' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Colonia', 2 from public.countries c where c.name = 'Uruguay'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Colonia', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Uruguay' and r.name = 'Colonia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Colonia', 'DOP', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colonia', 'DOP', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Uruguay' and r.name = 'Colonia' and s.name = 'Colonia'
+  where c.name = 'Uruguay' and r.name = 'Colonia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Colonia' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Colonia' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Rivera', 3 from public.countries c where c.name = 'Uruguay'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Rivera', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Uruguay' and r.name = 'Rivera'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Rivera', 'DOP', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rivera', 'DOP', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Uruguay' and r.name = 'Rivera' and s.name = 'Rivera'
+  where c.name = 'Uruguay' and r.name = 'Rivera'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Rivera' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Rivera' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Montevideo', 4 from public.countries c where c.name = 'Uruguay'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Montevideo', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Uruguay' and r.name = 'Montevideo'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Montevideo', 'DOP', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Montevideo', 'DOP', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Uruguay' and r.name = 'Montevideo' and s.name = 'Montevideo'
+  where c.name = 'Uruguay' and r.name = 'Montevideo'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Montevideo' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Montevideo' and a.level = 'region' and a.region_id = r.id);
 
 commit;

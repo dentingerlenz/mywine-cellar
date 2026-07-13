@@ -63,6 +63,44 @@ for (const file of files) {
   countries.push({ file, ...parsed.data });
 }
 
+// ── Daten-Invarianten (aus dem Geo-Voll-Audit 2026-07; Verstoß = Build-Abbruch)
+// Regionsübergreifende Appellationen, die bewusst an MEHREREN Regionen hängen
+// (der Picker dedupliziert die Anzeige):
+const MULTI_ANCHOR = new Set(["Mediterranee", "Delle Venezie", "Beiras", "Vully"]);
+const TYPE_PREFIX = /^(AOC|AOP|IGP|IGT|PGI|PDO|DOCG|DOCa|DOC|DO|AVA|DAC|GI|VR|VdlT|Vino de la Tierra|Vinho Regional|Vin de Pays)\s/;
+
+for (const c of countries) {
+  const allNames = [];
+  const perParent = new Map();
+  const walk = (apps, parentKey) => {
+    for (const a of apps ?? []) {
+      allNames.push(a.name);
+      const key = `${parentKey}|${a.name}`;
+      if (perParent.has(key)) problems.push(`${c.file}: '${a.name}' doppelt am selben Anker (${parentKey})`);
+      perParent.set(key, true);
+      if (TYPE_PREFIX.test(a.name)) problems.push(`${c.file}: Typ-Kürzel im Namen: '${a.name}' (gehört ins type-Feld)`);
+      if (a.name.includes("’")) problems.push(`${c.file}: typografischer Apostroph in '${a.name}' (gerades ' verwenden)`);
+    }
+  };
+  walk(c.appellations, "country");
+  for (const r of c.regions ?? []) {
+    walk(r.appellations, `region:${r.name}`);
+    if (r.name.includes("’")) problems.push(`${c.file}: typografischer Apostroph in Region '${r.name}'`);
+    for (const s of r.subRegions ?? []) {
+      if (s.name === r.name) problems.push(`${c.file}: Sub-Region '${s.name}' heißt wie ihre Region (auflösen: Apps auf Regionsebene)`);
+      if (s.name.includes("’")) problems.push(`${c.file}: typografischer Apostroph in Sub-Region '${s.name}'`);
+      walk(s.appellations, `sub:${r.name}/${s.name}`);
+    }
+  }
+  const seen = new Map();
+  for (const n of allNames) seen.set(n, (seen.get(n) ?? 0) + 1);
+  for (const [n, count] of seen) {
+    if (count > 1 && !MULTI_ANCHOR.has(n)) {
+      problems.push(`${c.file}: '${n}' ${count}x im Land — Duplikat oder in MULTI_ANCHOR aufnehmen`);
+    }
+  }
+}
+
 if (problems.length) {
   console.error("Validierung fehlgeschlagen:\n" + problems.map((p) => `  ✗ ${p}`).join("\n"));
   process.exit(1);

@@ -2,12 +2,6 @@
   "country": "Chile",
   "code": "CL",
   "continent": "Americas",
-  "appellations": [
-    {
-      "name": "Vino de Chile",
-      "type": "National"
-    }
-  ],
   "regions": [
     {
       "name": "Atacama",
@@ -70,18 +64,13 @@
         {
           "name": "Aconcagua Wine",
           "type": "DO"
+        },
+        {
+          "name": "Aconcagua",
+          "type": "DO"
         }
       ],
       "subRegions": [
-        {
-          "name": "Aconcagua",
-          "appellations": [
-            {
-              "name": "Aconcagua",
-              "type": "DO"
-            }
-          ]
-        },
         {
           "name": "Casablanca",
           "appellations": [

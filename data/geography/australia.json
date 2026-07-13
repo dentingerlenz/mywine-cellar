@@ -4,12 +4,8 @@
   "continent": "Oceania",
   "appellations": [
     {
-      "name": "Australian Wine",
-      "type": "National"
-    },
-    {
       "name": "South Eastern Australia",
-      "type": "Broad GI"
+      "type": "GI"
     }
   ],
   "regions": [
@@ -244,7 +240,7 @@
       "appellations": [
         {
           "name": "Western Australia",
-          "type": "Broad GI"
+          "type": "GI"
         }
       ],
       "subRegions": [
@@ -388,7 +384,7 @@
       "appellations": [
         {
           "name": "Tasmania",
-          "type": "Broad GI"
+          "type": "GI"
         }
       ],
       "subRegions": [

@@ -2,12 +2,6 @@
   "country": "Croatia",
   "code": "HR",
   "continent": "Europe",
-  "appellations": [
-    {
-      "name": "Stolno Vino",
-      "type": "Table"
-    }
-  ],
   "regions": [
     {
       "name": "Primorska",

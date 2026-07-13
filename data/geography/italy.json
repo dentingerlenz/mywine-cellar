@@ -13,89 +13,73 @@
       "name": "Piemonte",
       "appellations": [
         {
-          "name": "IGT Langhe Fantasia",
-          "type": "IGT"
-        }
-      ],
-      "subRegions": [
+          "name": "Barolo",
+          "type": "DOCG"
+        },
         {
-          "name": "Piemonte",
-          "appellations": [
-            {
-              "name": "Barolo",
-              "type": "DOCG"
-            },
-            {
-              "name": "Barbaresco",
-              "type": "DOCG"
-            },
-            {
-              "name": "Barbera d'Asti",
-              "type": "DOCG"
-            },
-            {
-              "name": "Barbera d'Alba",
-              "type": "DOC"
-            },
-            {
-              "name": "Dolcetto d'Alba",
-              "type": "DOC"
-            },
-            {
-              "name": "Moscato d'Asti",
-              "type": "DOCG"
-            },
-            {
-              "name": "Asti Spumante",
-              "type": "DOCG"
-            },
-            {
-              "name": "Gavi",
-              "type": "DOCG"
-            },
-            {
-              "name": "Roero",
-              "type": "DOCG"
-            },
-            {
-              "name": "Langhe",
-              "type": "DOC"
-            },
-            {
-              "name": "Nebbiolo d'Alba",
-              "type": "DOC"
-            },
-            {
-              "name": "Dogliani",
-              "type": "DOCG"
-            },
-            {
-              "name": "Ghemme",
-              "type": "DOCG"
-            },
-            {
-              "name": "Gattinara",
-              "type": "DOCG"
-            },
-            {
-              "name": "Brachetto d'Acqui",
-              "type": "DOCG"
-            }
-          ]
+          "name": "Barbaresco",
+          "type": "DOCG"
+        },
+        {
+          "name": "Barbera d'Asti",
+          "type": "DOCG"
+        },
+        {
+          "name": "Barbera d'Alba",
+          "type": "DOC"
+        },
+        {
+          "name": "Dolcetto d'Alba",
+          "type": "DOC"
+        },
+        {
+          "name": "Moscato d'Asti",
+          "type": "DOCG"
+        },
+        {
+          "name": "Asti Spumante",
+          "type": "DOCG"
+        },
+        {
+          "name": "Gavi",
+          "type": "DOCG"
+        },
+        {
+          "name": "Roero",
+          "type": "DOCG"
+        },
+        {
+          "name": "Langhe",
+          "type": "DOC"
+        },
+        {
+          "name": "Nebbiolo d'Alba",
+          "type": "DOC"
+        },
+        {
+          "name": "Dogliani",
+          "type": "DOCG"
+        },
+        {
+          "name": "Ghemme",
+          "type": "DOCG"
+        },
+        {
+          "name": "Gattinara",
+          "type": "DOCG"
+        },
+        {
+          "name": "Brachetto d'Acqui",
+          "type": "DOCG"
         }
       ]
     },
     {
       "name": "Valle d'Aosta",
-      "subRegions": [
+      "appellations": [
         {
           "name": "Valle d'Aosta",
-          "appellations": [
-            {
-              "name": "Valle d'Aosta",
-              "type": "DOC"
-            }
-          ]
+          "type": "DOC"
         }
       ]
     },
@@ -103,28 +87,23 @@
       "name": "Lombardia",
       "appellations": [
         {
-          "name": "IGT Lombardia",
+          "name": "Lombardia",
           "type": "IGT"
+        },
+        {
+          "name": "Franciacorta",
+          "type": "DOCG"
+        },
+        {
+          "name": "Lugana",
+          "type": "DOC"
+        },
+        {
+          "name": "Oltrepo Pavese",
+          "type": "DOC"
         }
       ],
       "subRegions": [
-        {
-          "name": "Lombardia",
-          "appellations": [
-            {
-              "name": "Franciacorta",
-              "type": "DOCG"
-            },
-            {
-              "name": "Lugana",
-              "type": "DOC"
-            },
-            {
-              "name": "Oltrepo Pavese",
-              "type": "DOC"
-            }
-          ]
-        },
         {
           "name": "Valtellina",
           "appellations": [
@@ -144,7 +123,7 @@
       "name": "Trentino-Alto Adige",
       "appellations": [
         {
-          "name": "IGT Delle Venezie",
+          "name": "Delle Venezie",
           "type": "IGT"
         }
       ],
@@ -181,7 +160,7 @@
       "name": "Veneto",
       "appellations": [
         {
-          "name": "IGT Delle Venezie",
+          "name": "Delle Venezie",
           "type": "IGT"
         }
       ],
@@ -252,7 +231,7 @@
       "name": "Friuli-Venezia Giulia",
       "appellations": [
         {
-          "name": "IGT Delle Venezie",
+          "name": "Delle Venezie",
           "type": "IGT"
         }
       ],
@@ -301,19 +280,14 @@
     },
     {
       "name": "Liguria",
-      "subRegions": [
+      "appellations": [
         {
-          "name": "Liguria",
-          "appellations": [
-            {
-              "name": "Cinque Terre",
-              "type": "DOC"
-            },
-            {
-              "name": "Riviera Ligure di Ponente",
-              "type": "DOC"
-            }
-          ]
+          "name": "Cinque Terre",
+          "type": "DOC"
+        },
+        {
+          "name": "Riviera Ligure di Ponente",
+          "type": "DOC"
         }
       ]
     },
@@ -321,7 +295,7 @@
       "name": "Toscana",
       "appellations": [
         {
-          "name": "IGT Toscana",
+          "name": "Toscana",
           "type": "IGT"
         }
       ],
@@ -415,7 +389,7 @@
       "name": "Umbria",
       "appellations": [
         {
-          "name": "IGT Umbria",
+          "name": "Umbria",
           "type": "IGT"
         }
       ],
@@ -457,7 +431,7 @@
       "name": "Marche",
       "appellations": [
         {
-          "name": "IGT Marche",
+          "name": "Marche",
           "type": "IGT"
         }
       ],
@@ -508,41 +482,29 @@
       "name": "Abruzzo",
       "appellations": [
         {
-          "name": "IGT Terre di Chieti",
+          "name": "Terre di Chieti",
           "type": "IGT"
-        }
-      ],
-      "subRegions": [
+        },
         {
-          "name": "Abruzzo",
-          "appellations": [
-            {
-              "name": "Montepulciano d'Abruzzo",
-              "type": "DOC"
-            },
-            {
-              "name": "Montepulciano d'Abruzzo Colline Teramane",
-              "type": "DOCG"
-            },
-            {
-              "name": "Trebbiano d'Abruzzo",
-              "type": "DOC"
-            }
-          ]
+          "name": "Montepulciano d'Abruzzo",
+          "type": "DOC"
+        },
+        {
+          "name": "Montepulciano d'Abruzzo Colline Teramane",
+          "type": "DOCG"
+        },
+        {
+          "name": "Trebbiano d'Abruzzo",
+          "type": "DOC"
         }
       ]
     },
     {
       "name": "Molise",
-      "subRegions": [
+      "appellations": [
         {
-          "name": "Molise",
-          "appellations": [
-            {
-              "name": "Tintilia del Molise",
-              "type": "DOC"
-            }
-          ]
+          "name": "Tintilia del Molise",
+          "type": "DOC"
         }
       ]
     },
@@ -550,7 +512,7 @@
       "name": "Lazio",
       "appellations": [
         {
-          "name": "IGT Lazio",
+          "name": "Lazio",
           "type": "IGT"
         }
       ],
@@ -592,7 +554,7 @@
       "name": "Campania",
       "appellations": [
         {
-          "name": "IGT Campania",
+          "name": "Campania",
           "type": "IGT"
         }
       ],
@@ -638,7 +600,7 @@
       "name": "Basilicata",
       "appellations": [
         {
-          "name": "IGT Basilicata",
+          "name": "Basilicata",
           "type": "IGT"
         }
       ],
@@ -662,7 +624,7 @@
       "name": "Calabria",
       "appellations": [
         {
-          "name": "IGT Calabria",
+          "name": "Calabria",
           "type": "IGT"
         }
       ],
@@ -691,7 +653,7 @@
       "name": "Puglia",
       "appellations": [
         {
-          "name": "IGT Puglia",
+          "name": "Puglia",
           "type": "IGT"
         }
       ],
@@ -755,8 +717,12 @@
       "name": "Sicilia",
       "appellations": [
         {
-          "name": "IGT Terre Siciliane",
+          "name": "Terre Siciliane",
           "type": "IGT"
+        },
+        {
+          "name": "Sicilia",
+          "type": "DOC"
         }
       ],
       "subRegions": [
@@ -795,15 +761,6 @@
               "type": "DOCG"
             }
           ]
-        },
-        {
-          "name": "Sicilia",
-          "appellations": [
-            {
-              "name": "Sicilia",
-              "type": "DOC"
-            }
-          ]
         }
       ]
     },
@@ -811,28 +768,23 @@
       "name": "Sardegna",
       "appellations": [
         {
-          "name": "IGT Isola dei Nuraghi",
+          "name": "Isola dei Nuraghi",
           "type": "IGT"
+        },
+        {
+          "name": "Cannonau di Sardegna",
+          "type": "DOC"
+        },
+        {
+          "name": "Vermentino di Sardegna",
+          "type": "DOC"
+        },
+        {
+          "name": "Monica di Sardegna",
+          "type": "DOC"
         }
       ],
       "subRegions": [
-        {
-          "name": "Sardegna",
-          "appellations": [
-            {
-              "name": "Cannonau di Sardegna",
-              "type": "DOC"
-            },
-            {
-              "name": "Vermentino di Sardegna",
-              "type": "DOC"
-            },
-            {
-              "name": "Monica di Sardegna",
-              "type": "DOC"
-            }
-          ]
-        },
         {
           "name": "Gallura",
           "appellations": [
@@ -866,7 +818,7 @@
       "name": "Emilia-Romagna",
       "appellations": [
         {
-          "name": "IGT Emilia",
+          "name": "Emilia",
           "type": "IGT"
         }
       ],

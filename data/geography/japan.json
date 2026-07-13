@@ -2,12 +2,6 @@
   "country": "Japan",
   "code": "JP",
   "continent": "Asia",
-  "appellations": [
-    {
-      "name": "Japanese Wine",
-      "type": "National"
-    }
-  ],
   "regions": [
     {
       "name": "Yamanashi",

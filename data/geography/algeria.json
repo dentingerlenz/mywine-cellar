@@ -5,29 +5,19 @@
   "regions": [
     {
       "name": "Mascara",
-      "subRegions": [
+      "appellations": [
         {
-          "name": "Mascara",
-          "appellations": [
-            {
-              "name": "Coteaux de Mascara",
-              "type": "AOIG"
-            }
-          ]
+          "name": "Coteaux de Mascara",
+          "type": "AOIG"
         }
       ]
     },
     {
       "name": "Tlemcen",
-      "subRegions": [
+      "appellations": [
         {
-          "name": "Tlemcen",
-          "appellations": [
-            {
-              "name": "Coteaux de Tlemcen",
-              "type": "AOIG"
-            }
-          ]
+          "name": "Coteaux de Tlemcen",
+          "type": "AOIG"
         }
       ]
     },
@@ -47,15 +37,10 @@
     },
     {
       "name": "Miliana",
-      "subRegions": [
+      "appellations": [
         {
-          "name": "Miliana",
-          "appellations": [
-            {
-              "name": "Coteaux du Zaccar",
-              "type": "AOIG"
-            }
-          ]
+          "name": "Coteaux du Zaccar",
+          "type": "AOIG"
         }
       ]
     }

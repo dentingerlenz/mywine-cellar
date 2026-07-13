@@ -13,11 +13,11 @@
       "name": "Douro",
       "appellations": [
         {
-          "name": "Vinho Regional Transmontano",
-          "type": "Vinho Regional"
+          "name": "Douro",
+          "type": "DOC"
         },
         {
-          "name": "Douro",
+          "name": "Vinho do Porto",
           "type": "DOC"
         }
       ],
@@ -30,15 +30,6 @@
         },
         {
           "name": "Baixo Corgo"
-        },
-        {
-          "name": "Douro",
-          "appellations": [
-            {
-              "name": "Vinho do Porto",
-              "type": "DOC"
-            }
-          ]
         }
       ]
     },
@@ -46,8 +37,8 @@
       "name": "Vinho Verde",
       "appellations": [
         {
-          "name": "Vinho Regional Minho",
-          "type": "Vinho Regional"
+          "name": "Minho",
+          "type": "VR"
         },
         {
           "name": "Vinho Verde",
@@ -67,19 +58,12 @@
       "name": "Dao",
       "appellations": [
         {
-          "name": "Vinho Regional Beiras",
-          "type": "Vinho Regional"
-        }
-      ],
-      "subRegions": [
+          "name": "Beiras",
+          "type": "VR"
+        },
         {
           "name": "Dao",
-          "appellations": [
-            {
-              "name": "Dao",
-              "type": "DOC"
-            }
-          ]
+          "type": "DOC"
         }
       ]
     },
@@ -87,19 +71,12 @@
       "name": "Bairrada",
       "appellations": [
         {
-          "name": "Vinho Regional Beiras",
-          "type": "Vinho Regional"
-        }
-      ],
-      "subRegions": [
+          "name": "Beiras",
+          "type": "VR"
+        },
         {
           "name": "Bairrada",
-          "appellations": [
-            {
-              "name": "Bairrada",
-              "type": "DOC"
-            }
-          ]
+          "type": "DOC"
         }
       ]
     },
@@ -107,19 +84,12 @@
       "name": "Alentejo",
       "appellations": [
         {
-          "name": "Vinho Regional Alentejano",
-          "type": "Vinho Regional"
-        }
-      ],
-      "subRegions": [
+          "name": "Alentejano",
+          "type": "VR"
+        },
         {
           "name": "Alentejo",
-          "appellations": [
-            {
-              "name": "Alentejo",
-              "type": "DOC"
-            }
-          ]
+          "type": "DOC"
         }
       ]
     },
@@ -127,8 +97,8 @@
       "name": "Peninsula de Setubal",
       "appellations": [
         {
-          "name": "Vinho Regional Peninsula de Setubal",
-          "type": "Vinho Regional"
+          "name": "Peninsula de Setubal",
+          "type": "VR"
         }
       ],
       "subRegions": [
@@ -160,8 +130,8 @@
       "name": "Lisboa",
       "appellations": [
         {
-          "name": "Vinho Regional Lisboa",
-          "type": "Vinho Regional"
+          "name": "Lisboa",
+          "type": "VR"
         }
       ],
       "subRegions": [
@@ -191,15 +161,6 @@
               "type": "DOC"
             }
           ]
-        },
-        {
-          "name": "Lisboa",
-          "appellations": [
-            {
-              "name": "Lisboa",
-              "type": "DOC"
-            }
-          ]
         }
       ]
     },
@@ -207,19 +168,8 @@
       "name": "Tejo",
       "appellations": [
         {
-          "name": "Vinho Regional Tejo",
-          "type": "Vinho Regional"
-        }
-      ],
-      "subRegions": [
-        {
           "name": "Tejo",
-          "appellations": [
-            {
-              "name": "Tejo",
-              "type": "DOC"
-            }
-          ]
+          "type": "VR"
         }
       ]
     },
@@ -227,31 +177,24 @@
       "name": "Algarve",
       "appellations": [
         {
-          "name": "Vinho Regional Algarve",
-          "type": "Vinho Regional"
-        }
-      ],
-      "subRegions": [
-        {
           "name": "Algarve",
-          "appellations": [
-            {
-              "name": "Lagos",
-              "type": "DOC"
-            },
-            {
-              "name": "Portimao",
-              "type": "DOC"
-            },
-            {
-              "name": "Lagoa",
-              "type": "DOC"
-            },
-            {
-              "name": "Tavira",
-              "type": "DOC"
-            }
-          ]
+          "type": "VR"
+        },
+        {
+          "name": "Lagos",
+          "type": "DOC"
+        },
+        {
+          "name": "Portimao",
+          "type": "DOC"
+        },
+        {
+          "name": "Lagoa",
+          "type": "DOC"
+        },
+        {
+          "name": "Tavira",
+          "type": "DOC"
         }
       ]
     },
@@ -271,29 +214,23 @@
     },
     {
       "name": "Tras-os-Montes",
-      "subRegions": [
+      "appellations": [
+        {
+          "name": "Transmontano",
+          "type": "VR"
+        },
         {
           "name": "Tras-os-Montes",
-          "appellations": [
-            {
-              "name": "Tras-os-Montes",
-              "type": "IG"
-            }
-          ]
+          "type": "IG"
         }
       ]
     },
     {
       "name": "Madeira",
-      "subRegions": [
+      "appellations": [
         {
-          "name": "Madeira",
-          "appellations": [
-            {
-              "name": "Vinho da Madeira",
-              "type": "DOC"
-            }
-          ]
+          "name": "Vinho da Madeira",
+          "type": "DOC"
         }
       ]
     },

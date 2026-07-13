@@ -2,12 +2,6 @@
   "country": "Bulgaria",
   "code": "BG",
   "continent": "Europe",
-  "appellations": [
-    {
-      "name": "Trpezno Vino",
-      "type": "Table"
-    }
-  ],
   "regions": [
     {
       "name": "Dunav Plain",

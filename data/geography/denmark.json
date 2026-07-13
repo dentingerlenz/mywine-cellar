@@ -3,8 +3,14 @@
   "code": "DK",
   "continent": "Europe",
   "regions": [
-    { "name": "Sjælland" },
-    { "name": "Jylland" },
-    { "name": "Fyn" }
+    {
+      "name": "Sjælland"
+    },
+    {
+      "name": "Jylland"
+    },
+    {
+      "name": "Fyn"
+    }
   ]
 }

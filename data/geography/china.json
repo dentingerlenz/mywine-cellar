@@ -2,12 +2,6 @@
   "country": "China",
   "code": "CN",
   "continent": "Asia",
-  "appellations": [
-    {
-      "name": "Putao Jiu",
-      "type": "National"
-    }
-  ],
   "regions": [
     {
       "name": "Xinjiang",

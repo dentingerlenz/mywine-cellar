@@ -74,12 +74,7 @@
             {
               "name": "Listrac-Medoc",
               "type": "AOC"
-            }
-          ]
-        },
-        {
-          "name": "Haut-Medoc",
-          "appellations": [
+            },
             {
               "name": "Haut-Medoc",
               "type": "AOC"
@@ -181,6 +176,10 @@
       "appellations": [
         {
           "name": "Bourgogne",
+          "type": "AOC"
+        },
+        {
+          "name": "Bourgogne Aligote",
           "type": "AOC"
         }
       ],
@@ -313,20 +312,7 @@
               "type": "AOC"
             },
             {
-              "name": "Viire-Clesse",
-              "type": "AOC"
-            }
-          ]
-        },
-        {
-          "name": "Regional",
-          "appellations": [
-            {
-              "name": "Bourgogne",
-              "type": "AOC"
-            },
-            {
-              "name": "Bourgogne Aligote",
+              "name": "Vire-Clesse",
               "type": "AOC"
             }
           ]
@@ -365,25 +351,14 @@
         {
           "name": "Alsace",
           "type": "AOC"
-        }
-      ],
-      "subRegions": [
+        },
         {
-          "name": "Alsace",
-          "appellations": [
-            {
-              "name": "Alsace",
-              "type": "AOC"
-            },
-            {
-              "name": "Alsace Grand Cru",
-              "type": "AOC"
-            },
-            {
-              "name": "Cremant d'Alsace",
-              "type": "AOC"
-            }
-          ]
+          "name": "Alsace Grand Cru",
+          "type": "AOC"
+        },
+        {
+          "name": "Cremant d'Alsace",
+          "type": "AOC"
         }
       ]
     },
@@ -478,10 +453,6 @@
             },
             {
               "name": "Grignan-les-Adhemar",
-              "type": "AOC"
-            },
-            {
-              "name": "Cotes du Rhone",
               "type": "AOC"
             },
             {
@@ -605,41 +576,34 @@
         {
           "name": "Mediterranee",
           "type": "IGP"
-        }
-      ],
-      "subRegions": [
+        },
         {
-          "name": "Provence",
-          "appellations": [
-            {
-              "name": "Coteaux d'Aix-en-Provence",
-              "type": "AOC"
-            },
-            {
-              "name": "Les Baux-de-Provence",
-              "type": "AOC"
-            },
-            {
-              "name": "Cotes de Provence",
-              "type": "AOC"
-            },
-            {
-              "name": "Bandol",
-              "type": "AOC"
-            },
-            {
-              "name": "Cassis",
-              "type": "AOC"
-            },
-            {
-              "name": "Palette",
-              "type": "AOC"
-            },
-            {
-              "name": "Coteaux Varois en Provence",
-              "type": "AOC"
-            }
-          ]
+          "name": "Coteaux d'Aix-en-Provence",
+          "type": "AOC"
+        },
+        {
+          "name": "Les Baux-de-Provence",
+          "type": "AOC"
+        },
+        {
+          "name": "Cotes de Provence",
+          "type": "AOC"
+        },
+        {
+          "name": "Bandol",
+          "type": "AOC"
+        },
+        {
+          "name": "Cassis",
+          "type": "AOC"
+        },
+        {
+          "name": "Palette",
+          "type": "AOC"
+        },
+        {
+          "name": "Coteaux Varois en Provence",
+          "type": "AOC"
         }
       ]
     },
@@ -849,20 +813,7 @@
       "name": "Beaujolais",
       "subRegions": [
         {
-          "name": "Beaujolais",
-          "appellations": [
-            {
-              "name": "Beaujolais",
-              "type": "AOC"
-            },
-            {
-              "name": "Beaujolais-Villages",
-              "type": "AOC"
-            }
-          ]
-        },
-        {
-          "name": "Beaujolais Crus",
+          "name": "Crus du Beaujolais",
           "appellations": [
             {
               "name": "Moulin-a-Vent",
@@ -906,27 +857,32 @@
             }
           ]
         }
+      ],
+      "appellations": [
+        {
+          "name": "Beaujolais",
+          "type": "AOC"
+        },
+        {
+          "name": "Beaujolais-Villages",
+          "type": "AOC"
+        }
       ]
     },
     {
       "name": "Corse",
-      "subRegions": [
+      "appellations": [
         {
-          "name": "Corse",
-          "appellations": [
-            {
-              "name": "Patrimonio",
-              "type": "AOC"
-            },
-            {
-              "name": "Ajaccio",
-              "type": "AOC"
-            },
-            {
-              "name": "Vin de Corse",
-              "type": "AOC"
-            }
-          ]
+          "name": "Patrimonio",
+          "type": "AOC"
+        },
+        {
+          "name": "Ajaccio",
+          "type": "AOC"
+        },
+        {
+          "name": "Vin de Corse",
+          "type": "AOC"
         }
       ]
     }

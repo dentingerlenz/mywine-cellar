@@ -2,12 +2,6 @@
   "country": "Greece",
   "code": "GR",
   "continent": "Europe",
-  "appellations": [
-    {
-      "name": "Epitrapezios Oinos",
-      "type": "Table"
-    }
-  ],
   "regions": [
     {
       "name": "Makedonia",
@@ -89,15 +83,10 @@
     },
     {
       "name": "Attiki",
-      "subRegions": [
+      "appellations": [
         {
-          "name": "Attiki",
-          "appellations": [
-            {
-              "name": "Savatiano",
-              "type": "PDO"
-            }
-          ]
+          "name": "Savatiano",
+          "type": "PDO"
         }
       ]
     },

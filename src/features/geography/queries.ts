@@ -90,73 +90,13 @@ export const useGeoLookups = () => {
     countryId ? regions.filter((r) => r.country_id === countryId) : [];
   const subRegionsByRegion = (regionId: string | null | undefined) =>
     regionId ? subRegions.filter((s) => s.region_id === regionId) : [];
-  /** Appellationen, die zum aktuellen Kaskaden-Stand passen (tiefste Ebene zuerst). */
-  const appellationsForSelection = (sel: {
-    country_id?: string | null;
-    region_id?: string | null;
-    sub_region_id?: string | null;
-  }) => {
-    // Landesweite Appellationen (z. B. Vin de France, English Wine) bleiben
-    // auch bei gewählter Region/Sub-Region wählbar.
-    const countryLevel = (countryId: string | null | undefined) =>
-      countryId
-        ? appellations.filter((a) => a.level === "country" && a.country_id === countryId)
-        : [];
-    if (sel.sub_region_id) {
-      const sub = subRegionById.get(sel.sub_region_id);
-      const regionId = sel.region_id ?? sub?.region_id ?? null;
-      const region = regionId ? regionById.get(regionId) : undefined;
-      const subLevel = appellations.filter((a) => a.sub_region_id === sel.sub_region_id);
-      const regionLevel = regionId ? appellations.filter((a) => a.region_id === regionId) : [];
-      return [...subLevel, ...regionLevel, ...countryLevel(region?.country_id ?? sel.country_id)];
-    }
-    if (sel.region_id) {
-      const region = regionById.get(sel.region_id);
-      const subIds = new Set(subRegionsByRegion(sel.region_id).map((s) => s.id));
-      return [
-        ...appellations.filter(
-          (a) => a.region_id === sel.region_id || (a.sub_region_id && subIds.has(a.sub_region_id))
-        ),
-        ...countryLevel(region?.country_id ?? sel.country_id),
-      ];
-    }
-    if (sel.country_id) {
-      const regionIds = new Set(regionsByCountry(sel.country_id).map((r) => r.id));
-      const subIds = new Set(subRegions.filter((s) => regionIds.has(s.region_id)).map((s) => s.id));
-      return appellations.filter(
-        (a) =>
-          a.country_id === sel.country_id ||
-          (a.region_id && regionIds.has(a.region_id)) ||
-          (a.sub_region_id && subIds.has(a.sub_region_id))
-      );
-    }
-    return appellations;
-  };
 
-  /** Vorfahren einer Appellation (fürs Auto-Ausfüllen der Kaskade im Formular). */
-  const ancestorsOfAppellation = (appellationId: string) => {
-    const a = appellationById.get(appellationId);
-    if (!a) return {};
-    if (a.level === "sub_region" && a.sub_region_id) {
-      const s = subRegionById.get(a.sub_region_id);
-      const r = s ? regionById.get(s.region_id) : undefined;
-      return {
-        sub_region_id: a.sub_region_id,
-        region_id: s?.region_id ?? null,
-        country_id: r?.country_id ?? null,
-      };
-    }
-    if (a.level === "region" && a.region_id) {
-      const r = regionById.get(a.region_id);
-      return { region_id: a.region_id, country_id: r?.country_id ?? null };
-    }
-    return { country_id: a.country_id ?? null };
-  };
-
+  // Auswahl-/Kaskaden-LOGIK lebt in selection.ts (resolveSelection,
+  // appellationOptions) — hier nur Daten + Lookup-Maps.
   return {
     countries, regions, subRegions, appellations,
     countryById, regionById, subRegionById, appellationById,
-    regionsByCountry, subRegionsByRegion, appellationsForSelection, ancestorsOfAppellation,
+    regionsByCountry, subRegionsByRegion,
   };
 };
 

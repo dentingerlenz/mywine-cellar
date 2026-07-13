@@ -2,12 +2,6 @@
   "country": "Hungary",
   "code": "HU",
   "continent": "Europe",
-  "appellations": [
-    {
-      "name": "Bortermelo Orszag",
-      "type": "Table"
-    }
-  ],
   "regions": [
     {
       "name": "Tokaj-Hegyalja",
@@ -25,113 +19,73 @@
     },
     {
       "name": "Eger",
-      "subRegions": [
+      "appellations": [
         {
-          "name": "Eger",
-          "appellations": [
-            {
-              "name": "Egri Bikaver",
-              "type": "OEM"
-            }
-          ]
+          "name": "Egri Bikaver",
+          "type": "OEM"
         }
       ]
     },
     {
       "name": "Villany",
-      "subRegions": [
+      "appellations": [
         {
           "name": "Villany",
-          "appellations": [
-            {
-              "name": "Villany",
-              "type": "OEM"
-            }
-          ]
+          "type": "OEM"
         }
       ]
     },
     {
       "name": "Szekszard",
-      "subRegions": [
+      "appellations": [
         {
           "name": "Szekszard",
-          "appellations": [
-            {
-              "name": "Szekszard",
-              "type": "OEM"
-            }
-          ]
+          "type": "OEM"
         }
       ]
     },
     {
       "name": "Somlo",
-      "subRegions": [
+      "appellations": [
         {
           "name": "Somlo",
-          "appellations": [
-            {
-              "name": "Somlo",
-              "type": "OEM"
-            }
-          ]
+          "type": "OEM"
         }
       ]
     },
     {
       "name": "Badacsony",
-      "subRegions": [
+      "appellations": [
         {
           "name": "Badacsony",
-          "appellations": [
-            {
-              "name": "Badacsony",
-              "type": "OEM"
-            }
-          ]
+          "type": "OEM"
         }
       ]
     },
     {
       "name": "Balatonfured-Csopak",
-      "subRegions": [
+      "appellations": [
         {
           "name": "Balatonfured-Csopak",
-          "appellations": [
-            {
-              "name": "Balatonfured-Csopak",
-              "type": "OEM"
-            }
-          ]
+          "type": "OEM"
         }
       ]
     },
     {
       "name": "Matra",
-      "subRegions": [
+      "appellations": [
         {
           "name": "Matra",
-          "appellations": [
-            {
-              "name": "Matra",
-              "type": "OEM"
-            }
-          ]
+          "type": "OEM"
         }
       ]
     },
     {
       "name": "Etyek-Buda",
-      "subRegions": [
+      "appellations": [
         {
           "name": "Etyek-Buda",
-          "appellations": [
-            {
-              "name": "Etyek-Buda",
-              "type": "OEM"
-            }
-          ]
+          "type": "OEM"
         }
       ]
     }

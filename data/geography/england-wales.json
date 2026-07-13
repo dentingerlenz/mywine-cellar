@@ -4,10 +4,6 @@
   "continent": "Europe",
   "appellations": [
     {
-      "name": "English Wine / Welsh Wine",
-      "type": "National"
-    },
-    {
       "name": "English Wine",
       "type": "PGI"
     }
@@ -28,20 +24,10 @@
       ]
     },
     {
-      "name": "Kent",
-      "subRegions": [
-        {
-          "name": "Kent"
-        }
-      ]
+      "name": "Kent"
     },
     {
-      "name": "Hampshire",
-      "subRegions": [
-        {
-          "name": "Hampshire"
-        }
-      ]
+      "name": "Hampshire"
     },
     {
       "name": "East Anglia",
@@ -53,15 +39,10 @@
     },
     {
       "name": "Wales",
-      "subRegions": [
+      "appellations": [
         {
-          "name": "Wales",
-          "appellations": [
-            {
-              "name": "Welsh Wine",
-              "type": "PDO"
-            }
-          ]
+          "name": "Welsh Wine",
+          "type": "PDO"
         }
       ]
     },

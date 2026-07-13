@@ -11,24 +11,20 @@ import {
 } from "@/components/ui/command";
 import { cn } from "@/lib/utils";
 import { useGeoLookups } from "./queries";
+import {
+  type GeoField, type GeoSelection, appellationOptions, resolveSelection,
+} from "./selection";
 
-export type GeoSelection = {
-  country_id: string | null;
-  region_id: string | null;
-  sub_region_id: string | null;
-  appellation_id: string | null;
-};
-
-export const emptyGeoSelection: GeoSelection = {
-  country_id: null, region_id: null, sub_region_id: null, appellation_id: null,
-};
+export type { GeoSelection };
+export { emptyGeoSelection } from "./selection";
 
 const CONTINENT_ORDER = ["Europe", "Americas", "North America", "South America", "Oceania", "Africa", "Asia"];
 
 /**
  * 4-Ebenen-Kaskade (Land → Region → Sub-Region → Appellation) auf FK-Basis.
- * Appellation-Wahl füllt die Vorfahren automatisch (eine Quelle: useGeoLookups).
- * Wiederverwendet in Formular, Filtern und Settings (Plan §6.1).
+ * Sämtliche Zustands-Übergänge laufen über `resolveSelection` (selection.ts):
+ * Vorfahren werden aufgefüllt, widersprüchliche Nachfahren gelöscht, ungültige
+ * Werte (z. B. Radix-interne ""-Resets) verworfen.
  */
 export const GeographyPicker = ({
   value, onChange, disabled,
@@ -39,6 +35,12 @@ export const GeographyPicker = ({
 }) => {
   const geo = useGeoLookups();
   const [appOpen, setAppOpen] = useState(false);
+
+  const update = (field: GeoField, id: string | null) => {
+    const next = resolveSelection(geo, value, field, id);
+    if (next !== value) onChange(next);
+  };
+  const fromSelect = (v: string) => (v === "none" ? null : v);
 
   const continentGroups = useMemo(() => {
     const groups = new Map<string, typeof geo.countries>();
@@ -63,7 +65,7 @@ export const GeographyPicker = ({
 
   const regions = geo.regionsByCountry(value.country_id);
   const subRegions = geo.subRegionsByRegion(value.region_id);
-  const appellations = geo.appellationsForSelection(value);
+  const appellations = appellationOptions(geo, value);
   const selectedAppellation = value.appellation_id
     ? geo.appellationById.get(value.appellation_id)
     : undefined;
@@ -74,9 +76,7 @@ export const GeographyPicker = ({
         <Label>Country</Label>
         <Select
           value={value.country_id ?? "none"}
-          onValueChange={(v) =>
-            onChange({ ...emptyGeoSelection, country_id: v === "none" ? null : v })
-          }
+          onValueChange={(v) => update("country", fromSelect(v))}
           disabled={disabled}
         >
           <SelectTrigger><SelectValue placeholder="Select country" /></SelectTrigger>
@@ -100,14 +100,7 @@ export const GeographyPicker = ({
         <Label>Region</Label>
         <Select
           value={value.region_id ?? "none"}
-          onValueChange={(v) =>
-            onChange({
-              ...value,
-              region_id: v === "none" ? null : v,
-              sub_region_id: null,
-              appellation_id: null,
-            })
-          }
+          onValueChange={(v) => update("region", fromSelect(v))}
           disabled={disabled || !value.country_id}
         >
           <SelectTrigger>
@@ -126,11 +119,7 @@ export const GeographyPicker = ({
         <Label>Sub-region</Label>
         <Select
           value={value.sub_region_id ?? "none"}
-          onValueChange={(v) =>
-            // Appellation bewusst NICHT löschen — manuelle Sub-Region-Wahl
-            // soll eine bereits gewählte Appellation nicht wegwischen.
-            onChange({ ...value, sub_region_id: v === "none" ? null : v })
-          }
+          onValueChange={(v) => update("sub_region", fromSelect(v))}
           disabled={disabled || !value.region_id}
         >
           <SelectTrigger>
@@ -166,7 +155,7 @@ export const GeographyPicker = ({
                     className="w-3.5 h-3.5 opacity-60 hover:opacity-100"
                     onClick={(e) => {
                       e.stopPropagation();
-                      onChange({ ...value, appellation_id: null });
+                      update("appellation", null);
                     }}
                   />
                 )}
@@ -175,7 +164,13 @@ export const GeographyPicker = ({
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-[320px] p-0 bg-card gold-border" align="start">
-            <Command>
+            {/* value = UUID (eindeutig, fixes Doppelnamen-Kollisionen); gesucht
+                wird ausschließlich über keywords (Name + Typ, simple Teilstring-Suche). */}
+            <Command
+              filter={(_, search, keywords) =>
+                (keywords ?? []).join(" ").toLowerCase().includes(search.toLowerCase()) ? 1 : 0
+              }
+            >
               <CommandInput placeholder="Search appellation…" />
               <CommandList className="max-h-64">
                 <CommandEmpty>No appellation found.</CommandEmpty>
@@ -183,16 +178,10 @@ export const GeographyPicker = ({
                   {appellations.map((a) => (
                     <CommandItem
                       key={a.id}
-                      value={`${a.name} ${a.type ?? ""}`}
+                      value={a.id}
+                      keywords={[a.name, a.type ?? ""]}
                       onSelect={() => {
-                        // Vorfahren automatisch setzen — kein manuelles Nachziehen
-                        onChange({
-                          country_id: value.country_id,
-                          region_id: value.region_id,
-                          sub_region_id: value.sub_region_id,
-                          ...geo.ancestorsOfAppellation(a.id),
-                          appellation_id: a.id,
-                        });
+                        update("appellation", a.id);
                         setAppOpen(false);
                       }}
                     >

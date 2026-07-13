@@ -2,12 +2,6 @@
   "country": "Czech Republic",
   "code": "CZ",
   "continent": "Europe",
-  "appellations": [
-    {
-      "name": "Stolni Vino",
-      "type": "Table"
-    }
-  ],
   "regions": [
     {
       "name": "Morava",

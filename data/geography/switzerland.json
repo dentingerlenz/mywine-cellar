@@ -105,7 +105,7 @@
       ]
     },
     {
-      "name": "Genève",
+      "name": "Geneve",
       "subRegions": [
         {
           "name": "Mandement"
@@ -128,7 +128,7 @@
       "name": "Drei Seen",
       "subRegions": [
         {
-          "name": "Neuchâtel",
+          "name": "Neuchatel",
           "appellations": [
             {
               "name": "Neuchatel",
@@ -163,7 +163,7 @@
           "name": "Zürich",
           "appellations": [
             {
-              "name": "Zurich",
+              "name": "Zürich",
               "type": "AOC"
             },
             {
