@@ -2,6 +2,13 @@
   "country": "France",
   "code": "FR",
   "continent": "Europe",
+  "verified": true,
+  "sources": [
+    "INAO Liste des AOC vins (MAJ 26.01.2012)",
+    "INAO Liste des IGP vins (MAJ 26.01.2014)"
+  ],
+  "officialCount": 309,
+  "verifiedOn": "2026-07-14",
   "appellations": [
     {
       "name": "Vin de France",
@@ -9,28 +16,6 @@
     }
   ],
   "regions": [
-    {
-      "name": "Auvergne",
-      "appellations": [
-        {
-          "name": "Cotes d'Auvergne",
-          "type": "AOC"
-        },
-        {
-          "name": "Saint-Pourcain",
-          "type": "AOC"
-        }
-      ]
-    },
-    {
-      "name": "Normandy",
-      "appellations": [
-        {
-          "name": "Domfront",
-          "type": "AOC"
-        }
-      ]
-    },
     {
       "name": "Bordeaux",
       "appellations": [
@@ -43,11 +28,7 @@
           "type": "AOC"
         },
         {
-          "name": "Bordeaux Clairet",
-          "type": "AOC"
-        },
-        {
-          "name": "Bordeaux Rose",
+          "name": "Cotes de Bordeaux",
           "type": "AOC"
         },
         {
@@ -203,32 +184,7 @@
               "type": "AOC"
             },
             {
-              "name": "Blaye Cotes de Bordeaux",
-              "type": "AOC"
-            }
-          ]
-        },
-        {
-          "name": "Cotes de Bordeaux",
-          "appellations": [
-            {
-              "name": "Cotes de Bordeaux",
-              "type": "AOC"
-            },
-            {
-              "name": "Castillon Cotes de Bordeaux",
-              "type": "AOC"
-            },
-            {
-              "name": "Francs Cotes de Bordeaux",
-              "type": "AOC"
-            },
-            {
-              "name": "Cadillac Cotes de Bordeaux",
-              "type": "AOC"
-            },
-            {
-              "name": "Sainte-Foy Cotes de Bordeaux",
+              "name": "Cotes de Blaye",
               "type": "AOC"
             }
           ]
@@ -238,10 +194,6 @@
           "appellations": [
             {
               "name": "Entre-Deux-Mers",
-              "type": "AOC"
-            },
-            {
-              "name": "Entre-Deux-Mers Haut-Benauge",
               "type": "AOC"
             },
             {
@@ -265,7 +217,199 @@
               "type": "AOC"
             },
             {
+              "name": "Sainte-Foy-Bordeaux",
+              "type": "AOC"
+            },
+            {
               "name": "Cotes de Bordeaux Saint-Macaire",
+              "type": "AOC"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Sud-Ouest",
+      "appellations": [
+        {
+          "name": "Comte Tolosan",
+          "type": "IGP"
+        },
+        {
+          "name": "Cotes de Gascogne",
+          "type": "IGP"
+        },
+        {
+          "name": "Cotes du Tarn",
+          "type": "IGP"
+        },
+        {
+          "name": "Cotes du Lot",
+          "type": "IGP"
+        },
+        {
+          "name": "Perigord",
+          "type": "IGP"
+        },
+        {
+          "name": "Landes",
+          "type": "IGP"
+        },
+        {
+          "name": "Agenais",
+          "type": "IGP"
+        },
+        {
+          "name": "Gers",
+          "type": "IGP"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Bergerac",
+          "appellations": [
+            {
+              "name": "Bergerac",
+              "type": "AOC"
+            },
+            {
+              "name": "Cotes de Bergerac",
+              "type": "AOC"
+            },
+            {
+              "name": "Monbazillac",
+              "type": "AOC"
+            },
+            {
+              "name": "Pecharmant",
+              "type": "AOC"
+            },
+            {
+              "name": "Montravel",
+              "type": "AOC"
+            },
+            {
+              "name": "Cotes de Montravel",
+              "type": "AOC"
+            },
+            {
+              "name": "Haut-Montravel",
+              "type": "AOC"
+            },
+            {
+              "name": "Saussignac",
+              "type": "AOC"
+            },
+            {
+              "name": "Rosette",
+              "type": "AOC"
+            }
+          ]
+        },
+        {
+          "name": "Garonne",
+          "appellations": [
+            {
+              "name": "Cotes de Duras",
+              "type": "AOC"
+            },
+            {
+              "name": "Cotes du Marmandais",
+              "type": "AOC"
+            },
+            {
+              "name": "Buzet",
+              "type": "AOC"
+            },
+            {
+              "name": "Brulhois",
+              "type": "AOC"
+            },
+            {
+              "name": "Saint-Sardos",
+              "type": "AOC"
+            }
+          ]
+        },
+        {
+          "name": "Lot & Aveyron",
+          "appellations": [
+            {
+              "name": "Cahors",
+              "type": "AOC"
+            },
+            {
+              "name": "Coteaux du Quercy",
+              "type": "AOC"
+            },
+            {
+              "name": "Marcillac",
+              "type": "AOC"
+            },
+            {
+              "name": "Cotes de Millau",
+              "type": "AOC"
+            },
+            {
+              "name": "Entraygues et le Fel",
+              "type": "AOC"
+            },
+            {
+              "name": "Estaing",
+              "type": "AOC"
+            }
+          ]
+        },
+        {
+          "name": "Gaillac & Fronton",
+          "appellations": [
+            {
+              "name": "Gaillac",
+              "type": "AOC"
+            },
+            {
+              "name": "Gaillac Premieres Cotes",
+              "type": "AOC"
+            },
+            {
+              "name": "Fronton",
+              "type": "AOC"
+            }
+          ]
+        },
+        {
+          "name": "Gascogne & Bearn",
+          "appellations": [
+            {
+              "name": "Madiran",
+              "type": "AOC"
+            },
+            {
+              "name": "Pacherenc du Vic-Bilh",
+              "type": "AOC"
+            },
+            {
+              "name": "Bearn",
+              "type": "AOC"
+            },
+            {
+              "name": "Saint-Mont",
+              "type": "AOC"
+            },
+            {
+              "name": "Tursan",
+              "type": "AOC"
+            },
+            {
+              "name": "Jurancon",
+              "type": "AOC"
+            },
+            {
+              "name": "Irouleguy",
+              "type": "AOC"
+            },
+            {
+              "name": "Floc de Gascogne",
               "type": "AOC"
             }
           ]
@@ -284,23 +428,19 @@
           "type": "AOC"
         },
         {
+          "name": "Bourgogne Mousseux",
+          "type": "AOC"
+        },
+        {
+          "name": "Bourgogne Passe-Tout-Grains",
+          "type": "AOC"
+        },
+        {
           "name": "Coteaux Bourguignons",
           "type": "AOC"
         },
         {
           "name": "Cremant de Bourgogne",
-          "type": "AOC"
-        },
-        {
-          "name": "Bourgogne Hautes Cotes de Nuits",
-          "type": "AOC"
-        },
-        {
-          "name": "Bourgogne Hautes Cotes de Beaune",
-          "type": "AOC"
-        },
-        {
-          "name": "Bourgogne Cote Chalonnaise",
           "type": "AOC"
         }
       ],
@@ -317,10 +457,6 @@
               "type": "AOC"
             },
             {
-              "name": "Chablis Premier Cru",
-              "type": "AOC"
-            },
-            {
               "name": "Chablis Grand Cru",
               "type": "AOC"
             },
@@ -331,34 +467,6 @@
             {
               "name": "Saint-Bris",
               "type": "AOC"
-            },
-            {
-              "name": "Blanchot",
-              "type": "Grand Cru"
-            },
-            {
-              "name": "Bougros",
-              "type": "Grand Cru"
-            },
-            {
-              "name": "Les Clos",
-              "type": "Grand Cru"
-            },
-            {
-              "name": "Grenouilles",
-              "type": "Grand Cru"
-            },
-            {
-              "name": "Preuses",
-              "type": "Grand Cru"
-            },
-            {
-              "name": "Valmur",
-              "type": "Grand Cru"
-            },
-            {
-              "name": "Vaudesir",
-              "type": "Grand Cru"
             }
           ]
         },
@@ -470,7 +578,7 @@
               "type": "Grand Cru"
             },
             {
-              "name": "Grands Echezeaux",
+              "name": "Grands-Echezeaux",
               "type": "Grand Cru"
             },
             {
@@ -551,6 +659,10 @@
               "type": "AOC"
             },
             {
+              "name": "Blagny",
+              "type": "AOC"
+            },
+            {
               "name": "Puligny-Montrachet",
               "type": "AOC"
             },
@@ -603,7 +715,7 @@
               "type": "Grand Cru"
             },
             {
-              "name": "Bienvenues-Batard-Montrachet",
+              "name": "Bienvenues Batard-Montrachet",
               "type": "Grand Cru"
             },
             {
@@ -645,10 +757,6 @@
               "type": "AOC"
             },
             {
-              "name": "Macon-Villages",
-              "type": "AOC"
-            },
-            {
               "name": "Pouilly-Fuisse",
               "type": "AOC"
             },
@@ -673,6 +781,149 @@
       ]
     },
     {
+      "name": "Beaujolais",
+      "appellations": [
+        {
+          "name": "Beaujolais",
+          "type": "AOC"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Crus du Beaujolais",
+          "appellations": [
+            {
+              "name": "Brouilly",
+              "type": "AOC"
+            },
+            {
+              "name": "Chenas",
+              "type": "AOC"
+            },
+            {
+              "name": "Chiroubles",
+              "type": "AOC"
+            },
+            {
+              "name": "Cote de Brouilly",
+              "type": "AOC"
+            },
+            {
+              "name": "Fleurie",
+              "type": "AOC"
+            },
+            {
+              "name": "Julienas",
+              "type": "AOC"
+            },
+            {
+              "name": "Morgon",
+              "type": "AOC"
+            },
+            {
+              "name": "Moulin-a-Vent",
+              "type": "AOC"
+            },
+            {
+              "name": "Regnie",
+              "type": "AOC"
+            },
+            {
+              "name": "Saint-Amour",
+              "type": "AOC"
+            }
+          ]
+        },
+        {
+          "name": "Lyonnais & Forez",
+          "appellations": [
+            {
+              "name": "Coteaux du Lyonnais",
+              "type": "AOC"
+            },
+            {
+              "name": "Cotes du Forez",
+              "type": "AOC"
+            },
+            {
+              "name": "Cote Roannaise",
+              "type": "AOC"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Savoie & Jura",
+      "appellations": [
+        {
+          "name": "Franche-Comte",
+          "type": "IGP"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Jura",
+          "appellations": [
+            {
+              "name": "Arbois",
+              "type": "AOC"
+            },
+            {
+              "name": "Chateau-Chalon",
+              "type": "AOC"
+            },
+            {
+              "name": "L'Etoile",
+              "type": "AOC"
+            },
+            {
+              "name": "Cotes du Jura",
+              "type": "AOC"
+            },
+            {
+              "name": "Cremant du Jura",
+              "type": "AOC"
+            },
+            {
+              "name": "Macvin du Jura",
+              "type": "AOC"
+            }
+          ]
+        },
+        {
+          "name": "Savoie",
+          "appellations": [
+            {
+              "name": "Vin de Savoie",
+              "type": "AOC"
+            },
+            {
+              "name": "Roussette de Savoie",
+              "type": "AOC"
+            },
+            {
+              "name": "Seyssel",
+              "type": "AOC"
+            }
+          ]
+        },
+        {
+          "name": "Bugey",
+          "appellations": [
+            {
+              "name": "Bugey",
+              "type": "AOC"
+            },
+            {
+              "name": "Roussette du Bugey",
+              "type": "AOC"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "Champagne",
       "appellations": [
         {
@@ -690,19 +941,24 @@
       ],
       "subRegions": [
         {
-          "name": "Montagne de Reims"
+          "name": "Montagne de Reims",
+          "appellations": []
         },
         {
-          "name": "Vallee de la Marne"
+          "name": "Vallee de la Marne",
+          "appellations": []
         },
         {
-          "name": "Cote des Blancs"
+          "name": "Cote des Blancs",
+          "appellations": []
         },
         {
-          "name": "Cote de Sezanne"
+          "name": "Cote de Sezanne",
+          "appellations": []
         },
         {
-          "name": "Aube (Cote des Bar)"
+          "name": "Aube (Cote des Bar)",
+          "appellations": []
         }
       ]
     },
@@ -714,11 +970,270 @@
           "type": "AOC"
         },
         {
-          "name": "Alsace Grand Cru",
+          "name": "Cremant d'Alsace",
           "type": "AOC"
         },
         {
-          "name": "Cremant d'Alsace",
+          "name": "Alsace Grand Cru",
+          "type": "Grand Cru"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Lorraine",
+          "appellations": [
+            {
+              "name": "Moselle",
+              "type": "AOC"
+            },
+            {
+              "name": "Cotes de Toul",
+              "type": "AOC"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Vallee de la Loire",
+      "appellations": [
+        {
+          "name": "Cremant de Loire",
+          "type": "AOC"
+        },
+        {
+          "name": "Rose de Loire",
+          "type": "AOC"
+        },
+        {
+          "name": "Val de Loire",
+          "type": "IGP"
+        }
+      ],
+      "subRegions": [
+        {
+          "name": "Pays Nantais",
+          "appellations": [
+            {
+              "name": "Muscadet",
+              "type": "AOC"
+            },
+            {
+              "name": "Muscadet Sevre et Maine",
+              "type": "AOC"
+            },
+            {
+              "name": "Muscadet Coteaux de la Loire",
+              "type": "AOC"
+            },
+            {
+              "name": "Muscadet Cotes de Grandlieu",
+              "type": "AOC"
+            },
+            {
+              "name": "Gros Plant du Pays Nantais",
+              "type": "AOC"
+            },
+            {
+              "name": "Coteaux d'Ancenis",
+              "type": "AOC"
+            },
+            {
+              "name": "Fiefs Vendeens",
+              "type": "AOC"
+            }
+          ]
+        },
+        {
+          "name": "Anjou-Saumur",
+          "appellations": [
+            {
+              "name": "Anjou",
+              "type": "AOC"
+            },
+            {
+              "name": "Anjou Coteaux de la Loire",
+              "type": "AOC"
+            },
+            {
+              "name": "Anjou Villages",
+              "type": "AOC"
+            },
+            {
+              "name": "Anjou Villages Brissac",
+              "type": "AOC"
+            },
+            {
+              "name": "Savennieres",
+              "type": "AOC"
+            },
+            {
+              "name": "Savennieres Coulee de Serrant",
+              "type": "AOC"
+            },
+            {
+              "name": "Savennieres Roche aux Moines",
+              "type": "AOC"
+            },
+            {
+              "name": "Coteaux du Layon",
+              "type": "AOC"
+            },
+            {
+              "name": "Coteaux de l'Aubance",
+              "type": "AOC"
+            },
+            {
+              "name": "Bonnezeaux",
+              "type": "AOC"
+            },
+            {
+              "name": "Quarts de Chaume",
+              "type": "AOC"
+            },
+            {
+              "name": "Rose d'Anjou",
+              "type": "AOC"
+            },
+            {
+              "name": "Cabernet d'Anjou",
+              "type": "AOC"
+            },
+            {
+              "name": "Saumur",
+              "type": "AOC"
+            },
+            {
+              "name": "Saumur-Champigny",
+              "type": "AOC"
+            },
+            {
+              "name": "Coteaux de Saumur",
+              "type": "AOC"
+            },
+            {
+              "name": "Cabernet de Saumur",
+              "type": "AOC"
+            }
+          ]
+        },
+        {
+          "name": "Touraine",
+          "appellations": [
+            {
+              "name": "Touraine",
+              "type": "AOC"
+            },
+            {
+              "name": "Touraine Noble Joue",
+              "type": "AOC"
+            },
+            {
+              "name": "Vouvray",
+              "type": "AOC"
+            },
+            {
+              "name": "Montlouis-sur-Loire",
+              "type": "AOC"
+            },
+            {
+              "name": "Chinon",
+              "type": "AOC"
+            },
+            {
+              "name": "Bourgueil",
+              "type": "AOC"
+            },
+            {
+              "name": "Saint-Nicolas-de-Bourgueil",
+              "type": "AOC"
+            },
+            {
+              "name": "Cheverny",
+              "type": "AOC"
+            },
+            {
+              "name": "Cour-Cheverny",
+              "type": "AOC"
+            },
+            {
+              "name": "Jasnieres",
+              "type": "AOC"
+            },
+            {
+              "name": "Coteaux du Loir",
+              "type": "AOC"
+            },
+            {
+              "name": "Coteaux du Vendomois",
+              "type": "AOC"
+            },
+            {
+              "name": "Valencay",
+              "type": "AOC"
+            },
+            {
+              "name": "Chateaumeillant",
+              "type": "AOC"
+            },
+            {
+              "name": "Haut-Poitou",
+              "type": "AOC"
+            },
+            {
+              "name": "Orleans",
+              "type": "AOC"
+            },
+            {
+              "name": "Orleans-Clery",
+              "type": "AOC"
+            }
+          ]
+        },
+        {
+          "name": "Centre-Loire",
+          "appellations": [
+            {
+              "name": "Sancerre",
+              "type": "AOC"
+            },
+            {
+              "name": "Pouilly-Fume",
+              "type": "AOC"
+            },
+            {
+              "name": "Pouilly-sur-Loire",
+              "type": "AOC"
+            },
+            {
+              "name": "Menetou-Salon",
+              "type": "AOC"
+            },
+            {
+              "name": "Quincy",
+              "type": "AOC"
+            },
+            {
+              "name": "Reuilly",
+              "type": "AOC"
+            },
+            {
+              "name": "Coteaux du Giennois",
+              "type": "AOC"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Auvergne",
+      "appellations": [
+        {
+          "name": "Cotes d'Auvergne",
+          "type": "AOC"
+        },
+        {
+          "name": "Saint-Pourcain",
           "type": "AOC"
         }
       ]
@@ -732,6 +1247,26 @@
         },
         {
           "name": "Mediterranee",
+          "type": "IGP"
+        },
+        {
+          "name": "Comtes Rhodaniens",
+          "type": "IGP"
+        },
+        {
+          "name": "Collines Rhodaniennes",
+          "type": "IGP"
+        },
+        {
+          "name": "Ardeche",
+          "type": "IGP"
+        },
+        {
+          "name": "Drome",
+          "type": "IGP"
+        },
+        {
+          "name": "Vaucluse",
           "type": "IGP"
         }
       ],
@@ -793,15 +1328,11 @@
               "type": "AOC"
             },
             {
-              "name": "Cairanne",
+              "name": "Beaumes de Venise",
               "type": "AOC"
             },
             {
-              "name": "Beaumes-de-Venise",
-              "type": "AOC"
-            },
-            {
-              "name": "Muscat de Beaumes de Venise",
+              "name": "Muscat de Beaumes-de-Venise",
               "type": "AOC"
             },
             {
@@ -825,10 +1356,6 @@
               "type": "AOC"
             },
             {
-              "name": "Costieres de Nimes",
-              "type": "AOC"
-            },
-            {
               "name": "Grignan-les-Adhemar",
               "type": "AOC"
             },
@@ -837,7 +1364,7 @@
               "type": "AOC"
             },
             {
-              "name": "Duche d'Uzes",
+              "name": "Pierrevert",
               "type": "AOC"
             },
             {
@@ -858,6 +1385,10 @@
               "type": "AOC"
             },
             {
+              "name": "Coteaux de Die",
+              "type": "AOC"
+            },
+            {
               "name": "Chatillon-en-Diois",
               "type": "AOC"
             }
@@ -866,106 +1397,164 @@
       ]
     },
     {
-      "name": "Vallee de la Loire",
+      "name": "Languedoc-Roussillon",
       "appellations": [
         {
-          "name": "Val de Loire",
+          "name": "Pays d'Oc",
+          "type": "IGP"
+        },
+        {
+          "name": "Pays d'Herault",
+          "type": "IGP"
+        },
+        {
+          "name": "Cotes Catalanes",
+          "type": "IGP"
+        },
+        {
+          "name": "Cevennes",
+          "type": "IGP"
+        },
+        {
+          "name": "Gard",
+          "type": "IGP"
+        },
+        {
+          "name": "Cote Vermeille",
+          "type": "IGP"
+        },
+        {
+          "name": "Aude",
           "type": "IGP"
         }
       ],
       "subRegions": [
         {
-          "name": "Pays Nantais",
+          "name": "Languedoc",
           "appellations": [
             {
-              "name": "Muscadet",
+              "name": "Languedoc",
               "type": "AOC"
             },
             {
-              "name": "Muscadet Sevre-et-Maine",
+              "name": "Clairette du Languedoc",
               "type": "AOC"
             },
             {
-              "name": "Muscadet Coteaux de la Loire",
+              "name": "Clairette de Bellegarde",
+              "type": "AOC"
+            },
+            {
+              "name": "Picpoul de Pinet",
+              "type": "AOC"
+            },
+            {
+              "name": "Cabardes",
+              "type": "AOC"
+            },
+            {
+              "name": "Malepere",
+              "type": "AOC"
+            },
+            {
+              "name": "Minervois",
+              "type": "AOC"
+            },
+            {
+              "name": "Minervois-La Liviniere",
+              "type": "AOC"
+            },
+            {
+              "name": "Corbieres",
+              "type": "AOC"
+            },
+            {
+              "name": "Corbieres-Boutenac",
+              "type": "AOC"
+            },
+            {
+              "name": "Saint-Chinian",
+              "type": "AOC"
+            },
+            {
+              "name": "Faugeres",
+              "type": "AOC"
+            },
+            {
+              "name": "Fitou",
+              "type": "AOC"
+            },
+            {
+              "name": "Limoux",
+              "type": "AOC"
+            },
+            {
+              "name": "Cremant de Limoux",
+              "type": "AOC"
+            },
+            {
+              "name": "Costieres de Nimes",
+              "type": "AOC"
+            },
+            {
+              "name": "Duche d'Uzes",
+              "type": "AOC"
+            },
+            {
+              "name": "Muscat de Frontignan",
+              "type": "AOC"
+            },
+            {
+              "name": "Muscat de Lunel",
+              "type": "AOC"
+            },
+            {
+              "name": "Muscat de Mireval",
+              "type": "AOC"
+            },
+            {
+              "name": "Muscat de Saint-Jean-de-Minervois",
               "type": "AOC"
             }
           ]
         },
         {
-          "name": "Anjou-Saumur",
+          "name": "Roussillon",
           "appellations": [
             {
-              "name": "Anjou",
+              "name": "Cotes du Roussillon",
               "type": "AOC"
             },
             {
-              "name": "Saumur",
+              "name": "Cotes du Roussillon Villages",
               "type": "AOC"
             },
             {
-              "name": "Savennieres",
+              "name": "Collioure",
               "type": "AOC"
             },
             {
-              "name": "Coteaux du Layon",
+              "name": "Banyuls",
               "type": "AOC"
             },
             {
-              "name": "Quarts de Chaume",
+              "name": "Banyuls grand cru",
               "type": "AOC"
             },
             {
-              "name": "Bonnezeaux",
-              "type": "AOC"
-            }
-          ]
-        },
-        {
-          "name": "Touraine",
-          "appellations": [
-            {
-              "name": "Chinon",
+              "name": "Maury",
               "type": "AOC"
             },
             {
-              "name": "Bourgueil",
+              "name": "Rivesaltes",
               "type": "AOC"
             },
             {
-              "name": "Saint-Nicolas-de-Bourgueil",
+              "name": "Muscat de Rivesaltes",
               "type": "AOC"
             },
             {
-              "name": "Vouvray",
-              "type": "AOC"
-            },
-            {
-              "name": "Montlouis-sur-Loire",
-              "type": "AOC"
-            }
-          ]
-        },
-        {
-          "name": "Centre-Loire",
-          "appellations": [
-            {
-              "name": "Sancerre",
-              "type": "AOC"
-            },
-            {
-              "name": "Pouilly-Fume",
-              "type": "AOC"
-            },
-            {
-              "name": "Menetou-Salon",
-              "type": "AOC"
-            },
-            {
-              "name": "Quincy",
-              "type": "AOC"
-            },
-            {
-              "name": "Reuilly",
+              "name": "Grand Roussillon",
               "type": "AOC"
             }
           ]
@@ -976,15 +1565,11 @@
       "name": "Provence",
       "appellations": [
         {
-          "name": "Mediterranee",
-          "type": "IGP"
-        },
-        {
           "name": "Coteaux d'Aix-en-Provence",
           "type": "AOC"
         },
         {
-          "name": "Les Baux-de-Provence",
+          "name": "Les Baux de Provence",
           "type": "AOC"
         },
         {
@@ -1006,268 +1591,34 @@
         {
           "name": "Coteaux Varois en Provence",
           "type": "AOC"
-        }
-      ]
-    },
-    {
-      "name": "Languedoc-Roussillon",
-      "appellations": [
-        {
-          "name": "Pays d'Oc",
-          "type": "IGP"
-        }
-      ],
-      "subRegions": [
-        {
-          "name": "Languedoc",
-          "appellations": [
-            {
-              "name": "Languedoc",
-              "type": "AOC"
-            },
-            {
-              "name": "Minervois",
-              "type": "AOC"
-            },
-            {
-              "name": "Corbieres",
-              "type": "AOC"
-            },
-            {
-              "name": "Saint-Chinian",
-              "type": "AOC"
-            },
-            {
-              "name": "Faugeres",
-              "type": "AOC"
-            },
-            {
-              "name": "Fitou",
-              "type": "AOC"
-            },
-            {
-              "name": "Limoux",
-              "type": "AOC"
-            },
-            {
-              "name": "Blanquette de Limoux",
-              "type": "AOC"
-            },
-            {
-              "name": "Cremant de Limoux",
-              "type": "AOC"
-            }
-          ]
         },
         {
-          "name": "Roussillon",
-          "appellations": [
-            {
-              "name": "Cotes du Roussillon",
-              "type": "AOC"
-            },
-            {
-              "name": "Cotes du Roussillon Villages",
-              "type": "AOC"
-            },
-            {
-              "name": "Banyuls",
-              "type": "AOC"
-            },
-            {
-              "name": "Collioure",
-              "type": "AOC"
-            },
-            {
-              "name": "Maury",
-              "type": "AOC"
-            },
-            {
-              "name": "Rivesaltes",
-              "type": "AOC"
-            },
-            {
-              "name": "Muscat de Rivesaltes",
-              "type": "AOC"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Sud-Ouest",
-      "appellations": [
-        {
-          "name": "Comtes Tolosan",
-          "type": "IGP"
-        }
-      ],
-      "subRegions": [
-        {
-          "name": "Bergerac",
-          "appellations": [
-            {
-              "name": "Bergerac",
-              "type": "AOC"
-            },
-            {
-              "name": "Cotes de Bergerac",
-              "type": "AOC"
-            },
-            {
-              "name": "Monbazillac",
-              "type": "AOC"
-            }
-          ]
-        },
-        {
-          "name": "Lot",
-          "appellations": [
-            {
-              "name": "Cahors",
-              "type": "AOC"
-            }
-          ]
-        },
-        {
-          "name": "Tarn",
-          "appellations": [
-            {
-              "name": "Gaillac",
-              "type": "AOC"
-            }
-          ]
-        },
-        {
-          "name": "Madiran",
-          "appellations": [
-            {
-              "name": "Madiran",
-              "type": "AOC"
-            }
-          ]
-        },
-        {
-          "name": "Jurancon",
-          "appellations": [
-            {
-              "name": "Jurancon",
-              "type": "AOC"
-            }
-          ]
-        },
-        {
-          "name": "Pays Basque",
-          "appellations": [
-            {
-              "name": "Irouleguy",
-              "type": "AOC"
-            }
-          ]
-        },
-        {
-          "name": "Aveyron",
-          "appellations": [
-            {
-              "name": "Marcillac",
-              "type": "AOC"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Savoie & Jura",
-      "subRegions": [
-        {
-          "name": "Savoie",
-          "appellations": [
-            {
-              "name": "Vin de Savoie",
-              "type": "AOC"
-            }
-          ]
-        },
-        {
-          "name": "Jura",
-          "appellations": [
-            {
-              "name": "Arbois",
-              "type": "AOC"
-            },
-            {
-              "name": "Chateau-Chalon",
-              "type": "AOC"
-            },
-            {
-              "name": "L'Etoile",
-              "type": "AOC"
-            },
-            {
-              "name": "Cotes du Jura",
-              "type": "AOC"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Beaujolais",
-      "subRegions": [
-        {
-          "name": "Crus du Beaujolais",
-          "appellations": [
-            {
-              "name": "Moulin-a-Vent",
-              "type": "AOC"
-            },
-            {
-              "name": "Fleurie",
-              "type": "AOC"
-            },
-            {
-              "name": "Morgon",
-              "type": "AOC"
-            },
-            {
-              "name": "Brouilly",
-              "type": "AOC"
-            },
-            {
-              "name": "Cote de Brouilly",
-              "type": "AOC"
-            },
-            {
-              "name": "Julienas",
-              "type": "AOC"
-            },
-            {
-              "name": "Saint-Amour",
-              "type": "AOC"
-            },
-            {
-              "name": "Chenas",
-              "type": "AOC"
-            },
-            {
-              "name": "Regnie",
-              "type": "AOC"
-            },
-            {
-              "name": "Chiroubles",
-              "type": "AOC"
-            }
-          ]
-        }
-      ],
-      "appellations": [
-        {
-          "name": "Beaujolais",
+          "name": "Bellet",
           "type": "AOC"
         },
         {
-          "name": "Beaujolais-Villages",
-          "type": "AOC"
+          "name": "Mediterranee",
+          "type": "IGP"
+        },
+        {
+          "name": "Var",
+          "type": "IGP"
+        },
+        {
+          "name": "Bouches-du-Rhone",
+          "type": "IGP"
+        },
+        {
+          "name": "Alpilles",
+          "type": "IGP"
+        },
+        {
+          "name": "Maures",
+          "type": "IGP"
+        },
+        {
+          "name": "Mont Caume",
+          "type": "IGP"
         }
       ]
     },
@@ -1275,7 +1626,7 @@
       "name": "Corse",
       "appellations": [
         {
-          "name": "Patrimonio",
+          "name": "Vin de Corse",
           "type": "AOC"
         },
         {
@@ -1283,8 +1634,29 @@
           "type": "AOC"
         },
         {
-          "name": "Vin de Corse",
+          "name": "Patrimonio",
           "type": "AOC"
+        },
+        {
+          "name": "Muscat du Cap Corse",
+          "type": "AOC"
+        },
+        {
+          "name": "Ile de Beaute",
+          "type": "IGP"
+        }
+      ]
+    },
+    {
+      "name": "Charentes",
+      "appellations": [
+        {
+          "name": "Pineau des Charentes",
+          "type": "AOC"
+        },
+        {
+          "name": "Charentais",
+          "type": "IGP"
         }
       ]
     }
