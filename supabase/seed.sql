@@ -4190,6 +4190,22 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Champagne' and a.level = 'region' and a.region_id = r.id);
 
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Coteaux Champenois', 'AOC', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'France' and r.name = 'Champagne'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Coteaux Champenois' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rose des Riceys', 'AOC', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'France' and r.name = 'Champagne'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Rose des Riceys' and a.level = 'region' and a.region_id = r.id);
+
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Montagne de Reims', 0
 from public.regions r join public.countries c on c.id = r.country_id
@@ -4253,20 +4269,20 @@ select c.id, 'Vallee du Rhone', 6 from public.countries c where c.name = 'France
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Mediterranee', 'IGP', 0
-from public.regions r
-  join public.countries c on c.id = r.country_id
-  where c.name = 'France' and r.name = 'Vallee du Rhone'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Mediterranee' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Cotes du Rhone', 'AOC', 1
+select 'region', r.id, 'Cotes du Rhone', 'AOC', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'France' and r.name = 'Vallee du Rhone'
   and not exists (select 1 from public.appellations a
     where a.name = 'Cotes du Rhone' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Mediterranee', 'IGP', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'France' and r.name = 'Vallee du Rhone'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Mediterranee' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.sub_regions (region_id, name, sort_order)
 select r.id, 'Rhone Nord', 0
@@ -4380,7 +4396,25 @@ from public.sub_regions s
     where a.name = 'Vacqueyras' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Beaumes-de-Venise', 'AOC', 3
+select 'sub_region', s.id, 'Vinsobres', 'AOC', 3
+from public.sub_regions s
+  join public.regions r on r.id = s.region_id
+  join public.countries c on c.id = r.country_id
+  where c.name = 'France' and r.name = 'Vallee du Rhone' and s.name = 'Rhone Sud'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Vinsobres' and a.level = 'sub_region' and a.sub_region_id = s.id);
+
+insert into public.appellations (level, sub_region_id, name, type, sort_order)
+select 'sub_region', s.id, 'Cairanne', 'AOC', 4
+from public.sub_regions s
+  join public.regions r on r.id = s.region_id
+  join public.countries c on c.id = r.country_id
+  where c.name = 'France' and r.name = 'Vallee du Rhone' and s.name = 'Rhone Sud'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Cairanne' and a.level = 'sub_region' and a.sub_region_id = s.id);
+
+insert into public.appellations (level, sub_region_id, name, type, sort_order)
+select 'sub_region', s.id, 'Beaumes-de-Venise', 'AOC', 5
 from public.sub_regions s
   join public.regions r on r.id = s.region_id
   join public.countries c on c.id = r.country_id
@@ -4389,7 +4423,16 @@ from public.sub_regions s
     where a.name = 'Beaumes-de-Venise' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Rasteau', 'AOC', 4
+select 'sub_region', s.id, 'Muscat de Beaumes de Venise', 'AOC', 6
+from public.sub_regions s
+  join public.regions r on r.id = s.region_id
+  join public.countries c on c.id = r.country_id
+  where c.name = 'France' and r.name = 'Vallee du Rhone' and s.name = 'Rhone Sud'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Muscat de Beaumes de Venise' and a.level = 'sub_region' and a.sub_region_id = s.id);
+
+insert into public.appellations (level, sub_region_id, name, type, sort_order)
+select 'sub_region', s.id, 'Rasteau', 'AOC', 7
 from public.sub_regions s
   join public.regions r on r.id = s.region_id
   join public.countries c on c.id = r.country_id
@@ -4398,7 +4441,7 @@ from public.sub_regions s
     where a.name = 'Rasteau' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Lirac', 'AOC', 5
+select 'sub_region', s.id, 'Lirac', 'AOC', 8
 from public.sub_regions s
   join public.regions r on r.id = s.region_id
   join public.countries c on c.id = r.country_id
@@ -4407,7 +4450,7 @@ from public.sub_regions s
     where a.name = 'Lirac' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Tavel', 'AOC', 6
+select 'sub_region', s.id, 'Tavel', 'AOC', 9
 from public.sub_regions s
   join public.regions r on r.id = s.region_id
   join public.countries c on c.id = r.country_id
@@ -4416,7 +4459,7 @@ from public.sub_regions s
     where a.name = 'Tavel' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Luberon', 'AOC', 7
+select 'sub_region', s.id, 'Luberon', 'AOC', 10
 from public.sub_regions s
   join public.regions r on r.id = s.region_id
   join public.countries c on c.id = r.country_id
@@ -4425,7 +4468,7 @@ from public.sub_regions s
     where a.name = 'Luberon' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Ventoux', 'AOC', 8
+select 'sub_region', s.id, 'Ventoux', 'AOC', 11
 from public.sub_regions s
   join public.regions r on r.id = s.region_id
   join public.countries c on c.id = r.country_id
@@ -4434,7 +4477,16 @@ from public.sub_regions s
     where a.name = 'Ventoux' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Grignan-les-Adhemar', 'AOC', 9
+select 'sub_region', s.id, 'Costieres de Nimes', 'AOC', 12
+from public.sub_regions s
+  join public.regions r on r.id = s.region_id
+  join public.countries c on c.id = r.country_id
+  where c.name = 'France' and r.name = 'Vallee du Rhone' and s.name = 'Rhone Sud'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Costieres de Nimes' and a.level = 'sub_region' and a.sub_region_id = s.id);
+
+insert into public.appellations (level, sub_region_id, name, type, sort_order)
+select 'sub_region', s.id, 'Grignan-les-Adhemar', 'AOC', 13
 from public.sub_regions s
   join public.regions r on r.id = s.region_id
   join public.countries c on c.id = r.country_id
@@ -4443,13 +4495,64 @@ from public.sub_regions s
     where a.name = 'Grignan-les-Adhemar' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Cotes du Rhone Villages', 'AOC', 10
+select 'sub_region', s.id, 'Cotes du Vivarais', 'AOC', 14
+from public.sub_regions s
+  join public.regions r on r.id = s.region_id
+  join public.countries c on c.id = r.country_id
+  where c.name = 'France' and r.name = 'Vallee du Rhone' and s.name = 'Rhone Sud'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Cotes du Vivarais' and a.level = 'sub_region' and a.sub_region_id = s.id);
+
+insert into public.appellations (level, sub_region_id, name, type, sort_order)
+select 'sub_region', s.id, 'Duche d''Uzes', 'AOC', 15
+from public.sub_regions s
+  join public.regions r on r.id = s.region_id
+  join public.countries c on c.id = r.country_id
+  where c.name = 'France' and r.name = 'Vallee du Rhone' and s.name = 'Rhone Sud'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Duche d''Uzes' and a.level = 'sub_region' and a.sub_region_id = s.id);
+
+insert into public.appellations (level, sub_region_id, name, type, sort_order)
+select 'sub_region', s.id, 'Cotes du Rhone Villages', 'AOC', 16
 from public.sub_regions s
   join public.regions r on r.id = s.region_id
   join public.countries c on c.id = r.country_id
   where c.name = 'France' and r.name = 'Vallee du Rhone' and s.name = 'Rhone Sud'
   and not exists (select 1 from public.appellations a
     where a.name = 'Cotes du Rhone Villages' and a.level = 'sub_region' and a.sub_region_id = s.id);
+
+insert into public.sub_regions (region_id, name, sort_order)
+select r.id, 'Diois', 2
+from public.regions r join public.countries c on c.id = r.country_id
+where c.name = 'France' and r.name = 'Vallee du Rhone'
+on conflict (region_id, name) do update set sort_order = excluded.sort_order;
+
+insert into public.appellations (level, sub_region_id, name, type, sort_order)
+select 'sub_region', s.id, 'Clairette de Die', 'AOC', 0
+from public.sub_regions s
+  join public.regions r on r.id = s.region_id
+  join public.countries c on c.id = r.country_id
+  where c.name = 'France' and r.name = 'Vallee du Rhone' and s.name = 'Diois'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Clairette de Die' and a.level = 'sub_region' and a.sub_region_id = s.id);
+
+insert into public.appellations (level, sub_region_id, name, type, sort_order)
+select 'sub_region', s.id, 'Cremant de Die', 'AOC', 1
+from public.sub_regions s
+  join public.regions r on r.id = s.region_id
+  join public.countries c on c.id = r.country_id
+  where c.name = 'France' and r.name = 'Vallee du Rhone' and s.name = 'Diois'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Cremant de Die' and a.level = 'sub_region' and a.sub_region_id = s.id);
+
+insert into public.appellations (level, sub_region_id, name, type, sort_order)
+select 'sub_region', s.id, 'Chatillon-en-Diois', 'AOC', 2
+from public.sub_regions s
+  join public.regions r on r.id = s.region_id
+  join public.countries c on c.id = r.country_id
+  where c.name = 'France' and r.name = 'Vallee du Rhone' and s.name = 'Diois'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Chatillon-en-Diois' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Vallee de la Loire', 7 from public.countries c where c.name = 'France'

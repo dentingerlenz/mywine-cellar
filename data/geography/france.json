@@ -678,6 +678,14 @@
         {
           "name": "Champagne",
           "type": "AOC"
+        },
+        {
+          "name": "Coteaux Champenois",
+          "type": "AOC"
+        },
+        {
+          "name": "Rose des Riceys",
+          "type": "AOC"
         }
       ],
       "subRegions": [
@@ -719,12 +727,12 @@
       "name": "Vallee du Rhone",
       "appellations": [
         {
-          "name": "Mediterranee",
-          "type": "IGP"
-        },
-        {
           "name": "Cotes du Rhone",
           "type": "AOC"
+        },
+        {
+          "name": "Mediterranee",
+          "type": "IGP"
         }
       ],
       "subRegions": [
@@ -781,7 +789,19 @@
               "type": "AOC"
             },
             {
+              "name": "Vinsobres",
+              "type": "AOC"
+            },
+            {
+              "name": "Cairanne",
+              "type": "AOC"
+            },
+            {
               "name": "Beaumes-de-Venise",
+              "type": "AOC"
+            },
+            {
+              "name": "Muscat de Beaumes de Venise",
               "type": "AOC"
             },
             {
@@ -805,11 +825,40 @@
               "type": "AOC"
             },
             {
+              "name": "Costieres de Nimes",
+              "type": "AOC"
+            },
+            {
               "name": "Grignan-les-Adhemar",
               "type": "AOC"
             },
             {
+              "name": "Cotes du Vivarais",
+              "type": "AOC"
+            },
+            {
+              "name": "Duche d'Uzes",
+              "type": "AOC"
+            },
+            {
               "name": "Cotes du Rhone Villages",
+              "type": "AOC"
+            }
+          ]
+        },
+        {
+          "name": "Diois",
+          "appellations": [
+            {
+              "name": "Clairette de Die",
+              "type": "AOC"
+            },
+            {
+              "name": "Cremant de Die",
+              "type": "AOC"
+            },
+            {
+              "name": "Chatillon-en-Diois",
               "type": "AOC"
             }
           ]
