@@ -6,7 +6,7 @@
 > federdoc, TTB, …). Ziel laut Plan §5.3 (max. Tiefe): ~1'800–2'200 Appellationen.
 > „Offiziell" = Soll-Zahl laut Register; „Lücke" heißt erfasst < offiziell.
 
-Stand: 2026-07-14 · **51 Länder (3 verifiziert) · 1457 Appellationen**
+Stand: 2026-07-14 · **51 Länder (4 verifiziert) · 1540 Appellationen**
 
 | Land | Regionen | Sub-Regionen | Erfasst | Offiziell | Geprüft am | Status |
 |---|---|---|---|---|---|---|
@@ -53,7 +53,7 @@ Stand: 2026-07-14 · **51 Länder (3 verifiziert) · 1457 Appellationen**
 | Slovakia | 6 | 6 | 6 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Slovenia | 3 | 9 | 9 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | South Africa | 3 | 12 | 17 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
-| Spain | 14 | 49 | 66 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
+| Spain | 17 | 0 | 149 | 149 | 2026-07-14 | ✅ verifiziert (MAPA Listado de DOP e IGP de vinos registradas en la UE (act. 02.07.2026)) |
 | Switzerland | 6 | 0 | 63 | 63 | 2026-07-14 | ✅ verifiziert (BLW/OFAG Schweizerisches Verzeichnis der kontrollierten Ursprungsbezeichnungen (AOC), Stand 1.1.2026) |
 | Thailand | 2 | 2 | 2 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Tunisia | 3 | 3 | 3 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
@@ -62,4 +62,4 @@ Stand: 2026-07-14 · **51 Länder (3 verifiziert) · 1457 Appellationen**
 | United States | 7 | 18 | 64 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Uruguay | 5 | 0 | 5 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 
-| **Gesamt** | **263** | **388** | **1457** | | | |
+| **Gesamt** | **266** | **339** | **1540** | | | |

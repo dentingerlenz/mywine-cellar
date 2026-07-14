@@ -85,7 +85,7 @@ const KNOWN_TYPES = new Set([
   "Anbaugebiet", "Bereich", "DAC", "Landwein", "Tafelwein",
   "VDP.Grosse Lage", "VDP.Erste Lage",
   // Spanien/Portugal
-  "DO", "DOCa", "DOP", "VP", "VdlT", "VR", "IG", "Vinho",
+  "DO", "DOCa", "DOP", "VP", "VC", "VdlT", "VR", "IG", "Vinho",
   // Neue Welt
   "AVA", "State designation", "National", "WO", "WO Region", "WO District",
   "WO Ward", "WO Geographical Unit", "GI", "State GI", "Broad GI",

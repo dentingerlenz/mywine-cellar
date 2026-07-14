@@ -13438,12 +13438,6 @@ insert into public.countries (name, code, continent, sort_order)
 values ('Spain', 'ES', 'Europe', 43)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
-insert into public.appellations (level, country_id, name, type, sort_order)
-select 'country', c.id, 'Vino de España', 'VdlT', 0
-from public.countries c where c.name = 'Spain'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Vino de España' and a.level = 'country' and a.country_id = c.id);
-
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Rioja', 0 from public.countries c where c.name = 'Spain'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
@@ -13456,164 +13450,764 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Rioja' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Rioja Alta', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Rioja'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Rioja Alavesa', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Rioja'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Rioja Oriental', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Rioja'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.regions (country_id, name, sort_order)
-select c.id, 'Priorat', 1 from public.countries c where c.name = 'Spain'
-on conflict (country_id, name) do update set sort_order = excluded.sort_order;
-
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Priorat', 'DOCa', 0
+select 'region', r.id, 'Valles de Sadacia', 'VdlT', 1
 from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Priorat'
+  where c.name = 'Spain' and r.name = 'Rioja'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Priorat' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Valles de Sadacia' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Cataluna', 2 from public.countries c where c.name = 'Spain'
+select c.id, 'Pais Vasco', 1 from public.countries c where c.name = 'Spain'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Cataluna', 'VdlT', 0
+select 'region', r.id, 'Arabako Txakolina', 'DO', 0
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Pais Vasco'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Arabako Txakolina' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bizkaiko Txakolina', 'DO', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Pais Vasco'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Bizkaiko Txakolina' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Getariako Txakolina', 'DO', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Pais Vasco'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Getariako Txakolina' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.regions (country_id, name, sort_order)
+select c.id, 'Navarra', 2 from public.countries c where c.name = 'Spain'
+on conflict (country_id, name) do update set sort_order = excluded.sort_order;
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, '3 Riberas', 'VdlT', 0
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Navarra'
+  and not exists (select 1 from public.appellations a
+    where a.name = '3 Riberas' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bolandin', 'VP', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Navarra'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Bolandin' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Navarra', 'DO', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Navarra'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Navarra' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Pago de Arinzano', 'VP', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Navarra'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Pago de Arinzano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Pago de Otazu', 'VP', 4
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Navarra'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Pago de Otazu' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Prado de Irache', 'VP', 5
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Navarra'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Prado de Irache' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ribera del Queiles', 'VdlT', 6
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Navarra'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ribera del Queiles' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.regions (country_id, name, sort_order)
+select c.id, 'Aragon', 3 from public.countries c where c.name = 'Spain'
+on conflict (country_id, name) do update set sort_order = excluded.sort_order;
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ayles', 'VP', 0
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Aragon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ayles' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bajo Aragon', 'VdlT', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Aragon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Bajo Aragon' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Calatayud', 'DO', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Aragon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Calatayud' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Campo de Borja', 'DO', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Aragon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Campo de Borja' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Carinena', 'DO', 4
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Aragon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Carinena' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ribera del Gallego - Cinco Villas', 'VdlT', 5
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Aragon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ribera del Gallego - Cinco Villas' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ribera del Jiloca', 'VdlT', 6
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Aragon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ribera del Jiloca' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Somontano', 'DO', 7
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Aragon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Somontano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Urbezo', 'DO', 8
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Aragon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Urbezo' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Valdejalon', 'VdlT', 9
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Aragon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Valdejalon' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Valle del Cinca', 'VdlT', 10
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Aragon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Valle del Cinca' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.regions (country_id, name, sort_order)
+select c.id, 'Cataluna', 4 from public.countries c where c.name = 'Spain'
+on conflict (country_id, name) do update set sort_order = excluded.sort_order;
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Alella', 'DO', 0
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Cataluna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Alella' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cataluna', 'DO', 1
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Spain' and r.name = 'Cataluna'
   and not exists (select 1 from public.appellations a
     where a.name = 'Cataluna' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Penedes', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Cataluna'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Penedes', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cava', 'DO', 2
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Cataluna' and s.name = 'Penedes'
+  where c.name = 'Spain' and r.name = 'Cataluna'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Penedes' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Cava' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Cava', 'DO', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Conca de Barbera', 'DO', 3
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Cataluna' and s.name = 'Penedes'
+  where c.name = 'Spain' and r.name = 'Cataluna'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Cava' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Conca de Barbera' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Montsant', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Cataluna'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Montsant', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Costers del Segre', 'DO', 4
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Cataluna' and s.name = 'Montsant'
+  where c.name = 'Spain' and r.name = 'Cataluna'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Montsant' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Costers del Segre' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Terra Alta', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Cataluna'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Terra Alta', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Emporda', 'DO', 5
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Cataluna' and s.name = 'Terra Alta'
+  where c.name = 'Spain' and r.name = 'Cataluna'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Terra Alta' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Emporda' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Costers del Segre', 3
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Cataluna'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Costers del Segre', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Montsant', 'DO', 6
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Cataluna' and s.name = 'Costers del Segre'
+  where c.name = 'Spain' and r.name = 'Cataluna'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Costers del Segre' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Montsant' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Conca de Barbera', 4
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Cataluna'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Conca de Barbera', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Penedes', 'DO', 7
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Cataluna' and s.name = 'Conca de Barbera'
+  where c.name = 'Spain' and r.name = 'Cataluna'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Conca de Barbera' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Penedes' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Alella', 5
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Cataluna'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Alella', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Pla de Bages', 'DO', 8
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Cataluna' and s.name = 'Alella'
+  where c.name = 'Spain' and r.name = 'Cataluna'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Alella' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Pla de Bages' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Tarragona', 6
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Cataluna'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Tarragona', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Priorat', 'DOCa', 9
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Cataluna' and s.name = 'Tarragona'
+  where c.name = 'Spain' and r.name = 'Cataluna'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Tarragona' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Priorat' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Tarragona', 'DO', 10
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Cataluna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Tarragona' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Terra Alta', 'DO', 11
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Cataluna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Terra Alta' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Galicia', 3 from public.countries c where c.name = 'Spain'
+select c.id, 'Castilla y Leon', 5 from public.countries c where c.name = 'Spain'
+on conflict (country_id, name) do update set sort_order = excluded.sort_order;
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Abadia Retuerta', 'VP', 0
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla y Leon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Abadia Retuerta' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Arlanza', 'DO', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla y Leon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Arlanza' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Arribes', 'DO', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla y Leon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Arribes' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bierzo', 'DO', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla y Leon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Bierzo' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Castilla y Leon', 'VdlT', 4
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla y Leon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Castilla y Leon' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cebreros', 'VC', 5
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla y Leon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Cebreros' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cigales', 'DO', 6
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla y Leon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Cigales' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Dehesa Penalba', 'VP', 7
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla y Leon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Dehesa Penalba' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Leon', 'DO', 8
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla y Leon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Leon' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ribera del Duero', 'DO', 9
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla y Leon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ribera del Duero' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rueda', 'DO', 10
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla y Leon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Rueda' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Sierra de Salamanca', 'VC', 11
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla y Leon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Sierra de Salamanca' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Tierra del Vino de Zamora', 'DO', 12
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla y Leon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Tierra del Vino de Zamora' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Toro', 'DO', 13
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla y Leon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Toro' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Uruena', 'VP', 14
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla y Leon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Uruena' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Valles de Benavente', 'VC', 15
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla y Leon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Valles de Benavente' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Valtiendas', 'VC', 16
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla y Leon'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Valtiendas' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.regions (country_id, name, sort_order)
+select c.id, 'Castilla-La Mancha', 6 from public.countries c where c.name = 'Spain'
+on conflict (country_id, name) do update set sort_order = excluded.sort_order;
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Almansa', 'DO', 0
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Almansa' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Calzadilla', 'VP', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Calzadilla' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Campo de Calatrava', 'DO', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Campo de Calatrava' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Campo de La Guardia', 'VP', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Campo de La Guardia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Casa del Blanco', 'VP', 4
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Casa del Blanco' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Castilla', 'VdlT', 5
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Castilla' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Dehesa del Carrizal', 'VP', 6
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Dehesa del Carrizal' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Dominio de Valdepusa', 'VP', 7
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Dominio de Valdepusa' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'El Vicario', 'VP', 8
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'El Vicario' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Finca Elez', 'VP', 9
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Finca Elez' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Guijoso', 'VP', 10
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Guijoso' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'La Jaraba', 'VP', 11
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'La Jaraba' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'La Mancha', 'DO', 12
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'La Mancha' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Los Cerrillos', 'VP', 13
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Los Cerrillos' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Manchuela', 'DO', 14
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Manchuela' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Mentrida', 'DO', 15
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Mentrida' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Mondejar', 'DO', 16
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Mondejar' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Pago Florentino', 'VP', 17
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Pago Florentino' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ribera del Jucar', 'DO', 18
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ribera del Jucar' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rio Negro', 'VP', 19
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Rio Negro' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rosalejo', 'VP', 20
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Rosalejo' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ucles', 'DO', 21
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ucles' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Valdepenas', 'DO', 22
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Valdepenas' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vallegarcia', 'VP', 23
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Vallegarcia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.regions (country_id, name, sort_order)
+select c.id, 'Madrid', 7 from public.countries c where c.name = 'Spain'
+on conflict (country_id, name) do update set sort_order = excluded.sort_order;
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vinos de Madrid', 'DO', 0
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Madrid'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Vinos de Madrid' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.regions (country_id, name, sort_order)
+select c.id, 'Valencia', 8 from public.countries c where c.name = 'Spain'
+on conflict (country_id, name) do update set sort_order = excluded.sort_order;
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Alicante', 'DO', 0
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Valencia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Alicante' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Castello', 'VdlT', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Valencia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Castello' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Chozas Carrascal', 'VP', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Valencia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Chozas Carrascal' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'El Terrerazo', 'VP', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Valencia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'El Terrerazo' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Los Balagueses', 'VP', 4
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Valencia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Los Balagueses' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Tharsys', 'VP', 5
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Valencia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Tharsys' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Utiel-Requena', 'DO', 6
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Valencia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Utiel-Requena' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Valencia', 'DO', 7
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Valencia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Valencia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vera de Estenas', 'VP', 8
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Valencia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Vera de Estenas' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.regions (country_id, name, sort_order)
+select c.id, 'Murcia', 9 from public.countries c where c.name = 'Spain'
+on conflict (country_id, name) do update set sort_order = excluded.sort_order;
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bullas', 'DO', 0
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Murcia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Bullas' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Campo de Cartagena', 'VdlT', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Murcia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Campo de Cartagena' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Jumilla', 'DO', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Murcia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Jumilla' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Murcia', 'VdlT', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Murcia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Murcia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Yecla', 'DO', 4
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Murcia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Yecla' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.regions (country_id, name, sort_order)
+select c.id, 'Galicia', 10 from public.countries c where c.name = 'Spain'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
@@ -13624,485 +14218,112 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Barbanza e Iria' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Rias Baixas', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Galicia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Rias Baixas', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Betanzos', 'VdlT', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Galicia' and s.name = 'Rias Baixas'
+  where c.name = 'Spain' and r.name = 'Galicia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Rias Baixas' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Betanzos' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Ribeiro', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Galicia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Ribeiro', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Monterrei', 'DO', 2
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Galicia' and s.name = 'Ribeiro'
+  where c.name = 'Spain' and r.name = 'Galicia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Ribeiro' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Monterrei' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Ribeira Sacra', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Galicia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Ribeira Sacra', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rias Baixas', 'DO', 3
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Galicia' and s.name = 'Ribeira Sacra'
+  where c.name = 'Spain' and r.name = 'Galicia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Ribeira Sacra' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Rias Baixas' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Monterrei', 3
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Galicia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Monterrei', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ribeira Sacra', 'DO', 4
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Galicia' and s.name = 'Monterrei'
+  where c.name = 'Spain' and r.name = 'Galicia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Monterrei' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Ribeira Sacra' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Valdeorras', 4
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Galicia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Valdeorras', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ribeiras do Morrazo', 'VdlT', 5
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Galicia' and s.name = 'Valdeorras'
+  where c.name = 'Spain' and r.name = 'Galicia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Valdeorras' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Ribeiras do Morrazo' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ribeiro', 'DO', 6
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Galicia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ribeiro' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Terras do Navia', 'VdlT', 7
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Galicia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Terras do Navia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Valdeorras', 'DO', 8
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Galicia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Valdeorras' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Valle del Mino-Ourense', 'VdlT', 9
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Galicia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Valle del Mino-Ourense' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Castilla y Leon', 4 from public.countries c where c.name = 'Spain'
+select c.id, 'Asturias', 11 from public.countries c where c.name = 'Spain'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Castilla y Leon', 'VdlT', 0
+select 'region', r.id, 'Cangas', 'VC', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Castilla y Leon'
+  where c.name = 'Spain' and r.name = 'Asturias'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Castilla y Leon' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Ribera del Duero', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Castilla y Leon'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Ribera del Duero', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Castilla y Leon' and s.name = 'Ribera del Duero'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Ribera del Duero' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Rueda', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Castilla y Leon'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Rueda', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Castilla y Leon' and s.name = 'Rueda'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Rueda' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Toro', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Castilla y Leon'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Toro', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Castilla y Leon' and s.name = 'Toro'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Toro' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Bierzo', 3
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Castilla y Leon'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Bierzo', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Castilla y Leon' and s.name = 'Bierzo'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Bierzo' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Cigales', 4
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Castilla y Leon'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Cigales', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Castilla y Leon' and s.name = 'Cigales'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Cigales' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Arribes', 5
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Castilla y Leon'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Arribes', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Castilla y Leon' and s.name = 'Arribes'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Arribes' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Cangas' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Castilla-La Mancha', 5 from public.countries c where c.name = 'Spain'
+select c.id, 'Cantabria', 12 from public.countries c where c.name = 'Spain'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Castilla', 'VdlT', 0
+select 'region', r.id, 'Costa de Cantabria', 'VdlT', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
+  where c.name = 'Spain' and r.name = 'Cantabria'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Castilla' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'La Mancha', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'La Mancha', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Castilla-La Mancha' and s.name = 'La Mancha'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'La Mancha' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Valdepenas', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Valdepenas', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Castilla-La Mancha' and s.name = 'Valdepenas'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Valdepenas' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Jumilla', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Jumilla', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Castilla-La Mancha' and s.name = 'Jumilla'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Jumilla' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Yecla', 3
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Yecla', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Castilla-La Mancha' and s.name = 'Yecla'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Yecla' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Almansa', 4
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Almansa', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Castilla-La Mancha' and s.name = 'Almansa'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Almansa' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Manchuela', 5
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Manchuela', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Castilla-La Mancha' and s.name = 'Manchuela'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Manchuela' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Ucles', 6
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Castilla-La Mancha'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Ucles', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Castilla-La Mancha' and s.name = 'Ucles'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Ucles' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.regions (country_id, name, sort_order)
-select c.id, 'Valencia', 6 from public.countries c where c.name = 'Spain'
-on conflict (country_id, name) do update set sort_order = excluded.sort_order;
+    where a.name = 'Costa de Cantabria' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Valencia', 'DO', 0
+select 'region', r.id, 'Liebana', 'VdlT', 1
 from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Valencia'
+  where c.name = 'Spain' and r.name = 'Cantabria'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Valencia' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Utiel-Requena', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Valencia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Utiel-Requena', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Valencia' and s.name = 'Utiel-Requena'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Utiel-Requena' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Alicante', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Valencia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Alicante', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Valencia' and s.name = 'Alicante'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Alicante' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Liebana' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Aragon', 7 from public.countries c where c.name = 'Spain'
-on conflict (country_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Bajo Aragon', 'VdlT', 0
-from public.regions r
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Aragon'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Bajo Aragon' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Campo de Borja', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Aragon'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Campo de Borja', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Aragon' and s.name = 'Campo de Borja'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Campo de Borja' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Carinena', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Aragon'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Carinena', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Aragon' and s.name = 'Carinena'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Carinena' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Calatayud', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Aragon'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Calatayud', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Aragon' and s.name = 'Calatayud'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Calatayud' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Somontano', 3
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Aragon'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Somontano', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Aragon' and s.name = 'Somontano'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Somontano' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.regions (country_id, name, sort_order)
-select c.id, 'Navarra', 8 from public.countries c where c.name = 'Spain'
-on conflict (country_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Navarra', 'DO', 0
-from public.regions r
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Navarra'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Navarra' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Pago de Arinzano', 'VP', 1
-from public.regions r
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Navarra'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Pago de Arinzano' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.regions (country_id, name, sort_order)
-select c.id, 'Pais Vasco', 9 from public.countries c where c.name = 'Spain'
-on conflict (country_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Getaria', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Pais Vasco'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Txakoli de Getaria', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Pais Vasco' and s.name = 'Getaria'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Txakoli de Getaria' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Bizkaia', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Pais Vasco'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Txakoli de Bizkaia', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Pais Vasco' and s.name = 'Bizkaia'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Txakoli de Bizkaia' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Alava', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Pais Vasco'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Txakoli de Alava', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Pais Vasco' and s.name = 'Alava'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Txakoli de Alava' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.regions (country_id, name, sort_order)
-select c.id, 'Extremadura', 10 from public.countries c where c.name = 'Spain'
+select c.id, 'Extremadura', 13 from public.countries c where c.name = 'Spain'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
@@ -14113,259 +14334,369 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Extremadura' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Guadiana', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Extremadura'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Ribera del Guadiana', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ribera del Guadiana', 'DO', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Extremadura' and s.name = 'Guadiana'
+  where c.name = 'Spain' and r.name = 'Extremadura'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Ribera del Guadiana' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Ribera del Guadiana' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Andalucia', 11 from public.countries c where c.name = 'Spain'
+select c.id, 'Andalucia', 14 from public.countries c where c.name = 'Spain'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Cadiz', 'VdlT', 0
+select 'region', r.id, 'Altiplano de Sierra Nevada', 'VdlT', 0
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Andalucia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Altiplano de Sierra Nevada' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bailen', 'VdlT', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Andalucia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Bailen' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cadiz', 'VdlT', 2
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Spain' and r.name = 'Andalucia'
   and not exists (select 1 from public.appellations a
     where a.name = 'Cadiz' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Jerez', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Andalucia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Jerez-Xeres-Sherry', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Condado de Huelva', 'DO', 3
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Andalucia' and s.name = 'Jerez'
+  where c.name = 'Spain' and r.name = 'Andalucia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Jerez-Xeres-Sherry' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Condado de Huelva' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Sanlucar', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Andalucia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Manzanilla-Sanlucar de Barrameda', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cordoba', 'VdlT', 4
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Andalucia' and s.name = 'Sanlucar'
+  where c.name = 'Spain' and r.name = 'Andalucia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Manzanilla-Sanlucar de Barrameda' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Cordoba' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Montilla', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Andalucia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Montilla-Moriles', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cumbres del Guadalfeo', 'VdlT', 5
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Andalucia' and s.name = 'Montilla'
+  where c.name = 'Spain' and r.name = 'Andalucia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Montilla-Moriles' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Cumbres del Guadalfeo' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Malaga', 3
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Andalucia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Malaga', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Desierto de Almeria', 'VdlT', 6
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Andalucia' and s.name = 'Malaga'
+  where c.name = 'Spain' and r.name = 'Andalucia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Malaga' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Desierto de Almeria' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Sierras de Malaga', 'DO', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Granada', 'DO', 7
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Andalucia' and s.name = 'Malaga'
+  where c.name = 'Spain' and r.name = 'Andalucia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Sierras de Malaga' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Granada' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Jerez-Xeres-Sherry', 'DO', 8
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Andalucia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Jerez-Xeres-Sherry' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Laderas del Genil', 'VdlT', 9
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Andalucia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Laderas del Genil' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Laujar-Alpujarra', 'VdlT', 10
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Andalucia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Laujar-Alpujarra' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Lebrija', 'VC', 11
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Andalucia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Lebrija' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Los Palacios', 'VdlT', 12
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Andalucia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Los Palacios' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Malaga', 'DO', 13
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Andalucia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Malaga' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Manzanilla-Sanlucar de Barrameda', 'DO', 14
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Andalucia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Manzanilla-Sanlucar de Barrameda' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Montilla-Moriles', 'DO', 15
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Andalucia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Montilla-Moriles' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Norte de Almeria', 'VdlT', 16
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Andalucia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Norte de Almeria' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ribera del Andarax', 'VdlT', 17
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Andalucia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ribera del Andarax' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Sierra Norte de Sevilla', 'VdlT', 18
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Andalucia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Sierra Norte de Sevilla' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Sierra Sur de Jaen', 'VdlT', 19
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Andalucia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Sierra Sur de Jaen' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Sierras de Las Estancias y Los Filabres', 'VdlT', 20
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Andalucia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Sierras de Las Estancias y Los Filabres' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Sierras de Malaga', 'DO', 21
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Andalucia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Sierras de Malaga' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Torreperogil', 'VdlT', 22
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Andalucia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Torreperogil' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Villaviciosa de Cordoba', 'VdlT', 23
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Andalucia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Villaviciosa de Cordoba' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Islas Canarias', 12 from public.countries c where c.name = 'Spain'
+select c.id, 'Islas Baleares', 15 from public.countries c where c.name = 'Spain'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'El Hierro', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Islas Canarias'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'El Hierro', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Binissalem', 'DO', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Islas Canarias' and s.name = 'El Hierro'
+  where c.name = 'Spain' and r.name = 'Islas Baleares'
   and not exists (select 1 from public.appellations a
-    where a.name = 'El Hierro' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Binissalem' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'La Palma', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Islas Canarias'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'La Palma', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Formentera', 'VdlT', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Islas Canarias' and s.name = 'La Palma'
+  where c.name = 'Spain' and r.name = 'Islas Baleares'
   and not exists (select 1 from public.appellations a
-    where a.name = 'La Palma' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Formentera' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'La Gomera', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Islas Canarias'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'La Gomera', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ibiza', 'VdlT', 2
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Islas Canarias' and s.name = 'La Gomera'
+  where c.name = 'Spain' and r.name = 'Islas Baleares'
   and not exists (select 1 from public.appellations a
-    where a.name = 'La Gomera' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Ibiza' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Tenerife', 3
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Islas Canarias'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Abona', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Illes Balears', 'VdlT', 3
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Islas Canarias' and s.name = 'Tenerife'
+  where c.name = 'Spain' and r.name = 'Islas Baleares'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Abona' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Illes Balears' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Tacoronte-Acentejo', 'DO', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Isla de Menorca', 'VdlT', 4
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Islas Canarias' and s.name = 'Tenerife'
+  where c.name = 'Spain' and r.name = 'Islas Baleares'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Tacoronte-Acentejo' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Isla de Menorca' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Valle de Güimar', 'DO', 2
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Mallorca', 'VdlT', 5
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Islas Canarias' and s.name = 'Tenerife'
+  where c.name = 'Spain' and r.name = 'Islas Baleares'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Valle de Güimar' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Mallorca' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Valle de la Orotava', 'DO', 3
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Pla i Llevant', 'DO', 6
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Islas Canarias' and s.name = 'Tenerife'
+  where c.name = 'Spain' and r.name = 'Islas Baleares'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Valle de la Orotava' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Pla i Llevant' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Ycoden-Daute-Isora', 'DO', 4
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Serra de Tramuntana-Costa Nord', 'VdlT', 7
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Islas Canarias' and s.name = 'Tenerife'
+  where c.name = 'Spain' and r.name = 'Islas Baleares'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Ycoden-Daute-Isora' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Gran Canaria', 4
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Islas Canarias'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Gran Canaria', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Islas Canarias' and s.name = 'Gran Canaria'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Gran Canaria' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Lanzarote', 5
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Islas Canarias'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Lanzarote', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Islas Canarias' and s.name = 'Lanzarote'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Lanzarote' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Serra de Tramuntana-Costa Nord' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Islas Baleares', 13 from public.countries c where c.name = 'Spain'
+select c.id, 'Islas Canarias', 16 from public.countries c where c.name = 'Spain'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Mallorca', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Spain' and r.name = 'Islas Baleares'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Binissalem Mallorca', 'DO', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Abona', 'DO', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Islas Baleares' and s.name = 'Mallorca'
+  where c.name = 'Spain' and r.name = 'Islas Canarias'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Binissalem Mallorca' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Abona' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Pla i Llevant', 'DO', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'El Hierro', 'DO', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Spain' and r.name = 'Islas Baleares' and s.name = 'Mallorca'
+  where c.name = 'Spain' and r.name = 'Islas Canarias'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Pla i Llevant' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'El Hierro' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Gran Canaria', 'DO', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Islas Canarias'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Gran Canaria' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Islas Canarias', 'VC', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Islas Canarias'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Islas Canarias' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'La Gomera', 'DO', 4
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Islas Canarias'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'La Gomera' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'La Palma', 'DO', 5
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Islas Canarias'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'La Palma' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Lanzarote', 'DO', 6
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Islas Canarias'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Lanzarote' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Tacoronte-Acentejo', 'DO', 7
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Islas Canarias'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Tacoronte-Acentejo' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Valle de Guimar', 'DO', 8
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Islas Canarias'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Valle de Guimar' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Valle de la Orotava', 'DO', 9
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Islas Canarias'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Valle de la Orotava' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ycoden-Daute-Isora', 'DO', 10
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Spain' and r.name = 'Islas Canarias'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ycoden-Daute-Isora' and a.level = 'region' and a.region_id = r.id);
 
 -- ── Switzerland ───────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
