@@ -6,7 +6,7 @@
 > federdoc, TTB, …). Ziel laut Plan §5.3 (max. Tiefe): ~1'800–2'200 Appellationen.
 > „Offiziell" = Soll-Zahl laut Register; „Lücke" heißt erfasst < offiziell.
 
-Stand: 2026-07-14 · **51 Länder (1 verifiziert) · 1016 Appellationen**
+Stand: 2026-07-14 · **51 Länder (2 verifiziert) · 1417 Appellationen**
 
 | Land | Regionen | Sub-Regionen | Erfasst | Offiziell | Geprüft am | Status |
 |---|---|---|---|---|---|---|
@@ -35,7 +35,7 @@ Stand: 2026-07-14 · **51 Länder (1 verifiziert) · 1016 Appellationen**
 | Hungary | 9 | 1 | 9 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | India | 3 | 4 | 4 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Israel | 5 | 5 | 5 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
-| Italy | 20 | 49 | 121 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
+| Italy | 20 | 0 | 522 | 522 | 2026-07-14 | ✅ verifiziert (MASAF Elenco DOP vini (agg. 18.03.2026), MASAF Elenco IGP vini (agg. 13.05.2026)) |
 | Japan | 5 | 5 | 5 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Kenya | 1 | 1 | 1 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Lebanon | 2 | 2 | 2 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
@@ -62,4 +62,4 @@ Stand: 2026-07-14 · **51 Länder (1 verifiziert) · 1016 Appellationen**
 | United States | 7 | 18 | 64 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Uruguay | 5 | 0 | 5 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 
-| **Gesamt** | **263** | **459** | **1016** | | | |
+| **Gesamt** | **263** | **410** | **1417** | | | |

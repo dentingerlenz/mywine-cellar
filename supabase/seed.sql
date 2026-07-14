@@ -7262,26 +7262,44 @@ insert into public.countries (name, code, continent, sort_order)
 values ('Italy', 'IT', 'Europe', 25)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
-insert into public.appellations (level, country_id, name, type, sort_order)
-select 'country', c.id, 'Vino d''Italia', 'IGT', 0
-from public.countries c where c.name = 'Italy'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Vino d''Italia' and a.level = 'country' and a.country_id = c.id);
-
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Piemonte', 0 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Barolo', 'DOCG', 0
+select 'region', r.id, 'Alba', 'DOC', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Piemonte'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Barolo' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Alba' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Barbaresco', 'DOCG', 1
+select 'region', r.id, 'Albugnano', 'DOC', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Albugnano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Alta Langa', 'DOCG', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Alta Langa' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Asti', 'DOCG', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Asti' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Barbaresco', 'DOCG', 4
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Piemonte'
@@ -7289,15 +7307,7 @@ from public.regions r
     where a.name = 'Barbaresco' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Barbera d''Asti', 'DOCG', 2
-from public.regions r
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Piemonte'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Barbera d''Asti' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Barbera d''Alba', 'DOC', 3
+select 'region', r.id, 'Barbera d''Alba', 'DOC', 5
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Piemonte'
@@ -7305,63 +7315,151 @@ from public.regions r
     where a.name = 'Barbera d''Alba' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Dolcetto d''Alba', 'DOC', 4
+select 'region', r.id, 'Barbera d''Asti', 'DOCG', 6
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Piemonte'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Dolcetto d''Alba' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Barbera d''Asti' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Moscato d''Asti', 'DOCG', 5
+select 'region', r.id, 'Barbera del Monferrato', 'DOC', 7
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Piemonte'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Moscato d''Asti' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Barbera del Monferrato' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Asti Spumante', 'DOCG', 6
+select 'region', r.id, 'Barbera del Monferrato Superiore', 'DOCG', 8
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Piemonte'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Asti Spumante' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Barbera del Monferrato Superiore' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Gavi', 'DOCG', 7
+select 'region', r.id, 'Barolo', 'DOCG', 9
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Piemonte'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Gavi' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Barolo' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Roero', 'DOCG', 8
+select 'region', r.id, 'Boca', 'DOC', 10
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Piemonte'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Roero' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Boca' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Langhe', 'DOC', 9
+select 'region', r.id, 'Brachetto d''Acqui Acqui', 'DOCG', 11
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Piemonte'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Langhe' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Brachetto d''Acqui Acqui' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Nebbiolo d''Alba', 'DOC', 10
+select 'region', r.id, 'Bramaterra', 'DOC', 12
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Piemonte'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Nebbiolo d''Alba' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Bramaterra' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Dogliani', 'DOCG', 11
+select 'region', r.id, 'Calosso', 'DOC', 13
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Calosso' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Canavese', 'DOC', 14
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Canavese' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Canelli', 'DOCG', 15
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Canelli' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Carema', 'DOC', 16
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Carema' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cisterna d''Asti', 'DOC', 17
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Cisterna d''Asti' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli Tortonesi', 'DOC', 18
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli Tortonesi' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Collina Torinese', 'DOC', 19
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Collina Torinese' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colline Novaresi', 'DOC', 20
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colline Novaresi' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colline Saluzzesi', 'DOC', 21
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colline Saluzzesi' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cortese dell''Alto Monferrato', 'DOC', 22
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Cortese dell''Alto Monferrato' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Coste della Sesia', 'DOC', 23
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Coste della Sesia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Dogliani', 'DOCG', 24
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Piemonte'
@@ -7369,15 +7467,95 @@ from public.regions r
     where a.name = 'Dogliani' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Ghemme', 'DOCG', 12
+select 'region', r.id, 'Dolcetto d''Acqui', 'DOC', 25
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Piemonte'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Ghemme' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Dolcetto d''Acqui' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Gattinara', 'DOCG', 13
+select 'region', r.id, 'Dolcetto d''Alba', 'DOC', 26
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Dolcetto d''Alba' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Dolcetto d''Asti', 'DOC', 27
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Dolcetto d''Asti' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Dolcetto di Diano d''Alba', 'DOCG', 28
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Dolcetto di Diano d''Alba' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Dolcetto di Ovada', 'DOC', 29
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Dolcetto di Ovada' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Dolcetto di Ovada Superiore', 'DOCG', 30
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Dolcetto di Ovada Superiore' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Erbaluce di Caluso', 'DOCG', 31
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Erbaluce di Caluso' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Fara', 'DOC', 32
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Fara' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Freisa d''Asti', 'DOC', 33
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Freisa d''Asti' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Freisa di Chieri', 'DOC', 34
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Freisa di Chieri' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Gabiano', 'DOC', 35
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Gabiano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Gattinara', 'DOCG', 36
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Piemonte'
@@ -7385,39 +7563,303 @@ from public.regions r
     where a.name = 'Gattinara' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Brachetto d''Acqui', 'DOCG', 14
+select 'region', r.id, 'Gavi', 'DOCG', 37
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Piemonte'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Brachetto d''Acqui' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Gavi' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ghemme', 'DOCG', 38
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ghemme' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Grignolino d''Asti', 'DOC', 39
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Grignolino d''Asti' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Grignolino del Monferrato Casalese', 'DOC', 40
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Grignolino del Monferrato Casalese' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Langhe', 'DOC', 41
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Langhe' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Lessona', 'DOC', 42
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Lessona' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Loazzolo', 'DOC', 43
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Loazzolo' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Malvasia di Casorzo', 'DOC', 44
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Malvasia di Casorzo' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Malvasia di Castelnuovo Don Bosco', 'DOC', 45
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Malvasia di Castelnuovo Don Bosco' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Monferrato', 'DOC', 46
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Monferrato' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Nebbiolo d''Alba', 'DOC', 47
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Nebbiolo d''Alba' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Nizza', 'DOCG', 48
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Nizza' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Piemonte', 'DOC', 49
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Piemonte' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Pinerolese', 'DOC', 50
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Pinerolese' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Roero', 'DOCG', 51
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Roero' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rubino di Cantavenna', 'DOC', 52
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Rubino di Cantavenna' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ruche di Castagnole Monferrato', 'DOCG', 53
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ruche di Castagnole Monferrato' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Sizzano', 'DOC', 54
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Sizzano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Strevi', 'DOC', 55
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Strevi' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Terre Alfieri', 'DOCG', 56
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Terre Alfieri' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Valli Ossolane', 'DOC', 57
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Valli Ossolane' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Valsusa', 'DOC', 58
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Valsusa' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Verduno Pelaverga', 'DOC', 59
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Piemonte'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Verduno Pelaverga' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Valle d''Aosta', 1 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Valle d''Aosta', 'DOC', 0
+select 'region', r.id, 'Valle d''Aosta Vallee d''Aoste', 'DOC', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Valle d''Aosta'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Valle d''Aosta' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Valle d''Aosta Vallee d''Aoste' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Lombardia', 2 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Lombardia', 'IGT', 0
+select 'region', r.id, 'Alpi Retiche', 'IGT', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Lombardia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Lombardia' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Alpi Retiche' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Franciacorta', 'DOCG', 1
+select 'region', r.id, 'Alto Mincio', 'IGT', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Alto Mincio' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Benaco Bresciano', 'IGT', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Benaco Bresciano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bergamasca', 'IGT', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Bergamasca' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bonarda dell''Oltrepo Pavese', 'DOC', 4
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Bonarda dell''Oltrepo Pavese' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Botticino', 'DOC', 5
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Botticino' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Buttafuoco dell''Oltrepo Pavese', 'DOC', 6
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Buttafuoco dell''Oltrepo Pavese' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Capriano del Colle', 'DOC', 7
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Capriano del Colle' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Casteggio', 'DOC', 8
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Casteggio' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cellatica', 'DOC', 9
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Cellatica' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Collina del Milanese', 'IGT', 10
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Collina del Milanese' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Curtefranca', 'DOC', 11
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Curtefranca' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Franciacorta', 'DOCG', 12
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Lombardia'
@@ -7425,7 +7867,31 @@ from public.regions r
     where a.name = 'Franciacorta' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Lugana', 'DOC', 2
+select 'region', r.id, 'Garda', 'DOC', 13
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Garda' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Garda Colli Mantovani', 'DOC', 14
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Garda Colli Mantovani' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Lambrusco Mantovano', 'DOC', 15
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Lambrusco Mantovano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Lugana', 'DOC', 16
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Lombardia'
@@ -7433,303 +7899,768 @@ from public.regions r
     where a.name = 'Lugana' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Oltrepo Pavese', 'DOC', 3
+select 'region', r.id, 'Montenetto di Brescia', 'IGT', 17
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Montenetto di Brescia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Moscato di Scanzo', 'DOCG', 18
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Moscato di Scanzo' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Oltrepo Pavese', 'DOC', 19
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Lombardia'
   and not exists (select 1 from public.appellations a
     where a.name = 'Oltrepo Pavese' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Valtellina', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Lombardia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Valtellina Superiore', 'DOCG', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Oltrepo Pavese metodo classico', 'DOCG', 20
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Lombardia' and s.name = 'Valtellina'
+  where c.name = 'Italy' and r.name = 'Lombardia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Valtellina Superiore' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Oltrepo Pavese metodo classico' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Sforzato di Valtellina', 'DOCG', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Oltrepo Pavese Pinot grigio', 'DOC', 21
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Lombardia' and s.name = 'Valtellina'
+  where c.name = 'Italy' and r.name = 'Lombardia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Sforzato di Valtellina' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Oltrepo Pavese Pinot grigio' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Pinot nero dell''Oltrepo Pavese', 'DOC', 22
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Pinot nero dell''Oltrepo Pavese' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Provincia di Mantova', 'IGT', 23
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Provincia di Mantova' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Provincia di Pavia', 'IGT', 24
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Provincia di Pavia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Quistello', 'IGT', 25
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Quistello' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Riviera del Garda Classico', 'DOC', 26
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Riviera del Garda Classico' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ronchi di Brescia', 'IGT', 27
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ronchi di Brescia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ronchi Varesini', 'IGT', 28
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ronchi Varesini' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rosso di Valtellina', 'DOC', 29
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Rosso di Valtellina' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Sabbioneta', 'IGT', 30
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Sabbioneta' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'San Colombano al Lambro', 'DOC', 31
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'San Colombano al Lambro' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'San Martino della Battaglia', 'DOC', 32
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'San Martino della Battaglia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Sangue di Giuda dell''Oltrepo Pavese', 'DOC', 33
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Sangue di Giuda dell''Oltrepo Pavese' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Sebino', 'IGT', 34
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Sebino' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Sforzato di Valtellina', 'DOCG', 35
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Sforzato di Valtellina' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Terre del Colleoni', 'DOC', 36
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Terre del Colleoni' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Terre Lariane', 'IGT', 37
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Terre Lariane' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Valcalepio', 'DOC', 38
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Valcalepio' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Valcamonica', 'IGT', 39
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Valcamonica' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Valtellina Superiore', 'DOCG', 40
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lombardia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Valtellina Superiore' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Trentino-Alto Adige', 3 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Delle Venezie', 'IGT', 0
+select 'region', r.id, 'Alto Adige', 'DOC', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Trentino-Alto Adige'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Delle Venezie' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Alto Adige' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Alto Adige', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Trentino-Alto Adige'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Alto Adige', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Casteller', 'DOC', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Trentino-Alto Adige' and s.name = 'Alto Adige'
+  where c.name = 'Italy' and r.name = 'Trentino-Alto Adige'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Alto Adige' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Casteller' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Trentino', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Trentino-Alto Adige'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Trentino', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Lago di Caldaro', 'DOC', 2
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Trentino-Alto Adige' and s.name = 'Trentino'
+  where c.name = 'Italy' and r.name = 'Trentino-Alto Adige'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Trentino' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Lago di Caldaro' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Teroldego Rotaliano', 'DOC', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Mitterberg', 'IGT', 3
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Trentino-Alto Adige' and s.name = 'Trentino'
+  where c.name = 'Italy' and r.name = 'Trentino-Alto Adige'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Teroldego Rotaliano' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Mitterberg' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Trento', 'DOC', 2
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Teroldego Rotaliano', 'DOC', 4
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Trentino-Alto Adige' and s.name = 'Trentino'
+  where c.name = 'Italy' and r.name = 'Trentino-Alto Adige'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Trento' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Teroldego Rotaliano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Trentino', 'DOC', 5
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Trentino-Alto Adige'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Trentino' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Trento', 'DOC', 6
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Trentino-Alto Adige'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Trento' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Valdadige', 'DOC', 7
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Trentino-Alto Adige'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Valdadige' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Valdadige Terradeiforti', 'DOC', 8
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Trentino-Alto Adige'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Valdadige Terradeiforti' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vallagarina', 'IGT', 9
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Trentino-Alto Adige'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Vallagarina' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vigneti delle Dolomiti', 'IGT', 10
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Trentino-Alto Adige'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Vigneti delle Dolomiti' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Veneto', 4 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Delle Venezie', 'IGT', 0
+select 'region', r.id, 'Amarone della Valpolicella', 'DOCG', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Veneto'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Delle Venezie' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Amarone della Valpolicella' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Valpolicella', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Veneto'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Amarone della Valpolicella', 'DOCG', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Arcole', 'DOC', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Veneto' and s.name = 'Valpolicella'
+  where c.name = 'Italy' and r.name = 'Veneto'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Amarone della Valpolicella' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Arcole' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Valpolicella', 'DOC', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Asolo Montello', 'DOC', 2
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Veneto' and s.name = 'Valpolicella'
+  where c.name = 'Italy' and r.name = 'Veneto'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Valpolicella' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Asolo Montello' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Valpolicella Ripasso', 'DOC', 2
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Asolo Prosecco', 'DOCG', 3
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Veneto' and s.name = 'Valpolicella'
+  where c.name = 'Italy' and r.name = 'Veneto'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Valpolicella Ripasso' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Asolo Prosecco' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Recioto della Valpolicella', 'DOCG', 3
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bagnoli di Sopra', 'DOC', 4
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Veneto' and s.name = 'Valpolicella'
+  where c.name = 'Italy' and r.name = 'Veneto'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Recioto della Valpolicella' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Bagnoli di Sopra' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Soave', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Veneto'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Soave', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bagnoli Friularo', 'DOCG', 5
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Veneto' and s.name = 'Soave'
+  where c.name = 'Italy' and r.name = 'Veneto'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Soave' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Bagnoli Friularo' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Soave Classico', 'DOCG', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bardolino', 'DOC', 6
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Veneto' and s.name = 'Soave'
+  where c.name = 'Italy' and r.name = 'Veneto'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Soave Classico' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Bardolino' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Recioto di Soave', 'DOCG', 2
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bardolino Superiore', 'DOCG', 7
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Veneto' and s.name = 'Soave'
+  where c.name = 'Italy' and r.name = 'Veneto'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Recioto di Soave' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Bardolino Superiore' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Garda', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Veneto'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Bardolino', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Breganze', 'DOC', 8
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Veneto' and s.name = 'Garda'
+  where c.name = 'Italy' and r.name = 'Veneto'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Bardolino' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Breganze' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Prosecco', 3
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Veneto'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Conegliano Valdobbiadene Prosecco Superiore', 'DOCG', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli Berici', 'DOC', 9
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Veneto' and s.name = 'Prosecco'
+  where c.name = 'Italy' and r.name = 'Veneto'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Conegliano Valdobbiadene Prosecco Superiore' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Colli Berici' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Prosecco', 'DOC', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli di Conegliano', 'DOCG', 10
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Veneto' and s.name = 'Prosecco'
+  where c.name = 'Italy' and r.name = 'Veneto'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Prosecco' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Colli di Conegliano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli Euganei', 'DOC', 11
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli Euganei' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli Euganei Fior d''Arancio', 'DOCG', 12
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli Euganei Fior d''Arancio' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli Trevigiani', 'IGT', 13
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli Trevigiani' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Conegliano Valdobbiadene Prosecco', 'DOCG', 14
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Conegliano Valdobbiadene Prosecco' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Conselvano', 'IGT', 15
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Conselvano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Corti Benedettine del Padovano', 'DOC', 16
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Corti Benedettine del Padovano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Custoza', 'DOC', 17
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Custoza' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Gambellara', 'DOC', 18
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Gambellara' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Lessini Durello', 'DOC', 19
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Lessini Durello' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Marca Trevigiana', 'IGT', 20
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Marca Trevigiana' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Merlara', 'DOC', 21
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Merlara' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Montello Rosso', 'DOCG', 22
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Montello Rosso' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Monti Lessini', 'DOC', 23
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Monti Lessini' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Piave', 'DOC', 24
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Piave' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Piave Malanotte', 'DOCG', 25
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Piave Malanotte' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Recioto della Valpolicella', 'DOCG', 26
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Recioto della Valpolicella' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Recioto di Gambellara', 'DOCG', 27
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Recioto di Gambellara' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Recioto di Soave', 'DOCG', 28
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Recioto di Soave' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Riviera del Brenta', 'DOC', 29
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Riviera del Brenta' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Soave', 'DOC', 30
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Soave' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Soave Superiore', 'DOCG', 31
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Soave Superiore' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Valpolicella', 'DOC', 32
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Valpolicella' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Valpolicella Ripasso', 'DOC', 33
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Valpolicella Ripasso' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Veneto', 'IGT', 34
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Veneto' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Veneto Orientale', 'IGT', 35
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Veneto Orientale' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Venezia', 'DOC', 36
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Venezia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Verona', 'IGT', 37
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Verona' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vicenza', 'DOC', 38
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Vicenza' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vigneti della Serenissima', 'DOC', 39
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Veneto'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Vigneti della Serenissima' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Friuli-Venezia Giulia', 5 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Delle Venezie', 'IGT', 0
+select 'region', r.id, 'Alto Livenza', 'IGT', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Delle Venezie' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Alto Livenza' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Collio', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Collio Goriziano', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Carso', 'DOC', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia' and s.name = 'Collio'
+  where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Collio Goriziano' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Carso' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Colli Orientali', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Colli Orientali del Friuli', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli Orientali del Friuli Picolit', 'DOCG', 2
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia' and s.name = 'Colli Orientali'
+  where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Colli Orientali del Friuli' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Colli Orientali del Friuli Picolit' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Ramandolo', 'DOCG', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Collio Goriziano', 'DOC', 3
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia' and s.name = 'Colli Orientali'
+  where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Ramandolo' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Collio Goriziano' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Isonzo', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Friuli Isonzo', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'delle Venezie', 'DOC', 4
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia' and s.name = 'Isonzo'
+  where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Friuli Isonzo' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'delle Venezie' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Grave', 3
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Friuli Grave', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Friuli', 'DOC', 5
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia' and s.name = 'Grave'
+  where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Friuli Grave' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Friuli' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Friuli Annia', 'DOC', 6
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Friuli Annia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Friuli Aquileia', 'DOC', 7
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Friuli Aquileia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Friuli Colli Orientali', 'DOC', 8
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Friuli Colli Orientali' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Friuli Grave', 'DOC', 9
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Friuli Grave' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Friuli Isonzo', 'DOC', 10
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Friuli Isonzo' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Friuli Latisana', 'DOC', 11
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Friuli Latisana' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Lison', 'DOCG', 12
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Lison' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Lison-Pramaggiore', 'DOC', 13
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Lison-Pramaggiore' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Prosecco', 'DOC', 14
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Prosecco' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ramandolo', 'DOCG', 15
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ramandolo' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rosazzo', 'DOCG', 16
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Rosazzo' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Trevenezie', 'IGT', 17
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Trevenezie' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Venezia Giulia', 'IGT', 18
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Friuli-Venezia Giulia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Venezia Giulia' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Liguria', 6 from public.countries c where c.name = 'Italy'
@@ -7744,336 +8675,1463 @@ from public.regions r
     where a.name = 'Cinque Terre' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Riviera Ligure di Ponente', 'DOC', 1
+select 'region', r.id, 'Colli di Luni', 'DOC', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Liguria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli di Luni' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colline del Genovesato', 'IGT', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Liguria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colline del Genovesato' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colline di Levanto', 'DOC', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Liguria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colline di Levanto' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colline Savonesi', 'IGT', 4
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Liguria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colline Savonesi' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Golfo del Tigullio - Portofino', 'DOC', 5
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Liguria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Golfo del Tigullio - Portofino' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Liguria di Levante', 'IGT', 6
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Liguria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Liguria di Levante' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ormeasco di Pornassio', 'DOC', 7
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Liguria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ormeasco di Pornassio' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Riviera Ligure di Ponente', 'DOC', 8
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Liguria'
   and not exists (select 1 from public.appellations a
     where a.name = 'Riviera Ligure di Ponente' and a.level = 'region' and a.region_id = r.id);
 
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rossese di Dolceacqua', 'DOC', 9
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Liguria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Rossese di Dolceacqua' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Terrazze dell''Imperiese', 'IGT', 10
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Liguria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Terrazze dell''Imperiese' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Val Polcevera', 'DOC', 11
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Liguria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Val Polcevera' and a.level = 'region' and a.region_id = r.id);
+
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Toscana', 7 from public.countries c where c.name = 'Italy'
+select c.id, 'Emilia-Romagna', 7 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Toscana', 'IGT', 0
+select 'region', r.id, 'Bosco Eliceo', 'DOC', 0
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Bosco Eliceo' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Castelfranco Emilia', 'IGT', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Castelfranco Emilia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli Bolognesi', 'DOC', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli Bolognesi' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli Bolognesi Pignoletto', 'DOCG', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli Bolognesi Pignoletto' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli d''Imola', 'DOC', 4
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli d''Imola' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli di Faenza', 'DOC', 5
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli di Faenza' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli di Parma', 'DOC', 6
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli di Parma' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli di Scandiano e di Canossa', 'DOC', 7
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli di Scandiano e di Canossa' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli Piacentini', 'DOC', 8
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli Piacentini' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli Romagna centrale', 'DOC', 9
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli Romagna centrale' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Emilia dell''Emilia', 'IGT', 10
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Emilia dell''Emilia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Emilia-Romagna', 'DOC', 11
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Emilia-Romagna' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Forli', 'IGT', 12
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Forli' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Fortana del Taro', 'IGT', 13
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Fortana del Taro' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Gutturnio', 'DOC', 14
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Gutturnio' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Lambrusco di Sorbara', 'DOC', 15
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Lambrusco di Sorbara' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Lambrusco Grasparossa di Castelvetro', 'DOC', 16
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Lambrusco Grasparossa di Castelvetro' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Lambrusco Salamino di Santa Croce', 'DOC', 17
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Lambrusco Salamino di Santa Croce' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Modena', 'DOC', 18
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Modena' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ortrugo dei Colli Piacentini', 'DOC', 19
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ortrugo dei Colli Piacentini' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ravenna', 'IGT', 20
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ravenna' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Reggiano', 'DOC', 21
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Reggiano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Reno', 'DOC', 22
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Reno' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rimini', 'DOC', 23
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Rimini' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Romagna', 'DOC', 24
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Romagna' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Romagna Albana', 'DOCG', 25
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Romagna Albana' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rubicone', 'IGT', 26
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Rubicone' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Sillaro', 'IGT', 27
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Sillaro' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Terre di Veleja', 'IGT', 28
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Terre di Veleja' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Val Tidone', 'IGT', 29
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Val Tidone' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.regions (country_id, name, sort_order)
+select c.id, 'Toscana', 8 from public.countries c where c.name = 'Italy'
+on conflict (country_id, name) do update set sort_order = excluded.sort_order;
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Alta Valle della Greve', 'IGT', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Toscana'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Toscana' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Alta Valle della Greve' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Montalcino', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Toscana'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Brunello di Montalcino', 'DOCG', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ansonica Costa dell''Argentario', 'DOC', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Toscana' and s.name = 'Montalcino'
+  where c.name = 'Italy' and r.name = 'Toscana'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Brunello di Montalcino' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Ansonica Costa dell''Argentario' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Rosso di Montalcino', 'DOC', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Barco Reale di Carmignano', 'DOC', 2
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Toscana' and s.name = 'Montalcino'
+  where c.name = 'Italy' and r.name = 'Toscana'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Rosso di Montalcino' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Barco Reale di Carmignano' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Chianti', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Toscana'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Chianti', 'DOCG', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bianco dell''Empolese', 'DOC', 3
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Toscana' and s.name = 'Chianti'
+  where c.name = 'Italy' and r.name = 'Toscana'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Chianti' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Bianco dell''Empolese' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Chianti Classico', 'DOCG', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bianco di Pitigliano', 'DOC', 4
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Toscana' and s.name = 'Chianti'
+  where c.name = 'Italy' and r.name = 'Toscana'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Chianti Classico' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Bianco di Pitigliano' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Vin Santo del Chianti Classico', 'DOC', 2
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bolgheri', 'DOC', 5
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Toscana' and s.name = 'Chianti'
+  where c.name = 'Italy' and r.name = 'Toscana'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Vin Santo del Chianti Classico' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Bolgheri' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Montepulciano', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Toscana'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Vino Nobile di Montepulciano', 'DOCG', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bolgheri Sassicaia', 'DOC', 6
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Toscana' and s.name = 'Montepulciano'
+  where c.name = 'Italy' and r.name = 'Toscana'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Vino Nobile di Montepulciano' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Bolgheri Sassicaia' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Maremma', 3
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Toscana'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Morellino di Scansano', 'DOCG', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Brunello di Montalcino', 'DOCG', 7
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Toscana' and s.name = 'Maremma'
+  where c.name = 'Italy' and r.name = 'Toscana'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Morellino di Scansano' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Brunello di Montalcino' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Maremma Toscana', 'DOC', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Candia dei Colli Apuani', 'DOC', 8
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Toscana' and s.name = 'Maremma'
+  where c.name = 'Italy' and r.name = 'Toscana'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Maremma Toscana' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Candia dei Colli Apuani' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'San Gimignano', 4
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Toscana'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Vernaccia di San Gimignano', 'DOCG', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Capalbio', 'DOC', 9
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Toscana' and s.name = 'San Gimignano'
+  where c.name = 'Italy' and r.name = 'Toscana'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Vernaccia di San Gimignano' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Capalbio' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Bolgheri', 5
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Toscana'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Bolgheri', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Carmignano', 'DOCG', 10
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Toscana' and s.name = 'Bolgheri'
+  where c.name = 'Italy' and r.name = 'Toscana'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Bolgheri' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Carmignano' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Bolgheri Sassicaia', 'DOC', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Chianti', 'DOCG', 11
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Toscana' and s.name = 'Bolgheri'
+  where c.name = 'Italy' and r.name = 'Toscana'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Bolgheri Sassicaia' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Chianti' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Carmignano', 6
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Toscana'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Carmignano', 'DOCG', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Chianti Classico', 'DOCG', 12
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Toscana' and s.name = 'Carmignano'
+  where c.name = 'Italy' and r.name = 'Toscana'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Carmignano' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Chianti Classico' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli dell''Etruria Centrale', 'DOC', 13
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli dell''Etruria Centrale' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli della Toscana centrale', 'IGT', 14
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli della Toscana centrale' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colline Lucchesi', 'DOC', 15
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colline Lucchesi' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cortona', 'DOC', 16
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Cortona' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Costa Toscana', 'IGT', 17
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Costa Toscana' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Elba', 'DOC', 18
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Elba' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Elba Aleatico Passito', 'DOCG', 19
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Elba Aleatico Passito' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Grance Senesi', 'DOC', 20
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Grance Senesi' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Maremma toscana', 'DOC', 21
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Maremma toscana' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Montecarlo', 'DOC', 22
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Montecarlo' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Montecastelli', 'IGT', 23
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Montecastelli' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Montecucco', 'DOC', 24
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Montecucco' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Montecucco Sangiovese', 'DOCG', 25
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Montecucco Sangiovese' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Monteregio di Massa Marittima', 'DOC', 26
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Monteregio di Massa Marittima' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Montescudaio', 'DOC', 27
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Montescudaio' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Morellino di Scansano', 'DOCG', 28
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Morellino di Scansano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Moscadello di Montalcino', 'DOC', 29
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Moscadello di Montalcino' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Orcia', 'DOC', 30
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Orcia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Parrina', 'DOC', 31
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Parrina' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Pomino', 'DOC', 32
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Pomino' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rosso di Montalcino', 'DOC', 33
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Rosso di Montalcino' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rosso di Montepulciano', 'DOC', 34
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Rosso di Montepulciano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'San Gimignano', 'DOC', 35
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'San Gimignano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'San Torpe', 'DOC', 36
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'San Torpe' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Sant''Antimo', 'DOC', 37
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Sant''Antimo' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Sovana', 'DOC', 38
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Sovana' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Suvereto', 'DOCG', 39
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Suvereto' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Terratico di Bibbona', 'DOC', 40
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Terratico di Bibbona' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Terre di Casole', 'DOC', 41
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Terre di Casole' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Terre di Pisa', 'DOC', 42
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Terre di Pisa' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Toscano Toscana', 'IGT', 43
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Toscano Toscana' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Val d''Arbia', 'DOC', 44
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Val d''Arbia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Val d''Arno di Sopra', 'DOC', 45
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Val d''Arno di Sopra' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Val di Cornia', 'DOC', 46
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Val di Cornia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Val di Cornia Rosso', 'DOCG', 47
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Val di Cornia Rosso' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Val di Magra', 'IGT', 48
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Val di Magra' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Valdichiana toscana', 'DOC', 49
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Valdichiana toscana' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Valdinievole', 'DOC', 50
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Valdinievole' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vernaccia di San Gimignano', 'DOCG', 51
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Vernaccia di San Gimignano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vin Santo del Chianti', 'DOC', 52
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Vin Santo del Chianti' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vin Santo del Chianti Classico', 'DOC', 53
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Vin Santo del Chianti Classico' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vin Santo di Carmignano', 'DOC', 54
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Vin Santo di Carmignano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vin Santo di Montepulciano', 'DOC', 55
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Vin Santo di Montepulciano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vino Nobile di Montepulciano', 'DOCG', 56
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Toscana'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Vino Nobile di Montepulciano' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Umbria', 8 from public.countries c where c.name = 'Italy'
+select c.id, 'Umbria', 9 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Umbria', 'IGT', 0
+select 'region', r.id, 'Allerona', 'IGT', 0
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Umbria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Allerona' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Amelia', 'DOC', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Umbria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Amelia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Assisi', 'DOC', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Umbria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Assisi' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bettona', 'IGT', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Umbria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Bettona' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cannara', 'IGT', 4
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Umbria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Cannara' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli Altotiberini', 'DOC', 5
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Umbria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli Altotiberini' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli del Trasimeno', 'DOC', 6
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Umbria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli del Trasimeno' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli Martani', 'DOC', 7
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Umbria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli Martani' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli Perugini', 'DOC', 8
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Umbria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli Perugini' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Lago di Corbara', 'DOC', 9
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Umbria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Lago di Corbara' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Montefalco', 'DOC', 10
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Umbria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Montefalco' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Montefalco Sagrantino', 'DOCG', 11
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Umbria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Montefalco Sagrantino' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Narni', 'IGT', 12
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Umbria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Narni' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rosso Orvietano', 'DOC', 13
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Umbria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Rosso Orvietano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Spello', 'IGT', 14
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Umbria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Spello' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Spoleto', 'DOC', 15
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Umbria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Spoleto' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Todi', 'DOC', 16
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Umbria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Todi' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Torgiano', 'DOC', 17
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Umbria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Torgiano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Torgiano Rosso Riserva', 'DOCG', 18
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Umbria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Torgiano Rosso Riserva' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Umbria', 'IGT', 19
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Umbria'
   and not exists (select 1 from public.appellations a
     where a.name = 'Umbria' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Montefalco', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Umbria'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Sagrantino di Montefalco', 'DOCG', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Umbria' and s.name = 'Montefalco'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Sagrantino di Montefalco' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Montefalco Rosso', 'DOC', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Umbria' and s.name = 'Montefalco'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Montefalco Rosso' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Orvieto', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Umbria'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Orvieto', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Umbria' and s.name = 'Orvieto'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Orvieto' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Torgiano', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Umbria'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Torgiano Rosso Riserva', 'DOCG', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Umbria' and s.name = 'Torgiano'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Torgiano Rosso Riserva' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Marche', 9 from public.countries c where c.name = 'Italy'
+select c.id, 'Marche', 10 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Marche', 'IGT', 0
+select 'region', r.id, 'Bianchello del Metauro', 'DOC', 0
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Marche'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Bianchello del Metauro' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Castelli di Jesi Verdicchio Riserva', 'DOCG', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Marche'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Castelli di Jesi Verdicchio Riserva' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli Maceratesi', 'DOC', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Marche'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli Maceratesi' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli Pesaresi', 'DOC', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Marche'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli Pesaresi' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Conero', 'DOCG', 4
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Marche'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Conero' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Esino', 'DOC', 5
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Marche'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Esino' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Falerio', 'DOC', 6
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Marche'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Falerio' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'I Terreni di Sanseverino', 'DOC', 7
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Marche'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'I Terreni di Sanseverino' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Lacrima di Morro d''Alba', 'DOC', 8
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Marche'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Lacrima di Morro d''Alba' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Marche', 'IGT', 9
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Marche'
   and not exists (select 1 from public.appellations a
     where a.name = 'Marche' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Castelli di Jesi', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Marche'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Verdicchio dei Castelli di Jesi', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Offida', 'DOCG', 10
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Marche' and s.name = 'Castelli di Jesi'
+  where c.name = 'Italy' and r.name = 'Marche'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Verdicchio dei Castelli di Jesi' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Offida' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Verdicchio dei Castelli di Jesi Classico Superiore', 'DOCG', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Pergola', 'DOC', 11
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Marche' and s.name = 'Castelli di Jesi'
+  where c.name = 'Italy' and r.name = 'Marche'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Verdicchio dei Castelli di Jesi Classico Superiore' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Pergola' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Matelica', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Marche'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Verdicchio di Matelica', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rosso Conero', 'DOC', 12
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Marche' and s.name = 'Matelica'
+  where c.name = 'Italy' and r.name = 'Marche'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Verdicchio di Matelica' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Rosso Conero' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Conero', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Marche'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Rosso Conero', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rosso Piceno', 'DOC', 13
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Marche' and s.name = 'Conero'
+  where c.name = 'Italy' and r.name = 'Marche'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Rosso Conero' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Rosso Piceno' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Offida', 3
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Marche'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Offida', 'DOCG', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'San Ginesio', 'DOC', 14
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Marche' and s.name = 'Offida'
+  where c.name = 'Italy' and r.name = 'Marche'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Offida' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'San Ginesio' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Serrapetrona', 'DOC', 15
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Marche'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Serrapetrona' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Terre di Offida', 'DOC', 16
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Marche'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Terre di Offida' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Verdicchio dei Castelli di Jesi', 'DOC', 17
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Marche'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Verdicchio dei Castelli di Jesi' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Verdicchio di Matelica', 'DOC', 18
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Marche'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Verdicchio di Matelica' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Verdicchio di Matelica Riserva', 'DOCG', 19
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Marche'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Verdicchio di Matelica Riserva' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vernaccia di Serrapetrona', 'DOCG', 20
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Marche'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Vernaccia di Serrapetrona' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Abruzzo', 10 from public.countries c where c.name = 'Italy'
+select c.id, 'Lazio', 11 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Terre di Chieti', 'IGT', 0
+select 'region', r.id, 'Aleatico di Gradoli', 'DOC', 0
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Aleatico di Gradoli' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Anagni', 'IGT', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Anagni' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Aprilia', 'DOC', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Aprilia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Atina', 'DOC', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Atina' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bianco Capena', 'DOC', 4
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Bianco Capena' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cannellino di Frascati', 'DOCG', 5
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Cannellino di Frascati' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Castelli Romani', 'DOC', 6
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Castelli Romani' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cerveteri', 'DOC', 7
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Cerveteri' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cesanese del Piglio', 'DOCG', 8
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Cesanese del Piglio' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cesanese di Affile', 'DOC', 9
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Cesanese di Affile' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cesanese di Olevano Romano', 'DOC', 10
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Cesanese di Olevano Romano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Circeo', 'DOC', 11
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Circeo' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Civitella d''Agliano', 'IGT', 12
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Civitella d''Agliano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli Albani', 'DOC', 13
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli Albani' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli Cimini', 'IGT', 14
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli Cimini' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli della Sabina', 'DOC', 15
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli della Sabina' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli Etruschi Viterbesi', 'DOC', 16
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli Etruschi Viterbesi' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli Lanuvini', 'DOC', 17
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli Lanuvini' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cori', 'DOC', 18
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Cori' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Costa Etrusco Romana', 'IGT', 19
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Costa Etrusco Romana' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Est! Est!! Est!!! di Montefiascone', 'DOC', 20
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Est! Est!! Est!!! di Montefiascone' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Frascati', 'DOC', 21
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Frascati' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Frascati Superiore', 'DOCG', 22
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Frascati Superiore' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Frusinate', 'IGT', 23
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Frusinate' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Genazzano', 'DOC', 24
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Genazzano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Lazio', 'IGT', 25
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Lazio' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Marino', 'DOC', 26
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Marino' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Montecompatri Colonna', 'DOC', 27
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Montecompatri Colonna' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Moscato di Terracina', 'DOC', 28
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Moscato di Terracina' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Nettuno', 'DOC', 29
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Nettuno' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Orvieto', 'DOC', 30
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Orvieto' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Roma', 'DOC', 31
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Roma' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Tarquinia', 'DOC', 32
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Tarquinia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Velletri', 'DOC', 33
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Velletri' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vignanello', 'DOC', 34
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Vignanello' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Zagarolo', 'DOC', 35
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Lazio'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Zagarolo' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.regions (country_id, name, sort_order)
+select c.id, 'Abruzzo', 12 from public.countries c where c.name = 'Italy'
+on conflict (country_id, name) do update set sort_order = excluded.sort_order;
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Abruzzo', 'DOC', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Abruzzo'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Terre di Chieti' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Abruzzo' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Montepulciano d''Abruzzo', 'DOC', 1
+select 'region', r.id, 'Casauria', 'DOCG', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Abruzzo'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Casauria' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cerasuolo d''Abruzzo', 'DOC', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Abruzzo'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Cerasuolo d''Abruzzo' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Controguerra', 'DOC', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Abruzzo'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Controguerra' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Montepulciano d''Abruzzo', 'DOC', 4
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Abruzzo'
@@ -8081,7 +10139,7 @@ from public.regions r
     where a.name = 'Montepulciano d''Abruzzo' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Montepulciano d''Abruzzo Colline Teramane', 'DOCG', 2
+select 'region', r.id, 'Montepulciano d''Abruzzo Colline Teramane', 'DOCG', 5
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Abruzzo'
@@ -8089,19 +10147,99 @@ from public.regions r
     where a.name = 'Montepulciano d''Abruzzo Colline Teramane' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Trebbiano d''Abruzzo', 'DOC', 3
+select 'region', r.id, 'Ortona', 'DOC', 6
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Abruzzo'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ortona' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Terre Abruzzesi', 'IGT', 7
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Abruzzo'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Terre Abruzzesi' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Terre Aquilane', 'IGT', 8
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Abruzzo'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Terre Aquilane' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Terre Tollesi Tullum', 'DOCG', 9
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Abruzzo'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Terre Tollesi Tullum' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Trebbiano d''Abruzzo', 'DOC', 10
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Abruzzo'
   and not exists (select 1 from public.appellations a
     where a.name = 'Trebbiano d''Abruzzo' and a.level = 'region' and a.region_id = r.id);
 
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Villamagna', 'DOC', 11
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Abruzzo'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Villamagna' and a.level = 'region' and a.region_id = r.id);
+
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Molise', 11 from public.countries c where c.name = 'Italy'
+select c.id, 'Molise', 13 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Tintilia del Molise', 'DOC', 0
+select 'region', r.id, 'Biferno', 'DOC', 0
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Molise'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Biferno' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Molise', 'DOC', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Molise'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Molise' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Osco Terre degli Osci', 'IGT', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Molise'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Osco Terre degli Osci' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Pentro di Isernia', 'DOC', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Molise'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Pentro di Isernia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rotae', 'IGT', 4
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Molise'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Rotae' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Tintilia del Molise', 'DOC', 5
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Molise'
@@ -8109,335 +10247,987 @@ from public.regions r
     where a.name = 'Tintilia del Molise' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Lazio', 12 from public.countries c where c.name = 'Italy'
+select c.id, 'Campania', 14 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Lazio', 'IGT', 0
+select 'region', r.id, 'Aglianico del Taburno', 'DOCG', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Lazio'
+  where c.name = 'Italy' and r.name = 'Campania'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Lazio' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Castelli Romani', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Lazio'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Frascati', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Lazio' and s.name = 'Castelli Romani'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Frascati' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Frascati Superiore', 'DOCG', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Lazio' and s.name = 'Castelli Romani'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Frascati Superiore' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Montefiascone', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Lazio'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Est! Est!! Est!!! di Montefiascone', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Lazio' and s.name = 'Montefiascone'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Est! Est!! Est!!! di Montefiascone' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Ciociaria', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Lazio'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Cesanese del Piglio', 'DOCG', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Lazio' and s.name = 'Ciociaria'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Cesanese del Piglio' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.regions (country_id, name, sort_order)
-select c.id, 'Campania', 13 from public.countries c where c.name = 'Italy'
-on conflict (country_id, name) do update set sort_order = excluded.sort_order;
+    where a.name = 'Aglianico del Taburno' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Campania', 'IGT', 0
+select 'region', r.id, 'Aversa', 'DOC', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Campania'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Aversa' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Benevento Beneventano', 'IGT', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Campania'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Benevento Beneventano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Campania', 'IGT', 3
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Campania'
   and not exists (select 1 from public.appellations a
     where a.name = 'Campania' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Irpinia', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Campania'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Taurasi', 'DOCG', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Campi Flegrei', 'DOC', 4
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Campania' and s.name = 'Irpinia'
+  where c.name = 'Italy' and r.name = 'Campania'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Taurasi' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Campi Flegrei' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Fiano di Avellino', 'DOCG', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Capri', 'DOC', 5
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Campania' and s.name = 'Irpinia'
+  where c.name = 'Italy' and r.name = 'Campania'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Fiano di Avellino' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Capri' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Greco di Tufo', 'DOCG', 2
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Casavecchia di Pontelatone', 'DOC', 6
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Campania' and s.name = 'Irpinia'
+  where c.name = 'Italy' and r.name = 'Campania'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Greco di Tufo' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Casavecchia di Pontelatone' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Campi Flegrei', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Campania'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Campi Flegrei', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Castel San Lorenzo', 'DOC', 7
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Campania' and s.name = 'Campi Flegrei'
+  where c.name = 'Italy' and r.name = 'Campania'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Campi Flegrei' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Castel San Lorenzo' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Sannio', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Campania'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Sannio', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Catalanesca del Monte Somma', 'IGT', 8
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Campania' and s.name = 'Sannio'
+  where c.name = 'Italy' and r.name = 'Campania'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Sannio' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Catalanesca del Monte Somma' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cilento', 'DOC', 9
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Campania'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Cilento' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli di Salerno', 'IGT', 10
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Campania'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli di Salerno' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Costa d''Amalfi', 'DOC', 11
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Campania'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Costa d''Amalfi' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Dugenta', 'IGT', 12
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Campania'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Dugenta' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Epomeo', 'IGT', 13
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Campania'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Epomeo' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Falanghina del Sannio', 'DOC', 14
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Campania'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Falanghina del Sannio' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Falerno del Massico', 'DOC', 15
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Campania'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Falerno del Massico' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Fiano di Avellino', 'DOCG', 16
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Campania'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Fiano di Avellino' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Galluccio', 'DOC', 17
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Campania'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Galluccio' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Greco di Tufo', 'DOCG', 18
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Campania'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Greco di Tufo' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Irpinia', 'DOC', 19
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Campania'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Irpinia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ischia', 'DOC', 20
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Campania'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ischia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Paestum', 'IGT', 21
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Campania'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Paestum' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Penisola Sorrentina', 'DOC', 22
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Campania'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Penisola Sorrentina' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Pompeiano', 'IGT', 23
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Campania'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Pompeiano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Roccamonfina', 'IGT', 24
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Campania'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Roccamonfina' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Sannio', 'DOC', 25
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Campania'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Sannio' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Taurasi', 'DOCG', 26
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Campania'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Taurasi' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Terre del Volturno', 'IGT', 27
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Campania'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Terre del Volturno' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vesuvio', 'DOC', 28
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Campania'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Vesuvio' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Basilicata', 14 from public.countries c where c.name = 'Italy'
+select c.id, 'Basilicata', 15 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Basilicata', 'IGT', 0
+select 'region', r.id, 'Aglianico del Vulture', 'DOC', 0
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Basilicata'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Aglianico del Vulture' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Aglianico del Vulture Superiore', 'DOCG', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Basilicata'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Aglianico del Vulture Superiore' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Basilicata', 'IGT', 2
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Basilicata'
   and not exists (select 1 from public.appellations a
     where a.name = 'Basilicata' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Vulture', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Basilicata'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Aglianico del Vulture', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Grottino di Roccanova', 'DOC', 3
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Basilicata' and s.name = 'Vulture'
+  where c.name = 'Italy' and r.name = 'Basilicata'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Aglianico del Vulture' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Grottino di Roccanova' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Aglianico del Vulture Superiore', 'DOCG', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Matera', 'DOC', 4
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Basilicata' and s.name = 'Vulture'
+  where c.name = 'Italy' and r.name = 'Basilicata'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Aglianico del Vulture Superiore' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Matera' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Terre dell''Alta Val d''Agri', 'DOC', 5
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Basilicata'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Terre dell''Alta Val d''Agri' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Calabria', 15 from public.countries c where c.name = 'Italy'
+select c.id, 'Calabria', 16 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Calabria', 'IGT', 0
+select 'region', r.id, 'Arghilla', 'IGT', 0
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Calabria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Arghilla' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bivongi', 'DOC', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Calabria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Bivongi' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Calabria', 'IGT', 2
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Calabria'
   and not exists (select 1 from public.appellations a
     where a.name = 'Calabria' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Ciro', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Calabria'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Ciro', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ciro', 'DOC', 3
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Calabria' and s.name = 'Ciro'
+  where c.name = 'Italy' and r.name = 'Calabria'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Ciro' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Ciro' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Cosenza', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Calabria'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Terre di Cosenza', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ciro Classico', 'DOCG', 4
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Calabria' and s.name = 'Cosenza'
+  where c.name = 'Italy' and r.name = 'Calabria'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Terre di Cosenza' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Ciro Classico' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Costa Viola', 'IGT', 5
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Calabria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Costa Viola' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Greco di Bianco', 'DOC', 6
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Calabria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Greco di Bianco' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Lamezia', 'DOC', 7
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Calabria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Lamezia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Lipuda', 'IGT', 8
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Calabria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Lipuda' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Locride', 'IGT', 9
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Calabria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Locride' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Melissa', 'DOC', 10
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Calabria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Melissa' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Palizzi', 'IGT', 11
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Calabria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Palizzi' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Pellaro', 'IGT', 12
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Calabria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Pellaro' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'S. Anna di Isola Capo Rizzuto', 'DOC', 13
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Calabria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'S. Anna di Isola Capo Rizzuto' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Savuto', 'DOC', 14
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Calabria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Savuto' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Scavigna', 'DOC', 15
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Calabria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Scavigna' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Scilla', 'IGT', 16
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Calabria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Scilla' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Terre di Cosenza', 'DOC', 17
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Calabria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Terre di Cosenza' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Val di Neto', 'IGT', 18
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Calabria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Val di Neto' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Valdamato', 'IGT', 19
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Calabria'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Valdamato' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Puglia', 16 from public.countries c where c.name = 'Italy'
+select c.id, 'Puglia', 17 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Puglia', 'IGT', 0
+select 'region', r.id, 'Aleatico di Puglia', 'DOC', 0
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Aleatico di Puglia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Alezio', 'DOC', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Alezio' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Barletta', 'DOC', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Barletta' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Brindisi', 'DOC', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Brindisi' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cacc''e mmitte di Lucera', 'DOC', 4
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Cacc''e mmitte di Lucera' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Castel del Monte', 'DOC', 5
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Castel del Monte' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Castel del Monte Bombino Nero', 'DOCG', 6
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Castel del Monte Bombino Nero' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Castel del Monte Nero di Troia Riserva', 'DOCG', 7
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Castel del Monte Nero di Troia Riserva' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Castel del Monte Rosso Riserva', 'DOCG', 8
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Castel del Monte Rosso Riserva' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colline Joniche Tarantine', 'DOC', 9
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colline Joniche Tarantine' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Copertino', 'DOC', 10
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Copertino' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Daunia', 'IGT', 11
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Daunia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Galatina', 'DOC', 12
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Galatina' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Gioia del Colle', 'DOC', 13
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Gioia del Colle' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Gravina', 'DOC', 14
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Gravina' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Leverano', 'DOC', 15
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Leverano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Lizzano', 'DOC', 16
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Lizzano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Locorotondo', 'DOC', 17
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Locorotondo' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Martina Franca', 'DOC', 18
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Martina Franca' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Matino', 'DOC', 19
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Matino' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Moscato di Trani', 'DOC', 20
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Moscato di Trani' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Murgia', 'IGT', 21
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Murgia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Nardo', 'DOC', 22
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Nardo' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Negroamaro di Terra d''Otranto', 'DOC', 23
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Negroamaro di Terra d''Otranto' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Orta Nova', 'DOC', 24
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Orta Nova' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ostuni', 'DOC', 25
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ostuni' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Primitivo di Manduria', 'DOC', 26
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Primitivo di Manduria' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Primitivo di Manduria Dolce Naturale', 'DOCG', 27
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Primitivo di Manduria Dolce Naturale' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Puglia', 'IGT', 28
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Puglia'
   and not exists (select 1 from public.appellations a
     where a.name = 'Puglia' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Manduria', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Puglia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Primitivo di Manduria', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rosso di Cerignola', 'DOC', 29
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Puglia' and s.name = 'Manduria'
+  where c.name = 'Italy' and r.name = 'Puglia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Primitivo di Manduria' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Rosso di Cerignola' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Primitivo di Manduria Dolce Naturale', 'DOCG', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Salento', 'IGT', 30
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Puglia' and s.name = 'Manduria'
+  where c.name = 'Italy' and r.name = 'Puglia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Primitivo di Manduria Dolce Naturale' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Salento' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Salento', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Puglia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Salice Salentino', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Salice Salentino', 'DOC', 31
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Puglia' and s.name = 'Salento'
+  where c.name = 'Italy' and r.name = 'Puglia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Salice Salentino' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Salice Salentino' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Castel del Monte', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Puglia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Castel del Monte', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'San Severo', 'DOC', 32
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Puglia' and s.name = 'Castel del Monte'
+  where c.name = 'Italy' and r.name = 'Puglia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Castel del Monte' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'San Severo' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Castel del Monte Bombino Nero', 'DOCG', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Squinzano', 'DOC', 33
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Puglia' and s.name = 'Castel del Monte'
+  where c.name = 'Italy' and r.name = 'Puglia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Castel del Monte Bombino Nero' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Squinzano' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Terra d''Otranto', 3
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Puglia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Negroamaro di Terra d''Otranto', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Tarantino', 'IGT', 34
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Puglia' and s.name = 'Terra d''Otranto'
+  where c.name = 'Italy' and r.name = 'Puglia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Negroamaro di Terra d''Otranto' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Tarantino' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Gioia del Colle', 4
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Puglia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Gioia del Colle', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Tavoliere delle Puglie', 'DOC', 35
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Puglia' and s.name = 'Gioia del Colle'
+  where c.name = 'Italy' and r.name = 'Puglia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Gioia del Colle' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Tavoliere delle Puglie' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Terra d''Otranto', 'DOC', 36
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Terra d''Otranto' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Valle d''Itria', 'IGT', 37
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Puglia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Valle d''Itria' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Sicilia', 17 from public.countries c where c.name = 'Italy'
+select c.id, 'Sicilia', 18 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Terre Siciliane', 'IGT', 0
+select 'region', r.id, 'Alcamo', 'DOC', 0
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Alcamo' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Avola', 'IGT', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Avola' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Camarro', 'IGT', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Camarro' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cerasuolo di Vittoria', 'DOCG', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Cerasuolo di Vittoria' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Contea di Sclafani', 'DOC', 4
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Contea di Sclafani' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Contessa Entellina', 'DOC', 5
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Contessa Entellina' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Delia Nivolelli', 'DOC', 6
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Delia Nivolelli' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Eloro', 'DOC', 7
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Eloro' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Erice', 'DOC', 8
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Erice' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Etna', 'DOC', 9
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Etna' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Faro', 'DOC', 10
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Faro' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Fontanarossa di Cerda', 'IGT', 11
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Fontanarossa di Cerda' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Malvasia delle Lipari', 'DOC', 12
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Malvasia delle Lipari' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Mamertino di Milazzo', 'DOC', 13
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Mamertino di Milazzo' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Marsala', 'DOC', 14
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Marsala' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Menfi', 'DOC', 15
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Menfi' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Monreale', 'DOC', 16
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Monreale' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Noto', 'DOC', 17
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Noto' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Pantelleria', 'DOC', 18
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Pantelleria' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Riesi', 'DOC', 19
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Riesi' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Salaparuta', 'DOC', 20
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Salaparuta' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Salina', 'IGT', 21
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Salina' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Sambuca di Sicilia', 'DOC', 22
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Sambuca di Sicilia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Santa Margherita di Belice', 'DOC', 23
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Santa Margherita di Belice' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Sciacca', 'DOC', 24
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Sciacca' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Sicilia', 'DOC', 25
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Sicilia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Siracusa', 'DOC', 26
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sicilia'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Siracusa' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Terre Siciliane', 'IGT', 27
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Sicilia'
@@ -8445,87 +11235,67 @@ from public.regions r
     where a.name = 'Terre Siciliane' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Sicilia', 'DOC', 1
+select 'region', r.id, 'Valle Belice', 'IGT', 28
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Sicilia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Sicilia' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Valle Belice' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Etna', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Sicilia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Etna', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vittoria', 'DOC', 29
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Sicilia' and s.name = 'Etna'
+  where c.name = 'Italy' and r.name = 'Sicilia'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Etna' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Trapani', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Sicilia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Marsala', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Sicilia' and s.name = 'Trapani'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Marsala' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Pantelleria', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Sicilia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Passito di Pantelleria', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Sicilia' and s.name = 'Pantelleria'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Passito di Pantelleria' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Ragusa', 3
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Sicilia'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Cerasuolo di Vittoria', 'DOCG', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Sicilia' and s.name = 'Ragusa'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Cerasuolo di Vittoria' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Vittoria' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Sardegna', 18 from public.countries c where c.name = 'Italy'
+select c.id, 'Sardegna', 19 from public.countries c where c.name = 'Italy'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Isola dei Nuraghi', 'IGT', 0
+select 'region', r.id, 'Alghero', 'DOC', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Sardegna'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Isola dei Nuraghi' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Alghero' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Cannonau di Sardegna', 'DOC', 1
+select 'region', r.id, 'Arborea', 'DOC', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Arborea' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Barbagia', 'IGT', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Barbagia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cagliari', 'DOC', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Cagliari' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Campidano di Terralba', 'DOC', 4
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Campidano di Terralba' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cannonau di Sardegna', 'DOC', 5
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Sardegna'
@@ -8533,7 +11303,207 @@ from public.regions r
     where a.name = 'Cannonau di Sardegna' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Vermentino di Sardegna', 'DOC', 2
+select 'region', r.id, 'Carignano del Sulcis', 'DOC', 6
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Carignano del Sulcis' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Colli del Limbara', 'IGT', 7
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Colli del Limbara' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Giro di Cagliari', 'DOC', 8
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Giro di Cagliari' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Isola dei Nuraghi', 'IGT', 9
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Isola dei Nuraghi' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Malvasia di Bosa', 'DOC', 10
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Malvasia di Bosa' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Mandrolisai', 'DOC', 11
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Mandrolisai' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Marmilla', 'IGT', 12
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Marmilla' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Monica di Sardegna', 'DOC', 13
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Monica di Sardegna' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Moscato di Sardegna', 'DOC', 14
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Moscato di Sardegna' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Moscato di Sorso-Sennori', 'DOC', 15
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Moscato di Sorso-Sennori' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Nasco di Cagliari', 'DOC', 16
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Nasco di Cagliari' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Nuragus di Cagliari', 'DOC', 17
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Nuragus di Cagliari' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Nurra', 'IGT', 18
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Nurra' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ogliastra', 'IGT', 19
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ogliastra' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Parteolla', 'IGT', 20
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Parteolla' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Planargia', 'IGT', 21
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Planargia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Provincia di Nuoro', 'IGT', 22
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Provincia di Nuoro' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Romangia', 'IGT', 23
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Romangia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Sardegna Semidano', 'DOC', 24
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Sardegna Semidano' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Sibiola', 'IGT', 25
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Sibiola' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Tharros', 'IGT', 26
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Tharros' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Trexenta', 'IGT', 27
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Trexenta' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Valle del Tirso', 'IGT', 28
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Valle del Tirso' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Valli di Porto Pino', 'IGT', 29
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Valli di Porto Pino' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vermentino di Gallura', 'DOCG', 30
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Italy' and r.name = 'Sardegna'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Vermentino di Gallura' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vermentino di Sardegna', 'DOC', 31
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Sardegna'
@@ -8541,141 +11511,12 @@ from public.regions r
     where a.name = 'Vermentino di Sardegna' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Monica di Sardegna', 'DOC', 3
+select 'region', r.id, 'Vernaccia di Oristano', 'DOC', 32
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Italy' and r.name = 'Sardegna'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Monica di Sardegna' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Gallura', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Sardegna'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Vermentino di Gallura', 'DOCG', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Sardegna' and s.name = 'Gallura'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Vermentino di Gallura' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Sulcis', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Sardegna'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Carignano del Sulcis', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Sardegna' and s.name = 'Sulcis'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Carignano del Sulcis' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Planargia', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Sardegna'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Malvasia di Bosa', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Sardegna' and s.name = 'Planargia'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Malvasia di Bosa' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.regions (country_id, name, sort_order)
-select c.id, 'Emilia-Romagna', 19 from public.countries c where c.name = 'Italy'
-on conflict (country_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Emilia', 'IGT', 0
-from public.regions r
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Emilia-Romagna'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Emilia' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Modena', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Emilia-Romagna'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Lambrusco di Sorbara', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Emilia-Romagna' and s.name = 'Modena'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Lambrusco di Sorbara' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Lambrusco Grasparossa di Castelvetro', 'DOC', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Emilia-Romagna' and s.name = 'Modena'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Lambrusco Grasparossa di Castelvetro' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Lambrusco Salamino di Santa Croce', 'DOC', 2
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Emilia-Romagna' and s.name = 'Modena'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Lambrusco Salamino di Santa Croce' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Romagna', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Emilia-Romagna'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Sangiovese di Romagna', 'DOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Emilia-Romagna' and s.name = 'Romagna'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Sangiovese di Romagna' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Albana di Romagna', 'DOCG', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Emilia-Romagna' and s.name = 'Romagna'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Albana di Romagna' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Bologna', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Italy' and r.name = 'Emilia-Romagna'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Colli Bolognesi Pignoletto', 'DOCG', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Italy' and r.name = 'Emilia-Romagna' and s.name = 'Bologna'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Colli Bolognesi Pignoletto' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Vernaccia di Oristano' and a.level = 'region' and a.region_id = r.id);
 
 -- ── Japan ─────────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
