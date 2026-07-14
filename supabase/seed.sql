@@ -14372,12 +14372,6 @@ insert into public.countries (name, code, continent, sort_order)
 values ('Switzerland', 'CH', 'Europe', 44)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
-insert into public.appellations (level, country_id, name, type, sort_order)
-select 'country', c.id, 'Vin de Table / Tafelwein', 'Tafelwein', 0
-from public.countries c where c.name = 'Switzerland'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Vin de Table / Tafelwein' and a.level = 'country' and a.country_id = c.id);
-
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Valais', 0 from public.countries c where c.name = 'Switzerland'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
@@ -14390,153 +14384,81 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Valais' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Sion & Zentralwallis', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Switzerland' and r.name = 'Valais'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Leytron / Chamoson / Fully', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Switzerland' and r.name = 'Valais'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Visperterminen', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Switzerland' and r.name = 'Valais'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Vaud', 1 from public.countries c where c.name = 'Switzerland'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'La Cote', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Switzerland' and r.name = 'Vaud'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'La Cote', 'AOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vaud', 'AOC', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Switzerland' and r.name = 'Vaud' and s.name = 'La Cote'
+  where c.name = 'Switzerland' and r.name = 'Vaud'
   and not exists (select 1 from public.appellations a
-    where a.name = 'La Cote' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Vaud' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Lavaux', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Switzerland' and r.name = 'Vaud'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Lavaux', 'AOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Chablais', 'AOC', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Switzerland' and r.name = 'Vaud' and s.name = 'Lavaux'
+  where c.name = 'Switzerland' and r.name = 'Vaud'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Lavaux' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Chablais' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Dezaley', 'AOC', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Lavaux', 'AOC', 2
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Switzerland' and r.name = 'Vaud' and s.name = 'Lavaux'
+  where c.name = 'Switzerland' and r.name = 'Vaud'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Dezaley' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Lavaux' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Calamin', 'AOC', 2
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'La Cote', 'AOC', 3
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Switzerland' and r.name = 'Vaud' and s.name = 'Lavaux'
+  where c.name = 'Switzerland' and r.name = 'Vaud'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Calamin' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'La Cote' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Chablais', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Switzerland' and r.name = 'Vaud'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Chablais', 'AOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cotes-de-l''Orbe', 'AOC', 4
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Switzerland' and r.name = 'Vaud' and s.name = 'Chablais'
+  where c.name = 'Switzerland' and r.name = 'Vaud'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Chablais' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Cotes-de-l''Orbe' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Yvorne', 'AOC', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bonvillars', 'AOC', 5
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Switzerland' and r.name = 'Vaud' and s.name = 'Chablais'
+  where c.name = 'Switzerland' and r.name = 'Vaud'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Yvorne' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Bonvillars' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Aigle', 'AOC', 2
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Dezaley', 'AOC', 6
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Switzerland' and r.name = 'Vaud' and s.name = 'Chablais'
+  where c.name = 'Switzerland' and r.name = 'Vaud'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Aigle' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Dezaley' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Cotes de l''Orbe', 3
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Switzerland' and r.name = 'Vaud'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Cotes de l''Orbe', 'AOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Dezaley-Marsens', 'AOC', 7
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Switzerland' and r.name = 'Vaud' and s.name = 'Cotes de l''Orbe'
+  where c.name = 'Switzerland' and r.name = 'Vaud'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Cotes de l''Orbe' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Dezaley-Marsens' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Bonvillars', 4
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Switzerland' and r.name = 'Vaud'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Bonvillars', 'AOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Calamin', 'AOC', 8
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Switzerland' and r.name = 'Vaud' and s.name = 'Bonvillars'
+  where c.name = 'Switzerland' and r.name = 'Vaud'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Bonvillars' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Vully (vaudois)', 5
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Switzerland' and r.name = 'Vaud'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Vully', 'AOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Switzerland' and r.name = 'Vaud' and s.name = 'Vully (vaudois)'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Vully' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Calamin' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Geneve', 2 from public.countries c where c.name = 'Switzerland'
@@ -14550,184 +14472,433 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Geneve' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Mandement', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Switzerland' and r.name = 'Geneve'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Coteau de Chevrens', 'AOC', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Geneve'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Coteau de Chevrens' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Arve-et-Lac', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Switzerland' and r.name = 'Geneve'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cotes de Landecy', 'AOC', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Geneve'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Cotes de Landecy' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Arve-et-Rhone', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Switzerland' and r.name = 'Geneve'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Coteau de Lully', 'AOC', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Geneve'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Coteau de Lully' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Coteau de Choulex', 'AOC', 4
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Geneve'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Coteau de Choulex' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Chateau de Collex', 'AOC', 5
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Geneve'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Chateau de Collex' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Coteau de Bossy', 'AOC', 6
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Geneve'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Coteau de Bossy' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Coteau de la vigne blanche', 'AOC', 7
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Geneve'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Coteau de la vigne blanche' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Coteaux de Dardagny', 'AOC', 8
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Geneve'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Coteaux de Dardagny' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Coteau de Genthod', 'AOC', 9
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Geneve'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Coteau de Genthod' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Chateau du Crest', 'AOC', 10
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Geneve'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Chateau du Crest' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Mandement de Jussy', 'AOC', 11
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Geneve'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Mandement de Jussy' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Grand Carraz', 'AOC', 12
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Geneve'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Grand Carraz' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Domaine de l''Abbaye', 'AOC', 13
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Geneve'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Domaine de l''Abbaye' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cotes de Russin', 'AOC', 14
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Geneve'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Cotes de Russin' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Coteau des Baillets', 'AOC', 15
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Geneve'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Coteau des Baillets' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Coteau de Bourdigny', 'AOC', 16
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Geneve'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Coteau de Bourdigny' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Coteau de Choully', 'AOC', 17
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Geneve'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Coteau de Choully' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Coteau de Peissy', 'AOC', 18
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Geneve'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Coteau de Peissy' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Coteaux de Peney', 'AOC', 19
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Geneve'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Coteaux de Peney' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Chateau de Choully', 'AOC', 20
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Geneve'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Chateau de Choully' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rougemont', 'AOC', 21
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Geneve'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Rougemont' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'La Feuillee', 'AOC', 22
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Geneve'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'La Feuillee' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Drei Seen', 3 from public.countries c where c.name = 'Switzerland'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Neuchatel', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Switzerland' and r.name = 'Drei Seen'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Neuchatel', 'AOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Neuchatel', 'AOC', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Switzerland' and r.name = 'Drei Seen' and s.name = 'Neuchatel'
+  where c.name = 'Switzerland' and r.name = 'Drei Seen'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Neuchatel' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Neuchatel' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Vully (fribourgeois)', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Switzerland' and r.name = 'Drei Seen'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Vully', 'AOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bielersee', 'AOC', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Switzerland' and r.name = 'Drei Seen' and s.name = 'Vully (fribourgeois)'
+  where c.name = 'Switzerland' and r.name = 'Drei Seen'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Vully' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Bielersee' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Bielersee', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Switzerland' and r.name = 'Drei Seen'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Bielersee', 'AOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cheyres', 'AOC', 2
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'Switzerland' and r.name = 'Drei Seen' and s.name = 'Bielersee'
+  where c.name = 'Switzerland' and r.name = 'Drei Seen'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Bielersee' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Cheyres' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vully', 'AOC', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Drei Seen'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Vully' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Deutschschweiz', 4 from public.countries c where c.name = 'Switzerland'
-on conflict (country_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Zürich', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Zürich', 'AOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Switzerland' and r.name = 'Deutschschweiz' and s.name = 'Zürich'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Zürich' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Zürichsee', 'AOC', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Switzerland' and r.name = 'Deutschschweiz' and s.name = 'Zürich'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Zürichsee' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Schaffhausen', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Schaffhausen', 'AOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Switzerland' and r.name = 'Deutschschweiz' and s.name = 'Schaffhausen'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Schaffhausen' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Thurgau', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Thurgau', 'AOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Switzerland' and r.name = 'Deutschschweiz' and s.name = 'Thurgau'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Thurgau' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Aargau', 3
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Aargau', 'AOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Switzerland' and r.name = 'Deutschschweiz' and s.name = 'Aargau'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Aargau' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Graubünden', 4
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Bündner Herrschaft', 'AOC', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Switzerland' and r.name = 'Deutschschweiz' and s.name = 'Graubünden'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Bündner Herrschaft' and a.level = 'sub_region' and a.sub_region_id = s.id);
-
-insert into public.regions (country_id, name, sort_order)
-select c.id, 'Ticino', 5 from public.countries c where c.name = 'Switzerland'
+select c.id, 'Ticino', 4 from public.countries c where c.name = 'Switzerland'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Ticino', 'DOC', 0
+select 'region', r.id, 'Ticino', 'AOC', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Switzerland' and r.name = 'Ticino'
   and not exists (select 1 from public.appellations a
     where a.name = 'Ticino' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Sopraceneri', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Switzerland' and r.name = 'Ticino'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rosso del Ticino', 'AOC', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Ticino'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Rosso del Ticino' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Sottoceneri', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Switzerland' and r.name = 'Ticino'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bianco del Ticino', 'AOC', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Ticino'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Bianco del Ticino' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rosato del Ticino', 'AOC', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Ticino'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Rosato del Ticino' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.regions (country_id, name, sort_order)
+select c.id, 'Deutschschweiz', 5 from public.countries c where c.name = 'Switzerland'
+on conflict (country_id, name) do update set sort_order = excluded.sort_order;
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Aargau', 'AOC', 0
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Aargau' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Appenzell Innerrhoden', 'AOC', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Appenzell Innerrhoden' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Appenzell Ausserrhoden', 'AOC', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Appenzell Ausserrhoden' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bern', 'AOC', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Bern' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Thunersee', 'AOC', 4
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Thunersee' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Basel-Landschaft', 'AOC', 5
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Basel-Landschaft' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Basel-Stadt', 'AOC', 6
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Basel-Stadt' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Glarus', 'AOC', 7
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Glarus' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Graubünden', 'AOC', 8
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Graubünden' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Jura', 'AOC', 9
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Jura' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Luzern', 'AOC', 10
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Luzern' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Nidwalden', 'AOC', 11
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Nidwalden' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Obwalden', 'AOC', 12
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Obwalden' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'St. Gallen', 'AOC', 13
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'St. Gallen' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Schaffhausen', 'AOC', 14
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Schaffhausen' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Solothurn', 'AOC', 15
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Solothurn' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Schwyz', 'AOC', 16
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Schwyz' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Thurgau', 'AOC', 17
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Thurgau' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Uri', 'AOC', 18
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Uri' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Zug', 'AOC', 19
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Zug' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Zürich', 'AOC', 20
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Zürich' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Zürichsee', 'AOC', 21
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Switzerland' and r.name = 'Deutschschweiz'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Zürichsee' and a.level = 'region' and a.region_id = r.id);
 
 -- ── Thailand ──────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)

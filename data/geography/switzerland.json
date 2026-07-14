@@ -2,26 +2,15 @@
   "country": "Switzerland",
   "code": "CH",
   "continent": "Europe",
-  "appellations": [
-    {
-      "name": "Vin de Table / Tafelwein",
-      "type": "Tafelwein"
-    }
+  "verified": true,
+  "sources": [
+    "BLW/OFAG Schweizerisches Verzeichnis der kontrollierten Ursprungsbezeichnungen (AOC), Stand 1.1.2026"
   ],
+  "officialCount": 63,
+  "verifiedOn": "2026-07-14",
   "regions": [
     {
       "name": "Valais",
-      "subRegions": [
-        {
-          "name": "Sion & Zentralwallis"
-        },
-        {
-          "name": "Leytron / Chamoson / Fully"
-        },
-        {
-          "name": "Visperterminen"
-        }
-      ],
       "appellations": [
         {
           "name": "Valais",
@@ -31,199 +20,274 @@
     },
     {
       "name": "Vaud",
-      "subRegions": [
+      "appellations": [
         {
-          "name": "La Cote",
-          "appellations": [
-            {
-              "name": "La Cote",
-              "type": "AOC"
-            }
-          ]
-        },
-        {
-          "name": "Lavaux",
-          "appellations": [
-            {
-              "name": "Lavaux",
-              "type": "AOC"
-            },
-            {
-              "name": "Dezaley",
-              "type": "AOC"
-            },
-            {
-              "name": "Calamin",
-              "type": "AOC"
-            }
-          ]
+          "name": "Vaud",
+          "type": "AOC"
         },
         {
           "name": "Chablais",
-          "appellations": [
-            {
-              "name": "Chablais",
-              "type": "AOC"
-            },
-            {
-              "name": "Yvorne",
-              "type": "AOC"
-            },
-            {
-              "name": "Aigle",
-              "type": "AOC"
-            }
-          ]
+          "type": "AOC"
         },
         {
-          "name": "Cotes de l'Orbe",
-          "appellations": [
-            {
-              "name": "Cotes de l'Orbe",
-              "type": "AOC"
-            }
-          ]
+          "name": "Lavaux",
+          "type": "AOC"
+        },
+        {
+          "name": "La Cote",
+          "type": "AOC"
+        },
+        {
+          "name": "Cotes-de-l'Orbe",
+          "type": "AOC"
         },
         {
           "name": "Bonvillars",
-          "appellations": [
-            {
-              "name": "Bonvillars",
-              "type": "AOC"
-            }
-          ]
+          "type": "AOC"
         },
         {
-          "name": "Vully (vaudois)",
-          "appellations": [
-            {
-              "name": "Vully",
-              "type": "AOC"
-            }
-          ]
+          "name": "Dezaley",
+          "type": "AOC"
+        },
+        {
+          "name": "Dezaley-Marsens",
+          "type": "AOC"
+        },
+        {
+          "name": "Calamin",
+          "type": "AOC"
         }
       ]
     },
     {
       "name": "Geneve",
-      "subRegions": [
-        {
-          "name": "Mandement"
-        },
-        {
-          "name": "Arve-et-Lac"
-        },
-        {
-          "name": "Arve-et-Rhone"
-        }
-      ],
       "appellations": [
         {
           "name": "Geneve",
+          "type": "AOC"
+        },
+        {
+          "name": "Coteau de Chevrens",
+          "type": "AOC"
+        },
+        {
+          "name": "Cotes de Landecy",
+          "type": "AOC"
+        },
+        {
+          "name": "Coteau de Lully",
+          "type": "AOC"
+        },
+        {
+          "name": "Coteau de Choulex",
+          "type": "AOC"
+        },
+        {
+          "name": "Chateau de Collex",
+          "type": "AOC"
+        },
+        {
+          "name": "Coteau de Bossy",
+          "type": "AOC"
+        },
+        {
+          "name": "Coteau de la vigne blanche",
+          "type": "AOC"
+        },
+        {
+          "name": "Coteaux de Dardagny",
+          "type": "AOC"
+        },
+        {
+          "name": "Coteau de Genthod",
+          "type": "AOC"
+        },
+        {
+          "name": "Chateau du Crest",
+          "type": "AOC"
+        },
+        {
+          "name": "Mandement de Jussy",
+          "type": "AOC"
+        },
+        {
+          "name": "Grand Carraz",
+          "type": "AOC"
+        },
+        {
+          "name": "Domaine de l'Abbaye",
+          "type": "AOC"
+        },
+        {
+          "name": "Cotes de Russin",
+          "type": "AOC"
+        },
+        {
+          "name": "Coteau des Baillets",
+          "type": "AOC"
+        },
+        {
+          "name": "Coteau de Bourdigny",
+          "type": "AOC"
+        },
+        {
+          "name": "Coteau de Choully",
+          "type": "AOC"
+        },
+        {
+          "name": "Coteau de Peissy",
+          "type": "AOC"
+        },
+        {
+          "name": "Coteaux de Peney",
+          "type": "AOC"
+        },
+        {
+          "name": "Chateau de Choully",
+          "type": "AOC"
+        },
+        {
+          "name": "Rougemont",
+          "type": "AOC"
+        },
+        {
+          "name": "La Feuillee",
           "type": "AOC"
         }
       ]
     },
     {
       "name": "Drei Seen",
-      "subRegions": [
+      "appellations": [
         {
           "name": "Neuchatel",
-          "appellations": [
-            {
-              "name": "Neuchatel",
-              "type": "AOC"
-            }
-          ]
-        },
-        {
-          "name": "Vully (fribourgeois)",
-          "appellations": [
-            {
-              "name": "Vully",
-              "type": "AOC"
-            }
-          ]
+          "type": "AOC"
         },
         {
           "name": "Bielersee",
-          "appellations": [
-            {
-              "name": "Bielersee",
-              "type": "AOC"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Deutschschweiz",
-      "subRegions": [
-        {
-          "name": "Zürich",
-          "appellations": [
-            {
-              "name": "Zürich",
-              "type": "AOC"
-            },
-            {
-              "name": "Zürichsee",
-              "type": "AOC"
-            }
-          ]
+          "type": "AOC"
         },
         {
-          "name": "Schaffhausen",
-          "appellations": [
-            {
-              "name": "Schaffhausen",
-              "type": "AOC"
-            }
-          ]
+          "name": "Cheyres",
+          "type": "AOC"
         },
         {
-          "name": "Thurgau",
-          "appellations": [
-            {
-              "name": "Thurgau",
-              "type": "AOC"
-            }
-          ]
-        },
-        {
-          "name": "Aargau",
-          "appellations": [
-            {
-              "name": "Aargau",
-              "type": "AOC"
-            }
-          ]
-        },
-        {
-          "name": "Graubünden",
-          "appellations": [
-            {
-              "name": "Bündner Herrschaft",
-              "type": "AOC"
-            }
-          ]
+          "name": "Vully",
+          "type": "AOC"
         }
       ]
     },
     {
       "name": "Ticino",
-      "subRegions": [
-        {
-          "name": "Sopraceneri"
-        },
-        {
-          "name": "Sottoceneri"
-        }
-      ],
       "appellations": [
         {
           "name": "Ticino",
-          "type": "DOC"
+          "type": "AOC"
+        },
+        {
+          "name": "Rosso del Ticino",
+          "type": "AOC"
+        },
+        {
+          "name": "Bianco del Ticino",
+          "type": "AOC"
+        },
+        {
+          "name": "Rosato del Ticino",
+          "type": "AOC"
+        }
+      ]
+    },
+    {
+      "name": "Deutschschweiz",
+      "appellations": [
+        {
+          "name": "Aargau",
+          "type": "AOC"
+        },
+        {
+          "name": "Appenzell Innerrhoden",
+          "type": "AOC"
+        },
+        {
+          "name": "Appenzell Ausserrhoden",
+          "type": "AOC"
+        },
+        {
+          "name": "Bern",
+          "type": "AOC"
+        },
+        {
+          "name": "Thunersee",
+          "type": "AOC"
+        },
+        {
+          "name": "Basel-Landschaft",
+          "type": "AOC"
+        },
+        {
+          "name": "Basel-Stadt",
+          "type": "AOC"
+        },
+        {
+          "name": "Glarus",
+          "type": "AOC"
+        },
+        {
+          "name": "Graubünden",
+          "type": "AOC"
+        },
+        {
+          "name": "Jura",
+          "type": "AOC"
+        },
+        {
+          "name": "Luzern",
+          "type": "AOC"
+        },
+        {
+          "name": "Nidwalden",
+          "type": "AOC"
+        },
+        {
+          "name": "Obwalden",
+          "type": "AOC"
+        },
+        {
+          "name": "St. Gallen",
+          "type": "AOC"
+        },
+        {
+          "name": "Schaffhausen",
+          "type": "AOC"
+        },
+        {
+          "name": "Solothurn",
+          "type": "AOC"
+        },
+        {
+          "name": "Schwyz",
+          "type": "AOC"
+        },
+        {
+          "name": "Thurgau",
+          "type": "AOC"
+        },
+        {
+          "name": "Uri",
+          "type": "AOC"
+        },
+        {
+          "name": "Zug",
+          "type": "AOC"
+        },
+        {
+          "name": "Zürich",
+          "type": "AOC"
+        },
+        {
+          "name": "Zürichsee",
+          "type": "AOC"
         }
       ]
     }
