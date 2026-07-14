@@ -31,6 +31,8 @@ const countrySchema = z.object({
   continent: z.string().min(1).nullable().optional(),
   verified: z.boolean().optional(), // true erst nach Abgleich mit offiziellem Register
   sources: z.array(z.string()).optional(),
+  officialCount: z.number().int().nonnegative().optional(), // Soll laut Register
+  verifiedOn: z.string().optional(), // ISO-Datum des Register-Abgleichs
   appellations: z.array(appellationSchema).optional(), // country-level
   regions: z.array(
     z.object({
@@ -52,6 +54,7 @@ const qn = (s) => (s == null ? "null" : q(s));
 const files = readdirSync(DATA).filter((f) => f.endsWith(".json")).sort();
 const countries = [];
 const problems = [];
+const warnings = [];
 
 for (const file of files) {
   const raw = JSON.parse(readFileSync(join(DATA, file), "utf8"));
@@ -69,6 +72,28 @@ for (const file of files) {
 const MULTI_ANCHOR = new Set(["Mediterranee", "Delle Venezie", "Beiras", "Vully"]);
 const TYPE_PREFIX = /^(AOC|AOP|IGP|IGT|PGI|PDO|DOCG|DOCa|DOC|DO|AVA|DAC|GI|VR|VdlT|Vino de la Tierra|Vinho Regional|Vin de Pays)\s/;
 
+// Bekanntes Typ-Vokabular (offizielle Systeme + max.-tiefe Lagen-Ebenen).
+// Unbekannter Typ = WARNUNG (kein Abbruch) → fängt Tippfehler bei neuen Ländern.
+const KNOWN_TYPES = new Set([
+  // EU-Dachbegriffe
+  "PDO", "PGI",
+  // Frankreich + max.-Tiefe
+  "AOC", "AOP", "IGP", "Grand Cru", "1er Cru", "Grand Cru Lieu-dit",
+  // Italien + MGA
+  "DOCG", "DOC", "IGT", "MGA",
+  // Deutschland/Österreich
+  "Anbaugebiet", "Bereich", "DAC", "Landwein", "Tafelwein",
+  "VDP.Grosse Lage", "VDP.Erste Lage",
+  // Spanien/Portugal
+  "DO", "DOCa", "DOP", "VP", "VdlT", "VR", "IG", "Vinho",
+  // Neue Welt
+  "AVA", "State designation", "National", "WO", "WO Region", "WO District",
+  "WO Ward", "WO Geographical Unit", "GI", "State GI", "Broad GI",
+  "VQA GI", "Nova Scotia GI", "Appellation Quebec", "IP",
+  // Übrige nationale Register (Balkan/Osteuropa/Nordafrika/Asien)
+  "AOG", "AOIG", "BGA", "CHOP", "DGO", "KGP", "KPN", "OEM", "ZGP", "Table",
+]);
+
 for (const c of countries) {
   const allNames = [];
   const perParent = new Map();
@@ -80,6 +105,9 @@ for (const c of countries) {
       perParent.set(key, true);
       if (TYPE_PREFIX.test(a.name)) problems.push(`${c.file}: Typ-Kürzel im Namen: '${a.name}' (gehört ins type-Feld)`);
       if (a.name.includes("’")) problems.push(`${c.file}: typografischer Apostroph in '${a.name}' (gerades ' verwenden)`);
+      if (a.type != null && !KNOWN_TYPES.has(a.type)) {
+        warnings.push(`${c.file}: unbekannter Typ '${a.type}' bei '${a.name}' (Tippfehler? sonst KNOWN_TYPES ergänzen)`);
+      }
     }
   };
   walk(c.appellations, "country");
@@ -104,6 +132,9 @@ for (const c of countries) {
 if (problems.length) {
   console.error("Validierung fehlgeschlagen:\n" + problems.map((p) => `  ✗ ${p}`).join("\n"));
   process.exit(1);
+}
+if (warnings.length) {
+  console.warn("Hinweise (kein Abbruch):\n" + warnings.map((p) => `  ⚠ ${p}`).join("\n"));
 }
 
 // ── SQL erzeugen ─────────────────────────────────────────────────────────────
@@ -216,16 +247,26 @@ const count = (c) => {
   return { regions: regions.length, subs: subs.length, apps };
 };
 
-const totals = { regions: 0, subs: 0, apps: 0 };
+const totals = { regions: 0, subs: 0, apps: 0, verified: 0 };
 const rows = countries.map((c) => {
   const n = count(c);
   totals.regions += n.regions;
   totals.subs += n.subs;
   totals.apps += n.apps;
-  const status = c.verified
-    ? `✅ verifiziert (${(c.sources ?? []).join(", ") || "Quelle fehlt!"})`
-    : "⚠️ unverifiziert (v1-Übernahme / Modellwissen)";
-  return `| ${c.country} | ${n.regions} | ${n.subs} | ${n.apps} | ${status} |`;
+  if (c.verified) totals.verified += 1;
+  const official = c.officialCount ?? null;
+  const officialCell = official == null ? "—" : String(official);
+  const checkedCell = c.verifiedOn ?? "—";
+  let status;
+  if (c.verified) {
+    const gap = official != null && n.apps < official;
+    status = gap
+      ? `⚠️ verifiziert, Lücke (${(c.sources ?? []).join(", ") || "Quelle fehlt!"})`
+      : `✅ verifiziert (${(c.sources ?? []).join(", ") || "Quelle fehlt!"})`;
+  } else {
+    status = "⚪ unverifiziert (v1-Übernahme / Modellwissen)";
+  }
+  return `| ${c.country} | ${n.regions} | ${n.subs} | ${n.apps} | ${officialCell} | ${checkedCell} | ${status} |`;
 });
 
 writeFileSync(
@@ -234,19 +275,19 @@ writeFileSync(
     "# Geografie-Abdeckung",
     "",
     "> GENERIERT von `npm run geo:build` — nicht von Hand editieren.",
-    "> Status wird pro Land im JSON gepflegt (`verified: true` + `sources: [...]`),",
-    "> erst NACH Abgleich mit dem offiziellen Register (INAO, federdoc, TTB, …).",
-    "> Ziel laut Plan §5.3: ~1'400–1'500 Appellationen; Tier-1-Sollwerte:",
-    "> Frankreich ~360 · Italien ~280 (77 DOCG + Top-DOC) · Spanien ~80 ·",
-    "> Deutschland (13 Anbaugebiete, Bereiche, VDP) · Schweiz ~65 · Portugal ~35.",
+    "> Pro Land im JSON gepflegt: `verified: true` + `sources` + `officialCount`",
+    "> + `verifiedOn` — erst NACH Abgleich mit dem offiziellen Register (INAO,",
+    "> federdoc, TTB, …). Ziel laut Plan §5.3 (max. Tiefe): ~1'800–2'200 Appellationen.",
+    "> „Offiziell\" = Soll-Zahl laut Register; „Lücke\" heißt erfasst < offiziell.",
     "",
-    `Stand: ${new Date().toISOString().slice(0, 10)} · **${countries.length} Länder · ${totals.apps} Appellationen**`,
+    `Stand: ${new Date().toISOString().slice(0, 10)} · **${countries.length} Länder`
+      + ` (${totals.verified} verifiziert) · ${totals.apps} Appellationen**`,
     "",
-    "| Land | Regionen | Sub-Regionen | Appellationen | Status |",
-    "|---|---|---|---|---|",
+    "| Land | Regionen | Sub-Regionen | Erfasst | Offiziell | Geprüft am | Status |",
+    "|---|---|---|---|---|---|---|",
     ...rows,
     "",
-    `| **Gesamt** | **${totals.regions}** | **${totals.subs}** | **${totals.apps}** | |`,
+    `| **Gesamt** | **${totals.regions}** | **${totals.subs}** | **${totals.apps}** | | | |`,
     "",
   ].join("\n")
 );
