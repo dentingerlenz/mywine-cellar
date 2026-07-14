@@ -5,9 +5,10 @@
   "verified": true,
   "sources": [
     "INAO Liste des AOC vins (MAJ 26.01.2012)",
-    "INAO Liste des IGP vins (MAJ 26.01.2014)"
+    "INAO Liste des IGP vins (MAJ 26.01.2014)",
+    "Post-2012-Nachtraege (INAO/EUR-Lex, vom Nutzer geliefert 2026-07)"
   ],
-  "officialCount": 309,
+  "officialCount": 318,
   "verifiedOn": "2026-07-14",
   "appellations": [
     {
@@ -466,6 +467,10 @@
             },
             {
               "name": "Saint-Bris",
+              "type": "AOC"
+            },
+            {
+              "name": "Vezelay",
               "type": "AOC"
             }
           ]
@@ -1235,6 +1240,10 @@
         {
           "name": "Saint-Pourcain",
           "type": "AOC"
+        },
+        {
+          "name": "Correze",
+          "type": "AOC"
         }
       ]
     },
@@ -1369,6 +1378,10 @@
             },
             {
               "name": "Cotes du Rhone Villages",
+              "type": "AOC"
+            },
+            {
+              "name": "Cairanne",
               "type": "AOC"
             }
           ]
@@ -1514,6 +1527,30 @@
             },
             {
               "name": "Muscat de Saint-Jean-de-Minervois",
+              "type": "AOC"
+            },
+            {
+              "name": "Blanquette de Limoux",
+              "type": "AOC"
+            },
+            {
+              "name": "Pic Saint-Loup",
+              "type": "AOC"
+            },
+            {
+              "name": "Terrasses du Larzac",
+              "type": "AOC"
+            },
+            {
+              "name": "La Clape",
+              "type": "AOC"
+            },
+            {
+              "name": "Montpeyroux",
+              "type": "AOC"
+            },
+            {
+              "name": "Sable de Camargue",
               "type": "AOC"
             }
           ]
