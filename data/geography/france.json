@@ -39,6 +39,22 @@
           "type": "AOC"
         },
         {
+          "name": "Bordeaux Superieur",
+          "type": "AOC"
+        },
+        {
+          "name": "Bordeaux Clairet",
+          "type": "AOC"
+        },
+        {
+          "name": "Bordeaux Rose",
+          "type": "AOC"
+        },
+        {
+          "name": "Cremant de Bordeaux",
+          "type": "AOC"
+        },
+        {
           "name": "Atlantique",
           "type": "IGP"
         }
@@ -52,15 +68,7 @@
               "type": "AOC"
             },
             {
-              "name": "Pauillac",
-              "type": "AOC"
-            },
-            {
-              "name": "Margaux",
-              "type": "AOC"
-            },
-            {
-              "name": "Saint-Julien",
+              "name": "Haut-Medoc",
               "type": "AOC"
             },
             {
@@ -68,7 +76,11 @@
               "type": "AOC"
             },
             {
-              "name": "Moulis-en-Medoc",
+              "name": "Pauillac",
+              "type": "AOC"
+            },
+            {
+              "name": "Saint-Julien",
               "type": "AOC"
             },
             {
@@ -76,7 +88,11 @@
               "type": "AOC"
             },
             {
-              "name": "Haut-Medoc",
+              "name": "Moulis-en-Medoc",
+              "type": "AOC"
+            },
+            {
+              "name": "Margaux",
               "type": "AOC"
             }
           ]
@@ -86,6 +102,10 @@
           "appellations": [
             {
               "name": "Graves",
+              "type": "AOC"
+            },
+            {
+              "name": "Graves Superieures",
               "type": "AOC"
             },
             {
@@ -104,6 +124,10 @@
             {
               "name": "Barsac",
               "type": "AOC"
+            },
+            {
+              "name": "Cerons",
+              "type": "AOC"
             }
           ]
         },
@@ -117,6 +141,22 @@
             {
               "name": "Saint-Emilion Grand Cru",
               "type": "AOC"
+            },
+            {
+              "name": "Montagne-Saint-Emilion",
+              "type": "AOC"
+            },
+            {
+              "name": "Saint-Georges-Saint-Emilion",
+              "type": "AOC"
+            },
+            {
+              "name": "Lussac-Saint-Emilion",
+              "type": "AOC"
+            },
+            {
+              "name": "Puisseguin-Saint-Emilion",
+              "type": "AOC"
             }
           ]
         },
@@ -125,6 +165,10 @@
           "appellations": [
             {
               "name": "Pomerol",
+              "type": "AOC"
+            },
+            {
+              "name": "Lalande-de-Pomerol",
               "type": "AOC"
             }
           ]
@@ -155,7 +199,36 @@
           "name": "Blaye",
           "appellations": [
             {
+              "name": "Blaye",
+              "type": "AOC"
+            },
+            {
               "name": "Blaye Cotes de Bordeaux",
+              "type": "AOC"
+            }
+          ]
+        },
+        {
+          "name": "Cotes de Bordeaux",
+          "appellations": [
+            {
+              "name": "Cotes de Bordeaux",
+              "type": "AOC"
+            },
+            {
+              "name": "Castillon Cotes de Bordeaux",
+              "type": "AOC"
+            },
+            {
+              "name": "Francs Cotes de Bordeaux",
+              "type": "AOC"
+            },
+            {
+              "name": "Cadillac Cotes de Bordeaux",
+              "type": "AOC"
+            },
+            {
+              "name": "Sainte-Foy Cotes de Bordeaux",
               "type": "AOC"
             }
           ]
@@ -165,6 +238,34 @@
           "appellations": [
             {
               "name": "Entre-Deux-Mers",
+              "type": "AOC"
+            },
+            {
+              "name": "Entre-Deux-Mers Haut-Benauge",
+              "type": "AOC"
+            },
+            {
+              "name": "Graves de Vayres",
+              "type": "AOC"
+            },
+            {
+              "name": "Cadillac",
+              "type": "AOC"
+            },
+            {
+              "name": "Loupiac",
+              "type": "AOC"
+            },
+            {
+              "name": "Sainte-Croix-du-Mont",
+              "type": "AOC"
+            },
+            {
+              "name": "Premieres Cotes de Bordeaux",
+              "type": "AOC"
+            },
+            {
+              "name": "Cotes de Bordeaux Saint-Macaire",
               "type": "AOC"
             }
           ]
