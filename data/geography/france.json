@@ -282,6 +282,26 @@
         {
           "name": "Bourgogne Aligote",
           "type": "AOC"
+        },
+        {
+          "name": "Coteaux Bourguignons",
+          "type": "AOC"
+        },
+        {
+          "name": "Cremant de Bourgogne",
+          "type": "AOC"
+        },
+        {
+          "name": "Bourgogne Hautes Cotes de Nuits",
+          "type": "AOC"
+        },
+        {
+          "name": "Bourgogne Hautes Cotes de Beaune",
+          "type": "AOC"
+        },
+        {
+          "name": "Bourgogne Cote Chalonnaise",
+          "type": "AOC"
         }
       ],
       "subRegions": [
@@ -303,12 +323,56 @@
             {
               "name": "Chablis Grand Cru",
               "type": "AOC"
+            },
+            {
+              "name": "Irancy",
+              "type": "AOC"
+            },
+            {
+              "name": "Saint-Bris",
+              "type": "AOC"
+            },
+            {
+              "name": "Blanchot",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Bougros",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Les Clos",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Grenouilles",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Preuses",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Valmur",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Vaudesir",
+              "type": "Grand Cru"
             }
           ]
         },
         {
           "name": "Cote de Nuits",
           "appellations": [
+            {
+              "name": "Marsannay",
+              "type": "AOC"
+            },
+            {
+              "name": "Fixin",
+              "type": "AOC"
+            },
             {
               "name": "Gevrey-Chambertin",
               "type": "AOC"
@@ -332,6 +396,106 @@
             {
               "name": "Nuits-Saint-Georges",
               "type": "AOC"
+            },
+            {
+              "name": "Cote de Nuits-Villages",
+              "type": "AOC"
+            },
+            {
+              "name": "Chambertin",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Chambertin-Clos de Beze",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Chapelle-Chambertin",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Charmes-Chambertin",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Griotte-Chambertin",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Latricieres-Chambertin",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Mazis-Chambertin",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Mazoyeres-Chambertin",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Ruchottes-Chambertin",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Clos de la Roche",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Clos des Lambrays",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Clos de Tart",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Clos Saint-Denis",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Bonnes-Mares",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Musigny",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Clos de Vougeot",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Echezeaux",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Grands Echezeaux",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "La Grande Rue",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "La Romanee",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "La Tache",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Richebourg",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Romanee-Conti",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Romanee-Saint-Vivant",
+              "type": "Grand Cru"
             }
           ]
         },
@@ -339,7 +503,23 @@
           "name": "Cote de Beaune",
           "appellations": [
             {
+              "name": "Ladoix",
+              "type": "AOC"
+            },
+            {
               "name": "Aloxe-Corton",
+              "type": "AOC"
+            },
+            {
+              "name": "Pernand-Vergelesses",
+              "type": "AOC"
+            },
+            {
+              "name": "Savigny-les-Beaune",
+              "type": "AOC"
+            },
+            {
+              "name": "Chorey-les-Beaune",
               "type": "AOC"
             },
             {
@@ -355,6 +535,18 @@
               "type": "AOC"
             },
             {
+              "name": "Monthelie",
+              "type": "AOC"
+            },
+            {
+              "name": "Auxey-Duresses",
+              "type": "AOC"
+            },
+            {
+              "name": "Saint-Romain",
+              "type": "AOC"
+            },
+            {
               "name": "Meursault",
               "type": "AOC"
             },
@@ -365,12 +557,72 @@
             {
               "name": "Chassagne-Montrachet",
               "type": "AOC"
+            },
+            {
+              "name": "Saint-Aubin",
+              "type": "AOC"
+            },
+            {
+              "name": "Santenay",
+              "type": "AOC"
+            },
+            {
+              "name": "Maranges",
+              "type": "AOC"
+            },
+            {
+              "name": "Cote de Beaune",
+              "type": "AOC"
+            },
+            {
+              "name": "Cote de Beaune-Villages",
+              "type": "AOC"
+            },
+            {
+              "name": "Corton",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Corton-Charlemagne",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Charlemagne",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Montrachet",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Chevalier-Montrachet",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Batard-Montrachet",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Bienvenues-Batard-Montrachet",
+              "type": "Grand Cru"
+            },
+            {
+              "name": "Criots-Batard-Montrachet",
+              "type": "Grand Cru"
             }
           ]
         },
         {
           "name": "Cote Chalonnaise",
           "appellations": [
+            {
+              "name": "Bouzeron",
+              "type": "AOC"
+            },
+            {
+              "name": "Rully",
+              "type": "AOC"
+            },
             {
               "name": "Mercurey",
               "type": "AOC"
@@ -380,15 +632,7 @@
               "type": "AOC"
             },
             {
-              "name": "Rully",
-              "type": "AOC"
-            },
-            {
               "name": "Montagny",
-              "type": "AOC"
-            },
-            {
-              "name": "Bouzeron",
               "type": "AOC"
             }
           ]
@@ -406,6 +650,14 @@
             },
             {
               "name": "Pouilly-Fuisse",
+              "type": "AOC"
+            },
+            {
+              "name": "Pouilly-Loche",
+              "type": "AOC"
+            },
+            {
+              "name": "Pouilly-Vinzelles",
               "type": "AOC"
             },
             {

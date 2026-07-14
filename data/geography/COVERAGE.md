@@ -6,7 +6,7 @@
 > federdoc, TTB, …). Ziel laut Plan §5.3 (max. Tiefe): ~1'800–2'200 Appellationen.
 > „Offiziell" = Soll-Zahl laut Register; „Lücke" heißt erfasst < offiziell.
 
-Stand: 2026-07-14 · **51 Länder (0 verifiziert) · 844 Appellationen**
+Stand: 2026-07-14 · **51 Länder (0 verifiziert) · 907 Appellationen**
 
 | Land | Regionen | Sub-Regionen | Erfasst | Offiziell | Geprüft am | Status |
 |---|---|---|---|---|---|---|
@@ -28,7 +28,7 @@ Stand: 2026-07-14 · **51 Länder (0 verifiziert) · 844 Appellationen**
 | Denmark | 3 | 0 | 0 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | England & Wales | 6 | 3 | 3 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Ethiopia | 1 | 1 | 1 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
-| France | 14 | 38 | 179 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
+| France | 14 | 38 | 242 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Georgia | 5 | 2 | 9 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Germany | 13 | 8 | 25 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Greece | 8 | 18 | 23 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
@@ -62,4 +62,4 @@ Stand: 2026-07-14 · **51 Länder (0 verifiziert) · 844 Appellationen**
 | United States | 7 | 18 | 64 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Uruguay | 5 | 0 | 5 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 
-| **Gesamt** | **263** | **458** | **844** | | | |
+| **Gesamt** | **263** | **458** | **907** | | | |
