@@ -6,7 +6,7 @@
 > federdoc, TTB, …). Ziel laut Plan §5.3 (max. Tiefe): ~1'800–2'200 Appellationen.
 > „Offiziell" = Soll-Zahl laut Register; „Lücke" heißt erfasst < offiziell.
 
-Stand: 2026-07-14 · **51 Länder (4 verifiziert) · 1540 Appellationen**
+Stand: 2026-07-15 · **51 Länder (5 verifiziert) · 1545 Appellationen**
 
 | Land | Regionen | Sub-Regionen | Erfasst | Offiziell | Geprüft am | Status |
 |---|---|---|---|---|---|---|
@@ -14,7 +14,7 @@ Stand: 2026-07-14 · **51 Länder (4 verifiziert) · 1540 Appellationen**
 | Argentina | 6 | 14 | 16 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Armenia | 4 | 4 | 4 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Australia | 6 | 41 | 49 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
-| Austria | 4 | 16 | 22 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
+| Austria | 5 | 0 | 27 | 27 | 2026-07-14 | ✅ verifiziert (OEsterreich Wein Marketing (OEWM), Wein aus Oesterreich Broschuere 11/2025 (DAC-Verordnungen + generische Weinbaugebiete)) |
 | Azerbaijan | 2 | 2 | 2 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Belgium | 3 | 3 | 3 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Brazil | 3 | 4 | 6 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
@@ -62,4 +62,4 @@ Stand: 2026-07-14 · **51 Länder (4 verifiziert) · 1540 Appellationen**
 | United States | 7 | 18 | 64 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Uruguay | 5 | 0 | 5 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 
-| **Gesamt** | **266** | **339** | **1540** | | | |
+| **Gesamt** | **267** | **323** | **1545** | | | |

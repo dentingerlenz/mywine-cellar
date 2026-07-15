@@ -82,7 +82,7 @@ const KNOWN_TYPES = new Set([
   // Italien + MGA
   "DOCG", "DOC", "IGT", "MGA",
   // Deutschland/Österreich
-  "Anbaugebiet", "Bereich", "DAC", "Landwein", "Tafelwein",
+  "Anbaugebiet", "Bereich", "DAC", "Qualitätswein", "Landwein", "Tafelwein",
   "VDP.Grosse Lage", "VDP.Erste Lage",
   // Spanien/Portugal
   "DO", "DOCa", "DOP", "VP", "VC", "VdlT", "VR", "IG", "Vinho",

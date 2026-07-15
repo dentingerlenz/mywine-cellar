@@ -2,105 +2,50 @@
   "country": "Austria",
   "code": "AT",
   "continent": "Europe",
-  "appellations": [
-    {
-      "name": "Wein",
-      "type": "Tafelwein"
-    }
+  "verified": true,
+  "sources": [
+    "OEsterreich Wein Marketing (OEWM), Wein aus Oesterreich Broschuere 11/2025 (DAC-Verordnungen + generische Weinbaugebiete)"
   ],
+  "officialCount": 27,
+  "verifiedOn": "2026-07-14",
   "regions": [
     {
       "name": "Niederösterreich",
       "appellations": [
         {
-          "name": "Niederösterreichischer Landwein",
-          "type": "Landwein"
-        }
-      ],
-      "subRegions": [
+          "name": "Niederösterreich",
+          "type": "Qualitätswein"
+        },
         {
           "name": "Wachau",
-          "appellations": [
-            {
-              "name": "Wachau",
-              "type": "DAC"
-            }
-          ]
+          "type": "DAC"
         },
         {
           "name": "Kremstal",
-          "appellations": [
-            {
-              "name": "Kremstal",
-              "type": "DAC"
-            }
-          ]
+          "type": "DAC"
         },
         {
           "name": "Kamptal",
-          "appellations": [
-            {
-              "name": "Kamptal",
-              "type": "DAC"
-            }
-          ]
+          "type": "DAC"
         },
         {
           "name": "Traisental",
-          "appellations": [
-            {
-              "name": "Traisental",
-              "type": "DAC"
-            }
-          ]
+          "type": "DAC"
         },
         {
           "name": "Wagram",
-          "appellations": [
-            {
-              "name": "Wagram",
-              "type": "DAC"
-            }
-          ]
+          "type": "DAC"
         },
         {
           "name": "Weinviertel",
-          "appellations": [
-            {
-              "name": "Weinviertel",
-              "type": "DAC"
-            }
-          ]
+          "type": "DAC"
         },
         {
           "name": "Carnuntum",
-          "appellations": [
-            {
-              "name": "Carnuntum",
-              "type": "DAC"
-            }
-          ]
+          "type": "DAC"
         },
         {
           "name": "Thermenregion",
-          "appellations": [
-            {
-              "name": "Thermenregion",
-              "type": "DAC"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Wien",
-      "appellations": [
-        {
-          "name": "Wiener Landwein",
-          "type": "Landwein"
-        },
-        {
-          "name": "Wien",
           "type": "DAC"
         }
       ]
@@ -109,55 +54,32 @@
       "name": "Burgenland",
       "appellations": [
         {
-          "name": "Burgenländischer Landwein",
-          "type": "Landwein"
-        }
-      ],
-      "subRegions": [
+          "name": "Burgenland",
+          "type": "Qualitätswein"
+        },
         {
           "name": "Neusiedlersee",
-          "appellations": [
-            {
-              "name": "Neusiedlersee",
-              "type": "DAC"
-            }
-          ]
+          "type": "DAC"
         },
         {
           "name": "Leithaberg",
-          "appellations": [
-            {
-              "name": "Leithaberg",
-              "type": "DAC"
-            }
-          ]
-        },
-        {
-          "name": "Eisenberg",
-          "appellations": [
-            {
-              "name": "Eisenberg",
-              "type": "DAC"
-            }
-          ]
+          "type": "DAC"
         },
         {
           "name": "Rosalia",
-          "appellations": [
-            {
-              "name": "Rosalia",
-              "type": "DAC"
-            }
-          ]
+          "type": "DAC"
         },
         {
-          "name": "Rust",
-          "appellations": [
-            {
-              "name": "Ruster Ausbruch",
-              "type": "DAC"
-            }
-          ]
+          "name": "Mittelburgenland",
+          "type": "DAC"
+        },
+        {
+          "name": "Eisenberg",
+          "type": "DAC"
+        },
+        {
+          "name": "Ruster Ausbruch",
+          "type": "DAC"
         }
       ]
     },
@@ -165,37 +87,58 @@
       "name": "Steiermark",
       "appellations": [
         {
-          "name": "Steirischer Landwein",
-          "type": "Landwein"
-        }
-      ],
-      "subRegions": [
-        {
-          "name": "Südsteiermark",
-          "appellations": [
-            {
-              "name": "Südsteiermark",
-              "type": "DAC"
-            }
-          ]
-        },
-        {
-          "name": "Weststeiermark",
-          "appellations": [
-            {
-              "name": "Weststeiermark",
-              "type": "DAC"
-            }
-          ]
+          "name": "Steiermark",
+          "type": "Qualitätswein"
         },
         {
           "name": "Vulkanland Steiermark",
-          "appellations": [
-            {
-              "name": "Vulkanland Steiermark",
-              "type": "DAC"
-            }
-          ]
+          "type": "DAC"
+        },
+        {
+          "name": "Südsteiermark",
+          "type": "DAC"
+        },
+        {
+          "name": "Weststeiermark",
+          "type": "DAC"
+        }
+      ]
+    },
+    {
+      "name": "Wien",
+      "appellations": [
+        {
+          "name": "Wien",
+          "type": "Qualitätswein"
+        },
+        {
+          "name": "Wiener Gemischter Satz",
+          "type": "DAC"
+        }
+      ]
+    },
+    {
+      "name": "Bergland",
+      "appellations": [
+        {
+          "name": "Kärnten",
+          "type": "Qualitätswein"
+        },
+        {
+          "name": "Oberösterreich",
+          "type": "Qualitätswein"
+        },
+        {
+          "name": "Tirol",
+          "type": "Qualitätswein"
+        },
+        {
+          "name": "Vorarlberg",
+          "type": "Qualitätswein"
+        },
+        {
+          "name": "Salzburg",
+          "type": "Qualitätswein"
         }
       ]
     }
