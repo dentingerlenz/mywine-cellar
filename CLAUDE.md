@@ -35,7 +35,32 @@ halten, Klick-Anleitungen für Dashboard-Schritte geben.
 - **Geografie**: globale Referenztabellen `countries/regions/sub_regions/appellations`
   (4-Ebenen, FKs an `wines`). Quelle = **`data/geography/*.json`** (1 Datei/Land),
   kompiliert per `npm run geo:build` → `supabase/seed.sql` + `COVERAGE.md`. Aktuell
-  51 Länder / ~884 Appellationen. **Vollständige AOC-Abdeckung = Phase 7 (offen).**
+  51 Länder / **~1545 Appellationen** (Phase 7 läuft, s. u.). Der Validator in
+  `build-seed.js` erzwingt harte Invarianten (keine Typ-Präfixe im Namen, keine
+  In-Land-Duplikate außer `MULTI_ANCHOR`, keine eponyme Einzel-Sub, kein `’`) und
+  warnt bei Typen außerhalb `KNOWN_TYPES`. **Picker-Logik** (Land→Region→Sub→
+  Appellation) liegt rein & getestet in `src/features/geography/selection.ts`
+  (`resolveSelection`, `appellationOptions`) + `selection.test.ts` — NICHT anfassen.
+
+## Phase 7 — Geografie registerbasiert vervollständigen (IN ARBEIT)
+Ziel: jede relevante Appellation aus **offiziellen Registern** (nicht Wikipedia),
+Land für Land. Voller Workflow + wiederverwendbare Skripte:
+**`scripts/geo/phase7/README.md`** (dort auch der Deploy-Befehl). Auto-Memory
+`rebuild-decisions.md` = laufendes Detail-Log.
+- **Fertig & verifiziert:** FR 351 · IT 522 · CH 63 · ES 149 · AT 27
+  (`verified:true` + `officialCount` + `verifiedOn` + `sources` je JSON).
+- **Prod:** FR + IT sind **live deployed**. **CH + ES + AT: Migrationen committet,
+  aber NOCH NICHT deployed** (Deploy erfolgt gebündelt, mehrere Länder pro Push).
+- **Muster flaches Land** (IT/CH/ES/AT): Region = offizielles Weingebiet/Verwaltungs-
+  gebiet, Appellationen flach, Migration via `scripts/geo/phase7/gen_flat_migration.py`
+  (hängt alte Sub-Region-Weine auf gleichnamige neue Appellation um; Frankreich mit
+  Sub-Regionen → `gen_fr_migration.py`). Jede Migration lokal per **Konvergenz-Test**
+  (alter Seed + Migration ≡ neuer Seed) + **Wein-Erhalt-Sim** (0 Weine ohne country)
+  abgesichert.
+- **PDF-Quellen extrahieren:** `pip3 install pypdf` im scratchpad (poppler fehlt);
+  Header/Footer strippen, Anker = eindeutiger Code, Vollständigkeit per N°-Lückencheck.
+- **Als Nächstes:** Deutschland (Quelle + VDP-Tiefe war offen), dann NZ, PT, Rest-
+  Kernländer. Nischenländer bleiben bewusst „unverifiziert".
 
 ## Produktion / Hosting (WICHTIG)
 - **Supabase-Projekt (Prod): `czmjxsojbomkqtluzhru`** — dem Nutzer gehörend, EU.
@@ -98,7 +123,7 @@ halten, Klick-Anleitungen für Dashboard-Schritte geben.
   V8). Model-IDs/API-Doku vor Umsetzung via `claude-api`-Skill prüfen.
 - 3 Weine (GR/HU/CY) haben leeres Regionsfeld (Datenfehler in Originaldaten:
   Produzentenname/Ländercode statt Ort) — in der App manuell korrigierbar.
-- Offen laut Plan: Phase 6 (KI), Phase 7 (Geo-Vollausbau), Phase 8 (Export V5,
+- Offen laut Plan: **Phase 7 (Geo, läuft — s. o.)**, Phase 6 (KI), Phase 8 (Export V5,
   Statistik V10, Tests), Phase 9 (PWA V4). Verworfene Features: V2, V9, V11–V13.
 
 ## Fallstricke (aus echten Bugs gelernt)
