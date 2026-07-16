@@ -18,21 +18,22 @@ gesichert. Der maßgebliche Datenstand liegt in `data/geography/*.json`.
 | Neuseeland | 19 | IPONZ GI-Register (wine): 10 regionale + 9 lokale GIs (IP 1004–1028) | ✅ live |
 | Portugal | 44 | eAmbrosia (EU-GI-Register), Extrakt PT/wine: 30 DOP + 14 IGP | ✅ live |
 | USA | 279 | TTB Established AVAs (Stand 29.04.2026): 261 Single-State + 18 Multi-State | ✅ live |
-| Südafrika | 142 | SAWIS/WoSA WO-Register (Production Areas, Feb 2026): 5 GU + 6 Region + 30 District + 101 Ward | ⏳ committet |
-| Zypern | 11 | Offizielle Wein-GI-Liste (User): 7 PDO + 4 PGI | ⏳ committet |
-| Ungarn | 38 | kormany.hu GI-Register: 32 OEM + 6 OFJ, 6 Weinregionen | ⏳ committet |
-| Griechenland | 107 | Recherchiert: 33 PDO + regionale/Präfektur-PGIs, 9 Regionen | ⏳ committet |
-| Polen | 16 | Recherchiert (1 generelle PGI): 8 Weinregionen + Subregionen | ⏳ committet |
-| Argentinien | 105 | INV-Register (gob.ar PDF): 103 IG + 2 DOC, Provinzen | ⏳ committet |
-| Chile | 95 | Decreto 464 (SAG PDF): 6 Regionen, Valles + Areas | ⏳ committet |
-| Australien | 111 | Wine Australia GI-Register: Zonen/Regionen/Subregionen je Bundesstaat | ⏳ committet |
+| Südafrika | 142 | SAWIS/WoSA WO-Register (Production Areas, Feb 2026): 5 GU + 6 Region + 30 District + 101 Ward | ✅ live |
+| Zypern | 11 | Offizielle Wein-GI-Liste (User): 7 PDO + 4 PGI | ✅ live |
+| Ungarn | 38 | kormany.hu GI-Register: 32 OEM + 6 OFJ, 6 Weinregionen | ✅ live |
+| Griechenland | 107 | Recherchiert: 33 PDO + regionale/Präfektur-PGIs, 9 Regionen | ✅ live |
+| Polen | 16 | Recherchiert (1 generelle PGI): 8 Weinregionen + Subregionen | ✅ live |
+| Argentinien | 105 | INV-Register (gob.ar PDF): 103 IG + 2 DOC, Provinzen | ✅ live |
+| Chile | 95 | Decreto 464 (SAG PDF): 6 Regionen, Valles + Areas | ✅ live |
+| Australien | 111 | Wine Australia GI-Register: Zonen/Regionen/Subregionen je Bundesstaat | ✅ live |
 
-**Deploy-Historie 2026-07-16:** DE+NZ+PT (apps 1545→1606), dann USA (→1821).
-FR/IT/CH/ES/AT/DE/NZ/PT/US sind live.
+**Deploy-Historie 2026-07-16:** DE+NZ+PT (1545→1606) · USA (→1821) · ZA+CY+HU+GR+PL+AR+CL+AU
+gebündelt (→**2306**, 0 verwaiste FKs, 0 Weine verloren, 0 Duplikate; Konvergenz 539/539).
+**Alle 17 Kernländer live & verifiziert. Kein offener DB-Deploy-Batch.**
 
-**Offener Deploy-Batch (bündeln bis User-Auftrag):** `…130000` (ZA) + `…140000`–`…200000`
-(CY/AR/HU/AU/CL/GR/PL) = 8 Migrationen, committet + lokal verifiziert (Konvergenz
-539/539 + Wein-Erhalt gegen alle Bestandsweine). Deploy auf User-Auftrag.
+**Hinweis GitHub-Sync:** Der letzte git push scheiterte (PAT abgelaufen) — die Commits
+(bis `4284dc7`) sind lokal + auf Prod-DB live, müssen aber noch mit einem frischen
+Token nach GitHub gepusht werden (rein Daten, Vercel-Rebuild ist ein No-op).
 
 **Deutschland-Besonderheit:** Einzellagen/Grosslagen sind bewusst KEINE Geografie
 → die konkrete Lage steht im Freitextfeld „Location". Die VDP-Klassifikationsstufen

@@ -50,8 +50,10 @@ Land für Land. Voller Workflow + wiederverwendbare Skripte:
 - **Fertig & verifiziert (17 Kernländer):** FR 351 · IT 522 · CH 63 · ES 149 · AT 27 · DE 66 ·
   NZ 19 · PT 44 · US 279 · ZA 142 · CY 11 · HU 38 · GR 107 · PL 16 · AR 105 · CL 95 · AU 111
   (`verified:true` + `officialCount` + `verifiedOn` + `sources` je JSON). Gesamt ~2306 Appellationen.
-- **Prod:** FR/IT/CH/ES/AT/DE/NZ/PT/US **live**. **ZA + CY/HU/GR/PL/AR/CL/AU: committet + lokal
-  verifiziert (Konvergenz 539/539 + Wein-Erhalt), Deploy gebündelt (User gibt ihn in Auftrag).**
+- **Prod:** alle **17 Kernländer live deployed** (ZA+CY+HU+GR+PL+AR+CL+AU gebündelt am
+  2026-07-16: apps 1821→2306, 0 verwaiste FKs, 0 Weine verloren, 0 Duplikate). **GitHub-Sync
+  offen:** git push scheiterte (PAT abgelaufen) — Commits bis `4284dc7` lokal + auf Prod live,
+  noch nicht auf GitHub; braucht frischen PAT.
 - **Muster flaches Land** (alle außer FR): Region = offizielles Weingebiet/Verwaltungs-
   gebiet, Appellationen flach, Migration via `scripts/geo/phase7/gen_flat_migration.py`
   (hängt alte Sub-Region-Weine auf gleichnamige neue Appellation um; Frankreich mit
