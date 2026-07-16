@@ -17,11 +17,14 @@ gesichert. Der maßgebliche Datenstand liegt in `data/geography/*.json`.
 | Deutschland | 66 | Weingesetz/Weinverordnung: 13 Anbaugebiete (g.U.) + 41 Bereiche + Landwein (recherchiert, kein amtliches PDF) | ✅ live |
 | Neuseeland | 19 | IPONZ GI-Register (wine): 10 regionale + 9 lokale GIs (IP 1004–1028) | ✅ live |
 | Portugal | 44 | eAmbrosia (EU-GI-Register), Extrakt PT/wine: 30 DOP + 14 IGP | ✅ live |
+| USA | 279 | TTB Established AVAs (Stand 29.04.2026): 261 Single-State + 18 Multi-State | ⏳ committet |
 
-**Kein offener Deploy-Batch.** DE + NZ + PT wurden am 2026-07-16 gebündelt deployed
-(`supabase db push --include-all` über Session-Pooler): Prod apps 1545→1606, DE 66 /
-NZ 19 / PT 45, 0 verwaiste Wein-FKs, 0 Weine ohne Country, 0 Duplikate. Alle 8
-Kernländer (FR/IT/CH/ES/AT/DE/NZ/PT) sind live & verifiziert.
+**Deploy-Historie:** DE + NZ + PT wurden am 2026-07-16 gebündelt deployed
+(`supabase db push --include-all` über Session-Pooler): Prod apps 1545→1606, 0
+verwaiste FKs, 0 Weine verloren. FR/IT/CH/ES/AT/DE/NZ/PT sind live.
+
+**Offener Deploy-Batch:** Migration `2026071612…` (USA, 279 AVAs) ist committet +
+lokal verifiziert (Konvergenz + Wein-Erhalt), Deploy noch offen.
 
 **Deutschland-Besonderheit:** Einzellagen/Grosslagen sind bewusst KEINE Geografie
 → die konkrete Lage steht im Freitextfeld „Location". Die VDP-Klassifikationsstufen
@@ -43,7 +46,13 @@ Romanische Diakritika → ASCII (Konvention wie ES/FR). Douro-Unterzonen ohne ei
 (Douro Superior …) → Migration hängt sie ins „Location"-Feld, AUCH wenn der Wein die
 DOP „Douro" behält (verfeinerter Erhalt-Schritt: Sub ins Location wenn ≠ Appellation).
 
-**Reihenfolge weiter:** Rest-Kernländer (ZA, GR, US, AU, CL, AR …).
+**USA-Besonderheit:** TTB-Register direkt aus den DOM-Tabellen extrahiert (JS im
+Browser), nicht WebFetch (Seite zu groß). Flach je Bundesstaat (Region), 279 AVAs
+als Appellationen (Typ „AVA"); AVA-Verschachtelung (Napa→Oakville, Central Coast→…)
+bewusst NICHT abgebildet — alle AVAs sind gleichrangig direkt wählbar. Multi-State-
+AVAs am wein-relevantesten Primärstaat. curly ' → gerade, En-/Em-Dash → „-".
+
+**Reihenfolge weiter:** Rest-Kernländer (ZA, GR, AU, CL, AR …).
 
 ## Workflow pro Land (identisch, wiederholbar)
 

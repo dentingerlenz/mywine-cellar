@@ -35,7 +35,7 @@ halten, Klick-Anleitungen für Dashboard-Schritte geben.
 - **Geografie**: globale Referenztabellen `countries/regions/sub_regions/appellations`
   (4-Ebenen, FKs an `wines`). Quelle = **`data/geography/*.json`** (1 Datei/Land),
   kompiliert per `npm run geo:build` → `supabase/seed.sql` + `COVERAGE.md`. Aktuell
-  51 Länder / **~1606 Appellationen** (Phase 7 läuft, s. u.). Der Validator in
+  51 Länder / **~1821 Appellationen** (Phase 7 läuft, s. u.). Der Validator in
   `build-seed.js` erzwingt harte Invarianten (keine Typ-Präfixe im Namen, keine
   In-Land-Duplikate außer `MULTI_ANCHOR`, keine eponyme Einzel-Sub, kein `’`) und
   warnt bei Typen außerhalb `KNOWN_TYPES`. **Picker-Logik** (Land→Region→Sub→
@@ -47,11 +47,11 @@ Ziel: jede relevante Appellation aus **offiziellen Registern** (nicht Wikipedia)
 Land für Land. Voller Workflow + wiederverwendbare Skripte:
 **`scripts/geo/phase7/README.md`** (dort auch der Deploy-Befehl). Auto-Memory
 `rebuild-decisions.md` = laufendes Detail-Log.
-- **Fertig & verifiziert:** FR 351 · IT 522 · CH 63 · ES 149 · AT 27 · DE 66 · NZ 19 · PT 44
+- **Fertig & verifiziert:** FR 351 · IT 522 · CH 63 · ES 149 · AT 27 · DE 66 · NZ 19 · PT 44 · US 279
   (`verified:true` + `officialCount` + `verifiedOn` + `sources` je JSON).
-- **Prod:** FR/IT/CH/ES/AT/DE/NZ/PT sind **alle live deployed** (DE+NZ+PT gebündelt am
-  2026-07-16: apps 1545→1606, 0 verwaiste FKs, 0 Weine verloren). Kein offener Batch.
-- **Muster flaches Land** (IT/CH/ES/AT/DE/NZ/PT): Region = offizielles Weingebiet/Verwaltungs-
+- **Prod:** FR/IT/CH/ES/AT/DE/NZ/PT sind **live deployed**. **US (279 AVAs): committet +
+  lokal verifiziert, Deploy noch offen.**
+- **Muster flaches Land** (IT/CH/ES/AT/DE/NZ/PT/US): Region = offizielles Weingebiet/Verwaltungs-
   gebiet, Appellationen flach, Migration via `scripts/geo/phase7/gen_flat_migration.py`
   (hängt alte Sub-Region-Weine auf gleichnamige neue Appellation um; Frankreich mit
   Sub-Regionen → `gen_fr_migration.py`). Jede Migration lokal per **Konvergenz-Test**

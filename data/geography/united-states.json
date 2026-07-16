@@ -2,174 +2,631 @@
   "country": "United States",
   "code": "US",
   "continent": "Americas",
-  "appellations": [
-    {
-      "name": "American",
-      "type": "National"
-    }
+  "verified": true,
+  "sources": [
+    "TTB Established American Viticultural Areas (ttb.gov/regulated-commodities/beverage-alcohol/wine/established-avas), Stand 29.04.2026: 279 AVAs (261 Single-State + 18 Multi-State). Flach je Bundesstaat; Multi-State-AVAs am Primärstaat. Sub-AVA-Verschachtelung nicht abgebildet (alle AVAs als Region-Appellationen)."
   ],
+  "officialCount": 279,
+  "verifiedOn": "2026-07-16",
   "regions": [
     {
       "name": "California",
       "appellations": [
         {
-          "name": "California Wine",
-          "type": "State designation"
-        }
-      ],
-      "subRegions": [
-        {
-          "name": "Napa Valley",
-          "appellations": [
-            {
-              "name": "Napa Valley",
-              "type": "AVA"
-            },
-            {
-              "name": "Rutherford",
-              "type": "AVA"
-            },
-            {
-              "name": "Oakville",
-              "type": "AVA"
-            },
-            {
-              "name": "Stags Leap District",
-              "type": "AVA"
-            },
-            {
-              "name": "Howell Mountain",
-              "type": "AVA"
-            },
-            {
-              "name": "Mt. Veeder",
-              "type": "AVA"
-            },
-            {
-              "name": "Spring Mountain District",
-              "type": "AVA"
-            },
-            {
-              "name": "Atlas Peak",
-              "type": "AVA"
-            },
-            {
-              "name": "Calistoga",
-              "type": "AVA"
-            },
-            {
-              "name": "Oak Knoll District",
-              "type": "AVA"
-            },
-            {
-              "name": "Carneros",
-              "type": "AVA"
-            }
-          ]
+          "name": "Adelaida District",
+          "type": "AVA"
         },
         {
-          "name": "Sonoma County",
-          "appellations": [
-            {
-              "name": "Sonoma Coast",
-              "type": "AVA"
-            },
-            {
-              "name": "Russian River Valley",
-              "type": "AVA"
-            },
-            {
-              "name": "Alexander Valley",
-              "type": "AVA"
-            },
-            {
-              "name": "Dry Creek Valley",
-              "type": "AVA"
-            },
-            {
-              "name": "Chalk Hill",
-              "type": "AVA"
-            },
-            {
-              "name": "Green Valley of Russian River Valley",
-              "type": "AVA"
-            }
-          ]
+          "name": "Alexander Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Alta Mesa",
+          "type": "AVA"
+        },
+        {
+          "name": "Anderson Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Alisos Canyon",
+          "type": "AVA"
+        },
+        {
+          "name": "Antelope Valley of the California High Desert",
+          "type": "AVA"
+        },
+        {
+          "name": "Arroyo Grande Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Arroyo Seco",
+          "type": "AVA"
+        },
+        {
+          "name": "Atlas Peak",
+          "type": "AVA"
+        },
+        {
+          "name": "Ballard Canyon",
+          "type": "AVA"
+        },
+        {
+          "name": "Ben Lomond Mountain",
+          "type": "AVA"
+        },
+        {
+          "name": "Benmore Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Bennett Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Big Valley District-Lake County",
+          "type": "AVA"
+        },
+        {
+          "name": "Borden Ranch",
+          "type": "AVA"
+        },
+        {
+          "name": "California Shenandoah Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Calistoga",
+          "type": "AVA"
+        },
+        {
+          "name": "Capay Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Carmel Valley",
+          "type": "AVA"
         },
         {
           "name": "Central Coast",
-          "appellations": [
-            {
-              "name": "Santa Cruz Mountains",
-              "type": "AVA"
-            },
-            {
-              "name": "Monterey",
-              "type": "AVA"
-            },
-            {
-              "name": "Santa Lucia Highlands",
-              "type": "AVA"
-            },
-            {
-              "name": "Paso Robles",
-              "type": "AVA"
-            },
-            {
-              "name": "Santa Ynez Valley",
-              "type": "AVA"
-            },
-            {
-              "name": "Sta. Rita Hills",
-              "type": "AVA"
-            },
-            {
-              "name": "Ballard Canyon",
-              "type": "AVA"
-            },
-            {
-              "name": "Happy Canyon of Santa Barbara",
-              "type": "AVA"
-            }
-          ]
+          "type": "AVA"
+        },
+        {
+          "name": "Chalk Hill",
+          "type": "AVA"
+        },
+        {
+          "name": "Chalone",
+          "type": "AVA"
+        },
+        {
+          "name": "Chiles Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Cienega Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Clarksburg",
+          "type": "AVA"
+        },
+        {
+          "name": "Clear Lake",
+          "type": "AVA"
+        },
+        {
+          "name": "Clements Hills",
+          "type": "AVA"
+        },
+        {
+          "name": "Cole Ranch",
+          "type": "AVA"
+        },
+        {
+          "name": "Comptche",
+          "type": "AVA"
+        },
+        {
+          "name": "Contra Costa",
+          "type": "AVA"
+        },
+        {
+          "name": "Coombsville",
+          "type": "AVA"
+        },
+        {
+          "name": "Cosumnes River",
+          "type": "AVA"
+        },
+        {
+          "name": "Covelo",
+          "type": "AVA"
+        },
+        {
+          "name": "Creston District",
+          "type": "AVA"
+        },
+        {
+          "name": "Crystal Springs of Napa Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Cucamonga Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Diablo Grande",
+          "type": "AVA"
+        },
+        {
+          "name": "Diamond Mountain District",
+          "type": "AVA"
+        },
+        {
+          "name": "Dos Rios",
+          "type": "AVA"
+        },
+        {
+          "name": "Dry Creek Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Dunnigan Hills",
+          "type": "AVA"
+        },
+        {
+          "name": "Eagle Peak Mendocino County",
+          "type": "AVA"
+        },
+        {
+          "name": "Edna Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "El Dorado",
+          "type": "AVA"
+        },
+        {
+          "name": "El Pomar District",
+          "type": "AVA"
+        },
+        {
+          "name": "Fair Play",
+          "type": "AVA"
+        },
+        {
+          "name": "Fiddletown",
+          "type": "AVA"
+        },
+        {
+          "name": "Fort Ross-Seaview",
+          "type": "AVA"
+        },
+        {
+          "name": "Fountaingrove District",
+          "type": "AVA"
+        },
+        {
+          "name": "Gabilan Mountains",
+          "type": "AVA"
+        },
+        {
+          "name": "Green Valley of Russian River Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Guenoc Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Hames Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Happy Canyon of Santa Barbara",
+          "type": "AVA"
+        },
+        {
+          "name": "High Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Howell Mountain",
+          "type": "AVA"
+        },
+        {
+          "name": "Inwood Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Jahant",
+          "type": "AVA"
+        },
+        {
+          "name": "Kelsey Bench-Lake County",
+          "type": "AVA"
+        },
+        {
+          "name": "Knights Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Lamorinda",
+          "type": "AVA"
+        },
+        {
+          "name": "Leona Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Lime Kiln Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Livermore Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Lodi",
+          "type": "AVA"
+        },
+        {
+          "name": "Long Valley-Lake County",
+          "type": "AVA"
+        },
+        {
+          "name": "Los Carneros",
+          "type": "AVA"
+        },
+        {
+          "name": "Los Olivos District",
+          "type": "AVA"
+        },
+        {
+          "name": "Madera",
+          "type": "AVA"
+        },
+        {
+          "name": "Malibu Coast",
+          "type": "AVA"
+        },
+        {
+          "name": "Malibu-Newton Canyon",
+          "type": "AVA"
+        },
+        {
+          "name": "Manton Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Mendocino",
+          "type": "AVA"
+        },
+        {
+          "name": "Mendocino Ridge",
+          "type": "AVA"
+        },
+        {
+          "name": "Merritt Island",
+          "type": "AVA"
+        },
+        {
+          "name": "McDowell Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Mokelumne River",
+          "type": "AVA"
+        },
+        {
+          "name": "Monterey",
+          "type": "AVA"
+        },
+        {
+          "name": "Moon Mountain District Sonoma County",
+          "type": "AVA"
+        },
+        {
+          "name": "Mt. Harlan",
+          "type": "AVA"
+        },
+        {
+          "name": "Mt. Veeder",
+          "type": "AVA"
+        },
+        {
+          "name": "Napa Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "North Coast",
+          "type": "AVA"
+        },
+        {
+          "name": "North Yuba",
+          "type": "AVA"
+        },
+        {
+          "name": "Northern Sonoma",
+          "type": "AVA"
+        },
+        {
+          "name": "Oak Knoll District of Napa Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Oakville",
+          "type": "AVA"
+        },
+        {
+          "name": "Pacheco Pass",
+          "type": "AVA"
+        },
+        {
+          "name": "Paicines",
+          "type": "AVA"
+        },
+        {
+          "name": "Palos Verdes Peninsula",
+          "type": "AVA"
+        },
+        {
+          "name": "Paso Robles",
+          "type": "AVA"
+        },
+        {
+          "name": "Paso Robles Estrella District",
+          "type": "AVA"
+        },
+        {
+          "name": "Paso Robles Geneseo District",
+          "type": "AVA"
+        },
+        {
+          "name": "Paso Robles Highlands District",
+          "type": "AVA"
+        },
+        {
+          "name": "Paso Robles Willow Creek District",
+          "type": "AVA"
+        },
+        {
+          "name": "Paulsell Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Petaluma Gap",
+          "type": "AVA"
+        },
+        {
+          "name": "Pine Mountain-Cloverdale Peak",
+          "type": "AVA"
+        },
+        {
+          "name": "Potter Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Ramona Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Red Hills Lake County",
+          "type": "AVA"
+        },
+        {
+          "name": "Redwood Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "River Junction",
+          "type": "AVA"
+        },
+        {
+          "name": "Rockpile",
+          "type": "AVA"
+        },
+        {
+          "name": "Russian River Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Rutherford",
+          "type": "AVA"
+        },
+        {
+          "name": "Saddle Rock-Malibu",
+          "type": "AVA"
+        },
+        {
+          "name": "Salado Creek",
+          "type": "AVA"
+        },
+        {
+          "name": "San Antonio Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "San Benito",
+          "type": "AVA"
+        },
+        {
+          "name": "San Bernabe",
+          "type": "AVA"
+        },
+        {
+          "name": "San Francisco Bay",
+          "type": "AVA"
+        },
+        {
+          "name": "San Juan Creek",
+          "type": "AVA"
+        },
+        {
+          "name": "San Luis Obispo Coast",
+          "type": "AVA"
+        },
+        {
+          "name": "San Luis Rey",
+          "type": "AVA"
+        },
+        {
+          "name": "San Lucas",
+          "type": "AVA"
+        },
+        {
+          "name": "San Miguel District",
+          "type": "AVA"
+        },
+        {
+          "name": "San Pasqual Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "San Ysidro District",
+          "type": "AVA"
+        },
+        {
+          "name": "Santa Clara Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Santa Cruz Mountains",
+          "type": "AVA"
+        },
+        {
+          "name": "Santa Lucia Highlands",
+          "type": "AVA"
+        },
+        {
+          "name": "Santa Margarita Ranch",
+          "type": "AVA"
+        },
+        {
+          "name": "Santa Maria Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Santa Ynez Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Seiad Valley",
+          "type": "AVA"
         },
         {
           "name": "Sierra Foothills",
-          "appellations": [
-            {
-              "name": "El Dorado",
-              "type": "AVA"
-            },
-            {
-              "name": "Amador County",
-              "type": "AVA"
-            },
-            {
-              "name": "Calaveras County",
-              "type": "AVA"
-            }
-          ]
+          "type": "AVA"
         },
         {
-          "name": "Other AVAs",
-          "appellations": [
-            {
-              "name": "Livermore Valley",
-              "type": "AVA"
-            },
-            {
-              "name": "Lodi",
-              "type": "AVA"
-            },
-            {
-              "name": "Anderson Valley",
-              "type": "AVA"
-            },
-            {
-              "name": "Redwood Valley",
-              "type": "AVA"
-            }
-          ]
+          "name": "Sierra Pelona Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Sloughhouse",
+          "type": "AVA"
+        },
+        {
+          "name": "Solano County Green Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Sonoma Coast",
+          "type": "AVA"
+        },
+        {
+          "name": "Sonoma Mountain",
+          "type": "AVA"
+        },
+        {
+          "name": "Sonoma Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "South Coast",
+          "type": "AVA"
+        },
+        {
+          "name": "Spring Mountain District",
+          "type": "AVA"
+        },
+        {
+          "name": "Squaw Valley-Miramonte",
+          "type": "AVA"
+        },
+        {
+          "name": "St. Helena",
+          "type": "AVA"
+        },
+        {
+          "name": "Sta. Rita Hills",
+          "type": "AVA"
+        },
+        {
+          "name": "Stags Leap District",
+          "type": "AVA"
+        },
+        {
+          "name": "Suisun Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Tehachapi Mountains",
+          "type": "AVA"
+        },
+        {
+          "name": "Temecula Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Templeton Gap District",
+          "type": "AVA"
+        },
+        {
+          "name": "Tracy Hills",
+          "type": "AVA"
+        },
+        {
+          "name": "Trinity Lakes",
+          "type": "AVA"
+        },
+        {
+          "name": "Upper Lake Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "West Sonoma Coast",
+          "type": "AVA"
+        },
+        {
+          "name": "Wild Horse Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Willow Creek",
+          "type": "AVA"
+        },
+        {
+          "name": "Winters Highlands",
+          "type": "AVA"
+        },
+        {
+          "name": "York Mountain",
+          "type": "AVA"
+        },
+        {
+          "name": "Yorkville Highlands",
+          "type": "AVA"
+        },
+        {
+          "name": "Yountville",
+          "type": "AVA"
+        },
+        {
+          "name": "Yucaipa Valley",
+          "type": "AVA"
         }
       ]
     },
@@ -177,220 +634,644 @@
       "name": "Oregon",
       "appellations": [
         {
-          "name": "Oregon Wine",
-          "type": "State designation"
-        }
-      ],
-      "subRegions": [
+          "name": "Applegate Valley",
+          "type": "AVA"
+        },
         {
-          "name": "Willamette Valley",
-          "appellations": [
-            {
-              "name": "Willamette Valley",
-              "type": "AVA"
-            },
-            {
-              "name": "Dundee Hills",
-              "type": "AVA"
-            },
-            {
-              "name": "Chehalem Mountains",
-              "type": "AVA"
-            },
-            {
-              "name": "Ribbon Ridge",
-              "type": "AVA"
-            },
-            {
-              "name": "Yamhill-Carlton",
-              "type": "AVA"
-            },
-            {
-              "name": "Eola-Amity Hills",
-              "type": "AVA"
-            },
-            {
-              "name": "McMinnville",
-              "type": "AVA"
-            }
-          ]
+          "name": "Chehalem Mountains",
+          "type": "AVA"
+        },
+        {
+          "name": "Dundee Hills",
+          "type": "AVA"
+        },
+        {
+          "name": "Elkton Oregon",
+          "type": "AVA"
+        },
+        {
+          "name": "Eola-Amity Hills",
+          "type": "AVA"
+        },
+        {
+          "name": "Laurelwood District",
+          "type": "AVA"
+        },
+        {
+          "name": "Lower Long Tom",
+          "type": "AVA"
+        },
+        {
+          "name": "McMinnville",
+          "type": "AVA"
+        },
+        {
+          "name": "Mt. Pisgah, Polk County, Oregon",
+          "type": "AVA"
+        },
+        {
+          "name": "Red Hill Douglas County Oregon",
+          "type": "AVA"
+        },
+        {
+          "name": "Ribbon Ridge",
+          "type": "AVA"
+        },
+        {
+          "name": "The Rocks District of Milton-Freewater",
+          "type": "AVA"
+        },
+        {
+          "name": "Rogue Valley",
+          "type": "AVA"
         },
         {
           "name": "Southern Oregon",
-          "appellations": [
-            {
-              "name": "Umpqua Valley",
-              "type": "AVA"
-            },
-            {
-              "name": "Rogue Valley",
-              "type": "AVA"
-            }
-          ]
+          "type": "AVA"
+        },
+        {
+          "name": "Tualatin Hills",
+          "type": "AVA"
+        },
+        {
+          "name": "Umpqua Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Van Duzer Corridor",
+          "type": "AVA"
+        },
+        {
+          "name": "Willamette Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Yamhill-Carlton",
+          "type": "AVA"
+        }
+      ]
+    },
+    {
+      "name": "Washington",
+      "appellations": [
+        {
+          "name": "Ancient Lakes of Columbia Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Beverly, Washington",
+          "type": "AVA"
+        },
+        {
+          "name": "Candy Mountain",
+          "type": "AVA"
+        },
+        {
+          "name": "Goose Gap",
+          "type": "AVA"
+        },
+        {
+          "name": "Horse Heaven Hills",
+          "type": "AVA"
+        },
+        {
+          "name": "Lake Chelan",
+          "type": "AVA"
+        },
+        {
+          "name": "Naches Heights",
+          "type": "AVA"
+        },
+        {
+          "name": "Puget Sound",
+          "type": "AVA"
+        },
+        {
+          "name": "Rattlesnake Hills",
+          "type": "AVA"
+        },
+        {
+          "name": "Red Mountain",
+          "type": "AVA"
+        },
+        {
+          "name": "Rocky Reach",
+          "type": "AVA"
+        },
+        {
+          "name": "Royal Slope",
+          "type": "AVA"
+        },
+        {
+          "name": "Snipes Mountain",
+          "type": "AVA"
+        },
+        {
+          "name": "The Burn of Columbia Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Wahluke Slope",
+          "type": "AVA"
+        },
+        {
+          "name": "White Bluffs",
+          "type": "AVA"
+        },
+        {
+          "name": "Yakima Valley",
+          "type": "AVA"
         },
         {
           "name": "Columbia Gorge",
-          "appellations": [
-            {
-              "name": "Columbia Gorge",
-              "type": "AVA"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Washington State",
-      "appellations": [
-        {
-          "name": "Washington Wine",
-          "type": "State designation"
-        }
-      ],
-      "subRegions": [
-        {
-          "name": "Columbia Valley",
-          "appellations": [
-            {
-              "name": "Columbia Valley",
-              "type": "AVA"
-            },
-            {
-              "name": "Yakima Valley",
-              "type": "AVA"
-            },
-            {
-              "name": "Red Mountain",
-              "type": "AVA"
-            },
-            {
-              "name": "Horse Heaven Hills",
-              "type": "AVA"
-            },
-            {
-              "name": "Rattlesnake Hills",
-              "type": "AVA"
-            },
-            {
-              "name": "Wahluke Slope",
-              "type": "AVA"
-            },
-            {
-              "name": "Ancient Lakes",
-              "type": "AVA"
-            }
-          ]
+          "type": "AVA"
         },
         {
-          "name": "Walla Walla",
-          "appellations": [
-            {
-              "name": "Walla Walla Valley",
-              "type": "AVA"
-            }
-          ]
+          "name": "Columbia Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Walla Walla Valley",
+          "type": "AVA"
         }
       ]
     },
     {
-      "name": "New York State",
+      "name": "New York",
       "appellations": [
         {
-          "name": "New York Wine",
-          "type": "State designation"
-        }
-      ],
-      "subRegions": [
+          "name": "Cayuga Lake",
+          "type": "AVA"
+        },
+        {
+          "name": "Champlain Valley of New York",
+          "type": "AVA"
+        },
         {
           "name": "Finger Lakes",
-          "appellations": [
-            {
-              "name": "Finger Lakes",
-              "type": "AVA"
-            }
-          ]
+          "type": "AVA"
+        },
+        {
+          "name": "Hudson River Region",
+          "type": "AVA"
         },
         {
           "name": "Long Island",
-          "appellations": [
-            {
-              "name": "North Fork of Long Island",
-              "type": "AVA"
-            },
-            {
-              "name": "The Hamptons, Long Island",
-              "type": "AVA"
-            }
-          ]
+          "type": "AVA"
         },
         {
-          "name": "Hudson Valley",
-          "appellations": [
-            {
-              "name": "Hudson River Region",
-              "type": "AVA"
-            }
-          ]
+          "name": "Niagara Escarpment",
+          "type": "AVA"
+        },
+        {
+          "name": "North Fork of Long Island",
+          "type": "AVA"
+        },
+        {
+          "name": "Seneca Lake",
+          "type": "AVA"
+        },
+        {
+          "name": "The Hamptons, Long Island",
+          "type": "AVA"
+        },
+        {
+          "name": "Upper Hudson",
+          "type": "AVA"
+        },
+        {
+          "name": "Lake Erie",
+          "type": "AVA"
         }
       ]
     },
     {
       "name": "Virginia",
-      "subRegions": [
+      "appellations": [
         {
-          "name": "Central Virginia",
-          "appellations": [
-            {
-              "name": "Monticello",
-              "type": "AVA"
-            }
-          ]
+          "name": "Middleburg Virginia",
+          "type": "AVA"
         },
         {
-          "name": "Northern Virginia",
-          "appellations": [
-            {
-              "name": "Shenandoah Valley",
-              "type": "AVA"
-            }
-          ]
+          "name": "Monticello",
+          "type": "AVA"
+        },
+        {
+          "name": "North Fork of Roanoke",
+          "type": "AVA"
+        },
+        {
+          "name": "Northern Neck George Washington Birthplace",
+          "type": "AVA"
+        },
+        {
+          "name": "Rocky Knob",
+          "type": "AVA"
+        },
+        {
+          "name": "Virginia's Eastern Shore",
+          "type": "AVA"
+        },
+        {
+          "name": "Virginia Peninsula",
+          "type": "AVA"
+        },
+        {
+          "name": "Shenandoah Valley",
+          "type": "AVA"
         }
       ]
     },
     {
       "name": "Texas",
-      "subRegions": [
+      "appellations": [
         {
-          "name": "Texas Panhandle",
-          "appellations": [
-            {
-              "name": "Texas High Plains",
-              "type": "AVA"
-            }
-          ]
+          "name": "Bell Mountain",
+          "type": "AVA"
         },
         {
-          "name": "Central Texas",
-          "appellations": [
-            {
-              "name": "Texas Hill Country",
-              "type": "AVA"
-            }
-          ]
+          "name": "Escondido Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Fredericksburg in the Texas Hill Country",
+          "type": "AVA"
+        },
+        {
+          "name": "Texas Davis Mountains",
+          "type": "AVA"
+        },
+        {
+          "name": "Texas High Plains",
+          "type": "AVA"
+        },
+        {
+          "name": "Texas Hill Country",
+          "type": "AVA"
+        },
+        {
+          "name": "Texoma",
+          "type": "AVA"
+        }
+      ]
+    },
+    {
+      "name": "Idaho",
+      "appellations": [
+        {
+          "name": "Eagle Foothills",
+          "type": "AVA"
+        },
+        {
+          "name": "Lewis-Clark Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Snake River Valley",
+          "type": "AVA"
         }
       ]
     },
     {
       "name": "Michigan",
-      "subRegions": [
+      "appellations": [
         {
-          "name": "Southwest Michigan",
-          "appellations": [
-            {
-              "name": "Lake Michigan Shore",
-              "type": "AVA"
-            }
-          ]
+          "name": "Fennville",
+          "type": "AVA"
+        },
+        {
+          "name": "Lake Michigan Shore",
+          "type": "AVA"
+        },
+        {
+          "name": "Leelanau Peninsula",
+          "type": "AVA"
+        },
+        {
+          "name": "Old Mission Peninsula",
+          "type": "AVA"
+        },
+        {
+          "name": "Tip of the Mitt",
+          "type": "AVA"
+        }
+      ]
+    },
+    {
+      "name": "Missouri",
+      "appellations": [
+        {
+          "name": "Augusta",
+          "type": "AVA"
+        },
+        {
+          "name": "Hermann",
+          "type": "AVA"
+        },
+        {
+          "name": "Ozark Highlands",
+          "type": "AVA"
+        },
+        {
+          "name": "Ozark Mountain",
+          "type": "AVA"
+        }
+      ]
+    },
+    {
+      "name": "New Mexico",
+      "appellations": [
+        {
+          "name": "Middle Rio Grande Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Mimbres Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Mesilla Valley",
+          "type": "AVA"
+        }
+      ]
+    },
+    {
+      "name": "Colorado",
+      "appellations": [
+        {
+          "name": "Grand Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "West Elks",
+          "type": "AVA"
+        }
+      ]
+    },
+    {
+      "name": "Arizona",
+      "appellations": [
+        {
+          "name": "Sonoita",
+          "type": "AVA"
+        },
+        {
+          "name": "Verde Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Willcox",
+          "type": "AVA"
+        }
+      ]
+    },
+    {
+      "name": "North Carolina",
+      "appellations": [
+        {
+          "name": "Crest of the Blue Ridge Henderson County",
+          "type": "AVA"
+        },
+        {
+          "name": "Haw River Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Swan Creek",
+          "type": "AVA"
+        },
+        {
+          "name": "Tryon Foothills",
+          "type": "AVA"
+        },
+        {
+          "name": "Yadkin Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Appalachian High Country",
+          "type": "AVA"
+        },
+        {
+          "name": "Upper Hiwassee Highlands",
+          "type": "AVA"
+        }
+      ]
+    },
+    {
+      "name": "New Jersey",
+      "appellations": [
+        {
+          "name": "Cape May Peninsula",
+          "type": "AVA"
+        },
+        {
+          "name": "Outer Coastal Plain",
+          "type": "AVA"
+        },
+        {
+          "name": "Warren Hills",
+          "type": "AVA"
+        },
+        {
+          "name": "Central Delaware Valley",
+          "type": "AVA"
+        }
+      ]
+    },
+    {
+      "name": "Pennsylvania",
+      "appellations": [
+        {
+          "name": "Lancaster Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Lehigh Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Cumberland Valley",
+          "type": "AVA"
+        }
+      ]
+    },
+    {
+      "name": "Ohio",
+      "appellations": [
+        {
+          "name": "Grand River Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Isle St. George",
+          "type": "AVA"
+        },
+        {
+          "name": "Loramie Creek",
+          "type": "AVA"
+        },
+        {
+          "name": "Ohio River Valley",
+          "type": "AVA"
+        }
+      ]
+    },
+    {
+      "name": "Maryland",
+      "appellations": [
+        {
+          "name": "Catoctin",
+          "type": "AVA"
+        },
+        {
+          "name": "Linganore",
+          "type": "AVA"
+        }
+      ]
+    },
+    {
+      "name": "Massachusetts",
+      "appellations": [
+        {
+          "name": "Martha's Vineyard",
+          "type": "AVA"
+        },
+        {
+          "name": "Nashoba Valley",
+          "type": "AVA"
+        },
+        {
+          "name": "Southeastern New England",
+          "type": "AVA"
+        }
+      ]
+    },
+    {
+      "name": "Connecticut",
+      "appellations": [
+        {
+          "name": "Eastern Connecticut Highlands",
+          "type": "AVA"
+        },
+        {
+          "name": "Western Connecticut Highlands",
+          "type": "AVA"
+        }
+      ]
+    },
+    {
+      "name": "Tennessee",
+      "appellations": [
+        {
+          "name": "Nine Lakes of East Tennessee",
+          "type": "AVA"
+        },
+        {
+          "name": "Upper Cumberland",
+          "type": "AVA"
+        }
+      ]
+    },
+    {
+      "name": "Arkansas",
+      "appellations": [
+        {
+          "name": "Altus",
+          "type": "AVA"
+        },
+        {
+          "name": "Arkansas Mountain",
+          "type": "AVA"
+        }
+      ]
+    },
+    {
+      "name": "Georgia",
+      "appellations": [
+        {
+          "name": "Dahlonega Plateau",
+          "type": "AVA"
+        }
+      ]
+    },
+    {
+      "name": "Hawaii",
+      "appellations": [
+        {
+          "name": "Ulupalakua",
+          "type": "AVA"
+        }
+      ]
+    },
+    {
+      "name": "Illinois",
+      "appellations": [
+        {
+          "name": "Shawnee Hills",
+          "type": "AVA"
+        }
+      ]
+    },
+    {
+      "name": "Indiana",
+      "appellations": [
+        {
+          "name": "Indiana Uplands",
+          "type": "AVA"
+        }
+      ]
+    },
+    {
+      "name": "Iowa",
+      "appellations": [
+        {
+          "name": "Loess Hills District",
+          "type": "AVA"
+        }
+      ]
+    },
+    {
+      "name": "Minnesota",
+      "appellations": [
+        {
+          "name": "Alexandria Lakes",
+          "type": "AVA"
+        }
+      ]
+    },
+    {
+      "name": "Mississippi",
+      "appellations": [
+        {
+          "name": "Mississippi Delta",
+          "type": "AVA"
+        }
+      ]
+    },
+    {
+      "name": "West Virginia",
+      "appellations": [
+        {
+          "name": "Kanawha River Valley",
+          "type": "AVA"
+        }
+      ]
+    },
+    {
+      "name": "Wisconsin",
+      "appellations": [
+        {
+          "name": "Lake Wisconsin",
+          "type": "AVA"
+        },
+        {
+          "name": "Wisconsin Ledge",
+          "type": "AVA"
+        },
+        {
+          "name": "Upper Mississippi River Valley",
+          "type": "AVA"
         }
       ]
     }

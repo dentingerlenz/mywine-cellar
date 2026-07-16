@@ -6,7 +6,7 @@
 > federdoc, TTB, …). Ziel laut Plan §5.3 (max. Tiefe): ~1'800–2'200 Appellationen.
 > „Offiziell" = Soll-Zahl laut Register; „Lücke" heißt erfasst < offiziell.
 
-Stand: 2026-07-16 · **51 Länder (8 verifiziert) · 1606 Appellationen**
+Stand: 2026-07-16 · **51 Länder (9 verifiziert) · 1821 Appellationen**
 
 | Land | Regionen | Sub-Regionen | Erfasst | Offiziell | Geprüft am | Status |
 |---|---|---|---|---|---|---|
@@ -59,7 +59,7 @@ Stand: 2026-07-16 · **51 Länder (8 verifiziert) · 1606 Appellationen**
 | Tunisia | 3 | 3 | 3 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Turkey | 5 | 5 | 5 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Ukraine | 3 | 3 | 4 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
-| United States | 7 | 18 | 64 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
+| United States | 30 | 0 | 279 | 279 | 2026-07-16 | ✅ verifiziert (TTB Established American Viticultural Areas (ttb.gov/regulated-commodities/beverage-alcohol/wine/established-avas), Stand 29.04.2026: 279 AVAs (261 Single-State + 18 Multi-State). Flach je Bundesstaat; Multi-State-AVAs am Primärstaat. Sub-AVA-Verschachtelung nicht abgebildet (alle AVAs als Region-Appellationen).) |
 | Uruguay | 5 | 0 | 5 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 
-| **Gesamt** | **265** | **282** | **1606** | | | |
+| **Gesamt** | **288** | **264** | **1821** | | | |
