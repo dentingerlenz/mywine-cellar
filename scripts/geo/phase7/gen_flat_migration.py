@@ -70,6 +70,14 @@ update public.wines w set appellation_id = na.id from _mig_cap cap join public.a
 update public.wines w set region_id = nr.id from _mig_cap cap join public.regions nr on nr.name = cap.region_name
   join public.countries c on c.id = nr.country_id and c.name={CN}
  where w.id = cap.wine_id and w.appellation_id is null and cap.region_name is not null;
+-- Erhalt: alte Sub-Region ohne passende neue Appellation ins Freitextfeld "location"
+-- (nur wenn leer und != zugewiesener Appellationsname). Aendert nur "location" -> der
+-- geo-Ancestor-Trigger (country/region/sub/appellation) feuert NICHT.
+update public.wines w set location = cap.sub_name
+  from _mig_cap cap
+ where w.id = cap.wine_id and cap.sub_name is not null
+   and (w.location is null or btrim(w.location) = '')
+   and cap.sub_name is distinct from coalesce((select a.name from public.appellations a where a.id = w.appellation_id), '');
 commit;""")
     out = f"{ROOT}/supabase/migrations/{ts}_{suffix}.sql"
     open(out, "w").write("\n".join(L) + "\n")

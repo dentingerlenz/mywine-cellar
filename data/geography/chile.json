@@ -2,59 +2,72 @@
   "country": "Chile",
   "code": "CL",
   "continent": "Americas",
+  "verified": true,
+  "sources": [
+    "Decreto N° 464 (SAG, Zonificacion Viticola y Denominacion de Origen; sag.gob.cl PDF): 6 Regionen viticolas -> Valles (Subregionen/Zonen, DO) + Areas (Comunas, DO Area). Aus dem amtlichen PDF geparst; Spanisch -> ASCII."
+  ],
+  "officialCount": 95,
+  "verifiedOn": "2026-07-16",
   "regions": [
     {
       "name": "Atacama",
-      "subRegions": [
+      "appellations": [
         {
-          "name": "Copiapo",
-          "appellations": [
-            {
-              "name": "Copiapo",
-              "type": "DO"
-            }
-          ]
+          "name": "Valle de Copiapo",
+          "type": "DO"
         },
         {
-          "name": "Huasco",
-          "appellations": [
-            {
-              "name": "Huasco",
-              "type": "DO"
-            }
-          ]
+          "name": "Valle del Huasco",
+          "type": "DO"
         }
       ]
     },
     {
       "name": "Coquimbo",
-      "subRegions": [
+      "appellations": [
         {
-          "name": "Elqui",
-          "appellations": [
-            {
-              "name": "Elqui",
-              "type": "DO"
-            }
-          ]
+          "name": "Valle del Elqui",
+          "type": "DO"
         },
         {
-          "name": "Limari",
-          "appellations": [
-            {
-              "name": "Limari",
-              "type": "DO"
-            }
-          ]
+          "name": "Valle del Limari",
+          "type": "DO"
         },
         {
-          "name": "Choapa",
-          "appellations": [
-            {
-              "name": "Choapa",
-              "type": "DO"
-            }
-          ]
+          "name": "Valle del Choapa",
+          "type": "DO"
+        },
+        {
+          "name": "La Serena",
+          "type": "DO Area"
+        },
+        {
+          "name": "Vicuna",
+          "type": "DO Area"
+        },
+        {
+          "name": "Paiguano",
+          "type": "DO Area"
+        },
+        {
+          "name": "Ovalle",
+          "type": "DO Area"
+        },
+        {
+          "name": "Punitaqui",
+          "type": "DO Area"
+        },
+        {
+          "name": "Rio Hurtado",
+          "type": "DO Area"
+        },
+        {
+          "name": "Salamanca",
+          "type": "DO Area"
+        },
+        {
+          "name": "Illapel",
+          "type": "DO Area"
         }
       ]
     },
@@ -62,36 +75,76 @@
       "name": "Aconcagua",
       "appellations": [
         {
-          "name": "Aconcagua Wine",
+          "name": "Valle del Aconcagua",
           "type": "DO"
         },
         {
-          "name": "Aconcagua",
+          "name": "Valle de Casablanca",
           "type": "DO"
-        }
-      ],
-      "subRegions": [
-        {
-          "name": "Casablanca",
-          "appellations": [
-            {
-              "name": "Casablanca",
-              "type": "DO"
-            }
-          ]
         },
         {
-          "name": "San Antonio",
-          "appellations": [
-            {
-              "name": "San Antonio",
-              "type": "DO"
-            },
-            {
-              "name": "Leyda",
-              "type": "DO"
-            }
-          ]
+          "name": "Valle de San Antonio",
+          "type": "DO"
+        },
+        {
+          "name": "Valle del Marga-Marga",
+          "type": "DO"
+        },
+        {
+          "name": "Valle de Leyda",
+          "type": "DO"
+        },
+        {
+          "name": "Panquehue",
+          "type": "DO Area"
+        },
+        {
+          "name": "Quillota",
+          "type": "DO Area"
+        },
+        {
+          "name": "Hijuelas",
+          "type": "DO Area"
+        },
+        {
+          "name": "Catemu",
+          "type": "DO Area"
+        },
+        {
+          "name": "Llaillay",
+          "type": "DO Area"
+        },
+        {
+          "name": "San Felipe",
+          "type": "DO Area"
+        },
+        {
+          "name": "Santa Maria",
+          "type": "DO Area"
+        },
+        {
+          "name": "Calle Larga",
+          "type": "DO Area"
+        },
+        {
+          "name": "San Esteban",
+          "type": "DO Area"
+        },
+        {
+          "name": "San Juan",
+          "type": "DO Area"
+        },
+        {
+          "name": "Santo Domingo",
+          "type": "DO Area"
+        },
+        {
+          "name": "Zapallar",
+          "type": "DO Area"
+        },
+        {
+          "name": "Cartagena",
+          "type": "DO Area"
         }
       ]
     },
@@ -99,82 +152,270 @@
       "name": "Valle Central",
       "appellations": [
         {
-          "name": "Valle Central Wine",
+          "name": "Valle del Maipo",
           "type": "DO"
-        }
-      ],
-      "subRegions": [
-        {
-          "name": "Maipo",
-          "appellations": [
-            {
-              "name": "Maipo",
-              "type": "DO"
-            }
-          ]
         },
         {
-          "name": "Rapel",
-          "appellations": [
-            {
-              "name": "Cachapoal",
-              "type": "DO"
-            },
-            {
-              "name": "Colchagua",
-              "type": "DO"
-            }
-          ]
+          "name": "Valle del Rapel",
+          "type": "DO"
         },
         {
-          "name": "Curico",
-          "appellations": [
-            {
-              "name": "Curico",
-              "type": "DO"
-            }
-          ]
+          "name": "Valle de Curico",
+          "type": "DO"
         },
         {
-          "name": "Maule",
-          "appellations": [
-            {
-              "name": "Maule",
-              "type": "DO"
-            }
-          ]
+          "name": "Valle del Maule",
+          "type": "DO"
+        },
+        {
+          "name": "Valle del Cachapoal",
+          "type": "DO"
+        },
+        {
+          "name": "Valle de Colchagua",
+          "type": "DO"
+        },
+        {
+          "name": "Valle del Teno",
+          "type": "DO"
+        },
+        {
+          "name": "Valle del Lontue",
+          "type": "DO"
+        },
+        {
+          "name": "Valle del Claro",
+          "type": "DO"
+        },
+        {
+          "name": "Valle del Loncomilla",
+          "type": "DO"
+        },
+        {
+          "name": "Valle del Tutuven",
+          "type": "DO"
+        },
+        {
+          "name": "Pirque",
+          "type": "DO Area"
+        },
+        {
+          "name": "Puente Alto",
+          "type": "DO Area"
+        },
+        {
+          "name": "Buin",
+          "type": "DO Area"
+        },
+        {
+          "name": "Isla de Maipo",
+          "type": "DO Area"
+        },
+        {
+          "name": "Talagante",
+          "type": "DO Area"
+        },
+        {
+          "name": "Melipilla",
+          "type": "DO Area"
+        },
+        {
+          "name": "Maria Pinto",
+          "type": "DO Area"
+        },
+        {
+          "name": "Colina",
+          "type": "DO Area"
+        },
+        {
+          "name": "Calera de Tango",
+          "type": "DO Area"
+        },
+        {
+          "name": "Til Til",
+          "type": "DO Area"
+        },
+        {
+          "name": "Lampa",
+          "type": "DO Area"
+        },
+        {
+          "name": "Rancagua",
+          "type": "DO Area"
+        },
+        {
+          "name": "Requinoa",
+          "type": "DO Area"
+        },
+        {
+          "name": "Peumo",
+          "type": "DO Area"
+        },
+        {
+          "name": "Machali",
+          "type": "DO Area"
+        },
+        {
+          "name": "Coltauco",
+          "type": "DO Area"
+        },
+        {
+          "name": "San Fernando",
+          "type": "DO Area"
+        },
+        {
+          "name": "Chimbarongo",
+          "type": "DO Area"
+        },
+        {
+          "name": "Nancagua",
+          "type": "DO Area"
+        },
+        {
+          "name": "Santa Cruz",
+          "type": "DO Area"
+        },
+        {
+          "name": "Palmilla",
+          "type": "DO Area"
+        },
+        {
+          "name": "Peralillo",
+          "type": "DO Area"
+        },
+        {
+          "name": "Lolol",
+          "type": "DO Area"
+        },
+        {
+          "name": "Litueche",
+          "type": "DO Area"
+        },
+        {
+          "name": "La Estrella",
+          "type": "DO Area"
+        },
+        {
+          "name": "Paredones",
+          "type": "DO Area"
+        },
+        {
+          "name": "Pumanque",
+          "type": "DO Area"
+        },
+        {
+          "name": "Rauco",
+          "type": "DO Area"
+        },
+        {
+          "name": "Romeral",
+          "type": "DO Area"
+        },
+        {
+          "name": "Vichuquen",
+          "type": "DO Area"
+        },
+        {
+          "name": "Molina",
+          "type": "DO Area"
+        },
+        {
+          "name": "Talca",
+          "type": "DO Area"
+        },
+        {
+          "name": "Pencahue",
+          "type": "DO Area"
+        },
+        {
+          "name": "San Clemente",
+          "type": "DO Area"
+        },
+        {
+          "name": "San Rafael",
+          "type": "DO Area"
+        },
+        {
+          "name": "Empedrado",
+          "type": "DO Area"
+        },
+        {
+          "name": "Curepto",
+          "type": "DO Area"
+        },
+        {
+          "name": "San Javier",
+          "type": "DO Area"
+        },
+        {
+          "name": "Villa Alegre",
+          "type": "DO Area"
+        },
+        {
+          "name": "Parral",
+          "type": "DO Area"
+        },
+        {
+          "name": "Linares",
+          "type": "DO Area"
+        },
+        {
+          "name": "Colbun",
+          "type": "DO Area"
+        },
+        {
+          "name": "Longavi",
+          "type": "DO Area"
+        },
+        {
+          "name": "Retiro",
+          "type": "DO Area"
         }
       ]
     },
     {
       "name": "Sur",
-      "subRegions": [
+      "appellations": [
         {
-          "name": "Itata",
-          "appellations": [
-            {
-              "name": "Itata",
-              "type": "DO"
-            }
-          ]
+          "name": "Valle del Itata",
+          "type": "DO"
         },
         {
-          "name": "Bio Bio",
-          "appellations": [
-            {
-              "name": "Bio Bio",
-              "type": "DO"
-            }
-          ]
+          "name": "Valle del Bio-Bio",
+          "type": "DO"
         },
         {
-          "name": "Malleco",
-          "appellations": [
-            {
-              "name": "Malleco",
-              "type": "DO"
-            }
-          ]
+          "name": "Valle del Malleco",
+          "type": "DO"
+        },
+        {
+          "name": "Chillan",
+          "type": "DO Area"
+        },
+        {
+          "name": "Quillon",
+          "type": "DO Area"
+        },
+        {
+          "name": "Coelemu",
+          "type": "DO Area"
+        },
+        {
+          "name": "Mulchen",
+          "type": "DO Area"
+        }
+      ]
+    },
+    {
+      "name": "Austral",
+      "appellations": [
+        {
+          "name": "Valle del Cautin",
+          "type": "DO"
+        },
+        {
+          "name": "Valle de Osorno",
+          "type": "DO"
         }
       ]
     }

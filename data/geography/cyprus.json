@@ -1,8 +1,43 @@
 {
   "country": "Cyprus",
   "code": "CY",
-  "continent": "Europe",
+  "continent": "Asia",
+  "verified": true,
+  "sources": [
+    "Offizielle zypriotische Wein-GI-Liste (User, 2026): 7 PDO + 4 PGI. Region = Weindistrikt (griech. Transliteration); PGI-Distrikte als gleichnamige Appellation."
+  ],
+  "officialCount": 11,
+  "verifiedOn": "2026-07-16",
   "regions": [
+    {
+      "name": "Lemesos",
+      "appellations": [
+        {
+          "name": "Lemesos",
+          "type": "PGI"
+        },
+        {
+          "name": "Krasohoria Lemesou",
+          "type": "PDO"
+        },
+        {
+          "name": "Krasohoria Lemesou - Afames",
+          "type": "PDO"
+        },
+        {
+          "name": "Krasohoria Lemesou - Laona",
+          "type": "PDO"
+        },
+        {
+          "name": "Commandaria",
+          "type": "PDO"
+        },
+        {
+          "name": "Pitsilia",
+          "type": "PDO"
+        }
+      ]
+    },
     {
       "name": "Pafos",
       "appellations": [
@@ -11,29 +46,12 @@
           "type": "PGI"
         },
         {
-          "name": "Laona Akamas",
+          "name": "Vouni Panayia - Ambelitis",
           "type": "PDO"
         },
         {
-          "name": "Vouni Panagias – Ampelitis",
+          "name": "Laona Akama",
           "type": "PDO"
-        }
-      ]
-    },
-    {
-      "name": "Lemesos",
-      "appellations": [
-        {
-          "name": "Commandaria",
-          "type": "PDO"
-        },
-        {
-          "name": "Krasochoria Lemesou",
-          "type": "PDO"
-        },
-        {
-          "name": "Lemesos",
-          "type": "PGI"
         }
       ]
     },

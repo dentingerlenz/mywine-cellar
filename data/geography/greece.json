@@ -2,226 +2,483 @@
   "country": "Greece",
   "code": "GR",
   "continent": "Europe",
+  "verified": true,
+  "sources": [
+    "Recherchiert (keine amtliche Einzelliste auffindbar, User bat um Recherche): 33 etablierte PDOs + breite regionale PGIs + bekannte Präfektur-PGIs, nach 9 Weinregionen. Transliteration Latein. PGI-Langschwanz (kleine lokale PGIs) bewusst nicht vollständig."
+  ],
+  "officialCount": 107,
+  "verifiedOn": "2026-07-16",
   "regions": [
     {
-      "name": "Makedonia",
-      "subRegions": [
+      "name": "Macedonia",
+      "appellations": [
         {
           "name": "Naoussa",
-          "appellations": [
-            {
-              "name": "Naoussa",
-              "type": "PDO"
-            }
-          ]
-        },
-        {
-          "name": "Amyndeon",
-          "appellations": [
-            {
-              "name": "Amyndeon",
-              "type": "PDO"
-            }
-          ]
+          "type": "PDO"
         },
         {
           "name": "Goumenissa",
-          "appellations": [
-            {
-              "name": "Goumenissa",
-              "type": "PDO"
-            }
-          ]
+          "type": "PDO"
         },
         {
-          "name": "Halkidiki",
-          "appellations": [
-            {
-              "name": "Cotes de Meliton",
-              "type": "PDO"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Ipeiros",
-      "subRegions": [
-        {
-          "name": "Ioannina",
-          "appellations": [
-            {
-              "name": "Zitsa",
-              "type": "PDO"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Thessalia",
-      "subRegions": [
-        {
-          "name": "Larissa",
-          "appellations": [
-            {
-              "name": "Rapsani",
-              "type": "PDO"
-            }
-          ]
+          "name": "Amynteo",
+          "type": "PDO"
         },
         {
-          "name": "Volos",
-          "appellations": [
-            {
-              "name": "Anchialos",
-              "type": "PDO"
-            }
-          ]
+          "name": "Slopes of Meliton",
+          "type": "PDO"
+        },
+        {
+          "name": "Macedonia",
+          "type": "PGI"
+        },
+        {
+          "name": "Drama",
+          "type": "PGI"
+        },
+        {
+          "name": "Epanomi",
+          "type": "PGI"
+        },
+        {
+          "name": "Chalkidiki",
+          "type": "PGI"
+        },
+        {
+          "name": "Florina",
+          "type": "PGI"
+        },
+        {
+          "name": "Pella",
+          "type": "PGI"
+        },
+        {
+          "name": "Pieria",
+          "type": "PGI"
+        },
+        {
+          "name": "Serres",
+          "type": "PGI"
+        },
+        {
+          "name": "Kavala",
+          "type": "PGI"
+        },
+        {
+          "name": "Thessaloniki",
+          "type": "PGI"
+        },
+        {
+          "name": "Grevena",
+          "type": "PGI"
+        },
+        {
+          "name": "Kozani",
+          "type": "PGI"
+        },
+        {
+          "name": "Kastoria",
+          "type": "PGI"
+        },
+        {
+          "name": "Mount Athos",
+          "type": "PGI"
         }
       ]
     },
     {
-      "name": "Attiki",
+      "name": "Thrace",
       "appellations": [
         {
-          "name": "Savatiano",
+          "name": "Thrace",
+          "type": "PGI"
+        },
+        {
+          "name": "Avdira",
+          "type": "PGI"
+        },
+        {
+          "name": "Ismaros",
+          "type": "PGI"
+        },
+        {
+          "name": "Evros",
+          "type": "PGI"
+        }
+      ]
+    },
+    {
+      "name": "Epirus",
+      "appellations": [
+        {
+          "name": "Zitsa",
           "type": "PDO"
+        },
+        {
+          "name": "Epirus",
+          "type": "PGI"
+        },
+        {
+          "name": "Ioannina",
+          "type": "PGI"
+        },
+        {
+          "name": "Metsovo",
+          "type": "PGI"
         }
       ]
     },
     {
-      "name": "Peloponnisos",
-      "subRegions": [
+      "name": "Thessaly",
+      "appellations": [
         {
-          "name": "Korinthia",
-          "appellations": [
-            {
-              "name": "Nemea",
-              "type": "PDO"
-            }
-          ]
+          "name": "Rapsani",
+          "type": "PDO"
         },
         {
-          "name": "Arkadia",
-          "appellations": [
-            {
-              "name": "Mantinia",
-              "type": "PDO"
-            }
-          ]
+          "name": "Messenikola",
+          "type": "PDO"
         },
         {
-          "name": "Achaia",
-          "appellations": [
-            {
-              "name": "Patras",
-              "type": "PDO"
-            },
-            {
-              "name": "Mavrodaphne of Patras",
-              "type": "PDO"
-            }
-          ]
+          "name": "Anchialos",
+          "type": "PDO"
+        },
+        {
+          "name": "Thessalia",
+          "type": "PGI"
+        },
+        {
+          "name": "Tyrnavos",
+          "type": "PGI"
+        },
+        {
+          "name": "Krania",
+          "type": "PGI"
+        },
+        {
+          "name": "Karditsa",
+          "type": "PGI"
+        },
+        {
+          "name": "Meteora",
+          "type": "PGI"
+        },
+        {
+          "name": "Magnesia",
+          "type": "PGI"
+        },
+        {
+          "name": "Pelion",
+          "type": "PGI"
+        },
+        {
+          "name": "Larissa",
+          "type": "PGI"
         }
       ]
     },
     {
-      "name": "Nisia Aigaiou",
-      "subRegions": [
+      "name": "Central Greece",
+      "appellations": [
         {
-          "name": "Santorini",
-          "appellations": [
-            {
-              "name": "Santorini",
-              "type": "PDO"
-            }
-          ]
+          "name": "Sterea Ellada",
+          "type": "PGI"
         },
         {
-          "name": "Limnos",
-          "appellations": [
-            {
-              "name": "Muscat of Limnos",
-              "type": "PDO"
-            }
-          ]
+          "name": "Attiki",
+          "type": "PGI"
         },
         {
-          "name": "Rodos",
-          "appellations": [
-            {
-              "name": "Rodos",
-              "type": "PDO"
-            }
-          ]
+          "name": "Viotia",
+          "type": "PGI"
         },
         {
-          "name": "Samos",
-          "appellations": [
-            {
-              "name": "Muscat of Samos",
-              "type": "PDO"
-            }
-          ]
+          "name": "Evia",
+          "type": "PGI"
+        },
+        {
+          "name": "Atalanti",
+          "type": "PGI"
+        },
+        {
+          "name": "Parnassos",
+          "type": "PGI"
+        },
+        {
+          "name": "Fthiotida",
+          "type": "PGI"
+        },
+        {
+          "name": "Ritsona",
+          "type": "PGI"
+        },
+        {
+          "name": "Markopoulo",
+          "type": "PGI"
+        },
+        {
+          "name": "Pallini",
+          "type": "PGI"
+        },
+        {
+          "name": "Spata",
+          "type": "PGI"
+        },
+        {
+          "name": "Koropi",
+          "type": "PGI"
+        },
+        {
+          "name": "Peania",
+          "type": "PGI"
         }
       ]
     },
     {
-      "name": "Ionia Nisia",
-      "subRegions": [
+      "name": "Ionian Islands",
+      "appellations": [
         {
-          "name": "Kefalonia",
-          "appellations": [
-            {
-              "name": "Robola of Cephalonia",
-              "type": "PDO"
-            },
-            {
-              "name": "Mavrodaphne of Cephalonia",
-              "type": "PDO"
-            }
-          ]
+          "name": "Robola of Kefalonia",
+          "type": "PDO"
+        },
+        {
+          "name": "Mavrodaphne of Kefalonia",
+          "type": "PDO"
+        },
+        {
+          "name": "Muscat of Kefalonia",
+          "type": "PDO"
+        },
+        {
+          "name": "Ionian Islands",
+          "type": "PGI"
+        },
+        {
+          "name": "Zakynthos",
+          "type": "PGI"
         },
         {
           "name": "Lefkada",
-          "appellations": [
-            {
-              "name": "Lefkada",
-              "type": "PDO"
-            }
-          ]
+          "type": "PGI"
+        },
+        {
+          "name": "Corfu",
+          "type": "PGI"
+        },
+        {
+          "name": "Kefallonia",
+          "type": "PGI"
+        },
+        {
+          "name": "Slopes of Ainos",
+          "type": "PGI"
+        }
+      ]
+    },
+    {
+      "name": "Peloponnese",
+      "appellations": [
+        {
+          "name": "Nemea",
+          "type": "PDO"
+        },
+        {
+          "name": "Mantinia",
+          "type": "PDO"
+        },
+        {
+          "name": "Patra",
+          "type": "PDO"
+        },
+        {
+          "name": "Mavrodaphne of Patra",
+          "type": "PDO"
+        },
+        {
+          "name": "Muscat of Patra",
+          "type": "PDO"
+        },
+        {
+          "name": "Muscat of Rio Patra",
+          "type": "PDO"
+        },
+        {
+          "name": "Monemvasia-Malvasia",
+          "type": "PDO"
+        },
+        {
+          "name": "Peloponnese",
+          "type": "PGI"
+        },
+        {
+          "name": "Achaia",
+          "type": "PGI"
+        },
+        {
+          "name": "Corinthos",
+          "type": "PGI"
+        },
+        {
+          "name": "Argolida",
+          "type": "PGI"
+        },
+        {
+          "name": "Arkadia",
+          "type": "PGI"
+        },
+        {
+          "name": "Lakonia",
+          "type": "PGI"
+        },
+        {
+          "name": "Messinia",
+          "type": "PGI"
+        },
+        {
+          "name": "Ilia",
+          "type": "PGI"
+        },
+        {
+          "name": "Slopes of Aigialeia",
+          "type": "PGI"
+        },
+        {
+          "name": "Tegea",
+          "type": "PGI"
+        },
+        {
+          "name": "Trifilia",
+          "type": "PGI"
+        }
+      ]
+    },
+    {
+      "name": "Aegean Islands",
+      "appellations": [
+        {
+          "name": "Santorini",
+          "type": "PDO"
+        },
+        {
+          "name": "Paros",
+          "type": "PDO"
+        },
+        {
+          "name": "Malvasia Paros",
+          "type": "PDO"
+        },
+        {
+          "name": "Rhodes",
+          "type": "PDO"
+        },
+        {
+          "name": "Muscat of Rhodes",
+          "type": "PDO"
+        },
+        {
+          "name": "Lemnos",
+          "type": "PDO"
+        },
+        {
+          "name": "Muscat of Lemnos",
+          "type": "PDO"
+        },
+        {
+          "name": "Samos",
+          "type": "PDO"
+        },
+        {
+          "name": "Aegean Sea",
+          "type": "PGI"
+        },
+        {
+          "name": "Cyclades",
+          "type": "PGI"
+        },
+        {
+          "name": "Dodecanese",
+          "type": "PGI"
+        },
+        {
+          "name": "Ikaria",
+          "type": "PGI"
+        },
+        {
+          "name": "Chios",
+          "type": "PGI"
+        },
+        {
+          "name": "Lesbos",
+          "type": "PGI"
+        },
+        {
+          "name": "Naxos",
+          "type": "PGI"
+        },
+        {
+          "name": "Syros",
+          "type": "PGI"
+        },
+        {
+          "name": "Tinos",
+          "type": "PGI"
+        },
+        {
+          "name": "Thera",
+          "type": "PGI"
         }
       ]
     },
     {
       "name": "Kriti",
-      "subRegions": [
+      "appellations": [
         {
-          "name": "Iraklio",
-          "appellations": [
-            {
-              "name": "Archanes",
-              "type": "PDO"
-            },
-            {
-              "name": "Peza",
-              "type": "PDO"
-            },
-            {
-              "name": "Dafnes",
-              "type": "PDO"
-            }
-          ]
+          "name": "Archanes",
+          "type": "PDO"
+        },
+        {
+          "name": "Dafnes",
+          "type": "PDO"
+        },
+        {
+          "name": "Peza",
+          "type": "PDO"
+        },
+        {
+          "name": "Sitia",
+          "type": "PDO"
+        },
+        {
+          "name": "Malvasia Sitia",
+          "type": "PDO"
+        },
+        {
+          "name": "Malvasia Chandakas-Candia",
+          "type": "PDO"
+        },
+        {
+          "name": "Kriti",
+          "type": "PGI"
+        },
+        {
+          "name": "Heraklion",
+          "type": "PGI"
+        },
+        {
+          "name": "Chania",
+          "type": "PGI"
+        },
+        {
+          "name": "Rethymno",
+          "type": "PGI"
         },
         {
           "name": "Lasithi",
-          "appellations": [
-            {
-              "name": "Sitia",
-              "type": "PDO"
-            }
-          ]
+          "type": "PGI"
+        },
+        {
+          "name": "Kissamos",
+          "type": "PGI"
         }
       ]
     }

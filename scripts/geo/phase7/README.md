@@ -19,13 +19,20 @@ gesichert. Der maßgebliche Datenstand liegt in `data/geography/*.json`.
 | Portugal | 44 | eAmbrosia (EU-GI-Register), Extrakt PT/wine: 30 DOP + 14 IGP | ✅ live |
 | USA | 279 | TTB Established AVAs (Stand 29.04.2026): 261 Single-State + 18 Multi-State | ✅ live |
 | Südafrika | 142 | SAWIS/WoSA WO-Register (Production Areas, Feb 2026): 5 GU + 6 Region + 30 District + 101 Ward | ⏳ committet |
+| Zypern | 11 | Offizielle Wein-GI-Liste (User): 7 PDO + 4 PGI | ⏳ committet |
+| Ungarn | 38 | kormany.hu GI-Register: 32 OEM + 6 OFJ, 6 Weinregionen | ⏳ committet |
+| Griechenland | 107 | Recherchiert: 33 PDO + regionale/Präfektur-PGIs, 9 Regionen | ⏳ committet |
+| Polen | 16 | Recherchiert (1 generelle PGI): 8 Weinregionen + Subregionen | ⏳ committet |
+| Argentinien | 105 | INV-Register (gob.ar PDF): 103 IG + 2 DOC, Provinzen | ⏳ committet |
+| Chile | 95 | Decreto 464 (SAG PDF): 6 Regionen, Valles + Areas | ⏳ committet |
+| Australien | 111 | Wine Australia GI-Register: Zonen/Regionen/Subregionen je Bundesstaat | ⏳ committet |
 
-**Deploy-Historie 2026-07-16:** DE+NZ+PT gebündelt (apps 1545→1606), dann USA
-(apps 1606→1821). FR/IT/CH/ES/AT/DE/NZ/PT/US sind live.
+**Deploy-Historie 2026-07-16:** DE+NZ+PT (apps 1545→1606), dann USA (→1821).
+FR/IT/CH/ES/AT/DE/NZ/PT/US sind live.
 
-**Offener Deploy-Batch (bündeln bis User-Auftrag):** Migration `…130000` (Südafrika,
-142 WO-Areas). Ab jetzt sammelt der User mehrere Länder und gibt den Deploy separat
-in Auftrag — also NICHT pro Land pushen/deployen.
+**Offener Deploy-Batch (bündeln bis User-Auftrag):** `…130000` (ZA) + `…140000`–`…200000`
+(CY/AR/HU/AU/CL/GR/PL) = 8 Migrationen, committet + lokal verifiziert (Konvergenz
+539/539 + Wein-Erhalt gegen alle Bestandsweine). Deploy auf User-Auftrag.
 
 **Deutschland-Besonderheit:** Einzellagen/Grosslagen sind bewusst KEINE Geografie
 → die konkrete Lage steht im Freitextfeld „Location". Die VDP-Klassifikationsstufen

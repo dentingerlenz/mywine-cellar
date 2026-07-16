@@ -2,236 +2,371 @@
   "country": "Australia",
   "code": "AU",
   "continent": "Oceania",
+  "verified": true,
+  "sources": [
+    "Wine Australia Register of Protected GIs — Australian Geographical Indications (wineaustralia.com, Browser-Extraktion 2026): State/Zone/Region/Subregion. Flach je Bundesstaat mit Typ-Badge; South Eastern Australia country-level (Broad GI); grenzüberschreitende Murray Darling/Swan Hill einmal (NSW)."
+  ],
+  "officialCount": 111,
+  "verifiedOn": "2026-07-16",
   "appellations": [
     {
       "name": "South Eastern Australia",
-      "type": "GI"
+      "type": "Broad GI"
     }
   ],
   "regions": [
     {
       "name": "South Australia",
-      "subRegions": [
+      "appellations": [
+        {
+          "name": "South Australia",
+          "type": "State GI"
+        },
+        {
+          "name": "Adelaide",
+          "type": "GI Zone"
+        },
+        {
+          "name": "Barossa",
+          "type": "GI Zone"
+        },
+        {
+          "name": "Far North",
+          "type": "GI Zone"
+        },
+        {
+          "name": "Fleurieu",
+          "type": "GI Zone"
+        },
+        {
+          "name": "Limestone Coast",
+          "type": "GI Zone"
+        },
+        {
+          "name": "Lower Murray",
+          "type": "GI Zone"
+        },
+        {
+          "name": "Mount Lofty Ranges",
+          "type": "GI Zone"
+        },
+        {
+          "name": "The Peninsulas",
+          "type": "GI Zone"
+        },
         {
           "name": "Barossa Valley",
-          "appellations": [
-            {
-              "name": "Barossa Valley",
-              "type": "GI"
-            }
-          ]
+          "type": "GI"
         },
         {
           "name": "Eden Valley",
-          "appellations": [
-            {
-              "name": "Eden Valley",
-              "type": "GI"
-            }
-          ]
+          "type": "GI"
         },
         {
-          "name": "McLaren Vale",
-          "appellations": [
-            {
-              "name": "McLaren Vale",
-              "type": "GI"
-            }
-          ]
+          "name": "Southern Flinders Ranges",
+          "type": "GI"
         },
         {
           "name": "Currency Creek",
-          "appellations": [
-            {
-              "name": "Currency Creek",
-              "type": "GI"
-            }
-          ]
-        },
-        {
-          "name": "Langhorne Creek",
-          "appellations": [
-            {
-              "name": "Langhorne Creek",
-              "type": "GI"
-            }
-          ]
+          "type": "GI"
         },
         {
           "name": "Kangaroo Island",
-          "appellations": [
-            {
-              "name": "Kangaroo Island",
-              "type": "GI"
-            }
-          ]
+          "type": "GI"
         },
         {
-          "name": "Adelaide Hills",
-          "appellations": [
-            {
-              "name": "Adelaide Hills",
-              "type": "GI"
-            }
-          ]
+          "name": "Langhorne Creek",
+          "type": "GI"
         },
         {
-          "name": "Clare Valley",
-          "appellations": [
-            {
-              "name": "Clare Valley",
-              "type": "GI"
-            }
-          ]
+          "name": "McLaren Vale",
+          "type": "GI"
+        },
+        {
+          "name": "Southern Fleurieu",
+          "type": "GI"
         },
         {
           "name": "Coonawarra",
-          "appellations": [
-            {
-              "name": "Coonawarra",
-              "type": "GI"
-            }
-          ]
-        },
-        {
-          "name": "Padthaway",
-          "appellations": [
-            {
-              "name": "Padthaway",
-              "type": "GI"
-            }
-          ]
-        },
-        {
-          "name": "Wrattonbully",
-          "appellations": [
-            {
-              "name": "Wrattonbully",
-              "type": "GI"
-            }
-          ]
-        },
-        {
-          "name": "Robe",
-          "appellations": [
-            {
-              "name": "Robe",
-              "type": "GI"
-            }
-          ]
+          "type": "GI"
         },
         {
           "name": "Mount Benson",
-          "appellations": [
-            {
-              "name": "Mount Benson",
-              "type": "GI"
-            }
-          ]
+          "type": "GI"
         },
         {
           "name": "Mount Gambier",
-          "appellations": [
-            {
-              "name": "Mount Gambier",
-              "type": "GI"
-            }
-          ]
+          "type": "GI"
+        },
+        {
+          "name": "Padthaway",
+          "type": "GI"
+        },
+        {
+          "name": "Robe",
+          "type": "GI"
+        },
+        {
+          "name": "Wrattonbully",
+          "type": "GI"
+        },
+        {
+          "name": "Riverland",
+          "type": "GI"
+        },
+        {
+          "name": "Adelaide Hills",
+          "type": "GI"
+        },
+        {
+          "name": "Adelaide Plains",
+          "type": "GI"
+        },
+        {
+          "name": "Clare Valley",
+          "type": "GI"
+        },
+        {
+          "name": "High Eden",
+          "type": "GI Subregion"
+        },
+        {
+          "name": "Lenswood",
+          "type": "GI Subregion"
+        },
+        {
+          "name": "Piccadilly Valley",
+          "type": "GI Subregion"
+        }
+      ]
+    },
+    {
+      "name": "New South Wales",
+      "appellations": [
+        {
+          "name": "New South Wales",
+          "type": "State GI"
+        },
+        {
+          "name": "Big Rivers",
+          "type": "GI Zone"
+        },
+        {
+          "name": "Central Ranges",
+          "type": "GI Zone"
+        },
+        {
+          "name": "Hunter Valley",
+          "type": "GI Zone"
+        },
+        {
+          "name": "Northern Rivers",
+          "type": "GI Zone"
+        },
+        {
+          "name": "Northern Slopes",
+          "type": "GI Zone"
+        },
+        {
+          "name": "South Coast",
+          "type": "GI Zone"
+        },
+        {
+          "name": "Southern New South Wales",
+          "type": "GI Zone"
+        },
+        {
+          "name": "Western Plains",
+          "type": "GI Zone"
+        },
+        {
+          "name": "Murray Darling",
+          "type": "GI"
+        },
+        {
+          "name": "Perricoota",
+          "type": "GI"
+        },
+        {
+          "name": "Riverina",
+          "type": "GI"
+        },
+        {
+          "name": "Swan Hill",
+          "type": "GI"
+        },
+        {
+          "name": "Cowra",
+          "type": "GI"
+        },
+        {
+          "name": "Mudgee",
+          "type": "GI"
+        },
+        {
+          "name": "Orange",
+          "type": "GI"
+        },
+        {
+          "name": "Hunter",
+          "type": "GI"
+        },
+        {
+          "name": "Hastings River",
+          "type": "GI"
+        },
+        {
+          "name": "New England Australia",
+          "type": "GI"
+        },
+        {
+          "name": "Shoalhaven Coast",
+          "type": "GI"
+        },
+        {
+          "name": "Southern Highlands",
+          "type": "GI"
+        },
+        {
+          "name": "Canberra District",
+          "type": "GI"
+        },
+        {
+          "name": "Gundagai",
+          "type": "GI"
+        },
+        {
+          "name": "Hilltops",
+          "type": "GI"
+        },
+        {
+          "name": "Tumbarumba",
+          "type": "GI"
+        },
+        {
+          "name": "Broke Fordwich",
+          "type": "GI Subregion"
+        },
+        {
+          "name": "Pokolbin",
+          "type": "GI Subregion"
+        },
+        {
+          "name": "Upper Hunter Valley",
+          "type": "GI Subregion"
         }
       ]
     },
     {
       "name": "Victoria",
-      "subRegions": [
+      "appellations": [
         {
-          "name": "Yarra Valley",
-          "appellations": [
-            {
-              "name": "Yarra Valley",
-              "type": "GI"
-            }
-          ]
+          "name": "Victoria",
+          "type": "State GI"
         },
         {
-          "name": "Mornington Peninsula",
-          "appellations": [
-            {
-              "name": "Mornington Peninsula",
-              "type": "GI"
-            }
-          ]
+          "name": "Central Victoria",
+          "type": "GI Zone"
         },
         {
-          "name": "Macedon Ranges",
-          "appellations": [
-            {
-              "name": "Macedon Ranges",
-              "type": "GI"
-            }
-          ]
+          "name": "Gippsland",
+          "type": "GI Zone"
         },
         {
-          "name": "Heathcote",
-          "appellations": [
-            {
-              "name": "Heathcote",
-              "type": "GI"
-            }
-          ]
+          "name": "North East Victoria",
+          "type": "GI Zone"
         },
         {
-          "name": "Grampians",
-          "appellations": [
-            {
-              "name": "Grampians",
-              "type": "GI"
-            }
-          ]
+          "name": "North West Victoria",
+          "type": "GI Zone"
         },
         {
-          "name": "Pyrenees",
-          "appellations": [
-            {
-              "name": "Pyrenees",
-              "type": "GI"
-            }
-          ]
+          "name": "Port Phillip",
+          "type": "GI Zone"
         },
         {
-          "name": "Beechworth",
-          "appellations": [
-            {
-              "name": "Beechworth",
-              "type": "GI"
-            }
-          ]
+          "name": "Western Victoria",
+          "type": "GI Zone"
         },
         {
-          "name": "Rutherglen",
-          "appellations": [
-            {
-              "name": "Rutherglen",
-              "type": "GI"
-            }
-          ]
+          "name": "Bendigo",
+          "type": "GI"
         },
         {
           "name": "Goulburn Valley",
-          "appellations": [
-            {
-              "name": "Goulburn Valley",
-              "type": "GI"
-            }
-          ]
+          "type": "GI"
+        },
+        {
+          "name": "Heathcote",
+          "type": "GI"
+        },
+        {
+          "name": "Strathbogie Ranges",
+          "type": "GI"
+        },
+        {
+          "name": "Upper Goulburn",
+          "type": "GI"
+        },
+        {
+          "name": "Alpine Valleys",
+          "type": "GI"
+        },
+        {
+          "name": "Beechworth",
+          "type": "GI"
+        },
+        {
+          "name": "Glenrowan",
+          "type": "GI"
         },
         {
           "name": "King Valley",
-          "appellations": [
-            {
-              "name": "King Valley",
-              "type": "GI"
-            }
-          ]
+          "type": "GI"
+        },
+        {
+          "name": "Rutherglen",
+          "type": "GI"
+        },
+        {
+          "name": "Geelong",
+          "type": "GI"
+        },
+        {
+          "name": "Macedon Ranges",
+          "type": "GI"
+        },
+        {
+          "name": "Mornington Peninsula",
+          "type": "GI"
+        },
+        {
+          "name": "Sunbury",
+          "type": "GI"
+        },
+        {
+          "name": "Yarra Valley",
+          "type": "GI"
+        },
+        {
+          "name": "Grampians",
+          "type": "GI"
+        },
+        {
+          "name": "Henty",
+          "type": "GI"
+        },
+        {
+          "name": "Pyrenees",
+          "type": "GI"
+        },
+        {
+          "name": "Nagambie Lakes",
+          "type": "GI Subregion"
+        },
+        {
+          "name": "Great Western",
+          "type": "GI Subregion"
         }
       ]
     },
@@ -240,142 +375,104 @@
       "appellations": [
         {
           "name": "Western Australia",
+          "type": "State GI"
+        },
+        {
+          "name": "Central Western Australia",
+          "type": "GI Zone"
+        },
+        {
+          "name": "Eastern Plains, Inland and North of Western Australia",
+          "type": "GI Zone"
+        },
+        {
+          "name": "Greater Perth",
+          "type": "GI Zone"
+        },
+        {
+          "name": "South West Australia",
+          "type": "GI Zone"
+        },
+        {
+          "name": "West Australian South East Coastal",
+          "type": "GI Zone"
+        },
+        {
+          "name": "Peel",
           "type": "GI"
-        }
-      ],
-      "subRegions": [
-        {
-          "name": "Margaret River",
-          "appellations": [
-            {
-              "name": "Margaret River",
-              "type": "GI"
-            }
-          ]
-        },
-        {
-          "name": "Great Southern",
-          "appellations": [
-            {
-              "name": "Great Southern",
-              "type": "GI"
-            },
-            {
-              "name": "Albany",
-              "type": "GI"
-            },
-            {
-              "name": "Denmark",
-              "type": "GI"
-            },
-            {
-              "name": "Frankland River",
-              "type": "GI"
-            },
-            {
-              "name": "Mount Barker",
-              "type": "GI"
-            },
-            {
-              "name": "Porongurup",
-              "type": "GI"
-            }
-          ]
-        },
-        {
-          "name": "Pemberton",
-          "appellations": [
-            {
-              "name": "Pemberton",
-              "type": "GI"
-            }
-          ]
-        },
-        {
-          "name": "Manjimup",
-          "appellations": [
-            {
-              "name": "Manjimup",
-              "type": "GI"
-            }
-          ]
-        },
-        {
-          "name": "Swan District",
-          "appellations": [
-            {
-              "name": "Swan District",
-              "type": "GI"
-            }
-          ]
         },
         {
           "name": "Perth Hills",
-          "appellations": [
-            {
-              "name": "Perth Hills",
-              "type": "GI"
-            }
-          ]
+          "type": "GI"
+        },
+        {
+          "name": "Swan District",
+          "type": "GI"
+        },
+        {
+          "name": "Blackwood Valley",
+          "type": "GI"
+        },
+        {
+          "name": "Geographe",
+          "type": "GI"
+        },
+        {
+          "name": "Great Southern",
+          "type": "GI"
+        },
+        {
+          "name": "Manjimup",
+          "type": "GI"
+        },
+        {
+          "name": "Margaret River",
+          "type": "GI"
+        },
+        {
+          "name": "Pemberton",
+          "type": "GI"
+        },
+        {
+          "name": "Swan Valley",
+          "type": "GI Subregion"
+        },
+        {
+          "name": "Albany",
+          "type": "GI Subregion"
+        },
+        {
+          "name": "Denmark",
+          "type": "GI Subregion"
+        },
+        {
+          "name": "Frankland River",
+          "type": "GI Subregion"
+        },
+        {
+          "name": "Mount Barker",
+          "type": "GI Subregion"
+        },
+        {
+          "name": "Porongurup",
+          "type": "GI Subregion"
         }
       ]
     },
     {
-      "name": "New South Wales",
-      "subRegions": [
+      "name": "Queensland",
+      "appellations": [
         {
-          "name": "Hunter Valley",
-          "appellations": [
-            {
-              "name": "Hunter Valley",
-              "type": "GI"
-            }
-          ]
+          "name": "Queensland",
+          "type": "State GI"
         },
         {
-          "name": "Mudgee",
-          "appellations": [
-            {
-              "name": "Mudgee",
-              "type": "GI"
-            }
-          ]
+          "name": "Granite Belt",
+          "type": "GI"
         },
         {
-          "name": "Orange",
-          "appellations": [
-            {
-              "name": "Orange",
-              "type": "GI"
-            }
-          ]
-        },
-        {
-          "name": "Hilltops",
-          "appellations": [
-            {
-              "name": "Hilltops",
-              "type": "GI"
-            }
-          ]
-        },
-        {
-          "name": "Canberra District",
-          "appellations": [
-            {
-              "name": "Canberra District",
-              "type": "GI"
-            }
-          ]
-        },
-        {
-          "name": "Riverina",
-          "appellations": [
-            {
-              "name": "Riverina",
-              "type": "GI"
-            }
-          ]
+          "name": "South Burnett",
+          "type": "GI"
         }
       ]
     },
@@ -384,59 +481,7 @@
       "appellations": [
         {
           "name": "Tasmania",
-          "type": "GI"
-        }
-      ],
-      "subRegions": [
-        {
-          "name": "Tamar Valley",
-          "appellations": [
-            {
-              "name": "Tamar Valley",
-              "type": "GI"
-            }
-          ]
-        },
-        {
-          "name": "Coal River Valley",
-          "appellations": [
-            {
-              "name": "Coal River Valley",
-              "type": "GI"
-            }
-          ]
-        },
-        {
-          "name": "East Coast",
-          "appellations": [
-            {
-              "name": "East Coast Tasmania",
-              "type": "GI"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Queensland",
-      "subRegions": [
-        {
-          "name": "Granite Belt",
-          "appellations": [
-            {
-              "name": "Granite Belt",
-              "type": "GI"
-            }
-          ]
-        },
-        {
-          "name": "South Burnett",
-          "appellations": [
-            {
-              "name": "South Burnett",
-              "type": "GI"
-            }
-          ]
+          "type": "State GI"
         }
       ]
     }

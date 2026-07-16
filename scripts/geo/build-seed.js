@@ -86,12 +86,14 @@ const KNOWN_TYPES = new Set([
   "VDP.Grosse Lage", "VDP.Erste Lage",
   // Spanien/Portugal
   "DO", "DOCa", "DOP", "VP", "VC", "VdlT", "VR", "IG", "Vinho",
+  // Chile
+  "DO Area",
   // Neue Welt
   "AVA", "State designation", "National", "WO", "WO Region", "WO District",
-  "WO Ward", "WO Geographical Unit", "GI", "State GI", "Broad GI",
+  "WO Ward", "WO Geographical Unit", "GI", "GI Zone", "GI Subregion", "State GI", "Broad GI",
   "VQA GI", "Nova Scotia GI", "Appellation Quebec", "IP",
   // Übrige nationale Register (Balkan/Osteuropa/Nordafrika/Asien)
-  "AOG", "AOIG", "BGA", "CHOP", "DGO", "KGP", "KPN", "OEM", "ZGP", "Table",
+  "AOG", "AOIG", "BGA", "CHOP", "DGO", "KGP", "KPN", "OEM", "OFJ", "ZGP", "Table",
 ]);
 
 for (const c of countries) {

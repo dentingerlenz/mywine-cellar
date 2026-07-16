@@ -2,18 +2,116 @@
   "country": "Poland",
   "code": "PL",
   "continent": "Europe",
+  "verified": true,
+  "sources": [
+    "Recherchiert (User: eine generelle poln. Wein-PGI; relevante Regionen/Subregionen aufnehmen): 8 Weinregionen + bekannte Subregionen, Typ PGI. Polnische Diakritika beibehalten."
+  ],
+  "officialCount": 16,
+  "verifiedOn": "2026-07-16",
   "regions": [
     {
-      "name": "Dolny Śląsk"
+      "name": "Dolny Śląsk",
+      "appellations": [
+        {
+          "name": "Dolny Śląsk",
+          "type": "PGI"
+        }
+      ]
     },
     {
-      "name": "Małopolska"
+      "name": "Lubuskie",
+      "appellations": [
+        {
+          "name": "Lubuskie",
+          "type": "PGI"
+        },
+        {
+          "name": "Zielona Góra",
+          "type": "PGI"
+        }
+      ]
     },
     {
-      "name": "Podkarpacie"
+      "name": "Małopolska",
+      "appellations": [
+        {
+          "name": "Małopolska",
+          "type": "PGI"
+        },
+        {
+          "name": "Jurajski",
+          "type": "PGI"
+        },
+        {
+          "name": "Małopolski Przełom Wisły",
+          "type": "PGI"
+        }
+      ]
     },
     {
-      "name": "Lubuskie"
+      "name": "Podkarpacie",
+      "appellations": [
+        {
+          "name": "Podkarpacie",
+          "type": "PGI"
+        },
+        {
+          "name": "Jasielski",
+          "type": "PGI"
+        },
+        {
+          "name": "Podgórzański",
+          "type": "PGI"
+        }
+      ]
+    },
+    {
+      "name": "Świętokrzyskie",
+      "appellations": [
+        {
+          "name": "Świętokrzyskie",
+          "type": "PGI"
+        },
+        {
+          "name": "Sandomiersko-Świętokrzyski",
+          "type": "PGI"
+        }
+      ]
+    },
+    {
+      "name": "Zachodniopomorskie",
+      "appellations": [
+        {
+          "name": "Zachodniopomorskie",
+          "type": "PGI"
+        },
+        {
+          "name": "Szczecin-Gorzowski",
+          "type": "PGI"
+        }
+      ]
+    },
+    {
+      "name": "Mazowieckie",
+      "appellations": [
+        {
+          "name": "Mazowieckie",
+          "type": "PGI"
+        },
+        {
+          "name": "Warka",
+          "type": "PGI"
+        }
+      ]
+    },
+    {
+      "name": "Wielkopolska",
+      "appellations": [
+        {
+          "name": "Wielkopolska",
+          "type": "PGI"
+        }
+      ]
     }
   ]
 }

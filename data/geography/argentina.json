@@ -2,134 +2,320 @@
   "country": "Argentina",
   "code": "AR",
   "continent": "Americas",
+  "verified": true,
+  "sources": [
+    "INV — Indicaciones Geograficas y Denominaciones de Origen reconocidas de la Republica Argentina (offizielles PDF, gob.ar, User 2026): IG + 2 DOC. Region = Provinz, flach; multi-provinzielle IG am Primärstandort; Spanisch -> ASCII."
+  ],
+  "officialCount": 105,
+  "verifiedOn": "2026-07-16",
   "regions": [
     {
-      "name": "Mendoza",
+      "name": "Buenos Aires",
       "appellations": [
         {
-          "name": "Mendoza Wine",
+          "name": "Chapadmalal",
           "type": "IG"
-        }
-      ],
-      "subRegions": [
-        {
-          "name": "Lujan de Cuyo",
-          "appellations": [
-            {
-              "name": "Lujan de Cuyo",
-              "type": "DOC"
-            }
-          ]
         },
         {
-          "name": "Maipu",
-          "appellations": [
-            {
-              "name": "Maipu",
-              "type": "IG"
-            }
-          ]
-        },
-        {
-          "name": "Valle de Uco",
-          "appellations": [
-            {
-              "name": "Valle de Uco",
-              "type": "IG"
-            }
-          ]
-        },
-        {
-          "name": "San Rafael",
-          "appellations": [
-            {
-              "name": "San Rafael",
-              "type": "DOC"
-            }
-          ]
-        },
-        {
-          "name": "Este",
-          "appellations": [
-            {
-              "name": "Este de Mendoza",
-              "type": "IG"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "San Juan",
-      "subRegions": [
-        {
-          "name": "Tulum",
-          "appellations": [
-            {
-              "name": "Tulum",
-              "type": "IG"
-            }
-          ]
-        },
-        {
-          "name": "Ullum",
-          "appellations": [
-            {
-              "name": "Ullum",
-              "type": "IG"
-            }
-          ]
-        },
-        {
-          "name": "Calingasta",
-          "appellations": [
-            {
-              "name": "Calingasta",
-              "type": "IG"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Salta",
-      "subRegions": [
-        {
-          "name": "Valles Calchaquies",
-          "appellations": [
-            {
-              "name": "Cafayate",
-              "type": "IG"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "La Rioja",
-      "subRegions": [
-        {
-          "name": "Famatina",
-          "appellations": [
-            {
-              "name": "Famatina",
-              "type": "IG"
-            }
-          ]
+          "name": "Villa Ventana",
+          "type": "IG"
         }
       ]
     },
     {
       "name": "Catamarca",
-      "subRegions": [
+      "appellations": [
         {
-          "name": "Santa Maria / Fiambala",
-          "appellations": [
-            {
-              "name": "Catamarca",
-              "type": "IG"
-            }
-          ]
+          "name": "Belen",
+          "type": "IG"
+        },
+        {
+          "name": "Catamarca",
+          "type": "IG"
+        },
+        {
+          "name": "Poman",
+          "type": "IG"
+        },
+        {
+          "name": "Santa Maria",
+          "type": "IG"
+        },
+        {
+          "name": "Tinogasta",
+          "type": "IG"
+        }
+      ]
+    },
+    {
+      "name": "Chubut",
+      "appellations": [
+        {
+          "name": "Trevelin",
+          "type": "IG"
+        }
+      ]
+    },
+    {
+      "name": "Cordoba",
+      "appellations": [
+        {
+          "name": "Colon",
+          "type": "IG"
+        },
+        {
+          "name": "Colonia Caroya",
+          "type": "IG"
+        },
+        {
+          "name": "Cordoba Argentina",
+          "type": "IG"
+        },
+        {
+          "name": "Cruz del Eje",
+          "type": "IG"
+        },
+        {
+          "name": "San Javier",
+          "type": "IG"
+        }
+      ]
+    },
+    {
+      "name": "Cuyo",
+      "appellations": [
+        {
+          "name": "Cuyo",
+          "type": "IG"
+        }
+      ]
+    },
+    {
+      "name": "Entre Rios",
+      "appellations": [
+        {
+          "name": "Victoria, Entre Rios",
+          "type": "IG"
+        }
+      ]
+    },
+    {
+      "name": "Jujuy",
+      "appellations": [
+        {
+          "name": "Jujuy",
+          "type": "IG"
+        },
+        {
+          "name": "Quebrada de Humahuaca",
+          "type": "IG"
+        }
+      ]
+    },
+    {
+      "name": "La Rioja",
+      "appellations": [
+        {
+          "name": "Arauco",
+          "type": "IG"
+        },
+        {
+          "name": "Castro Barros",
+          "type": "IG"
+        },
+        {
+          "name": "Chilecito",
+          "type": "IG"
+        },
+        {
+          "name": "Famatina",
+          "type": "IG"
+        },
+        {
+          "name": "Felipe Varela",
+          "type": "IG"
+        },
+        {
+          "name": "General Lamadrid",
+          "type": "IG"
+        },
+        {
+          "name": "La Rioja Argentina",
+          "type": "IG"
+        },
+        {
+          "name": "San Blas de los Sauces",
+          "type": "IG"
+        },
+        {
+          "name": "Sanagasta",
+          "type": "IG"
+        },
+        {
+          "name": "Valle de Chanarmuyo",
+          "type": "IG"
+        },
+        {
+          "name": "Valles del Famatina",
+          "type": "IG"
+        },
+        {
+          "name": "Vinchina",
+          "type": "IG"
+        }
+      ]
+    },
+    {
+      "name": "Mendoza",
+      "appellations": [
+        {
+          "name": "Agrelo",
+          "type": "IG"
+        },
+        {
+          "name": "Barrancas",
+          "type": "IG"
+        },
+        {
+          "name": "Canota",
+          "type": "IG"
+        },
+        {
+          "name": "Distrito Medrano",
+          "type": "IG"
+        },
+        {
+          "name": "El Paraiso",
+          "type": "IG"
+        },
+        {
+          "name": "General Alvear",
+          "type": "IG"
+        },
+        {
+          "name": "Godoy Cruz",
+          "type": "IG"
+        },
+        {
+          "name": "Guaymallen",
+          "type": "IG"
+        },
+        {
+          "name": "Junin",
+          "type": "IG"
+        },
+        {
+          "name": "La Consulta",
+          "type": "IG"
+        },
+        {
+          "name": "La Paz",
+          "type": "IG"
+        },
+        {
+          "name": "Las Compuertas",
+          "type": "IG"
+        },
+        {
+          "name": "Las Heras",
+          "type": "IG"
+        },
+        {
+          "name": "Lavalle",
+          "type": "IG"
+        },
+        {
+          "name": "Los Chacayes",
+          "type": "IG"
+        },
+        {
+          "name": "Lujan de Cuyo",
+          "type": "DOC"
+        },
+        {
+          "name": "Lunlunta",
+          "type": "IG"
+        },
+        {
+          "name": "Maipu",
+          "type": "IG"
+        },
+        {
+          "name": "Mendoza",
+          "type": "IG"
+        },
+        {
+          "name": "Pampa el Cepillo",
+          "type": "IG"
+        },
+        {
+          "name": "Paraje Altamira",
+          "type": "IG"
+        },
+        {
+          "name": "Reduccion",
+          "type": "IG"
+        },
+        {
+          "name": "Rivadavia (Mendoza)",
+          "type": "IG"
+        },
+        {
+          "name": "Russel",
+          "type": "IG"
+        },
+        {
+          "name": "San Carlos (Mendoza)",
+          "type": "IG"
+        },
+        {
+          "name": "San Martin (Mendoza)",
+          "type": "IG"
+        },
+        {
+          "name": "San Pablo",
+          "type": "IG"
+        },
+        {
+          "name": "San Rafael",
+          "type": "DOC"
+        },
+        {
+          "name": "Santa Rosa",
+          "type": "IG"
+        },
+        {
+          "name": "Tunuyan",
+          "type": "IG"
+        },
+        {
+          "name": "Tupungato",
+          "type": "IG"
+        },
+        {
+          "name": "Valle de Uco",
+          "type": "IG"
+        },
+        {
+          "name": "Vista Flores",
+          "type": "IG"
+        }
+      ]
+    },
+    {
+      "name": "Neuquen",
+      "appellations": [
+        {
+          "name": "Anelo",
+          "type": "IG"
+        },
+        {
+          "name": "Confluencia",
+          "type": "IG"
+        },
+        {
+          "name": "Neuquen",
+          "type": "IG"
         }
       ]
     },
@@ -137,37 +323,189 @@
       "name": "Patagonia",
       "appellations": [
         {
-          "name": "Patagonia Wine",
+          "name": "Patagonia",
           "type": "IG"
         }
-      ],
-      "subRegions": [
+      ]
+    },
+    {
+      "name": "Rio Negro",
+      "appellations": [
         {
-          "name": "Neuquen",
-          "appellations": [
-            {
-              "name": "San Patricio del Chanar",
-              "type": "IG"
-            }
-          ]
+          "name": "Alto valle de Rio Negro",
+          "type": "IG"
+        },
+        {
+          "name": "Avellaneda",
+          "type": "IG"
+        },
+        {
+          "name": "General Conesa",
+          "type": "IG"
+        },
+        {
+          "name": "General Roca",
+          "type": "IG"
+        },
+        {
+          "name": "Pichimahuida",
+          "type": "IG"
         },
         {
           "name": "Rio Negro",
-          "appellations": [
-            {
-              "name": "Alto Valle of Rio Negro",
-              "type": "IG"
-            }
-          ]
+          "type": "IG"
+        }
+      ]
+    },
+    {
+      "name": "Salta",
+      "appellations": [
+        {
+          "name": "Cachi",
+          "type": "IG"
         },
         {
-          "name": "Chubut",
-          "appellations": [
-            {
-              "name": "Chubut",
-              "type": "IG"
-            }
-          ]
+          "name": "Cafayate",
+          "type": "IG"
+        },
+        {
+          "name": "Molinos",
+          "type": "IG"
+        },
+        {
+          "name": "Salta",
+          "type": "IG"
+        },
+        {
+          "name": "San Carlos (Salta)",
+          "type": "IG"
+        },
+        {
+          "name": "Valles Calchaquies",
+          "type": "IG"
+        }
+      ]
+    },
+    {
+      "name": "San Juan",
+      "appellations": [
+        {
+          "name": "25 de Mayo",
+          "type": "IG"
+        },
+        {
+          "name": "9 de Julio",
+          "type": "IG"
+        },
+        {
+          "name": "Albardon",
+          "type": "IG"
+        },
+        {
+          "name": "Angaco",
+          "type": "IG"
+        },
+        {
+          "name": "Barreal",
+          "type": "IG"
+        },
+        {
+          "name": "Calingasta",
+          "type": "IG"
+        },
+        {
+          "name": "Caucete",
+          "type": "IG"
+        },
+        {
+          "name": "Chimbas",
+          "type": "IG"
+        },
+        {
+          "name": "Iglesia",
+          "type": "IG"
+        },
+        {
+          "name": "Jachal",
+          "type": "IG"
+        },
+        {
+          "name": "Pocito",
+          "type": "IG"
+        },
+        {
+          "name": "Pozo de los Algarrobos",
+          "type": "IG"
+        },
+        {
+          "name": "Rawson",
+          "type": "IG"
+        },
+        {
+          "name": "Rivadavia (San Juan)",
+          "type": "IG"
+        },
+        {
+          "name": "San Juan",
+          "type": "IG"
+        },
+        {
+          "name": "San Martin (San Juan)",
+          "type": "IG"
+        },
+        {
+          "name": "Santa Lucia",
+          "type": "IG"
+        },
+        {
+          "name": "Sarmiento",
+          "type": "IG"
+        },
+        {
+          "name": "Ullum",
+          "type": "IG"
+        },
+        {
+          "name": "Valle Fertil",
+          "type": "IG"
+        },
+        {
+          "name": "Valle de Zonda",
+          "type": "IG"
+        },
+        {
+          "name": "Valle del Pedernal",
+          "type": "IG"
+        },
+        {
+          "name": "Valle del Tulum",
+          "type": "IG"
+        },
+        {
+          "name": "Zonda",
+          "type": "IG"
+        }
+      ]
+    },
+    {
+      "name": "San Luis",
+      "appellations": [
+        {
+          "name": "San Luis",
+          "type": "IG"
+        }
+      ]
+    },
+    {
+      "name": "Tucuman",
+      "appellations": [
+        {
+          "name": "Tafi",
+          "type": "IG"
+        },
+        {
+          "name": "Tucuman",
+          "type": "IG"
         }
       ]
     }

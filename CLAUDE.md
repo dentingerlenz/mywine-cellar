@@ -35,7 +35,7 @@ halten, Klick-Anleitungen für Dashboard-Schritte geben.
 - **Geografie**: globale Referenztabellen `countries/regions/sub_regions/appellations`
   (4-Ebenen, FKs an `wines`). Quelle = **`data/geography/*.json`** (1 Datei/Land),
   kompiliert per `npm run geo:build` → `supabase/seed.sql` + `COVERAGE.md`. Aktuell
-  51 Länder / **~1821 Appellationen** (Phase 7 läuft, s. u.). Der Validator in
+  51 Länder / **~2306 Appellationen** (Phase 7 fast fertig, s. u.). Der Validator in
   `build-seed.js` erzwingt harte Invarianten (keine Typ-Präfixe im Namen, keine
   In-Land-Duplikate außer `MULTI_ANCHOR`, keine eponyme Einzel-Sub, kein `’`) und
   warnt bei Typen außerhalb `KNOWN_TYPES`. **Picker-Logik** (Land→Region→Sub→
@@ -47,12 +47,12 @@ Ziel: jede relevante Appellation aus **offiziellen Registern** (nicht Wikipedia)
 Land für Land. Voller Workflow + wiederverwendbare Skripte:
 **`scripts/geo/phase7/README.md`** (dort auch der Deploy-Befehl). Auto-Memory
 `rebuild-decisions.md` = laufendes Detail-Log.
-- **Fertig & verifiziert:** FR 351 · IT 522 · CH 63 · ES 149 · AT 27 · DE 66 · NZ 19 · PT 44 · US 279 · ZA 142
-  (`verified:true` + `officialCount` + `verifiedOn` + `sources` je JSON).
-- **Prod:** FR/IT/CH/ES/AT/DE/NZ/PT/US sind **live deployed**. **ZA (142 WO-Areas): committet +
-  lokal verifiziert, Deploy offen.** Deploy-Kadenz (User 2026-07-16): **ab jetzt bündeln** —
-  mehrere Länder sammeln, KEIN Push/Deploy pro Land, bis der User den Deploy in Auftrag gibt.
-- **Muster flaches Land** (IT/CH/ES/AT/DE/NZ/PT/US/ZA): Region = offizielles Weingebiet/Verwaltungs-
+- **Fertig & verifiziert (17 Kernländer):** FR 351 · IT 522 · CH 63 · ES 149 · AT 27 · DE 66 ·
+  NZ 19 · PT 44 · US 279 · ZA 142 · CY 11 · HU 38 · GR 107 · PL 16 · AR 105 · CL 95 · AU 111
+  (`verified:true` + `officialCount` + `verifiedOn` + `sources` je JSON). Gesamt ~2306 Appellationen.
+- **Prod:** FR/IT/CH/ES/AT/DE/NZ/PT/US **live**. **ZA + CY/HU/GR/PL/AR/CL/AU: committet + lokal
+  verifiziert (Konvergenz 539/539 + Wein-Erhalt), Deploy gebündelt (User gibt ihn in Auftrag).**
+- **Muster flaches Land** (alle außer FR): Region = offizielles Weingebiet/Verwaltungs-
   gebiet, Appellationen flach, Migration via `scripts/geo/phase7/gen_flat_migration.py`
   (hängt alte Sub-Region-Weine auf gleichnamige neue Appellation um; Frankreich mit
   Sub-Regionen → `gen_fr_migration.py`). Jede Migration lokal per **Konvergenz-Test**

@@ -2,18 +2,100 @@
   "country": "Hungary",
   "code": "HU",
   "continent": "Europe",
+  "verified": true,
+  "sources": [
+    "Ungarisches GI-Register (kormany.hu / Szellemi Tulajdon Nemzeti Hivatala, User-PDF): 38 Wein-GIs (32 OEM/PDO + 6 OFJ/PGI). Regionsgruppierung = 6 offizielle ungarische Weinregionen (borrégió); Diakritika bleiben, Adjektivform weggelassen."
+  ],
+  "officialCount": 38,
+  "verifiedOn": "2026-07-16",
   "regions": [
     {
-      "name": "Tokaj-Hegyalja",
-      "subRegions": [
+      "name": "Balaton",
+      "appellations": [
         {
-          "name": "Tokaj",
-          "appellations": [
-            {
-              "name": "Tokaj",
-              "type": "OEM"
-            }
-          ]
+          "name": "Badacsony",
+          "type": "OEM"
+        },
+        {
+          "name": "Balatonboglár",
+          "type": "OEM"
+        },
+        {
+          "name": "Balaton-felvidék",
+          "type": "OEM"
+        },
+        {
+          "name": "Balatonfüred-Csopak",
+          "type": "OEM"
+        },
+        {
+          "name": "Csopak",
+          "type": "OEM"
+        },
+        {
+          "name": "Káli",
+          "type": "OEM"
+        },
+        {
+          "name": "Nagy-Somló",
+          "type": "OEM"
+        },
+        {
+          "name": "Somló",
+          "type": "OEM"
+        },
+        {
+          "name": "Tihany",
+          "type": "OEM"
+        },
+        {
+          "name": "Zala",
+          "type": "OEM"
+        },
+        {
+          "name": "Balaton",
+          "type": "OFJ"
+        },
+        {
+          "name": "Balatonmelléki",
+          "type": "OFJ"
+        }
+      ]
+    },
+    {
+      "name": "Duna",
+      "appellations": [
+        {
+          "name": "Csongrád",
+          "type": "OEM"
+        },
+        {
+          "name": "Duna",
+          "type": "OEM"
+        },
+        {
+          "name": "Hajós-Baja",
+          "type": "OEM"
+        },
+        {
+          "name": "Izsáki Arany Sárfehér",
+          "type": "OEM"
+        },
+        {
+          "name": "Kunság",
+          "type": "OEM"
+        },
+        {
+          "name": "Monor",
+          "type": "OEM"
+        },
+        {
+          "name": "Soltvadkerti",
+          "type": "OEM"
+        },
+        {
+          "name": "Duna-Tisza közi",
+          "type": "OFJ"
         }
       ]
     },
@@ -21,71 +103,91 @@
       "name": "Eger",
       "appellations": [
         {
-          "name": "Egri Bikaver",
+          "name": "Bükk",
           "type": "OEM"
+        },
+        {
+          "name": "Debrői Hárslevelű",
+          "type": "OEM"
+        },
+        {
+          "name": "Eger",
+          "type": "OEM"
+        },
+        {
+          "name": "Mátra",
+          "type": "OEM"
+        },
+        {
+          "name": "Felső-Magyarország",
+          "type": "OFJ"
         }
       ]
     },
     {
-      "name": "Villany",
+      "name": "Pannon",
       "appellations": [
         {
-          "name": "Villany",
+          "name": "Pannon",
           "type": "OEM"
-        }
-      ]
-    },
-    {
-      "name": "Szekszard",
-      "appellations": [
+        },
         {
-          "name": "Szekszard",
+          "name": "Pécs",
           "type": "OEM"
-        }
-      ]
-    },
-    {
-      "name": "Somlo",
-      "appellations": [
+        },
         {
-          "name": "Somlo",
+          "name": "Szekszárd",
           "type": "OEM"
-        }
-      ]
-    },
-    {
-      "name": "Badacsony",
-      "appellations": [
+        },
         {
-          "name": "Badacsony",
+          "name": "Tolna",
           "type": "OEM"
-        }
-      ]
-    },
-    {
-      "name": "Balatonfured-Csopak",
-      "appellations": [
+        },
         {
-          "name": "Balatonfured-Csopak",
+          "name": "Villány",
           "type": "OEM"
         }
       ]
     },
     {
-      "name": "Matra",
-      "appellations": [
-        {
-          "name": "Matra",
-          "type": "OEM"
-        }
-      ]
-    },
-    {
-      "name": "Etyek-Buda",
+      "name": "Sopron",
       "appellations": [
         {
           "name": "Etyek-Buda",
           "type": "OEM"
+        },
+        {
+          "name": "Mór",
+          "type": "OEM"
+        },
+        {
+          "name": "Neszmély",
+          "type": "OEM"
+        },
+        {
+          "name": "Pannonhalma",
+          "type": "OEM"
+        },
+        {
+          "name": "Sopron",
+          "type": "OEM"
+        },
+        {
+          "name": "Dunántúl",
+          "type": "OFJ"
+        }
+      ]
+    },
+    {
+      "name": "Tokaj",
+      "appellations": [
+        {
+          "name": "Tokaj",
+          "type": "OEM"
+        },
+        {
+          "name": "Zemplén",
+          "type": "OFJ"
         }
       ]
     }
