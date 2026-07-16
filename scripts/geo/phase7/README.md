@@ -14,14 +14,14 @@ gesichert. Der maßgebliche Datenstand liegt in `data/geography/*.json`.
 | Schweiz | 63 | BLW/OFAG AOC-Register (1.1.2026) | ✅ live |
 | Spanien | 149 | MAPA Listado DOP/IGP (02.07.2026) | ✅ live |
 | Österreich | 27 | ÖWM „Wein aus Österreich" 11/2025 (DAC + generische Gebiete) | ✅ live |
-| Deutschland | 66 | Weingesetz/Weinverordnung: 13 Anbaugebiete (g.U.) + 41 Bereiche + Landwein (recherchiert, kein amtliches PDF) | ⏳ committet |
-| Neuseeland | 19 | IPONZ GI-Register (wine): 10 regionale + 9 lokale GIs (IP 1004–1028) | ⏳ committet |
-| Portugal | 44 | eAmbrosia (EU-GI-Register), Extrakt PT/wine: 30 DOP + 14 IGP | ⏳ committet |
+| Deutschland | 66 | Weingesetz/Weinverordnung: 13 Anbaugebiete (g.U.) + 41 Bereiche + Landwein (recherchiert, kein amtliches PDF) | ✅ live |
+| Neuseeland | 19 | IPONZ GI-Register (wine): 10 regionale + 9 lokale GIs (IP 1004–1028) | ✅ live |
+| Portugal | 44 | eAmbrosia (EU-GI-Register), Extrakt PT/wine: 30 DOP + 14 IGP | ✅ live |
 
-**Offener Deploy-Batch:** Migrationen `2026071609…` (DE) + `…10…` (NZ) + `…11…` (PT)
-sind committet + lokal verifiziert (Konvergenz + Wein-Erhalt); Deploy erfolgt jetzt
-gebündelt. FR/IT/CH/ES/AT sind bereits live. (DE-Frontend/VDP-Klassifikation ist
-bereits gepusht → Vercel.)
+**Kein offener Deploy-Batch.** DE + NZ + PT wurden am 2026-07-16 gebündelt deployed
+(`supabase db push --include-all` über Session-Pooler): Prod apps 1545→1606, DE 66 /
+NZ 19 / PT 45, 0 verwaiste Wein-FKs, 0 Weine ohne Country, 0 Duplikate. Alle 8
+Kernländer (FR/IT/CH/ES/AT/DE/NZ/PT) sind live & verifiziert.
 
 **Deutschland-Besonderheit:** Einzellagen/Grosslagen sind bewusst KEINE Geografie
 → die konkrete Lage steht im Freitextfeld „Location". Die VDP-Klassifikationsstufen

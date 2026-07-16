@@ -49,8 +49,8 @@ Land für Land. Voller Workflow + wiederverwendbare Skripte:
 `rebuild-decisions.md` = laufendes Detail-Log.
 - **Fertig & verifiziert:** FR 351 · IT 522 · CH 63 · ES 149 · AT 27 · DE 66 · NZ 19 · PT 44
   (`verified:true` + `officialCount` + `verifiedOn` + `sources` je JSON).
-- **Prod:** FR/IT/CH/ES/AT sind **live deployed**. **DE + NZ + PT: Migrationen committet +
-  lokal verifiziert; Deploy erfolgt gebündelt** (DE-Frontend/VDP-Klassifikation ist bereits live gepusht).
+- **Prod:** FR/IT/CH/ES/AT/DE/NZ/PT sind **alle live deployed** (DE+NZ+PT gebündelt am
+  2026-07-16: apps 1545→1606, 0 verwaiste FKs, 0 Weine verloren). Kein offener Batch.
 - **Muster flaches Land** (IT/CH/ES/AT/DE/NZ/PT): Region = offizielles Weingebiet/Verwaltungs-
   gebiet, Appellationen flach, Migration via `scripts/geo/phase7/gen_flat_migration.py`
   (hängt alte Sub-Region-Weine auf gleichnamige neue Appellation um; Frankreich mit
