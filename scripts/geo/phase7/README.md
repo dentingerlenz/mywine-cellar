@@ -5,21 +5,30 @@ Backup & Provenienz für die Phase-7-Arbeit (Appellationen Land für Land aus
 Skripte sind Wegwerf-/Einmal-Werkzeuge, hier als Nachweis + Wiederverwendung
 gesichert. Der maßgebliche Datenstand liegt in `data/geography/*.json`.
 
-## Stand (2026-07-14)
+## Stand (2026-07-16)
 
 | Land | Appellationen | Quelle | Prod |
 |---|---|---|---|
 | Frankreich | 351 | INAO AOC-Liste (2012) + IGP (2014) + Post-2012-Nachträge | ✅ live |
 | Italien | 522 | MASAF Elenco DOP (18.03.2026) + IGP (13.05.2026) | ✅ live |
-| Schweiz | 63 | BLW/OFAG AOC-Register (1.1.2026) | ⏳ committet |
-| Spanien | 149 | MAPA Listado DOP/IGP (02.07.2026) | ⏳ committet |
-| Österreich | 27 | ÖWM „Wein aus Österreich" 11/2025 (DAC + generische Gebiete) | ⏳ committet |
+| Schweiz | 63 | BLW/OFAG AOC-Register (1.1.2026) | ✅ live |
+| Spanien | 149 | MAPA Listado DOP/IGP (02.07.2026) | ✅ live |
+| Österreich | 27 | ÖWM „Wein aus Österreich" 11/2025 (DAC + generische Gebiete) | ✅ live |
+| Deutschland | 66 | Weingesetz/Weinverordnung: 13 Anbaugebiete (g.U.) + 41 Bereiche + Landwein (recherchiert, kein amtliches PDF) | ⏳ committet |
 
-**Offener Deploy-Batch:** Migrationen `2026071411…` (CH), `…12…` (ES), `…13…` (AT)
-sind committet + lokal verifiziert, aber noch NICHT auf Prod. FR (`…09…`) + IT
-(`…10…`) sind bereits deployed.
+**Offener Deploy-Batch:** Migration `2026071609…` (DE) ist committet + lokal
+verifiziert (Konvergenz + Wein-Erhalt), aber noch NICHT auf Prod. FR/IT/CH/ES/AT
+sind bereits live.
 
-**Reihenfolge weiter:** DE, NZ, PT, dann Rest-Kernländer (ZA, GR, US, AU, CL, AR …).
+**Deutschland-Besonderheit:** Einzellagen/Grosslagen sind bewusst KEINE Geografie
+→ die konkrete Lage steht im Freitextfeld „Location". Die VDP-Klassifikationsstufen
+(VDP.Grosse Lage/Erste Lage/Ortswein/Gutswein, Grosses Gewächs) sind KEINE Region,
+sondern im Formularfeld „Classification" wählbar (kuratierte Liste in
+`src/features/wines/model.ts` → `CLASSIFICATION_SUGGESTIONS`). Die Migration hängt
+alte informelle Sub-Regionen (Mittelmosel/Terrassenmosel) verlustfrei ins
+„Location"-Feld um.
+
+**Reihenfolge weiter:** NZ, PT, dann Rest-Kernländer (ZA, GR, US, AU, CL, AR …).
 
 ## Workflow pro Land (identisch, wiederholbar)
 

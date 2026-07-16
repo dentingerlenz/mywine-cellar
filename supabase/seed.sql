@@ -1,7 +1,7 @@
 -- ═══════════════════════════════════════════════════════════════════════
 -- GENERIERT von scripts/geo/build-seed.js — NICHT von Hand editieren!
 -- Quelle: data/geography/*.json  ·  Neu erzeugen: npm run geo:build
--- Stand: 2026-07-15 · 51 Länder
+-- Stand: 2026-07-16 · 51 Länder
 -- Idempotent: kann beliebig oft ausgeführt werden.
 -- ═══════════════════════════════════════════════════════════════════════
 
@@ -6256,208 +6256,408 @@ select c.id, 'Mosel', 0 from public.countries c where c.name = 'Germany'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Landwein der Mosel', 'Landwein', 0
-from public.regions r
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Germany' and r.name = 'Mosel'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Landwein der Mosel' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Mosel', 'Anbaugebiet', 1
+select 'region', r.id, 'Mosel', 'Anbaugebiet', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Germany' and r.name = 'Mosel'
   and not exists (select 1 from public.appellations a
     where a.name = 'Mosel' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Mittelmosel', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Germany' and r.name = 'Mosel'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bernkastel', 'Bereich', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Mosel'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Bernkastel' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Saar', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Germany' and r.name = 'Mosel'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Burg Cochem', 'Bereich', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Mosel'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Burg Cochem' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Ruwer', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Germany' and r.name = 'Mosel'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Moseltor', 'Bereich', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Mosel'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Moseltor' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Terrassenmosel', 3
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Germany' and r.name = 'Mosel'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Obermosel', 'Bereich', 4
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Mosel'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Obermosel' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ruwertal', 'Bereich', 5
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Mosel'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ruwertal' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Saar', 'Bereich', 6
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Mosel'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Saar' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Landwein der Mosel', 'Landwein', 7
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Mosel'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Landwein der Mosel' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Rheingau', 1 from public.countries c where c.name = 'Germany'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Rheingauer Landwein', 'Landwein', 0
-from public.regions r
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Germany' and r.name = 'Rheingau'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Rheingauer Landwein' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Rheingau', 'Anbaugebiet', 1
+select 'region', r.id, 'Rheingau', 'Anbaugebiet', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Germany' and r.name = 'Rheingau'
   and not exists (select 1 from public.appellations a
     where a.name = 'Rheingau' and a.level = 'region' and a.region_id = r.id);
 
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Johannisberg', 'Bereich', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Rheingau'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Johannisberg' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rheingauer Landwein', 'Landwein', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Rheingau'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Rheingauer Landwein' and a.level = 'region' and a.region_id = r.id);
+
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Rheinhessen', 2 from public.countries c where c.name = 'Germany'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Rheinischer Landwein', 'Landwein', 0
-from public.regions r
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Germany' and r.name = 'Rheinhessen'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Rheinischer Landwein' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Rheinhessen', 'Anbaugebiet', 1
+select 'region', r.id, 'Rheinhessen', 'Anbaugebiet', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Germany' and r.name = 'Rheinhessen'
   and not exists (select 1 from public.appellations a
     where a.name = 'Rheinhessen' and a.level = 'region' and a.region_id = r.id);
 
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bingen', 'Bereich', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Rheinhessen'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Bingen' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Nierstein', 'Bereich', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Rheinhessen'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Nierstein' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Wonnegau', 'Bereich', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Rheinhessen'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Wonnegau' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rheinischer Landwein', 'Landwein', 4
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Rheinhessen'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Rheinischer Landwein' and a.level = 'region' and a.region_id = r.id);
+
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Pfalz', 3 from public.countries c where c.name = 'Germany'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Pfälzer Landwein', 'Landwein', 0
-from public.regions r
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Germany' and r.name = 'Pfalz'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Pfälzer Landwein' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Pfalz', 'Anbaugebiet', 1
+select 'region', r.id, 'Pfalz', 'Anbaugebiet', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Germany' and r.name = 'Pfalz'
   and not exists (select 1 from public.appellations a
     where a.name = 'Pfalz' and a.level = 'region' and a.region_id = r.id);
 
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Mittelhaardt-Deutsche Weinstrasse', 'Bereich', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Pfalz'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Mittelhaardt-Deutsche Weinstrasse' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Südliche Weinstrasse', 'Bereich', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Pfalz'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Südliche Weinstrasse' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Pfälzer Landwein', 'Landwein', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Pfalz'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Pfälzer Landwein' and a.level = 'region' and a.region_id = r.id);
+
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Nahe', 4 from public.countries c where c.name = 'Germany'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Nahegauer Landwein', 'Landwein', 0
-from public.regions r
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Germany' and r.name = 'Nahe'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Nahegauer Landwein' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Nahe', 'Anbaugebiet', 1
+select 'region', r.id, 'Nahe', 'Anbaugebiet', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Germany' and r.name = 'Nahe'
   and not exists (select 1 from public.appellations a
     where a.name = 'Nahe' and a.level = 'region' and a.region_id = r.id);
 
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Nahetal', 'Bereich', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Nahe'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Nahetal' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Nahegauer Landwein', 'Landwein', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Nahe'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Nahegauer Landwein' and a.level = 'region' and a.region_id = r.id);
+
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Franken', 5 from public.countries c where c.name = 'Germany'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Fränkischer Landwein', 'Landwein', 0
-from public.regions r
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Germany' and r.name = 'Franken'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Fränkischer Landwein' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Franken', 'Anbaugebiet', 1
+select 'region', r.id, 'Franken', 'Anbaugebiet', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Germany' and r.name = 'Franken'
   and not exists (select 1 from public.appellations a
     where a.name = 'Franken' and a.level = 'region' and a.region_id = r.id);
 
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Maindreieck', 'Bereich', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Franken'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Maindreieck' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Mainviereck', 'Bereich', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Franken'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Mainviereck' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Steigerwald', 'Bereich', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Franken'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Steigerwald' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Fränkischer Landwein', 'Landwein', 4
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Franken'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Fränkischer Landwein' and a.level = 'region' and a.region_id = r.id);
+
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Baden', 6 from public.countries c where c.name = 'Germany'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Badischer Landwein', 'Landwein', 0
-from public.regions r
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Germany' and r.name = 'Baden'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Badischer Landwein' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Baden', 'Anbaugebiet', 1
+select 'region', r.id, 'Baden', 'Anbaugebiet', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Germany' and r.name = 'Baden'
   and not exists (select 1 from public.appellations a
     where a.name = 'Baden' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Kaiserstuhl', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Germany' and r.name = 'Baden'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Badische Bergstrasse', 'Bereich', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Baden'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Badische Bergstrasse' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Markgraflerland', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Germany' and r.name = 'Baden'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bodensee', 'Bereich', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Baden'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Bodensee' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Ortenau', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Germany' and r.name = 'Baden'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Breisgau', 'Bereich', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Baden'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Breisgau' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Breisgau', 3
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'Germany' and r.name = 'Baden'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Kaiserstuhl', 'Bereich', 4
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Baden'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Kaiserstuhl' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Kraichgau', 'Bereich', 5
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Baden'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Kraichgau' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Markgräflerland', 'Bereich', 6
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Baden'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Markgräflerland' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ortenau', 'Bereich', 7
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Baden'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ortenau' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Tauberfranken', 'Bereich', 8
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Baden'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Tauberfranken' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Tuniberg', 'Bereich', 9
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Baden'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Tuniberg' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Badischer Landwein', 'Landwein', 10
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Baden'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Badischer Landwein' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Württemberg', 7 from public.countries c where c.name = 'Germany'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Schwäbischer Landwein', 'Landwein', 0
-from public.regions r
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Germany' and r.name = 'Württemberg'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Schwäbischer Landwein' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Württemberg', 'Anbaugebiet', 1
+select 'region', r.id, 'Württemberg', 'Anbaugebiet', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Germany' and r.name = 'Württemberg'
   and not exists (select 1 from public.appellations a
     where a.name = 'Württemberg' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bayerischer Bodensee', 'Bereich', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Württemberg'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Bayerischer Bodensee' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Kocher-Jagst-Tauber', 'Bereich', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Württemberg'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Kocher-Jagst-Tauber' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Oberer Neckar', 'Bereich', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Württemberg'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Oberer Neckar' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Remstal-Stuttgart', 'Bereich', 4
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Württemberg'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Remstal-Stuttgart' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Württembergischer Bodensee', 'Bereich', 5
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Württemberg'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Württembergischer Bodensee' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Württembergisch Unterland', 'Bereich', 6
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Württemberg'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Württembergisch Unterland' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Schwäbischer Landwein', 'Landwein', 7
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Württemberg'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Schwäbischer Landwein' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Mittelrhein', 8 from public.countries c where c.name = 'Germany'
@@ -6471,65 +6671,129 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Mittelrhein' and a.level = 'region' and a.region_id = r.id);
 
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Loreley', 'Bereich', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Mittelrhein'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Loreley' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Siebengebirge', 'Bereich', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Mittelrhein'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Siebengebirge' and a.level = 'region' and a.region_id = r.id);
+
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Ahr', 9 from public.countries c where c.name = 'Germany'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Ahrer Landwein', 'Landwein', 0
-from public.regions r
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Germany' and r.name = 'Ahr'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Ahrer Landwein' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Ahr', 'Anbaugebiet', 1
+select 'region', r.id, 'Ahr', 'Anbaugebiet', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Germany' and r.name = 'Ahr'
   and not exists (select 1 from public.appellations a
     where a.name = 'Ahr' and a.level = 'region' and a.region_id = r.id);
 
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Walporzheim/Ahrtal', 'Bereich', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Ahr'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Walporzheim/Ahrtal' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ahrtaler Landwein', 'Landwein', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Ahr'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ahrtaler Landwein' and a.level = 'region' and a.region_id = r.id);
+
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Saale-Unstrut', 10 from public.countries c where c.name = 'Germany'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Mitteldeutscher Landwein', 'Landwein', 0
-from public.regions r
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Germany' and r.name = 'Saale-Unstrut'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Mitteldeutscher Landwein' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Saale-Unstrut', 'Anbaugebiet', 1
+select 'region', r.id, 'Saale-Unstrut', 'Anbaugebiet', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Germany' and r.name = 'Saale-Unstrut'
   and not exists (select 1 from public.appellations a
     where a.name = 'Saale-Unstrut' and a.level = 'region' and a.region_id = r.id);
 
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Schloss Neuenburg', 'Bereich', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Saale-Unstrut'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Schloss Neuenburg' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Thüringen', 'Bereich', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Saale-Unstrut'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Thüringen' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Mitteldeutscher Landwein', 'Landwein', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Saale-Unstrut'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Mitteldeutscher Landwein' and a.level = 'region' and a.region_id = r.id);
+
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Sachsen', 11 from public.countries c where c.name = 'Germany'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Sächsischer Landwein', 'Landwein', 0
-from public.regions r
-  join public.countries c on c.id = r.country_id
-  where c.name = 'Germany' and r.name = 'Sachsen'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Sächsischer Landwein' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Sachsen', 'Anbaugebiet', 1
+select 'region', r.id, 'Sachsen', 'Anbaugebiet', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'Germany' and r.name = 'Sachsen'
   and not exists (select 1 from public.appellations a
     where a.name = 'Sachsen' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Dresden', 'Bereich', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Sachsen'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Dresden' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Elstertal', 'Bereich', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Sachsen'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Elstertal' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Meissen', 'Bereich', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Sachsen'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Meissen' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Sächsischer Landwein', 'Landwein', 4
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Sachsen'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Sächsischer Landwein' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Hessische Bergstrasse', 12 from public.countries c where c.name = 'Germany'
@@ -6542,6 +6806,22 @@ from public.regions r
   where c.name = 'Germany' and r.name = 'Hessische Bergstrasse'
   and not exists (select 1 from public.appellations a
     where a.name = 'Hessische Bergstrasse' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Starkenburg', 'Bereich', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Hessische Bergstrasse'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Starkenburg' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Umstadt', 'Bereich', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'Germany' and r.name = 'Hessische Bergstrasse'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Umstadt' and a.level = 'region' and a.region_id = r.id);
 
 -- ── Greece ────────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)

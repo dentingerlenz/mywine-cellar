@@ -6,7 +6,7 @@
 > federdoc, TTB, …). Ziel laut Plan §5.3 (max. Tiefe): ~1'800–2'200 Appellationen.
 > „Offiziell" = Soll-Zahl laut Register; „Lücke" heißt erfasst < offiziell.
 
-Stand: 2026-07-15 · **51 Länder (5 verifiziert) · 1545 Appellationen**
+Stand: 2026-07-16 · **51 Länder (6 verifiziert) · 1586 Appellationen**
 
 | Land | Regionen | Sub-Regionen | Erfasst | Offiziell | Geprüft am | Status |
 |---|---|---|---|---|---|---|
@@ -30,7 +30,7 @@ Stand: 2026-07-15 · **51 Länder (5 verifiziert) · 1545 Appellationen**
 | Ethiopia | 1 | 1 | 1 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | France | 14 | 39 | 351 | 318 | 2026-07-14 | ✅ verifiziert (INAO Liste des AOC vins (MAJ 26.01.2012), INAO Liste des IGP vins (MAJ 26.01.2014), Post-2012-Nachtraege (INAO/EUR-Lex, vom Nutzer geliefert 2026-07)) |
 | Georgia | 5 | 2 | 9 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
-| Germany | 13 | 8 | 25 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
+| Germany | 13 | 0 | 66 | 54 | 2026-07-15 | ✅ verifiziert (Deutsches Weingesetz / Weinverordnung: 13 bestimmte Anbaugebiete (g.U.) + 41 Bereiche; Landwein (g.g.A.) je Gebiet; Deutscher Wein (national). Einzellagen/Grosslagen bewusst als Freitext (Location); VDP-Stufen im Classification-Feld. Recherchiert 2026-07 (Deutsches Weininstitut).) |
 | Greece | 8 | 18 | 23 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Hungary | 9 | 1 | 9 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | India | 3 | 4 | 4 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
@@ -62,4 +62,4 @@ Stand: 2026-07-15 · **51 Länder (5 verifiziert) · 1545 Appellationen**
 | United States | 7 | 18 | 64 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Uruguay | 5 | 0 | 5 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 
-| **Gesamt** | **267** | **323** | **1545** | | | |
+| **Gesamt** | **267** | **315** | **1586** | | | |

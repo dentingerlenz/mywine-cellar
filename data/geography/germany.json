@@ -2,6 +2,12 @@
   "country": "Germany",
   "code": "DE",
   "continent": "Europe",
+  "verified": true,
+  "sources": [
+    "Deutsches Weingesetz / Weinverordnung: 13 bestimmte Anbaugebiete (g.U.) + 41 Bereiche; Landwein (g.g.A.) je Gebiet; Deutscher Wein (national). Einzellagen/Grosslagen bewusst als Freitext (Location); VDP-Stufen im Classification-Feld. Recherchiert 2026-07 (Deutsches Weininstitut)."
+  ],
+  "officialCount": 54,
+  "verifiedOn": "2026-07-15",
   "appellations": [
     {
       "name": "Deutscher Wein",
@@ -13,26 +19,36 @@
       "name": "Mosel",
       "appellations": [
         {
-          "name": "Landwein der Mosel",
-          "type": "Landwein"
-        },
-        {
           "name": "Mosel",
           "type": "Anbaugebiet"
-        }
-      ],
-      "subRegions": [
-        {
-          "name": "Mittelmosel"
         },
         {
-          "name": "Saar"
+          "name": "Bernkastel",
+          "type": "Bereich"
         },
         {
-          "name": "Ruwer"
+          "name": "Burg Cochem",
+          "type": "Bereich"
         },
         {
-          "name": "Terrassenmosel"
+          "name": "Moseltor",
+          "type": "Bereich"
+        },
+        {
+          "name": "Obermosel",
+          "type": "Bereich"
+        },
+        {
+          "name": "Ruwertal",
+          "type": "Bereich"
+        },
+        {
+          "name": "Saar",
+          "type": "Bereich"
+        },
+        {
+          "name": "Landwein der Mosel",
+          "type": "Landwein"
         }
       ]
     },
@@ -40,12 +56,16 @@
       "name": "Rheingau",
       "appellations": [
         {
-          "name": "Rheingauer Landwein",
-          "type": "Landwein"
-        },
-        {
           "name": "Rheingau",
           "type": "Anbaugebiet"
+        },
+        {
+          "name": "Johannisberg",
+          "type": "Bereich"
+        },
+        {
+          "name": "Rheingauer Landwein",
+          "type": "Landwein"
         }
       ]
     },
@@ -53,12 +73,24 @@
       "name": "Rheinhessen",
       "appellations": [
         {
-          "name": "Rheinischer Landwein",
-          "type": "Landwein"
-        },
-        {
           "name": "Rheinhessen",
           "type": "Anbaugebiet"
+        },
+        {
+          "name": "Bingen",
+          "type": "Bereich"
+        },
+        {
+          "name": "Nierstein",
+          "type": "Bereich"
+        },
+        {
+          "name": "Wonnegau",
+          "type": "Bereich"
+        },
+        {
+          "name": "Rheinischer Landwein",
+          "type": "Landwein"
         }
       ]
     },
@@ -66,12 +98,20 @@
       "name": "Pfalz",
       "appellations": [
         {
-          "name": "Pfälzer Landwein",
-          "type": "Landwein"
-        },
-        {
           "name": "Pfalz",
           "type": "Anbaugebiet"
+        },
+        {
+          "name": "Mittelhaardt-Deutsche Weinstrasse",
+          "type": "Bereich"
+        },
+        {
+          "name": "Südliche Weinstrasse",
+          "type": "Bereich"
+        },
+        {
+          "name": "Pfälzer Landwein",
+          "type": "Landwein"
         }
       ]
     },
@@ -79,12 +119,16 @@
       "name": "Nahe",
       "appellations": [
         {
-          "name": "Nahegauer Landwein",
-          "type": "Landwein"
-        },
-        {
           "name": "Nahe",
           "type": "Anbaugebiet"
+        },
+        {
+          "name": "Nahetal",
+          "type": "Bereich"
+        },
+        {
+          "name": "Nahegauer Landwein",
+          "type": "Landwein"
         }
       ]
     },
@@ -92,12 +136,24 @@
       "name": "Franken",
       "appellations": [
         {
-          "name": "Fränkischer Landwein",
-          "type": "Landwein"
-        },
-        {
           "name": "Franken",
           "type": "Anbaugebiet"
+        },
+        {
+          "name": "Maindreieck",
+          "type": "Bereich"
+        },
+        {
+          "name": "Mainviereck",
+          "type": "Bereich"
+        },
+        {
+          "name": "Steigerwald",
+          "type": "Bereich"
+        },
+        {
+          "name": "Fränkischer Landwein",
+          "type": "Landwein"
         }
       ]
     },
@@ -105,26 +161,48 @@
       "name": "Baden",
       "appellations": [
         {
-          "name": "Badischer Landwein",
-          "type": "Landwein"
-        },
-        {
           "name": "Baden",
           "type": "Anbaugebiet"
-        }
-      ],
-      "subRegions": [
-        {
-          "name": "Kaiserstuhl"
         },
         {
-          "name": "Markgraflerland"
+          "name": "Badische Bergstrasse",
+          "type": "Bereich"
         },
         {
-          "name": "Ortenau"
+          "name": "Bodensee",
+          "type": "Bereich"
         },
         {
-          "name": "Breisgau"
+          "name": "Breisgau",
+          "type": "Bereich"
+        },
+        {
+          "name": "Kaiserstuhl",
+          "type": "Bereich"
+        },
+        {
+          "name": "Kraichgau",
+          "type": "Bereich"
+        },
+        {
+          "name": "Markgräflerland",
+          "type": "Bereich"
+        },
+        {
+          "name": "Ortenau",
+          "type": "Bereich"
+        },
+        {
+          "name": "Tauberfranken",
+          "type": "Bereich"
+        },
+        {
+          "name": "Tuniberg",
+          "type": "Bereich"
+        },
+        {
+          "name": "Badischer Landwein",
+          "type": "Landwein"
         }
       ]
     },
@@ -132,12 +210,36 @@
       "name": "Württemberg",
       "appellations": [
         {
-          "name": "Schwäbischer Landwein",
-          "type": "Landwein"
-        },
-        {
           "name": "Württemberg",
           "type": "Anbaugebiet"
+        },
+        {
+          "name": "Bayerischer Bodensee",
+          "type": "Bereich"
+        },
+        {
+          "name": "Kocher-Jagst-Tauber",
+          "type": "Bereich"
+        },
+        {
+          "name": "Oberer Neckar",
+          "type": "Bereich"
+        },
+        {
+          "name": "Remstal-Stuttgart",
+          "type": "Bereich"
+        },
+        {
+          "name": "Württembergischer Bodensee",
+          "type": "Bereich"
+        },
+        {
+          "name": "Württembergisch Unterland",
+          "type": "Bereich"
+        },
+        {
+          "name": "Schwäbischer Landwein",
+          "type": "Landwein"
         }
       ]
     },
@@ -147,6 +249,14 @@
         {
           "name": "Mittelrhein",
           "type": "Anbaugebiet"
+        },
+        {
+          "name": "Loreley",
+          "type": "Bereich"
+        },
+        {
+          "name": "Siebengebirge",
+          "type": "Bereich"
         }
       ]
     },
@@ -154,12 +264,16 @@
       "name": "Ahr",
       "appellations": [
         {
-          "name": "Ahrer Landwein",
-          "type": "Landwein"
-        },
-        {
           "name": "Ahr",
           "type": "Anbaugebiet"
+        },
+        {
+          "name": "Walporzheim/Ahrtal",
+          "type": "Bereich"
+        },
+        {
+          "name": "Ahrtaler Landwein",
+          "type": "Landwein"
         }
       ]
     },
@@ -167,12 +281,20 @@
       "name": "Saale-Unstrut",
       "appellations": [
         {
-          "name": "Mitteldeutscher Landwein",
-          "type": "Landwein"
-        },
-        {
           "name": "Saale-Unstrut",
           "type": "Anbaugebiet"
+        },
+        {
+          "name": "Schloss Neuenburg",
+          "type": "Bereich"
+        },
+        {
+          "name": "Thüringen",
+          "type": "Bereich"
+        },
+        {
+          "name": "Mitteldeutscher Landwein",
+          "type": "Landwein"
         }
       ]
     },
@@ -180,12 +302,24 @@
       "name": "Sachsen",
       "appellations": [
         {
-          "name": "Sächsischer Landwein",
-          "type": "Landwein"
-        },
-        {
           "name": "Sachsen",
           "type": "Anbaugebiet"
+        },
+        {
+          "name": "Dresden",
+          "type": "Bereich"
+        },
+        {
+          "name": "Elstertal",
+          "type": "Bereich"
+        },
+        {
+          "name": "Meissen",
+          "type": "Bereich"
+        },
+        {
+          "name": "Sächsischer Landwein",
+          "type": "Landwein"
         }
       ]
     },
@@ -195,6 +329,14 @@
         {
           "name": "Hessische Bergstrasse",
           "type": "Anbaugebiet"
+        },
+        {
+          "name": "Starkenburg",
+          "type": "Bereich"
+        },
+        {
+          "name": "Umstadt",
+          "type": "Bereich"
         }
       ]
     }

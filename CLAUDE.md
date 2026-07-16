@@ -35,7 +35,7 @@ halten, Klick-Anleitungen für Dashboard-Schritte geben.
 - **Geografie**: globale Referenztabellen `countries/regions/sub_regions/appellations`
   (4-Ebenen, FKs an `wines`). Quelle = **`data/geography/*.json`** (1 Datei/Land),
   kompiliert per `npm run geo:build` → `supabase/seed.sql` + `COVERAGE.md`. Aktuell
-  51 Länder / **~1545 Appellationen** (Phase 7 läuft, s. u.). Der Validator in
+  51 Länder / **~1586 Appellationen** (Phase 7 läuft, s. u.). Der Validator in
   `build-seed.js` erzwingt harte Invarianten (keine Typ-Präfixe im Namen, keine
   In-Land-Duplikate außer `MULTI_ANCHOR`, keine eponyme Einzel-Sub, kein `’`) und
   warnt bei Typen außerhalb `KNOWN_TYPES`. **Picker-Logik** (Land→Region→Sub→
@@ -47,20 +47,25 @@ Ziel: jede relevante Appellation aus **offiziellen Registern** (nicht Wikipedia)
 Land für Land. Voller Workflow + wiederverwendbare Skripte:
 **`scripts/geo/phase7/README.md`** (dort auch der Deploy-Befehl). Auto-Memory
 `rebuild-decisions.md` = laufendes Detail-Log.
-- **Fertig & verifiziert:** FR 351 · IT 522 · CH 63 · ES 149 · AT 27
+- **Fertig & verifiziert:** FR 351 · IT 522 · CH 63 · ES 149 · AT 27 · DE 66
   (`verified:true` + `officialCount` + `verifiedOn` + `sources` je JSON).
-- **Prod:** FR + IT sind **live deployed**. **CH + ES + AT: Migrationen committet,
-  aber NOCH NICHT deployed** (Deploy erfolgt gebündelt, mehrere Länder pro Push).
-- **Muster flaches Land** (IT/CH/ES/AT): Region = offizielles Weingebiet/Verwaltungs-
+- **Prod:** FR/IT/CH/ES/AT sind **live deployed**. **DE: Migration committet + lokal
+  verifiziert, aber NOCH NICHT deployed** (Deploy erfolgt gebündelt, mehrere Länder pro Push).
+- **Muster flaches Land** (IT/CH/ES/AT/DE): Region = offizielles Weingebiet/Verwaltungs-
   gebiet, Appellationen flach, Migration via `scripts/geo/phase7/gen_flat_migration.py`
   (hängt alte Sub-Region-Weine auf gleichnamige neue Appellation um; Frankreich mit
   Sub-Regionen → `gen_fr_migration.py`). Jede Migration lokal per **Konvergenz-Test**
   (alter Seed + Migration ≡ neuer Seed) + **Wein-Erhalt-Sim** (0 Weine ohne country)
   abgesichert.
+- **Deutschland:** 13 Anbaugebiete (g.U.) + 41 Bereiche + Landwein, **recherchiert**
+  (kein amtliches PDF). Einzellagen/Grosslagen bewusst NICHT als Geo → Freitext
+  „Location"; VDP-Stufen (VDP.Grosse Lage/Erste Lage/Ortswein/Gutswein, Grosses
+  Gewächs) im Feld „Classification" wählbar (`CLASSIFICATION_SUGGESTIONS` in
+  `src/features/wines/model.ts`). DE-Migration hängt informelle Sub-Regionen
+  (Mittelmosel/Terrassenmosel) verlustfrei ins „Location"-Feld um.
 - **PDF-Quellen extrahieren:** `pip3 install pypdf` im scratchpad (poppler fehlt);
   Header/Footer strippen, Anker = eindeutiger Code, Vollständigkeit per N°-Lückencheck.
-- **Als Nächstes:** Deutschland (Quelle + VDP-Tiefe war offen), dann NZ, PT, Rest-
-  Kernländer. Nischenländer bleiben bewusst „unverifiziert".
+- **Als Nächstes:** NZ, PT, dann Rest-Kernländer. Nischenländer bleiben bewusst „unverifiziert".
 
 ## Produktion / Hosting (WICHTIG)
 - **Supabase-Projekt (Prod): `czmjxsojbomkqtluzhru`** — dem Nutzer gehörend, EU.
