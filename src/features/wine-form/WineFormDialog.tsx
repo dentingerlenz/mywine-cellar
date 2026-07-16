@@ -15,7 +15,8 @@ import { toast } from "sonner";
 import { AlertTriangle, Loader2 } from "lucide-react";
 import {
   type Wine, type WineInput, wineSchema, OCCASIONS, OCCASION_LABEL,
-  SIZE_ML_OPTIONS, DOSAGE_LEVELS, findDuplicates, dateToMonthYear, monthsOnLees,
+  SIZE_ML_OPTIONS, DOSAGE_LEVELS, CLASSIFICATION_SUGGESTIONS,
+  findDuplicates, dateToMonthYear, monthsOnLees,
 } from "@/features/wines/model";
 import { useUpsertWine, useWines, uploadLabelPhoto, labelPhotoUrl } from "@/features/wines/queries";
 import { useColours, useColourLookup } from "@/features/colours/queries";
@@ -67,7 +68,10 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
 
   // Vorschlagslisten für die Freitext-Felder (aus dem Bestand).
   const classificationOptions = useMemo(
-    () => Array.from(new Set(wines.map((w) => w.classification).filter(Boolean) as string[])).sort(),
+    () => Array.from(new Set([
+      ...CLASSIFICATION_SUGGESTIONS,
+      ...(wines.map((w) => w.classification).filter(Boolean) as string[]),
+    ])).sort(),
     [wines],
   );
   const locationOptions = useMemo(

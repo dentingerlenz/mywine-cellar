@@ -42,6 +42,25 @@ export const DOSAGE_LEVELS = [
   "Brut Nature", "Extra Brut", "Brut", "Extra Dry", "Sec", "Demi-Sec", "Doux",
 ] as const;
 
+// Kuratierte Klassifikations-Stufen für das Freitext-Feld „Classification".
+// Immer wählbar (auch ohne Bestandswein), ergänzt um die real vergebenen Werte.
+// Bewusst die Qualitäts-/Klassifikationsebene — NICHT die Geografie. Für Deutschland
+// die VDP-Stufen: die konkrete Einzellage bleibt Freitext (Name/Location), aber der
+// VDP-Rang ist hier wählbar. Dazu die gängigen internationalen Klassifikationen.
+export const CLASSIFICATION_SUGGESTIONS: readonly string[] = [
+  // Deutschland — VDP-Klassifikationspyramide (+ Grosses Gewächs)
+  "VDP.Grosse Lage", "VDP.Erste Lage", "VDP.Ortswein", "VDP.Gutswein",
+  "VDP.Prädikatswein", "Grosses Gewächs",
+  // Frankreich
+  "Grand Cru", "Premier Cru", "AOC", "AOP", "IGP",
+  // Italien
+  "DOCG", "DOC", "IGT",
+  // Spanien / Portugal
+  "DOCa", "DO", "DOP", "IG",
+  // Österreich
+  "DAC",
+] as const;
+
 // Freitext-Jahrgang → strukturierte Felder (geteilt von Import & Scan).
 export const parseVintageInput = (raw: string | number | null | undefined) => {
   const v = String(raw ?? "").trim();
