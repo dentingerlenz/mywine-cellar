@@ -2,134 +2,39 @@
   "country": "New Zealand",
   "code": "NZ",
   "continent": "Oceania",
+  "verified": true,
+  "sources": [
+    "IPONZ Geographical Indications Register (wine, New Zealand): 19 registrierte GIs (10 regionale + 9 lokale), IP 1004–1028, registriert 2018–2022. iponz.govt.nz/get-ip/geographical-indications/register (Stand 2026-07). Nicht-registrierte informelle Sub-Regionen bleiben Freitext (Location)."
+  ],
+  "officialCount": 19,
+  "verifiedOn": "2026-07-16",
   "regions": [
     {
-      "name": "Marlborough",
+      "name": "Northland",
       "appellations": [
         {
-          "name": "Marlborough Wine",
-          "type": "GI"
-        },
-        {
-          "name": "Marlborough",
-          "type": "GI"
-        }
-      ],
-      "subRegions": [
-        {
-          "name": "Wairau Valley"
-        },
-        {
-          "name": "Awatere Valley"
-        },
-        {
-          "name": "Southern Valleys"
-        }
-      ]
-    },
-    {
-      "name": "Hawke's Bay",
-      "subRegions": [
-        {
-          "name": "Gimblett Gravels"
-        },
-        {
-          "name": "Bridge Pa Triangle"
-        }
-      ],
-      "appellations": [
-        {
-          "name": "Hawke's Bay",
+          "name": "Northland",
           "type": "GI"
         }
       ]
     },
     {
-      "name": "Central Otago",
+      "name": "Auckland",
       "appellations": [
         {
-          "name": "Central Otago Wine",
+          "name": "Auckland",
           "type": "GI"
         },
         {
-          "name": "Central Otago",
+          "name": "Kumeu",
           "type": "GI"
-        }
-      ],
-      "subRegions": [
-        {
-          "name": "Bannockburn"
         },
         {
-          "name": "Cromwell Basin"
-        },
-        {
-          "name": "Gibbston"
-        },
-        {
-          "name": "Wanaka"
-        },
-        {
-          "name": "Bendigo"
-        },
-        {
-          "name": "Alexandra"
-        }
-      ]
-    },
-    {
-      "name": "Canterbury",
-      "subRegions": [
-        {
-          "name": "Waipara Valley"
-        },
-        {
-          "name": "Christchurch Plains"
-        }
-      ],
-      "appellations": [
-        {
-          "name": "Canterbury",
+          "name": "Matakana",
           "type": "GI"
-        }
-      ]
-    },
-    {
-      "name": "Wairarapa",
-      "subRegions": [
-        {
-          "name": "Martinborough",
-          "appellations": [
-            {
-              "name": "Martinborough",
-              "type": "GI"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Nelson",
-      "subRegions": [
-        {
-          "name": "Waimea Plains"
         },
         {
-          "name": "Moutere Hills"
-        }
-      ],
-      "appellations": [
-        {
-          "name": "Nelson",
-          "type": "GI"
-        }
-      ]
-    },
-    {
-      "name": "Waitaki Valley",
-      "appellations": [
-        {
-          "name": "Waitaki Valley",
+          "name": "Waiheke Island",
           "type": "GI"
         }
       ]
@@ -144,30 +49,88 @@
       ]
     },
     {
-      "name": "Auckland",
-      "subRegions": [
-        {
-          "name": "Waiheke Island"
-        },
-        {
-          "name": "Henderson"
-        },
-        {
-          "name": "Matakana"
-        }
-      ],
+      "name": "Hawke's Bay",
       "appellations": [
         {
-          "name": "Auckland",
+          "name": "Hawke's Bay",
+          "type": "GI"
+        },
+        {
+          "name": "Central Hawke's Bay",
           "type": "GI"
         }
       ]
     },
     {
-      "name": "Northland",
+      "name": "Wairarapa",
       "appellations": [
         {
-          "name": "Northland",
+          "name": "Wairarapa",
+          "type": "GI"
+        },
+        {
+          "name": "Gladstone",
+          "type": "GI"
+        },
+        {
+          "name": "Martinborough",
+          "type": "GI"
+        }
+      ]
+    },
+    {
+      "name": "Nelson",
+      "appellations": [
+        {
+          "name": "Nelson",
+          "type": "GI"
+        }
+      ]
+    },
+    {
+      "name": "Marlborough",
+      "appellations": [
+        {
+          "name": "Marlborough",
+          "type": "GI"
+        }
+      ]
+    },
+    {
+      "name": "Canterbury",
+      "appellations": [
+        {
+          "name": "Canterbury",
+          "type": "GI"
+        },
+        {
+          "name": "North Canterbury",
+          "type": "GI"
+        },
+        {
+          "name": "Waipara Valley",
+          "type": "GI"
+        }
+      ]
+    },
+    {
+      "name": "Waitaki Valley North Otago",
+      "appellations": [
+        {
+          "name": "Waitaki Valley North Otago",
+          "type": "GI"
+        }
+      ]
+    },
+    {
+      "name": "Central Otago",
+      "appellations": [
+        {
+          "name": "Central Otago",
+          "type": "GI"
+        },
+        {
+          "name": "Bannockburn",
           "type": "GI"
         }
       ]

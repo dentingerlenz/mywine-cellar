@@ -15,10 +15,12 @@ gesichert. Der maßgebliche Datenstand liegt in `data/geography/*.json`.
 | Spanien | 149 | MAPA Listado DOP/IGP (02.07.2026) | ✅ live |
 | Österreich | 27 | ÖWM „Wein aus Österreich" 11/2025 (DAC + generische Gebiete) | ✅ live |
 | Deutschland | 66 | Weingesetz/Weinverordnung: 13 Anbaugebiete (g.U.) + 41 Bereiche + Landwein (recherchiert, kein amtliches PDF) | ⏳ committet |
+| Neuseeland | 19 | IPONZ GI-Register (wine): 10 regionale + 9 lokale GIs (IP 1004–1028) | ⏳ committet |
 
-**Offener Deploy-Batch:** Migration `2026071609…` (DE) ist committet + lokal
-verifiziert (Konvergenz + Wein-Erhalt), aber noch NICHT auf Prod. FR/IT/CH/ES/AT
-sind bereits live.
+**Offener Deploy-Batch:** Migrationen `2026071609…` (DE) + `…10…` (NZ) sind
+committet + lokal verifiziert (Konvergenz + Wein-Erhalt), aber noch NICHT auf Prod.
+FR/IT/CH/ES/AT sind bereits live. (DE-Frontend/VDP-Klassifikation ist bereits
+gepusht → Vercel; nur die DE+NZ-DB-Migrationen warten auf den gebündelten Push.)
 
 **Deutschland-Besonderheit:** Einzellagen/Grosslagen sind bewusst KEINE Geografie
 → die konkrete Lage steht im Freitextfeld „Location". Die VDP-Klassifikationsstufen
@@ -28,7 +30,13 @@ sondern im Formularfeld „Classification" wählbar (kuratierte Liste in
 alte informelle Sub-Regionen (Mittelmosel/Terrassenmosel) verlustfrei ins
 „Location"-Feld um.
 
-**Reihenfolge weiter:** NZ, PT, dann Rest-Kernländer (ZA, GR, US, AU, CL, AR …).
+**Neuseeland-Besonderheit:** Register hat 2 Ebenen (regionale GI enthält lokale
+GIs). Flach modelliert — lokale GIs (Kumeu, Bannockburn, Central Hawke's Bay …)
+als Geschwister-Appellationen unter ihrer Region, alle Typ „GI". Nicht-registrierte
+informelle Sub-Regionen (Wairau Valley, Southern Valleys, Awatere …) sind KEINE GI
+→ Migration hängt solche Bestandsweine ins „Location"-Feld um (wie DE Mittelmosel).
+
+**Reihenfolge weiter:** PT, dann Rest-Kernländer (ZA, GR, US, AU, CL, AR …).
 
 ## Workflow pro Land (identisch, wiederholbar)
 

@@ -12223,45 +12223,67 @@ values ('New Zealand', 'NZ', 'Oceania', 35)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Marlborough', 0 from public.countries c where c.name = 'New Zealand'
+select c.id, 'Northland', 0 from public.countries c where c.name = 'New Zealand'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Marlborough Wine', 'GI', 0
+select 'region', r.id, 'Northland', 'GI', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'New Zealand' and r.name = 'Marlborough'
+  where c.name = 'New Zealand' and r.name = 'Northland'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Marlborough Wine' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Marlborough', 'GI', 1
-from public.regions r
-  join public.countries c on c.id = r.country_id
-  where c.name = 'New Zealand' and r.name = 'Marlborough'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Marlborough' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Wairau Valley', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'New Zealand' and r.name = 'Marlborough'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Awatere Valley', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'New Zealand' and r.name = 'Marlborough'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Southern Valleys', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'New Zealand' and r.name = 'Marlborough'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
+    where a.name = 'Northland' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Hawke''s Bay', 1 from public.countries c where c.name = 'New Zealand'
+select c.id, 'Auckland', 1 from public.countries c where c.name = 'New Zealand'
+on conflict (country_id, name) do update set sort_order = excluded.sort_order;
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Auckland', 'GI', 0
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'New Zealand' and r.name = 'Auckland'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Auckland' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Kumeu', 'GI', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'New Zealand' and r.name = 'Auckland'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Kumeu' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Matakana', 'GI', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'New Zealand' and r.name = 'Auckland'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Matakana' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Waiheke Island', 'GI', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'New Zealand' and r.name = 'Auckland'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Waiheke Island' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.regions (country_id, name, sort_order)
+select c.id, 'Gisborne', 2 from public.countries c where c.name = 'New Zealand'
+on conflict (country_id, name) do update set sort_order = excluded.sort_order;
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Gisborne', 'GI', 0
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'New Zealand' and r.name = 'Gisborne'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Gisborne' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.regions (country_id, name, sort_order)
+select c.id, 'Hawke''s Bay', 3 from public.countries c where c.name = 'New Zealand'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
@@ -12272,116 +12294,41 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Hawke''s Bay' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Gimblett Gravels', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'New Zealand' and r.name = 'Hawke''s Bay'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Bridge Pa Triangle', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'New Zealand' and r.name = 'Hawke''s Bay'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.regions (country_id, name, sort_order)
-select c.id, 'Central Otago', 2 from public.countries c where c.name = 'New Zealand'
-on conflict (country_id, name) do update set sort_order = excluded.sort_order;
-
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Central Otago Wine', 'GI', 0
+select 'region', r.id, 'Central Hawke''s Bay', 'GI', 1
 from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'New Zealand' and r.name = 'Central Otago'
+  where c.name = 'New Zealand' and r.name = 'Hawke''s Bay'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Central Otago Wine' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Central Otago', 'GI', 1
-from public.regions r
-  join public.countries c on c.id = r.country_id
-  where c.name = 'New Zealand' and r.name = 'Central Otago'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Central Otago' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Bannockburn', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'New Zealand' and r.name = 'Central Otago'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Cromwell Basin', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'New Zealand' and r.name = 'Central Otago'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Gibbston', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'New Zealand' and r.name = 'Central Otago'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Wanaka', 3
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'New Zealand' and r.name = 'Central Otago'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Bendigo', 4
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'New Zealand' and r.name = 'Central Otago'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Alexandra', 5
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'New Zealand' and r.name = 'Central Otago'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.regions (country_id, name, sort_order)
-select c.id, 'Canterbury', 3 from public.countries c where c.name = 'New Zealand'
-on conflict (country_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Canterbury', 'GI', 0
-from public.regions r
-  join public.countries c on c.id = r.country_id
-  where c.name = 'New Zealand' and r.name = 'Canterbury'
-  and not exists (select 1 from public.appellations a
-    where a.name = 'Canterbury' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Waipara Valley', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'New Zealand' and r.name = 'Canterbury'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Christchurch Plains', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'New Zealand' and r.name = 'Canterbury'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
+    where a.name = 'Central Hawke''s Bay' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Wairarapa', 4 from public.countries c where c.name = 'New Zealand'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Martinborough', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'New Zealand' and r.name = 'Wairarapa'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Martinborough', 'GI', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Wairarapa', 'GI', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'New Zealand' and r.name = 'Wairarapa' and s.name = 'Martinborough'
+  where c.name = 'New Zealand' and r.name = 'Wairarapa'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Martinborough' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Wairarapa' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Gladstone', 'GI', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'New Zealand' and r.name = 'Wairarapa'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Gladstone' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Martinborough', 'GI', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'New Zealand' and r.name = 'Wairarapa'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Martinborough' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Nelson', 5 from public.countries c where c.name = 'New Zealand'
@@ -12395,83 +12342,77 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Nelson' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Waimea Plains', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'New Zealand' and r.name = 'Nelson'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Moutere Hills', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'New Zealand' and r.name = 'Nelson'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Waitaki Valley', 6 from public.countries c where c.name = 'New Zealand'
+select c.id, 'Marlborough', 6 from public.countries c where c.name = 'New Zealand'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Waitaki Valley', 'GI', 0
+select 'region', r.id, 'Marlborough', 'GI', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'New Zealand' and r.name = 'Waitaki Valley'
+  where c.name = 'New Zealand' and r.name = 'Marlborough'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Waitaki Valley' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Marlborough' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Gisborne', 7 from public.countries c where c.name = 'New Zealand'
+select c.id, 'Canterbury', 7 from public.countries c where c.name = 'New Zealand'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Gisborne', 'GI', 0
+select 'region', r.id, 'Canterbury', 'GI', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'New Zealand' and r.name = 'Gisborne'
+  where c.name = 'New Zealand' and r.name = 'Canterbury'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Gisborne' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Canterbury' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'North Canterbury', 'GI', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'New Zealand' and r.name = 'Canterbury'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'North Canterbury' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Waipara Valley', 'GI', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'New Zealand' and r.name = 'Canterbury'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Waipara Valley' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Auckland', 8 from public.countries c where c.name = 'New Zealand'
+select c.id, 'Waitaki Valley North Otago', 8 from public.countries c where c.name = 'New Zealand'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Auckland', 'GI', 0
+select 'region', r.id, 'Waitaki Valley North Otago', 'GI', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'New Zealand' and r.name = 'Auckland'
+  where c.name = 'New Zealand' and r.name = 'Waitaki Valley North Otago'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Auckland' and a.level = 'region' and a.region_id = r.id);
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Waiheke Island', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'New Zealand' and r.name = 'Auckland'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Henderson', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'New Zealand' and r.name = 'Auckland'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Matakana', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'New Zealand' and r.name = 'Auckland'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
+    where a.name = 'Waitaki Valley North Otago' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'Northland', 9 from public.countries c where c.name = 'New Zealand'
+select c.id, 'Central Otago', 9 from public.countries c where c.name = 'New Zealand'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Northland', 'GI', 0
+select 'region', r.id, 'Central Otago', 'GI', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'New Zealand' and r.name = 'Northland'
+  where c.name = 'New Zealand' and r.name = 'Central Otago'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Northland' and a.level = 'region' and a.region_id = r.id);
+    where a.name = 'Central Otago' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bannockburn', 'GI', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'New Zealand' and r.name = 'Central Otago'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Bannockburn' and a.level = 'region' and a.region_id = r.id);
 
 -- ── Poland ────────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)

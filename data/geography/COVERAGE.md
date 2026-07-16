@@ -6,7 +6,7 @@
 > federdoc, TTB, …). Ziel laut Plan §5.3 (max. Tiefe): ~1'800–2'200 Appellationen.
 > „Offiziell" = Soll-Zahl laut Register; „Lücke" heißt erfasst < offiziell.
 
-Stand: 2026-07-16 · **51 Länder (6 verifiziert) · 1586 Appellationen**
+Stand: 2026-07-16 · **51 Länder (7 verifiziert) · 1593 Appellationen**
 
 | Land | Regionen | Sub-Regionen | Erfasst | Offiziell | Geprüft am | Status |
 |---|---|---|---|---|---|---|
@@ -45,7 +45,7 @@ Stand: 2026-07-16 · **51 Länder (6 verifiziert) · 1586 Appellationen**
 | Morocco | 3 | 3 | 6 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Myanmar | 1 | 1 | 1 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Netherlands | 1 | 1 | 1 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
-| New Zealand | 10 | 19 | 12 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
+| New Zealand | 10 | 0 | 19 | 19 | 2026-07-16 | ✅ verifiziert (IPONZ Geographical Indications Register (wine, New Zealand): 19 registrierte GIs (10 regionale + 9 lokale), IP 1004–1028, registriert 2018–2022. iponz.govt.nz/get-ip/geographical-indications/register (Stand 2026-07). Nicht-registrierte informelle Sub-Regionen bleiben Freitext (Location).) |
 | Poland | 4 | 0 | 0 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Portugal | 13 | 14 | 32 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Romania | 6 | 10 | 11 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
@@ -62,4 +62,4 @@ Stand: 2026-07-16 · **51 Länder (6 verifiziert) · 1586 Appellationen**
 | United States | 7 | 18 | 64 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Uruguay | 5 | 0 | 5 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 
-| **Gesamt** | **267** | **315** | **1586** | | | |
+| **Gesamt** | **267** | **296** | **1593** | | | |
