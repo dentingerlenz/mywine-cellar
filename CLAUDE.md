@@ -47,11 +47,12 @@ Ziel: jede relevante Appellation aus **offiziellen Registern** (nicht Wikipedia)
 Land für Land. Voller Workflow + wiederverwendbare Skripte:
 **`scripts/geo/phase7/README.md`** (dort auch der Deploy-Befehl). Auto-Memory
 `rebuild-decisions.md` = laufendes Detail-Log.
-- **Fertig & verifiziert:** FR 351 · IT 522 · CH 63 · ES 149 · AT 27 · DE 66 · NZ 19 · PT 44 · US 279
+- **Fertig & verifiziert:** FR 351 · IT 522 · CH 63 · ES 149 · AT 27 · DE 66 · NZ 19 · PT 44 · US 279 · ZA 142
   (`verified:true` + `officialCount` + `verifiedOn` + `sources` je JSON).
-- **Prod:** FR/IT/CH/ES/AT/DE/NZ/PT/US sind **alle live deployed** (US am 2026-07-16:
-  apps 1606→1821, 279 AVAs, 0 verwaiste FKs, 0 Weine verloren). Kein offener Batch.
-- **Muster flaches Land** (IT/CH/ES/AT/DE/NZ/PT/US): Region = offizielles Weingebiet/Verwaltungs-
+- **Prod:** FR/IT/CH/ES/AT/DE/NZ/PT/US sind **live deployed**. **ZA (142 WO-Areas): committet +
+  lokal verifiziert, Deploy offen.** Deploy-Kadenz (User 2026-07-16): **ab jetzt bündeln** —
+  mehrere Länder sammeln, KEIN Push/Deploy pro Land, bis der User den Deploy in Auftrag gibt.
+- **Muster flaches Land** (IT/CH/ES/AT/DE/NZ/PT/US/ZA): Region = offizielles Weingebiet/Verwaltungs-
   gebiet, Appellationen flach, Migration via `scripts/geo/phase7/gen_flat_migration.py`
   (hängt alte Sub-Region-Weine auf gleichnamige neue Appellation um; Frankreich mit
   Sub-Regionen → `gen_fr_migration.py`). Jede Migration lokal per **Konvergenz-Test**

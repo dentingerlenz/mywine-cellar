@@ -18,11 +18,14 @@ gesichert. Der maßgebliche Datenstand liegt in `data/geography/*.json`.
 | Neuseeland | 19 | IPONZ GI-Register (wine): 10 regionale + 9 lokale GIs (IP 1004–1028) | ✅ live |
 | Portugal | 44 | eAmbrosia (EU-GI-Register), Extrakt PT/wine: 30 DOP + 14 IGP | ✅ live |
 | USA | 279 | TTB Established AVAs (Stand 29.04.2026): 261 Single-State + 18 Multi-State | ✅ live |
+| Südafrika | 142 | SAWIS/WoSA WO-Register (Production Areas, Feb 2026): 5 GU + 6 Region + 30 District + 101 Ward | ⏳ committet |
 
-**Kein offener Deploy-Batch.** Deploy-Historie 2026-07-16: DE+NZ+PT gebündelt
-(apps 1545→1606), dann USA (`…120000`, apps 1606→1821, US 279 AVAs / 30 Regionen,
-0 verwaiste FKs, 0 Weine verloren). **9 Kernländer FR/IT/CH/ES/AT/DE/NZ/PT/US live
-& verifiziert.**
+**Deploy-Historie 2026-07-16:** DE+NZ+PT gebündelt (apps 1545→1606), dann USA
+(apps 1606→1821). FR/IT/CH/ES/AT/DE/NZ/PT/US sind live.
+
+**Offener Deploy-Batch (bündeln bis User-Auftrag):** Migration `…130000` (Südafrika,
+142 WO-Areas). Ab jetzt sammelt der User mehrere Länder und gibt den Deploy separat
+in Auftrag — also NICHT pro Land pushen/deployen.
 
 **Deutschland-Besonderheit:** Einzellagen/Grosslagen sind bewusst KEINE Geografie
 → die konkrete Lage steht im Freitextfeld „Location". Die VDP-Klassifikationsstufen
@@ -50,7 +53,14 @@ als Appellationen (Typ „AVA"); AVA-Verschachtelung (Napa→Oakville, Central C
 bewusst NICHT abgebildet — alle AVAs sind gleichrangig direkt wählbar. Multi-State-
 AVAs am wein-relevantesten Primärstaat. curly ' → gerade, En-/Em-Dash → „-".
 
-**Reihenfolge weiter:** Rest-Kernländer (ZA, GR, AU, CL, AR …).
+**Südafrika-Besonderheit:** WO-Schema ist mehrstufig (Geographical Unit → Region →
+Subregion → District → Ward), bilingual Eng/Afr. Flach je GU (Region), alles darunter
+als Appellationen mit Typ-Badge (WO Geographical Unit / WO Region / WO District /
+WO Ward); Subregionen (Cape West Coast …) als Ebene weggelassen. Namen → Englisch
+(vor „/"), gerade Apostrophe, PDF-Tippfehler „Simonsberg-Stellenbosh" → „…bosch"
+korrigiert. Erhält die 4 Bestandsweine (Region Western Cape), Elgin-Weine → Appellation.
+
+**Reihenfolge weiter:** Rest-Kernländer (GR, AU, CL, AR …).
 
 ## Workflow pro Land (identisch, wiederholbar)
 

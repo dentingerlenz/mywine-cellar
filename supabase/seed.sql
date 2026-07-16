@@ -13369,217 +13369,1111 @@ select c.id, 'Western Cape', 0 from public.countries c where c.name = 'South Afr
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
-select 'region', r.id, 'Western Cape', 'WO', 0
+select 'region', r.id, 'Western Cape', 'WO Geographical Unit', 0
 from public.regions r
   join public.countries c on c.id = r.country_id
   where c.name = 'South Africa' and r.name = 'Western Cape'
   and not exists (select 1 from public.appellations a
     where a.name = 'Western Cape' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Stellenbosch', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'South Africa' and r.name = 'Western Cape'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Stellenbosch', 'WO District', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Coastal Region', 'WO Region', 1
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'South Africa' and r.name = 'Western Cape' and s.name = 'Stellenbosch'
+  where c.name = 'South Africa' and r.name = 'Western Cape'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Stellenbosch' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Coastal Region' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Franschhoek', 1
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'South Africa' and r.name = 'Western Cape'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Franschhoek', 'WO Ward', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cape South Coast', 'WO Region', 2
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'South Africa' and r.name = 'Western Cape' and s.name = 'Franschhoek'
+  where c.name = 'South Africa' and r.name = 'Western Cape'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Franschhoek' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Cape South Coast' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Paarl', 2
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'South Africa' and r.name = 'Western Cape'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Paarl', 'WO District', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Breede River Valley', 'WO Region', 3
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'South Africa' and r.name = 'Western Cape' and s.name = 'Paarl'
+  where c.name = 'South Africa' and r.name = 'Western Cape'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Paarl' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Breede River Valley' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Swartland', 3
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'South Africa' and r.name = 'Western Cape'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Swartland', 'WO District', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Klein Karoo', 'WO Region', 4
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'South Africa' and r.name = 'Western Cape' and s.name = 'Swartland'
+  where c.name = 'South Africa' and r.name = 'Western Cape'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Swartland' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Klein Karoo' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Constantia', 4
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'South Africa' and r.name = 'Western Cape'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Constantia', 'WO Ward', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Olifants River', 'WO Region', 5
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'South Africa' and r.name = 'Western Cape' and s.name = 'Constantia'
+  where c.name = 'South Africa' and r.name = 'Western Cape'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Constantia' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Olifants River' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Elgin', 5
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'South Africa' and r.name = 'Western Cape'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Elgin', 'WO Ward', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cape Agulhas', 'WO District', 6
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'South Africa' and r.name = 'Western Cape' and s.name = 'Elgin'
+  where c.name = 'South Africa' and r.name = 'Western Cape'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Elgin' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Cape Agulhas' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Walker Bay', 6
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'South Africa' and r.name = 'Western Cape'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Walker Bay', 'WO District', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Elgin', 'WO District', 7
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'South Africa' and r.name = 'Western Cape' and s.name = 'Walker Bay'
+  where c.name = 'South Africa' and r.name = 'Western Cape'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Walker Bay' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Elgin' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Hemel-en-Aarde Valley', 'WO Ward', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Lower Duivenhoks River', 'WO District', 8
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'South Africa' and r.name = 'Western Cape' and s.name = 'Walker Bay'
+  where c.name = 'South Africa' and r.name = 'Western Cape'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Hemel-en-Aarde Valley' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Lower Duivenhoks River' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Overberg', 7
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'South Africa' and r.name = 'Western Cape'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Overberg', 'WO District', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Overberg', 'WO District', 9
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'South Africa' and r.name = 'Western Cape' and s.name = 'Overberg'
+  where c.name = 'South Africa' and r.name = 'Western Cape'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Overberg' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Overberg' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Elim', 'WO Ward', 1
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Plettenberg Bay', 'WO District', 10
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'South Africa' and r.name = 'Western Cape' and s.name = 'Overberg'
+  where c.name = 'South Africa' and r.name = 'Western Cape'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Elim' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Plettenberg Bay' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Robertson', 8
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'South Africa' and r.name = 'Western Cape'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Robertson', 'WO District', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Swellendam', 'WO District', 11
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'South Africa' and r.name = 'Western Cape' and s.name = 'Robertson'
+  where c.name = 'South Africa' and r.name = 'Western Cape'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Robertson' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Swellendam' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Worcester', 9
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'South Africa' and r.name = 'Western Cape'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Worcester', 'WO District', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Walker Bay', 'WO District', 12
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'South Africa' and r.name = 'Western Cape' and s.name = 'Worcester'
+  where c.name = 'South Africa' and r.name = 'Western Cape'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Worcester' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Walker Bay' and a.level = 'region' and a.region_id = r.id);
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Breedekloof', 10
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'South Africa' and r.name = 'Western Cape'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Breedekloof', 'WO District', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Still Bay', 'WO District', 13
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'South Africa' and r.name = 'Western Cape' and s.name = 'Breedekloof'
+  where c.name = 'South Africa' and r.name = 'Western Cape'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Breedekloof' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Still Bay' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cape Town', 'WO District', 14
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Cape Town' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Darling', 'WO District', 15
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Darling' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Franschhoek', 'WO District', 16
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Franschhoek' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Lutzville Valley', 'WO District', 17
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Lutzville Valley' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Paarl', 'WO District', 18
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Paarl' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Stellenbosch', 'WO District', 19
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Stellenbosch' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Swartland', 'WO District', 20
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Swartland' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Tulbagh', 'WO District', 21
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Tulbagh' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Wellington', 'WO District', 22
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Wellington' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Breedekloof', 'WO District', 23
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Breedekloof' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Robertson', 'WO District', 24
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Robertson' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Worcester', 'WO District', 25
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Worcester' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Calitzdorp', 'WO District', 26
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Calitzdorp' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Langeberg-Garcia', 'WO District', 27
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Langeberg-Garcia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Citrusdal Mountain', 'WO District', 28
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Citrusdal Mountain' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Citrusdal Valley', 'WO District', 29
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Citrusdal Valley' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ceres Plateau', 'WO District', 30
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ceres Plateau' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Prince Albert', 'WO District', 31
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Prince Albert' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Elim', 'WO Ward', 32
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Elim' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Elandskloof', 'WO Ward', 33
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Elandskloof' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Greyton', 'WO Ward', 34
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Greyton' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Klein River', 'WO Ward', 35
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Klein River' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Shaw''s Mountain', 'WO Ward', 36
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Shaw''s Mountain' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Theewater', 'WO Ward', 37
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Theewater' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Buffeljags', 'WO Ward', 38
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Buffeljags' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Malgas', 'WO Ward', 39
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Malgas' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Stormsvlei', 'WO Ward', 40
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Stormsvlei' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bot River', 'WO Ward', 41
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Bot River' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Hemel-en-Aarde Ridge', 'WO Ward', 42
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Hemel-en-Aarde Ridge' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Hemel-en-Aarde Valley', 'WO Ward', 43
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Hemel-en-Aarde Valley' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Sunday''s Glen', 'WO Ward', 44
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Sunday''s Glen' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Springfontein Rim', 'WO Ward', 45
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Springfontein Rim' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Stanford Foothills', 'WO Ward', 46
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Stanford Foothills' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Upper Hemel-en-Aarde Valley', 'WO Ward', 47
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Upper Hemel-en-Aarde Valley' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Goukou River Valley', 'WO Ward', 48
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Goukou River Valley' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Herbertsdale', 'WO Ward', 49
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Herbertsdale' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Napier', 'WO Ward', 50
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Napier' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Constantia', 'WO Ward', 51
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Constantia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Durbanville', 'WO Ward', 52
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Durbanville' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Hout Bay', 'WO Ward', 53
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Hout Bay' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Philadelphia', 'WO Ward', 54
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Philadelphia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Groenekloof', 'WO Ward', 55
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Groenekloof' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Koekenaap', 'WO Ward', 56
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Koekenaap' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Agter-Paarl', 'WO Ward', 57
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Agter-Paarl' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Simonsberg-Paarl', 'WO Ward', 58
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Simonsberg-Paarl' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Voor-Paardeberg', 'WO Ward', 59
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Voor-Paardeberg' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Banghoek', 'WO Ward', 60
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Banghoek' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bottelary', 'WO Ward', 61
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Bottelary' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Devon Valley', 'WO Ward', 62
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Devon Valley' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Jonkershoek Valley', 'WO Ward', 63
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Jonkershoek Valley' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Papegaaiberg', 'WO Ward', 64
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Papegaaiberg' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Polkadraai Hills', 'WO Ward', 65
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Polkadraai Hills' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Simonsberg-Stellenbosch', 'WO Ward', 66
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Simonsberg-Stellenbosch' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vlottenburg', 'WO Ward', 67
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Vlottenburg' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Malmesbury', 'WO Ward', 68
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Malmesbury' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Paardeberg', 'WO Ward', 69
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Paardeberg' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Paardeberg South', 'WO Ward', 70
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Paardeberg South' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Piket-Bo-Berg', 'WO Ward', 71
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Piket-Bo-Berg' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Porseleinberg', 'WO Ward', 72
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Porseleinberg' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Riebeekberg', 'WO Ward', 73
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Riebeekberg' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Riebeeksrivier', 'WO Ward', 74
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Riebeeksrivier' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'St Helena Bay', 'WO Ward', 75
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'St Helena Bay' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Blouvlei', 'WO Ward', 76
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Blouvlei' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bovlei', 'WO Ward', 77
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Bovlei' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Groenberg', 'WO Ward', 78
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Groenberg' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Limietberg', 'WO Ward', 79
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Limietberg' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Mid-Berg River', 'WO Ward', 80
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Mid-Berg River' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bamboes Bay', 'WO Ward', 81
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Bamboes Bay' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Lamberts Bay', 'WO Ward', 82
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Lamberts Bay' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Goudini', 'WO Ward', 83
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Goudini' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Slanghoek', 'WO Ward', 84
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Slanghoek' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Agterkliphoogte', 'WO Ward', 85
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Agterkliphoogte' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ashton', 'WO Ward', 86
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ashton' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Boesmansrivier', 'WO Ward', 87
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Boesmansrivier' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Bonnievale', 'WO Ward', 88
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Bonnievale' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Eilandia', 'WO Ward', 89
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Eilandia' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Goedemoed', 'WO Ward', 90
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Goedemoed' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Goree', 'WO Ward', 91
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Goree' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Goudmyn', 'WO Ward', 92
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Goudmyn' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Hoopsrivier', 'WO Ward', 93
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Hoopsrivier' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Klaasvoogds', 'WO Ward', 94
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Klaasvoogds' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Le Chasseur', 'WO Ward', 95
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Le Chasseur' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'McGregor', 'WO Ward', 96
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'McGregor' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vinkrivier', 'WO Ward', 97
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Vinkrivier' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Zandrivier', 'WO Ward', 98
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Zandrivier' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Hex River Valley', 'WO Ward', 99
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Hex River Valley' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Keeromsberg', 'WO Ward', 100
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Keeromsberg' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Moordkuil', 'WO Ward', 101
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Moordkuil' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Nuy', 'WO Ward', 102
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Nuy' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rooikrans', 'WO Ward', 103
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Rooikrans' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Scherpenheuvel', 'WO Ward', 104
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Scherpenheuvel' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Stettyn', 'WO Ward', 105
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Stettyn' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Groenfontein', 'WO Ward', 106
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Groenfontein' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cango Valley', 'WO Ward', 107
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Cango Valley' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Koo Plateau', 'WO Ward', 108
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Koo Plateau' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Montagu', 'WO Ward', 109
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Montagu' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Outeniqua', 'WO Ward', 110
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Outeniqua' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Tradouw', 'WO Ward', 111
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Tradouw' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Tradouw Highlands', 'WO Ward', 112
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Tradouw Highlands' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Upper Langkloof', 'WO Ward', 113
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Upper Langkloof' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Piekenierskloof', 'WO Ward', 114
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Piekenierskloof' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Spruitdrift', 'WO Ward', 115
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Spruitdrift' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Vredendal', 'WO Ward', 116
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Vredendal' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Ceres', 'WO Ward', 117
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Ceres' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Kweekvallei', 'WO Ward', 118
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Kweekvallei' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Prince Albert Valley', 'WO Ward', 119
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Prince Albert Valley' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Swartberg', 'WO Ward', 120
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Swartberg' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Nieuwoudtville', 'WO Ward', 121
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Nieuwoudtville' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Cederberg', 'WO Ward', 122
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Cederberg' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Leipoldtville-Sandveld', 'WO Ward', 123
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Western Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Leipoldtville-Sandveld' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
 select c.id, 'Northern Cape', 1 from public.countries c where c.name = 'South Africa'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
-insert into public.sub_regions (region_id, name, sort_order)
-select r.id, 'Orange River', 0
-from public.regions r join public.countries c on c.id = r.country_id
-where c.name = 'South Africa' and r.name = 'Northern Cape'
-on conflict (region_id, name) do update set sort_order = excluded.sort_order;
-
-insert into public.appellations (level, sub_region_id, name, type, sort_order)
-select 'sub_region', s.id, 'Orange River', 'WO Region', 0
-from public.sub_regions s
-  join public.regions r on r.id = s.region_id
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Northern Cape', 'WO Geographical Unit', 0
+from public.regions r
   join public.countries c on c.id = r.country_id
-  where c.name = 'South Africa' and r.name = 'Northern Cape' and s.name = 'Orange River'
+  where c.name = 'South Africa' and r.name = 'Northern Cape'
   and not exists (select 1 from public.appellations a
-    where a.name = 'Orange River' and a.level = 'sub_region' and a.sub_region_id = s.id);
+    where a.name = 'Northern Cape' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Karoo-Hoogland', 'WO Region', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Northern Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Karoo-Hoogland' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Sutherland-Karoo', 'WO District', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Northern Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Sutherland-Karoo' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Douglas', 'WO District', 3
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Northern Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Douglas' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Groblershoop', 'WO Ward', 4
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Northern Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Groblershoop' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Grootdrink', 'WO Ward', 5
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Northern Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Grootdrink' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Kakamas', 'WO Ward', 6
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Northern Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Kakamas' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Keimoes', 'WO Ward', 7
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Northern Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Keimoes' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Upington', 'WO Ward', 8
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Northern Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Upington' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Hartswater', 'WO Ward', 9
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Northern Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Hartswater' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Prieska', 'WO Ward', 10
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Northern Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Prieska' and a.level = 'region' and a.region_id = r.id);
 
 insert into public.regions (country_id, name, sort_order)
-select c.id, 'KwaZulu-Natal', 2 from public.countries c where c.name = 'South Africa'
+select c.id, 'Eastern Cape', 2 from public.countries c where c.name = 'South Africa'
+on conflict (country_id, name) do update set sort_order = excluded.sort_order;
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Eastern Cape', 'WO Geographical Unit', 0
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Eastern Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Eastern Cape' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'St Francis Bay', 'WO Ward', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Eastern Cape'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'St Francis Bay' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.regions (country_id, name, sort_order)
+select c.id, 'KwaZulu-Natal', 3 from public.countries c where c.name = 'South Africa'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
 insert into public.appellations (level, region_id, name, type, sort_order)
@@ -13589,6 +14483,42 @@ from public.regions r
   where c.name = 'South Africa' and r.name = 'KwaZulu-Natal'
   and not exists (select 1 from public.appellations a
     where a.name = 'KwaZulu-Natal' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Central Drakensberg', 'WO District', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'KwaZulu-Natal'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Central Drakensberg' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Lions River', 'WO District', 2
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'KwaZulu-Natal'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Lions River' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.regions (country_id, name, sort_order)
+select c.id, 'Free State', 4 from public.countries c where c.name = 'South Africa'
+on conflict (country_id, name) do update set sort_order = excluded.sort_order;
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Free State', 'WO Geographical Unit', 0
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Free State'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Free State' and a.level = 'region' and a.region_id = r.id);
+
+insert into public.appellations (level, region_id, name, type, sort_order)
+select 'region', r.id, 'Rietrivier FS', 'WO Ward', 1
+from public.regions r
+  join public.countries c on c.id = r.country_id
+  where c.name = 'South Africa' and r.name = 'Free State'
+  and not exists (select 1 from public.appellations a
+    where a.name = 'Rietrivier FS' and a.level = 'region' and a.region_id = r.id);
 
 -- ── Spain ─────────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)

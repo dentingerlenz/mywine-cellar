@@ -6,7 +6,7 @@
 > federdoc, TTB, …). Ziel laut Plan §5.3 (max. Tiefe): ~1'800–2'200 Appellationen.
 > „Offiziell" = Soll-Zahl laut Register; „Lücke" heißt erfasst < offiziell.
 
-Stand: 2026-07-16 · **51 Länder (9 verifiziert) · 1821 Appellationen**
+Stand: 2026-07-16 · **51 Länder (10 verifiziert) · 1947 Appellationen**
 
 | Land | Regionen | Sub-Regionen | Erfasst | Offiziell | Geprüft am | Status |
 |---|---|---|---|---|---|---|
@@ -52,7 +52,7 @@ Stand: 2026-07-16 · **51 Länder (9 verifiziert) · 1821 Appellationen**
 | Serbia | 3 | 2 | 3 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Slovakia | 6 | 6 | 6 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 | Slovenia | 3 | 9 | 9 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
-| South Africa | 3 | 12 | 17 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
+| South Africa | 5 | 0 | 143 | 142 | 2026-07-16 | ✅ verifiziert (SAWIS/WoSA 'Production Areas Defined in Terms of the Wine of Origin Scheme' (Feb 2026, User-PDF). Flach je Geographical Unit; WO-Regionen/Districts/Wards als Appellationen mit Typ-Badge. Subregionen als Ebene weggelassen; bilinguale Namen → Englisch.) |
 | Spain | 17 | 0 | 149 | 149 | 2026-07-14 | ✅ verifiziert (MAPA Listado de DOP e IGP de vinos registradas en la UE (act. 02.07.2026)) |
 | Switzerland | 6 | 0 | 63 | 63 | 2026-07-14 | ✅ verifiziert (BLW/OFAG Schweizerisches Verzeichnis der kontrollierten Ursprungsbezeichnungen (AOC), Stand 1.1.2026) |
 | Thailand | 2 | 2 | 2 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
@@ -62,4 +62,4 @@ Stand: 2026-07-16 · **51 Länder (9 verifiziert) · 1821 Appellationen**
 | United States | 30 | 0 | 279 | 279 | 2026-07-16 | ✅ verifiziert (TTB Established American Viticultural Areas (ttb.gov/regulated-commodities/beverage-alcohol/wine/established-avas), Stand 29.04.2026: 279 AVAs (261 Single-State + 18 Multi-State). Flach je Bundesstaat; Multi-State-AVAs am Primärstaat. Sub-AVA-Verschachtelung nicht abgebildet (alle AVAs als Region-Appellationen).) |
 | Uruguay | 5 | 0 | 5 | — | — | ⚪ unverifiziert (v1-Übernahme / Modellwissen) |
 
-| **Gesamt** | **288** | **264** | **1821** | | | |
+| **Gesamt** | **290** | **252** | **1947** | | | |

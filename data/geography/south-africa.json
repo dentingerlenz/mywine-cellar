@@ -2,6 +2,12 @@
   "country": "South Africa",
   "code": "ZA",
   "continent": "Africa",
+  "verified": true,
+  "sources": [
+    "SAWIS/WoSA 'Production Areas Defined in Terms of the Wine of Origin Scheme' (Feb 2026, User-PDF). Flach je Geographical Unit; WO-Regionen/Districts/Wards als Appellationen mit Typ-Badge. Subregionen als Ebene weggelassen; bilinguale Namen → Englisch."
+  ],
+  "officialCount": 142,
+  "verifiedOn": "2026-07-16",
   "appellations": [
     {
       "name": "Wine of Origin",
@@ -14,130 +20,561 @@
       "appellations": [
         {
           "name": "Western Cape",
-          "type": "WO"
-        }
-      ],
-      "subRegions": [
-        {
-          "name": "Stellenbosch",
-          "appellations": [
-            {
-              "name": "Stellenbosch",
-              "type": "WO District"
-            }
-          ]
+          "type": "WO Geographical Unit"
         },
         {
-          "name": "Franschhoek",
-          "appellations": [
-            {
-              "name": "Franschhoek",
-              "type": "WO Ward"
-            }
-          ]
+          "name": "Coastal Region",
+          "type": "WO Region"
         },
         {
-          "name": "Paarl",
-          "appellations": [
-            {
-              "name": "Paarl",
-              "type": "WO District"
-            }
-          ]
+          "name": "Cape South Coast",
+          "type": "WO Region"
         },
         {
-          "name": "Swartland",
-          "appellations": [
-            {
-              "name": "Swartland",
-              "type": "WO District"
-            }
-          ]
+          "name": "Breede River Valley",
+          "type": "WO Region"
         },
         {
-          "name": "Constantia",
-          "appellations": [
-            {
-              "name": "Constantia",
-              "type": "WO Ward"
-            }
-          ]
+          "name": "Klein Karoo",
+          "type": "WO Region"
+        },
+        {
+          "name": "Olifants River",
+          "type": "WO Region"
+        },
+        {
+          "name": "Cape Agulhas",
+          "type": "WO District"
         },
         {
           "name": "Elgin",
-          "appellations": [
-            {
-              "name": "Elgin",
-              "type": "WO Ward"
-            }
-          ]
+          "type": "WO District"
         },
         {
-          "name": "Walker Bay",
-          "appellations": [
-            {
-              "name": "Walker Bay",
-              "type": "WO District"
-            },
-            {
-              "name": "Hemel-en-Aarde Valley",
-              "type": "WO Ward"
-            }
-          ]
+          "name": "Lower Duivenhoks River",
+          "type": "WO District"
         },
         {
           "name": "Overberg",
-          "appellations": [
-            {
-              "name": "Overberg",
-              "type": "WO District"
-            },
-            {
-              "name": "Elim",
-              "type": "WO Ward"
-            }
-          ]
+          "type": "WO District"
         },
         {
-          "name": "Robertson",
-          "appellations": [
-            {
-              "name": "Robertson",
-              "type": "WO District"
-            }
-          ]
+          "name": "Plettenberg Bay",
+          "type": "WO District"
         },
         {
-          "name": "Worcester",
-          "appellations": [
-            {
-              "name": "Worcester",
-              "type": "WO District"
-            }
-          ]
+          "name": "Swellendam",
+          "type": "WO District"
+        },
+        {
+          "name": "Walker Bay",
+          "type": "WO District"
+        },
+        {
+          "name": "Still Bay",
+          "type": "WO District"
+        },
+        {
+          "name": "Cape Town",
+          "type": "WO District"
+        },
+        {
+          "name": "Darling",
+          "type": "WO District"
+        },
+        {
+          "name": "Franschhoek",
+          "type": "WO District"
+        },
+        {
+          "name": "Lutzville Valley",
+          "type": "WO District"
+        },
+        {
+          "name": "Paarl",
+          "type": "WO District"
+        },
+        {
+          "name": "Stellenbosch",
+          "type": "WO District"
+        },
+        {
+          "name": "Swartland",
+          "type": "WO District"
+        },
+        {
+          "name": "Tulbagh",
+          "type": "WO District"
+        },
+        {
+          "name": "Wellington",
+          "type": "WO District"
         },
         {
           "name": "Breedekloof",
-          "appellations": [
-            {
-              "name": "Breedekloof",
-              "type": "WO District"
-            }
-          ]
+          "type": "WO District"
+        },
+        {
+          "name": "Robertson",
+          "type": "WO District"
+        },
+        {
+          "name": "Worcester",
+          "type": "WO District"
+        },
+        {
+          "name": "Calitzdorp",
+          "type": "WO District"
+        },
+        {
+          "name": "Langeberg-Garcia",
+          "type": "WO District"
+        },
+        {
+          "name": "Citrusdal Mountain",
+          "type": "WO District"
+        },
+        {
+          "name": "Citrusdal Valley",
+          "type": "WO District"
+        },
+        {
+          "name": "Ceres Plateau",
+          "type": "WO District"
+        },
+        {
+          "name": "Prince Albert",
+          "type": "WO District"
+        },
+        {
+          "name": "Elim",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Elandskloof",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Greyton",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Klein River",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Shaw's Mountain",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Theewater",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Buffeljags",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Malgas",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Stormsvlei",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Bot River",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Hemel-en-Aarde Ridge",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Hemel-en-Aarde Valley",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Sunday's Glen",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Springfontein Rim",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Stanford Foothills",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Upper Hemel-en-Aarde Valley",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Goukou River Valley",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Herbertsdale",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Napier",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Constantia",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Durbanville",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Hout Bay",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Philadelphia",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Groenekloof",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Koekenaap",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Agter-Paarl",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Simonsberg-Paarl",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Voor-Paardeberg",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Banghoek",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Bottelary",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Devon Valley",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Jonkershoek Valley",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Papegaaiberg",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Polkadraai Hills",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Simonsberg-Stellenbosch",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Vlottenburg",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Malmesbury",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Paardeberg",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Paardeberg South",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Piket-Bo-Berg",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Porseleinberg",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Riebeekberg",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Riebeeksrivier",
+          "type": "WO Ward"
+        },
+        {
+          "name": "St Helena Bay",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Blouvlei",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Bovlei",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Groenberg",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Limietberg",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Mid-Berg River",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Bamboes Bay",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Lamberts Bay",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Goudini",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Slanghoek",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Agterkliphoogte",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Ashton",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Boesmansrivier",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Bonnievale",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Eilandia",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Goedemoed",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Goree",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Goudmyn",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Hoopsrivier",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Klaasvoogds",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Le Chasseur",
+          "type": "WO Ward"
+        },
+        {
+          "name": "McGregor",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Vinkrivier",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Zandrivier",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Hex River Valley",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Keeromsberg",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Moordkuil",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Nuy",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Rooikrans",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Scherpenheuvel",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Stettyn",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Groenfontein",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Cango Valley",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Koo Plateau",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Montagu",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Outeniqua",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Tradouw",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Tradouw Highlands",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Upper Langkloof",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Piekenierskloof",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Spruitdrift",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Vredendal",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Ceres",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Kweekvallei",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Prince Albert Valley",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Swartberg",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Nieuwoudtville",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Cederberg",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Leipoldtville-Sandveld",
+          "type": "WO Ward"
         }
       ]
     },
     {
       "name": "Northern Cape",
-      "subRegions": [
+      "appellations": [
         {
-          "name": "Orange River",
-          "appellations": [
-            {
-              "name": "Orange River",
-              "type": "WO Region"
-            }
-          ]
+          "name": "Northern Cape",
+          "type": "WO Geographical Unit"
+        },
+        {
+          "name": "Karoo-Hoogland",
+          "type": "WO Region"
+        },
+        {
+          "name": "Sutherland-Karoo",
+          "type": "WO District"
+        },
+        {
+          "name": "Douglas",
+          "type": "WO District"
+        },
+        {
+          "name": "Groblershoop",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Grootdrink",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Kakamas",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Keimoes",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Upington",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Hartswater",
+          "type": "WO Ward"
+        },
+        {
+          "name": "Prieska",
+          "type": "WO Ward"
+        }
+      ]
+    },
+    {
+      "name": "Eastern Cape",
+      "appellations": [
+        {
+          "name": "Eastern Cape",
+          "type": "WO Geographical Unit"
+        },
+        {
+          "name": "St Francis Bay",
+          "type": "WO Ward"
         }
       ]
     },
@@ -147,6 +584,27 @@
         {
           "name": "KwaZulu-Natal",
           "type": "WO Geographical Unit"
+        },
+        {
+          "name": "Central Drakensberg",
+          "type": "WO District"
+        },
+        {
+          "name": "Lions River",
+          "type": "WO District"
+        }
+      ]
+    },
+    {
+      "name": "Free State",
+      "appellations": [
+        {
+          "name": "Free State",
+          "type": "WO Geographical Unit"
+        },
+        {
+          "name": "Rietrivier FS",
+          "type": "WO Ward"
         }
       ]
     }
