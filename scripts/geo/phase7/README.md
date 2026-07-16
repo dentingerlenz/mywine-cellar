@@ -16,11 +16,12 @@ gesichert. Der maßgebliche Datenstand liegt in `data/geography/*.json`.
 | Österreich | 27 | ÖWM „Wein aus Österreich" 11/2025 (DAC + generische Gebiete) | ✅ live |
 | Deutschland | 66 | Weingesetz/Weinverordnung: 13 Anbaugebiete (g.U.) + 41 Bereiche + Landwein (recherchiert, kein amtliches PDF) | ⏳ committet |
 | Neuseeland | 19 | IPONZ GI-Register (wine): 10 regionale + 9 lokale GIs (IP 1004–1028) | ⏳ committet |
+| Portugal | 44 | eAmbrosia (EU-GI-Register), Extrakt PT/wine: 30 DOP + 14 IGP | ⏳ committet |
 
-**Offener Deploy-Batch:** Migrationen `2026071609…` (DE) + `…10…` (NZ) sind
-committet + lokal verifiziert (Konvergenz + Wein-Erhalt), aber noch NICHT auf Prod.
-FR/IT/CH/ES/AT sind bereits live. (DE-Frontend/VDP-Klassifikation ist bereits
-gepusht → Vercel; nur die DE+NZ-DB-Migrationen warten auf den gebündelten Push.)
+**Offener Deploy-Batch:** Migrationen `2026071609…` (DE) + `…10…` (NZ) + `…11…` (PT)
+sind committet + lokal verifiziert (Konvergenz + Wein-Erhalt); Deploy erfolgt jetzt
+gebündelt. FR/IT/CH/ES/AT sind bereits live. (DE-Frontend/VDP-Klassifikation ist
+bereits gepusht → Vercel.)
 
 **Deutschland-Besonderheit:** Einzellagen/Grosslagen sind bewusst KEINE Geografie
 → die konkrete Lage steht im Freitextfeld „Location". Die VDP-Klassifikationsstufen
@@ -36,7 +37,13 @@ als Geschwister-Appellationen unter ihrer Region, alle Typ „GI". Nicht-registr
 informelle Sub-Regionen (Wairau Valley, Southern Valleys, Awatere …) sind KEINE GI
 → Migration hängt solche Bestandsweine ins „Location"-Feld um (wie DE Mittelmosel).
 
-**Reihenfolge weiter:** PT, dann Rest-Kernländer (ZA, GR, US, AU, CL, AR …).
+**Portugal-Besonderheit:** Quelle eAmbrosia (EU-Register) liefert nur Name + PDO/PGI,
+keine Region → Regionsgruppierung = etablierte portug. Weinregion-Struktur (11 Regionen).
+Romanische Diakritika → ASCII (Konvention wie ES/FR). Douro-Unterzonen ohne eigene DOP
+(Douro Superior …) → Migration hängt sie ins „Location"-Feld, AUCH wenn der Wein die
+DOP „Douro" behält (verfeinerter Erhalt-Schritt: Sub ins Location wenn ≠ Appellation).
+
+**Reihenfolge weiter:** Rest-Kernländer (ZA, GR, US, AU, CL, AR …).
 
 ## Workflow pro Land (identisch, wiederholbar)
 

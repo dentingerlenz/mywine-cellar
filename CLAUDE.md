@@ -35,7 +35,7 @@ halten, Klick-Anleitungen für Dashboard-Schritte geben.
 - **Geografie**: globale Referenztabellen `countries/regions/sub_regions/appellations`
   (4-Ebenen, FKs an `wines`). Quelle = **`data/geography/*.json`** (1 Datei/Land),
   kompiliert per `npm run geo:build` → `supabase/seed.sql` + `COVERAGE.md`. Aktuell
-  51 Länder / **~1593 Appellationen** (Phase 7 läuft, s. u.). Der Validator in
+  51 Länder / **~1606 Appellationen** (Phase 7 läuft, s. u.). Der Validator in
   `build-seed.js` erzwingt harte Invarianten (keine Typ-Präfixe im Namen, keine
   In-Land-Duplikate außer `MULTI_ANCHOR`, keine eponyme Einzel-Sub, kein `’`) und
   warnt bei Typen außerhalb `KNOWN_TYPES`. **Picker-Logik** (Land→Region→Sub→
@@ -47,12 +47,11 @@ Ziel: jede relevante Appellation aus **offiziellen Registern** (nicht Wikipedia)
 Land für Land. Voller Workflow + wiederverwendbare Skripte:
 **`scripts/geo/phase7/README.md`** (dort auch der Deploy-Befehl). Auto-Memory
 `rebuild-decisions.md` = laufendes Detail-Log.
-- **Fertig & verifiziert:** FR 351 · IT 522 · CH 63 · ES 149 · AT 27 · DE 66 · NZ 19
+- **Fertig & verifiziert:** FR 351 · IT 522 · CH 63 · ES 149 · AT 27 · DE 66 · NZ 19 · PT 44
   (`verified:true` + `officialCount` + `verifiedOn` + `sources` je JSON).
-- **Prod:** FR/IT/CH/ES/AT sind **live deployed**. **DE + NZ: Migrationen committet +
-  lokal verifiziert, aber NOCH NICHT deployed** (Deploy gebündelt; DE-Frontend/VDP-
-  Klassifikation ist bereits live gepusht, nur die DE+NZ-DB-Migrationen warten).
-- **Muster flaches Land** (IT/CH/ES/AT/DE/NZ): Region = offizielles Weingebiet/Verwaltungs-
+- **Prod:** FR/IT/CH/ES/AT sind **live deployed**. **DE + NZ + PT: Migrationen committet +
+  lokal verifiziert; Deploy erfolgt gebündelt** (DE-Frontend/VDP-Klassifikation ist bereits live gepusht).
+- **Muster flaches Land** (IT/CH/ES/AT/DE/NZ/PT): Region = offizielles Weingebiet/Verwaltungs-
   gebiet, Appellationen flach, Migration via `scripts/geo/phase7/gen_flat_migration.py`
   (hängt alte Sub-Region-Weine auf gleichnamige neue Appellation um; Frankreich mit
   Sub-Regionen → `gen_fr_migration.py`). Jede Migration lokal per **Konvergenz-Test**

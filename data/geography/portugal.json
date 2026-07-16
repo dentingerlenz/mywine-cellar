@@ -2,6 +2,12 @@
   "country": "Portugal",
   "code": "PT",
   "continent": "Europe",
+  "verified": true,
+  "sources": [
+    "eAmbrosia (EU-GI-Register), Extrakt Portugal/wine: 44 registrierte GIs (30 DOP/PDO + 14 IGP/PGI, PDO-PT-/PGI-PT-*). Regionszuordnung = etablierte portugiesische Weinregion-Struktur. Stand 2026-07 (User-Datei)."
+  ],
+  "officialCount": 44,
+  "verifiedOn": "2026-07-16",
   "appellations": [
     {
       "name": "Vinho",
@@ -10,119 +16,86 @@
   ],
   "regions": [
     {
+      "name": "Minho",
+      "appellations": [
+        {
+          "name": "Minho",
+          "type": "IGP"
+        },
+        {
+          "name": "Vinho Verde",
+          "type": "DOP"
+        }
+      ]
+    },
+    {
       "name": "Douro",
       "appellations": [
         {
           "name": "Douro",
-          "type": "DOC"
+          "type": "DOP"
         },
         {
-          "name": "Vinho do Porto",
-          "type": "DOC"
-        }
-      ],
-      "subRegions": [
-        {
-          "name": "Douro Superior"
+          "name": "Porto",
+          "type": "DOP"
         },
         {
-          "name": "Cima Corgo"
-        },
-        {
-          "name": "Baixo Corgo"
+          "name": "Duriense",
+          "type": "IGP"
         }
       ]
     },
     {
-      "name": "Vinho Verde",
+      "name": "Tras-os-Montes",
       "appellations": [
         {
-          "name": "Minho",
-          "type": "VR"
+          "name": "Tras-os-Montes",
+          "type": "DOP"
         },
         {
-          "name": "Vinho Verde",
-          "type": "DOC"
-        }
-      ],
-      "subRegions": [
-        {
-          "name": "Minho"
-        },
-        {
-          "name": "Moncao e Melgaco"
+          "name": "Transmontano",
+          "type": "IGP"
         }
       ]
     },
     {
-      "name": "Dao",
+      "name": "Beiras",
       "appellations": [
-        {
-          "name": "Beiras",
-          "type": "VR"
-        },
         {
           "name": "Dao",
-          "type": "DOC"
-        }
-      ]
-    },
-    {
-      "name": "Bairrada",
-      "appellations": [
-        {
-          "name": "Beiras",
-          "type": "VR"
+          "type": "DOP"
         },
         {
           "name": "Bairrada",
-          "type": "DOC"
-        }
-      ]
-    },
-    {
-      "name": "Alentejo",
-      "appellations": [
-        {
-          "name": "Alentejano",
-          "type": "VR"
+          "type": "DOP"
         },
         {
-          "name": "Alentejo",
-          "type": "DOC"
-        }
-      ]
-    },
-    {
-      "name": "Peninsula de Setubal",
-      "appellations": [
-        {
-          "name": "Peninsula de Setubal",
-          "type": "VR"
-        }
-      ],
-      "subRegions": [
-        {
-          "name": "Palmela",
-          "appellations": [
-            {
-              "name": "Palmela",
-              "type": "DOC"
-            }
-          ]
+          "name": "Beira Interior",
+          "type": "DOP"
         },
         {
-          "name": "Setubal",
-          "appellations": [
-            {
-              "name": "Moscatel de Setubal",
-              "type": "DOC"
-            },
-            {
-              "name": "Arrabida",
-              "type": "DOC"
-            }
-          ]
+          "name": "Lafoes",
+          "type": "DOP"
+        },
+        {
+          "name": "Tavora-Varosa",
+          "type": "DOP"
+        },
+        {
+          "name": "Beira Atlantico",
+          "type": "IGP"
+        },
+        {
+          "name": "Terras da Beira",
+          "type": "IGP"
+        },
+        {
+          "name": "Terras do Dao",
+          "type": "IGP"
+        },
+        {
+          "name": "Terras de Cister",
+          "type": "IGP"
         }
       ]
     },
@@ -131,36 +104,39 @@
       "appellations": [
         {
           "name": "Lisboa",
-          "type": "VR"
-        }
-      ],
-      "subRegions": [
-        {
-          "name": "Bucelas",
-          "appellations": [
-            {
-              "name": "Bucelas",
-              "type": "DOC"
-            }
-          ]
+          "type": "IGP"
         },
         {
-          "name": "Colares",
-          "appellations": [
-            {
-              "name": "Colares",
-              "type": "DOC"
-            }
-          ]
+          "name": "Alenquer",
+          "type": "DOP"
+        },
+        {
+          "name": "Arruda",
+          "type": "DOP"
+        },
+        {
+          "name": "Bucelas",
+          "type": "DOP"
         },
         {
           "name": "Carcavelos",
-          "appellations": [
-            {
-              "name": "Carcavelos",
-              "type": "DOC"
-            }
-          ]
+          "type": "DOP"
+        },
+        {
+          "name": "Colares",
+          "type": "DOP"
+        },
+        {
+          "name": "Encostas d'Aire",
+          "type": "DOP"
+        },
+        {
+          "name": "Obidos",
+          "type": "DOP"
+        },
+        {
+          "name": "Torres Vedras",
+          "type": "DOP"
         }
       ]
     },
@@ -168,8 +144,42 @@
       "name": "Tejo",
       "appellations": [
         {
+          "name": "Do Tejo",
+          "type": "DOP"
+        },
+        {
           "name": "Tejo",
-          "type": "VR"
+          "type": "IGP"
+        }
+      ]
+    },
+    {
+      "name": "Peninsula de Setubal",
+      "appellations": [
+        {
+          "name": "Setubal",
+          "type": "DOP"
+        },
+        {
+          "name": "Palmela",
+          "type": "DOP"
+        },
+        {
+          "name": "Peninsula de Setubal",
+          "type": "IGP"
+        }
+      ]
+    },
+    {
+      "name": "Alentejo",
+      "appellations": [
+        {
+          "name": "Alentejo",
+          "type": "DOP"
+        },
+        {
+          "name": "Alentejano",
+          "type": "IGP"
         }
       ]
     },
@@ -178,50 +188,23 @@
       "appellations": [
         {
           "name": "Algarve",
-          "type": "VR"
-        },
-        {
-          "name": "Lagos",
-          "type": "DOC"
-        },
-        {
-          "name": "Portimao",
-          "type": "DOC"
+          "type": "IGP"
         },
         {
           "name": "Lagoa",
-          "type": "DOC"
+          "type": "DOP"
+        },
+        {
+          "name": "Lagos",
+          "type": "DOP"
+        },
+        {
+          "name": "Portimao",
+          "type": "DOP"
         },
         {
           "name": "Tavira",
-          "type": "DOC"
-        }
-      ]
-    },
-    {
-      "name": "Beiras",
-      "subRegions": [
-        {
-          "name": "Beira Interior",
-          "appellations": [
-            {
-              "name": "Beira Interior",
-              "type": "DOC"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Tras-os-Montes",
-      "appellations": [
-        {
-          "name": "Transmontano",
-          "type": "VR"
-        },
-        {
-          "name": "Tras-os-Montes",
-          "type": "IG"
+          "type": "DOP"
         }
       ]
     },
@@ -229,40 +212,37 @@
       "name": "Madeira",
       "appellations": [
         {
-          "name": "Vinho da Madeira",
-          "type": "DOC"
+          "name": "Madeira",
+          "type": "DOP"
+        },
+        {
+          "name": "Madeirense",
+          "type": "DOP"
+        },
+        {
+          "name": "Terras Madeirenses",
+          "type": "IGP"
         }
       ]
     },
     {
       "name": "Acores",
-      "subRegions": [
+      "appellations": [
         {
-          "name": "Pico",
-          "appellations": [
-            {
-              "name": "Pico",
-              "type": "DOC"
-            }
-          ]
+          "name": "Acores",
+          "type": "IGP"
         },
         {
           "name": "Biscoitos",
-          "appellations": [
-            {
-              "name": "Biscoitos",
-              "type": "DOC"
-            }
-          ]
+          "type": "DOP"
         },
         {
           "name": "Graciosa",
-          "appellations": [
-            {
-              "name": "Graciosa",
-              "type": "DOC"
-            }
-          ]
+          "type": "DOP"
+        },
+        {
+          "name": "Pico",
+          "type": "DOP"
         }
       ]
     }
