@@ -17,14 +17,12 @@ gesichert. Der maßgebliche Datenstand liegt in `data/geography/*.json`.
 | Deutschland | 66 | Weingesetz/Weinverordnung: 13 Anbaugebiete (g.U.) + 41 Bereiche + Landwein (recherchiert, kein amtliches PDF) | ✅ live |
 | Neuseeland | 19 | IPONZ GI-Register (wine): 10 regionale + 9 lokale GIs (IP 1004–1028) | ✅ live |
 | Portugal | 44 | eAmbrosia (EU-GI-Register), Extrakt PT/wine: 30 DOP + 14 IGP | ✅ live |
-| USA | 279 | TTB Established AVAs (Stand 29.04.2026): 261 Single-State + 18 Multi-State | ⏳ committet |
+| USA | 279 | TTB Established AVAs (Stand 29.04.2026): 261 Single-State + 18 Multi-State | ✅ live |
 
-**Deploy-Historie:** DE + NZ + PT wurden am 2026-07-16 gebündelt deployed
-(`supabase db push --include-all` über Session-Pooler): Prod apps 1545→1606, 0
-verwaiste FKs, 0 Weine verloren. FR/IT/CH/ES/AT/DE/NZ/PT sind live.
-
-**Offener Deploy-Batch:** Migration `2026071612…` (USA, 279 AVAs) ist committet +
-lokal verifiziert (Konvergenz + Wein-Erhalt), Deploy noch offen.
+**Kein offener Deploy-Batch.** Deploy-Historie 2026-07-16: DE+NZ+PT gebündelt
+(apps 1545→1606), dann USA (`…120000`, apps 1606→1821, US 279 AVAs / 30 Regionen,
+0 verwaiste FKs, 0 Weine verloren). **9 Kernländer FR/IT/CH/ES/AT/DE/NZ/PT/US live
+& verifiziert.**
 
 **Deutschland-Besonderheit:** Einzellagen/Grosslagen sind bewusst KEINE Geografie
 → die konkrete Lage steht im Freitextfeld „Location". Die VDP-Klassifikationsstufen
