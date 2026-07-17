@@ -16,7 +16,7 @@ import { AlertTriangle, Loader2 } from "lucide-react";
 import {
   type Wine, type WineInput, wineSchema, OCCASIONS, OCCASION_LABEL,
   SIZE_ML_OPTIONS, DOSAGE_LEVELS, CLASSIFICATION_SUGGESTIONS,
-  findDuplicates, dateToMonthYear, monthsOnLees,
+  findDuplicates, dateToMonthYear, monthsOnLees, parseDosageInput,
 } from "@/features/wines/model";
 import { useUpsertWine, useWines, uploadLabelPhoto, labelPhotoUrl } from "@/features/wines/queries";
 import { useColours, useColourLookup } from "@/features/colours/queries";
@@ -160,21 +160,26 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     };
     setIfPresent("producer", parsed.producer);
     setIfPresent("name", parsed.name);
-    if (parsed.vintage && /^\d{4}$/.test(String(parsed.vintage))) {
-      setIfPresent("vintage", Number(parsed.vintage));
-    } else if (parsed.vintage && /^nv/i.test(String(parsed.vintage))) {
-      setValue("is_non_vintage", true);
+    // Jahrgang: Zahl → vintage; NV-Flag toggelt Schaumwein/Solera (leert vintage).
+    if (typeof parsed.vintage === "number" && Number.isFinite(parsed.vintage)) {
+      setValue("vintage", parsed.vintage, { shouldValidate: true });
     }
-    setIfPresent("variety", parsed.grape_varieties);
-    setIfPresent("dosage_level", parsed.dosage);
+    if (parsed.is_non_vintage) {
+      setValue("is_non_vintage", true);
+      setValue("vintage", null);
+    }
+    setIfPresent("variety", parsed.variety);
+    setIfPresent("classification", parsed.classification);
     setIfPresent("notes", parsed.notes);
-    setIfPresent("ready_from", parsed.ready_from); // V8 — ab Edge Function v2
+    setIfPresent("ready_from", parsed.ready_from); // V8 — KI-Trinkfenster
     setIfPresent("drink_by", parsed.drink_by);
+    setIfPresent("alcohol_pct", parsed.alcohol_pct);
 
-    const alc = parsed.alcohol;
-    if (alc !== null && alc !== undefined && alc !== "") {
-      const n = typeof alc === "number" ? alc : parseFloat(String(alc).replace(",", ".").replace(/[^\d.]/g, ""));
-      if (!Number.isNaN(n)) setValue("alcohol_pct", n, { shouldValidate: true });
+    // Dosage: „Brut" (Stufe) vs. „3" (g/L) über den geteilten Helfer trennen.
+    if (parsed.dosage != null && String(parsed.dosage).trim() !== "") {
+      const { dosage_level, dosage_gl } = parseDosageInput(parsed.dosage);
+      if (dosage_level) setValue("dosage_level", dosage_level, { shouldValidate: true });
+      if (dosage_gl != null) setValue("dosage_gl", dosage_gl, { shouldValidate: true });
     }
 
     // Geo-Namen → FK-IDs über den geteilten Resolver

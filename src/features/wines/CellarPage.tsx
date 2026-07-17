@@ -9,6 +9,7 @@ import { WineCard } from "./components/WineCard";
 import { WineListRow } from "./components/WineListRow";
 import { WineDetailDialog } from "./components/WineDetailDialog";
 import { OpenBottleDialog } from "./components/OpenBottleDialog";
+import { SommelierDialog } from "./components/SommelierDialog";
 import { Dashboard } from "./components/Dashboard";
 import { FilterBar, applyFilters, emptyFilters, type Filters, type SortKey, type GeoNames } from "./components/FilterBar";
 import { WineFormDialog } from "@/features/wine-form/WineFormDialog";
@@ -18,7 +19,7 @@ import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import {
   Plus, LogOut, Wine as WineIcon, Upload, LayoutGrid, List,
-  Settings as SettingsIcon, BookOpen,
+  Settings as SettingsIcon, BookOpen, Sparkles,
 } from "lucide-react";
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
@@ -39,6 +40,7 @@ export default function CellarPage() {
   const [detail, setDetail] = useState<Wine | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<Wine | null>(null);
   const [openingBottle, setOpeningBottle] = useState<Wine | null>(null);
+  const [sommelierOpen, setSommelierOpen] = useState(false);
 
   const geoNames: GeoNames = useMemo(
     () => ({
@@ -108,6 +110,15 @@ export default function CellarPage() {
               <Link to="/import">
                 <Upload className="w-4 h-4" /> <span className="hidden sm:inline">Import</span>
               </Link>
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="sm:size-auto sm:px-3 text-primary"
+              onClick={() => setSommelierOpen(true)}
+              title="Sommelier"
+            >
+              <Sparkles className="w-4 h-4" /> <span className="hidden sm:inline">Sommelier</span>
             </Button>
             <Button onClick={onAdd} size="icon" className="sm:size-auto sm:px-3" title="Add bottle">
               <Plus className="w-4 h-4" /> <span className="hidden sm:inline">Add bottle</span>
@@ -244,6 +255,13 @@ export default function CellarPage() {
       </main>
 
       <WineFormDialog open={formOpen} onOpenChange={setFormOpen} wine={editing} />
+
+      <SommelierDialog
+        open={sommelierOpen}
+        onOpenChange={setSommelierOpen}
+        wines={wines}
+        onSelectWine={(w) => setDetail(w)}
+      />
 
       <OpenBottleDialog
         wine={openingBottle}

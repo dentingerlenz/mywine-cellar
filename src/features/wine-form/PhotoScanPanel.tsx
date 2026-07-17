@@ -6,20 +6,23 @@ import { supabase } from "@/integrations/supabase/client";
 
 const MAX_PHOTO_SIZE = 5 * 1024 * 1024;
 
+// Spiegelt das `extract_label`-Tool-Schema der Edge Function v2 (Phase 6).
 export type ScanResult = {
   producer?: string | null;
   name?: string | null;
-  vintage?: string | null;
+  vintage?: number | null;
+  is_non_vintage?: boolean | null;
   country?: string | null;
   region?: string | null;
   sub_region?: string | null;
   appellation?: string | null;
-  grape_varieties?: string | null;
-  alcohol?: string | number | null;
+  classification?: string | null;
+  variety?: string | null;
+  alcohol_pct?: number | null;
   dosage?: string | null;
-  notes?: string | null;
-  ready_from?: number | null; // V8 — kommt mit Edge Function v2 (Phase 6)
+  ready_from?: number | null; // V8 — KI-Trinkfenster
   drink_by?: number | null;
+  notes?: string | null;
 };
 
 export type PhotoState = {
@@ -82,11 +85,8 @@ export const PhotoScanPanel = ({
       if (error) throw error;
       if (!data?.success) throw new Error(data?.error ?? "Scan failed");
 
-      let parsed: unknown = data.content;
-      if (typeof parsed === "string") {
-        parsed = JSON.parse(parsed.replace(/```json\s*|\s*```/g, "").trim());
-      }
-      onScanResult(parsed as ScanResult);
+      // Edge Function v2 liefert bereits validiertes JSON (forced tool-use).
+      onScanResult(data.data as ScanResult);
       toast.success("Label scanned ✓");
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Could not scan label");

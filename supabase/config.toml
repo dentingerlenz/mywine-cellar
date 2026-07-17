@@ -371,6 +371,12 @@ authorization_url_path = "/oauth/consent"
 # Allow dynamic client registration
 allow_dynamic_registration = false
 
+# Edge Functions. verify_jwt=true (the default) is the hard auth gate for
+# claude-assistant: unauthenticated calls are rejected by the platform before
+# our code runs. Stated explicitly here as self-documentation.
+[functions.claude-assistant]
+verify_jwt = true
+
 [edge_runtime]
 enabled = true
 # Supported request policies: `oneshot`, `per_worker`.
