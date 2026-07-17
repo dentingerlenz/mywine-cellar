@@ -10,8 +10,8 @@ halten, Klick-Anleitungen für Dashboard-Schritte geben.
 - **`docs/REBUILD_PLAN.md`** — der große Neuaufbau-Plan (Phasen 0–9), Schema-DDL,
   Feature-Backlog (Anhang C), Umsetzungs-Log (Anhang D). **Vor Rebuild-Arbeit lesen.**
 - **`.claude/plans/phase-6-ki-plan.md`** — Plan für Phase 6 (KI: Edge Function v2 +
-  Etiketten-Scan-Fix + V7 Sommelier + V8 Trinkfenster). **IMPLEMENTIERT** (commit
-  `cfd6d48`); Rest = Deploy (Secret + `functions deploy`) auf Abruf, s. u.
+  Etiketten-Scan-Fix + V7 Sommelier + V8 Trinkfenster). **IMPLEMENTIERT + LIVE**
+  (commit `cfd6d48`, deployed + gepusht 2026-07-17). Details s. „Bekannte offene Punkte".
 - **`.claude/plans/bevor-mit-phase-6-*.md`** — älter: Go-Live-Rollout-Plan.
 - Auto-Memory (`~/.claude/projects/.../memory/rebuild-decisions.md`) — laufendes
   Entscheidungs-/Status-Log über Sessions hinweg.
@@ -129,15 +129,17 @@ Land für Land. Voller Workflow + wiederverwendbare Skripte:
 `npm run build` · `npm test`. Commit-Messages auf Englisch, pro logischer Einheit.
 
 ## Bekannte offene Punkte
-- **KI (Phase 6) CODE FERTIG (commit `cfd6d48`), aber NOCH NICHT deployed.** Die Edge
-  Function `supabase/functions/claude-assistant` ist v2 (Auth via `verify_jwt`+JWT,
-  Secret `ANTHROPIC_API_KEY`, Modell `claude-sonnet-5`, forced tool-use Scan + V8
-  Trinkfenster + V7 Sommelier). **Damit die KI live geht, muss der User (auf Abruf):**
-  1) den Secret setzen — `node_modules/.bin/supabase secrets set ANTHROPIC_API_KEY=<key>
-  --project-ref czmjxsojbomkqtluzhru` (Key NIE committen), 2) deployen —
+- **KI (Phase 6) LIVE seit 2026-07-17** (commit `cfd6d48`, deployed + gepusht). Edge
+  Function `claude-assistant` v2 auf Prod (`verify_jwt`+JWT-Auth, Secret
+  `ANTHROPIC_API_KEY` vom User gesetzt, Modell `claude-sonnet-5`, forced tool-use Scan +
+  V8 Trinkfenster + V7 Sommelier). Deploy-Befehl (bei Änderungen):
   `node_modules/.bin/supabase functions deploy claude-assistant --project-ref
-  czmjxsojbomkqtluzhru`, 3) `git push` (frischer PAT). Bis dahin wirft der Scan
-  „AI is not configured yet".
+  czmjxsojbomkqtluzhru` (braucht `supabase login` + Docker fürs edge-runtime-Image).
+  Auth-Gate per curl verifiziert (ohne Header → 401; anon-Key ohne User → „Please sign
+  in first", kein API-Call). Modell per Secret `ANTHROPIC_MODEL` überschreibbar
+  (`claude-haiku-4-5` = billiger). API-Key = EIN Projekt-Secret, Kosten laufen über den
+  Owner-Account. Supabase-MCP lokal in `.mcp.json` konfiguriert (nicht committet; braucht
+  `claude /mcp`→Authenticate + neue Session).
 - 3 Weine (GR/HU/CY) haben leeres Regionsfeld (Datenfehler in Originaldaten:
   Produzentenname/Ländercode statt Ort) — in der App manuell korrigierbar.
 - Offen laut Plan: Phase 6 (KI — Code fertig, Deploy offen), Phase 8 (Export V5,
