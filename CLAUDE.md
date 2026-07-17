@@ -9,8 +9,9 @@ halten, Klick-Anleitungen für Dashboard-Schritte geben.
 ## Wo die Details stehen
 - **`docs/REBUILD_PLAN.md`** — der große Neuaufbau-Plan (Phasen 0–9), Schema-DDL,
   Feature-Backlog (Anhang C), Umsetzungs-Log (Anhang D). **Vor Rebuild-Arbeit lesen.**
-- **`.claude/plans/phase-6-ki-plan.md`** — detaillierter Plan für Phase 6 (KI:
-  Edge Function v2 + Etiketten-Scan-Fix + V7 Sommelier + V8 Trinkfenster). **Nächster Schritt.**
+- **`.claude/plans/phase-6-ki-plan.md`** — Plan für Phase 6 (KI: Edge Function v2 +
+  Etiketten-Scan-Fix + V7 Sommelier + V8 Trinkfenster). **IMPLEMENTIERT** (commit
+  `cfd6d48`); Rest = Deploy (Secret + `functions deploy`) auf Abruf, s. u.
 - **`.claude/plans/bevor-mit-phase-6-*.md`** — älter: Go-Live-Rollout-Plan.
 - Auto-Memory (`~/.claude/projects/.../memory/rebuild-decisions.md`) — laufendes
   Entscheidungs-/Status-Log über Sessions hinweg.
@@ -128,14 +129,20 @@ Land für Land. Voller Workflow + wiederverwendbare Skripte:
 `npm run build` · `npm test`. Commit-Messages auf Englisch, pro logischer Einheit.
 
 ## Bekannte offene Punkte
-- **KI-Etiketten-Scan** nutzt noch die alte, kaputte Edge Function
-  (`supabase/functions/claude-assistant`: ungültige Modell-ID, Env `cave_key`, keine
-  Auth) → wirft Fehler bis **Phase 6** (Edge Function v2 + Sommelier V7 + Trinkfenster
-  V8). Model-IDs/API-Doku vor Umsetzung via `claude-api`-Skill prüfen.
+- **KI (Phase 6) CODE FERTIG (commit `cfd6d48`), aber NOCH NICHT deployed.** Die Edge
+  Function `supabase/functions/claude-assistant` ist v2 (Auth via `verify_jwt`+JWT,
+  Secret `ANTHROPIC_API_KEY`, Modell `claude-sonnet-5`, forced tool-use Scan + V8
+  Trinkfenster + V7 Sommelier). **Damit die KI live geht, muss der User (auf Abruf):**
+  1) den Secret setzen — `node_modules/.bin/supabase secrets set ANTHROPIC_API_KEY=<key>
+  --project-ref czmjxsojbomkqtluzhru` (Key NIE committen), 2) deployen —
+  `node_modules/.bin/supabase functions deploy claude-assistant --project-ref
+  czmjxsojbomkqtluzhru`, 3) `git push` (frischer PAT). Bis dahin wirft der Scan
+  „AI is not configured yet".
 - 3 Weine (GR/HU/CY) haben leeres Regionsfeld (Datenfehler in Originaldaten:
   Produzentenname/Ländercode statt Ort) — in der App manuell korrigierbar.
-- Offen laut Plan: **Phase 7 (Geo, läuft — s. o.)**, Phase 6 (KI), Phase 8 (Export V5,
-  Statistik V10, Tests), Phase 9 (PWA V4). Verworfene Features: V2, V9, V11–V13.
+- Offen laut Plan: Phase 6 (KI — Code fertig, Deploy offen), Phase 8 (Export V5,
+  Statistik V10, Tests), Phase 9 (PWA V4). Phase 7 (Geo) im Kern abgeschlossen
+  (17 Kernländer live; 47 Land-Stubs ohne Detailgeografie). Verworfen: V2, V9, V11–V13.
 
 ## Fallstricke (aus echten Bugs gelernt)
 - Abfragen auf `cellar_members` liefern via RLS **alle** Mitglieder des eigenen

@@ -3,6 +3,12 @@
 > Detaillierter Umsetzungsplan. Erstellt 2026-07-17 (nach Abschluss der Geografie/Phase 7).
 > Modell-IDs/Preise/API-Muster via `claude-api`-Skill verifiziert (Stand 2026-07). Vor der
 > Umsetzung ggf. erneut den `claude-api`-Skill konsultieren, falls Zeit vergangen ist.
+>
+> ✅ **IMPLEMENTIERT 2026-07-17 (commit `cfd6d48`).** Alle Schritte umgesetzt; Gates grün.
+> **Eine bewusste Abweichung:** `output_config:{effort:"low"}` (Schritt 2) weggelassen —
+> forced `tool_choice` ist mit Extended Thinking unverträglich (400-Risiko); reine
+> forced-tool-use-Extraktion ist robuster. **Offen = nur Deploy** (Schritt 5): User setzt
+> den `ANTHROPIC_API_KEY`-Secret + `functions deploy` + `git push` auf Abruf.
 
 ## Ziel
 
