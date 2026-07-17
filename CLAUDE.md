@@ -9,7 +9,9 @@ halten, Klick-Anleitungen für Dashboard-Schritte geben.
 ## Wo die Details stehen
 - **`docs/REBUILD_PLAN.md`** — der große Neuaufbau-Plan (Phasen 0–9), Schema-DDL,
   Feature-Backlog (Anhang C), Umsetzungs-Log (Anhang D). **Vor Rebuild-Arbeit lesen.**
-- **`.claude/plans/bevor-mit-phase-6-*.md`** — zuletzt: Go-Live-Rollout-Plan.
+- **`.claude/plans/phase-6-ki-plan.md`** — detaillierter Plan für Phase 6 (KI:
+  Edge Function v2 + Etiketten-Scan-Fix + V7 Sommelier + V8 Trinkfenster). **Nächster Schritt.**
+- **`.claude/plans/bevor-mit-phase-6-*.md`** — älter: Go-Live-Rollout-Plan.
 - Auto-Memory (`~/.claude/projects/.../memory/rebuild-decisions.md`) — laufendes
   Entscheidungs-/Status-Log über Sessions hinweg.
 
