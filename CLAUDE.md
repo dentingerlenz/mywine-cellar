@@ -35,7 +35,8 @@ halten, Klick-Anleitungen für Dashboard-Schritte geben.
 - **Geografie**: globale Referenztabellen `countries/regions/sub_regions/appellations`
   (4-Ebenen, FKs an `wines`). Quelle = **`data/geography/*.json`** (1 Datei/Land),
   kompiliert per `npm run geo:build` → `supabase/seed.sql` + `COVERAGE.md`. Aktuell
-  51 Länder / **~2306 Appellationen** (Phase 7 fast fertig, s. u.). Der Validator in
+  98 Länder / **~2306 Appellationen** (17 Kernländer verifiziert; 47 weitere Wein-Länder
+  als reine Land-Stubs OHNE Geografie — Regionen/Appellationen noch ausständig). Der Validator in
   `build-seed.js` erzwingt harte Invarianten (keine Typ-Präfixe im Namen, keine
   In-Land-Duplikate außer `MULTI_ANCHOR`, keine eponyme Einzel-Sub, kein `’`) und
   warnt bei Typen außerhalb `KNOWN_TYPES`. **Picker-Logik** (Land→Region→Sub→

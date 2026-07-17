@@ -1,15 +1,20 @@
 -- ═══════════════════════════════════════════════════════════════════════
 -- GENERIERT von scripts/geo/build-seed.js — NICHT von Hand editieren!
 -- Quelle: data/geography/*.json  ·  Neu erzeugen: npm run geo:build
--- Stand: 2026-07-16 · 51 Länder
+-- Stand: 2026-07-17 · 98 Länder
 -- Idempotent: kann beliebig oft ausgeführt werden.
 -- ═══════════════════════════════════════════════════════════════════════
 
 begin;
 
+-- ── Albania ───────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Albania', 'AL', 'Europe', 0)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
 -- ── Algeria ───────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Algeria', 'DZ', 'Africa', 0)
+values ('Algeria', 'DZ', 'Africa', 1)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -69,7 +74,7 @@ from public.regions r
 
 -- ── Argentina ─────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Argentina', 'AR', 'Americas', 1)
+values ('Argentina', 'AR', 'Americas', 2)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -978,7 +983,7 @@ from public.regions r
 
 -- ── Armenia ───────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Armenia', 'AM', 'Asia', 2)
+values ('Armenia', 'AM', 'Asia', 3)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -1059,7 +1064,7 @@ from public.sub_regions s
 
 -- ── Australia ─────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Australia', 'AU', 'Oceania', 3)
+values ('Australia', 'AU', 'Oceania', 4)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.appellations (level, country_id, name, type, sort_order)
@@ -1974,7 +1979,7 @@ from public.regions r
 
 -- ── Austria ───────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Austria', 'AT', 'Europe', 4)
+values ('Austria', 'AT', 'Europe', 5)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -2215,7 +2220,7 @@ from public.regions r
 
 -- ── Azerbaijan ────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Azerbaijan', 'AZ', 'Asia', 5)
+values ('Azerbaijan', 'AZ', 'Asia', 6)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -2256,9 +2261,14 @@ from public.sub_regions s
   and not exists (select 1 from public.appellations a
     where a.name = 'Shirvan' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
+-- ── Belarus ───────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Belarus', 'BY', 'Europe', 7)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
 -- ── Belgium ───────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Belgium', 'BE', 'Europe', 6)
+values ('Belgium', 'BE', 'Europe', 8)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -2318,9 +2328,19 @@ from public.sub_regions s
   and not exists (select 1 from public.appellations a
     where a.name = 'Coteaux de Sambre-et-Meuse' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
+-- ── Bolivia ───────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Bolivia', 'BO', 'Americas', 9)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
+-- ── Bosnia and Herzegovina ────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Bosnia and Herzegovina', 'BA', 'Europe', 10)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
 -- ── Brazil ────────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Brazil', 'BR', 'Americas', 7)
+values ('Brazil', 'BR', 'Americas', 11)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -2415,7 +2435,7 @@ from public.sub_regions s
 
 -- ── Bulgaria ──────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Bulgaria', 'BG', 'Europe', 8)
+values ('Bulgaria', 'BG', 'Europe', 12)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -2515,7 +2535,7 @@ from public.sub_regions s
 
 -- ── Canada ────────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Canada', 'CA', 'Americas', 9)
+values ('Canada', 'CA', 'Americas', 13)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -2729,9 +2749,14 @@ from public.sub_regions s
   and not exists (select 1 from public.appellations a
     where a.name = 'Gaspereau Valley' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
+-- ── Cape Verde ────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Cape Verde', 'CV', 'Africa', 14)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
 -- ── Chile ─────────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Chile', 'CL', 'Americas', 10)
+values ('Chile', 'CL', 'Americas', 15)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -3520,7 +3545,7 @@ from public.regions r
 
 -- ── China ─────────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('China', 'CN', 'Asia', 11)
+values ('China', 'CN', 'Asia', 16)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -3686,9 +3711,14 @@ from public.sub_regions s
   and not exists (select 1 from public.appellations a
     where a.name = 'Shanxi' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
+-- ── Colombia ──────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Colombia', 'CO', 'Americas', 17)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
 -- ── Croatia ───────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Croatia', 'HR', 'Europe', 12)
+values ('Croatia', 'HR', 'Europe', 18)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -3813,9 +3843,14 @@ from public.sub_regions s
   and not exists (select 1 from public.appellations a
     where a.name = 'Plesivica' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
+-- ── Cuba ──────────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Cuba', 'CU', 'Americas', 19)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
 -- ── Cyprus ────────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Cyprus', 'CY', 'Asia', 13)
+values ('Cyprus', 'CY', 'Asia', 20)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -3924,7 +3959,7 @@ from public.regions r
 
 -- ── Czech Republic ────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Czech Republic', 'CZ', 'Europe', 14)
+values ('Czech Republic', 'CZ', 'Europe', 21)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -4027,7 +4062,7 @@ from public.sub_regions s
 
 -- ── Denmark ───────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Denmark', 'DK', 'Europe', 15)
+values ('Denmark', 'DK', 'Europe', 22)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -4042,9 +4077,24 @@ insert into public.regions (country_id, name, sort_order)
 select c.id, 'Fyn', 2 from public.countries c where c.name = 'Denmark'
 on conflict (country_id, name) do update set sort_order = excluded.sort_order;
 
+-- ── Dominican Republic ────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Dominican Republic', 'DO', 'Americas', 23)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
+-- ── Ecuador ───────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Ecuador', 'EC', 'Americas', 24)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
+-- ── Egypt ─────────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Egypt', 'EG', 'Africa', 25)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
 -- ── England & Wales ───────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('England & Wales', 'GB', 'Europe', 16)
+values ('England & Wales', 'GB', 'Europe', 26)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.appellations (level, country_id, name, type, sort_order)
@@ -4112,9 +4162,14 @@ from public.regions r join public.countries c on c.id = r.country_id
 where c.name = 'England & Wales' and r.name = 'South-West'
 on conflict (region_id, name) do update set sort_order = excluded.sort_order;
 
+-- ── Estonia ───────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Estonia', 'EE', 'Europe', 27)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
 -- ── Ethiopia ──────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Ethiopia', 'ET', 'Africa', 17)
+values ('Ethiopia', 'ET', 'Africa', 28)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -4136,9 +4191,14 @@ from public.sub_regions s
   and not exists (select 1 from public.appellations a
     where a.name = 'Ziway' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
+-- ── Finland ───────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Finland', 'FI', 'Europe', 29)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
 -- ── France ────────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('France', 'FR', 'Europe', 18)
+values ('France', 'FR', 'Europe', 30)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.appellations (level, country_id, name, type, sort_order)
@@ -7519,9 +7579,14 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Charentais' and a.level = 'region' and a.region_id = r.id);
 
+-- ── French Polynesia ──────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('French Polynesia', 'PF', 'Oceania', 31)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
 -- ── Georgia ───────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Georgia', 'GE', 'Europe', 19)
+values ('Georgia', 'GE', 'Europe', 32)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -7636,7 +7701,7 @@ from public.regions r
 
 -- ── Germany ───────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Germany', 'DE', 'Europe', 20)
+values ('Germany', 'DE', 'Europe', 33)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.appellations (level, country_id, name, type, sort_order)
@@ -8219,7 +8284,7 @@ from public.regions r
 
 -- ── Greece ────────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Greece', 'GR', 'Europe', 21)
+values ('Greece', 'GR', 'Europe', 34)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -9116,7 +9181,7 @@ from public.regions r
 
 -- ── Hungary ───────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Hungary', 'HU', 'Europe', 22)
+values ('Hungary', 'HU', 'Europe', 35)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -9449,7 +9514,7 @@ from public.regions r
 
 -- ── India ─────────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('India', 'IN', 'Asia', 23)
+values ('India', 'IN', 'Asia', 36)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -9524,9 +9589,29 @@ from public.sub_regions s
   and not exists (select 1 from public.appellations a
     where a.name = 'Kullu' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
+-- ── Indonesia ─────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Indonesia', 'ID', 'Asia', 37)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
+-- ── Iran ──────────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Iran', 'IR', 'Asia', 38)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
+-- ── Iraq ──────────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Iraq', 'IQ', 'Asia', 39)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
+-- ── Ireland ───────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Ireland', 'IE', 'Europe', 40)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
 -- ── Israel ────────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Israel', 'IL', 'Asia', 24)
+values ('Israel', 'IL', 'Asia', 41)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -9626,7 +9711,7 @@ from public.sub_regions s
 
 -- ── Italy ─────────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Italy', 'IT', 'Europe', 25)
+values ('Italy', 'IT', 'Europe', 42)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -13887,7 +13972,7 @@ from public.regions r
 
 -- ── Japan ─────────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Japan', 'JP', 'Asia', 26)
+values ('Japan', 'JP', 'Asia', 43)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -13985,9 +14070,19 @@ from public.sub_regions s
   and not exists (select 1 from public.appellations a
     where a.name = 'Osaka' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
+-- ── Jordan ────────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Jordan', 'JO', 'Asia', 44)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
+-- ── Kazakhstan ────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Kazakhstan', 'KZ', 'Asia', 45)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
 -- ── Kenya ─────────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Kenya', 'KE', 'Africa', 27)
+values ('Kenya', 'KE', 'Africa', 46)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -14009,9 +14104,24 @@ from public.sub_regions s
   and not exists (select 1 from public.appellations a
     where a.name = 'Lake Naivasha' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
+-- ── Kosovo ────────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Kosovo', 'XK', 'Europe', 47)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
+-- ── Kyrgyzstan ────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Kyrgyzstan', 'KG', 'Asia', 48)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
+-- ── Latvia ────────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Latvia', 'LV', 'Europe', 49)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
 -- ── Lebanon ───────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Lebanon', 'LB', 'Asia', 28)
+values ('Lebanon', 'LB', 'Asia', 50)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -14052,9 +14162,19 @@ from public.sub_regions s
   and not exists (select 1 from public.appellations a
     where a.name = 'Mont-Liban' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
+-- ── Liechtenstein ─────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Liechtenstein', 'LI', 'Europe', 51)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
+-- ── Lithuania ─────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Lithuania', 'LT', 'Europe', 52)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
 -- ── Luxembourg ────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Luxembourg', 'LU', 'Europe', 29)
+values ('Luxembourg', 'LU', 'Europe', 53)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -14076,9 +14196,19 @@ from public.sub_regions s
   and not exists (select 1 from public.appellations a
     where a.name = 'Moselle Luxembourgeoise' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
+-- ── Madagascar ────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Madagascar', 'MG', 'Africa', 54)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
+-- ── Malta ─────────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Malta', 'MT', 'Europe', 55)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
 -- ── Mexico ────────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Mexico', 'MX', 'Americas', 30)
+values ('Mexico', 'MX', 'Americas', 56)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -14182,7 +14312,7 @@ from public.regions r
 
 -- ── Moldova ───────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Moldova', 'MD', 'Europe', 31)
+values ('Moldova', 'MD', 'Europe', 57)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -14233,9 +14363,14 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Balti' and a.level = 'region' and a.region_id = r.id);
 
+-- ── Montenegro ────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Montenegro', 'ME', 'Europe', 58)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
 -- ── Morocco ───────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Morocco', 'MA', 'Africa', 32)
+values ('Morocco', 'MA', 'Africa', 59)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -14324,7 +14459,7 @@ from public.sub_regions s
 
 -- ── Myanmar ───────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Myanmar', 'MM', 'Asia', 33)
+values ('Myanmar', 'MM', 'Asia', 60)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -14346,9 +14481,14 @@ from public.sub_regions s
   and not exists (select 1 from public.appellations a
     where a.name = 'Aythaya' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
+-- ── Namibia ───────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Namibia', 'NA', 'Africa', 61)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
 -- ── Netherlands ───────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Netherlands', 'NL', 'Europe', 34)
+values ('Netherlands', 'NL', 'Europe', 62)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -14372,7 +14512,7 @@ from public.sub_regions s
 
 -- ── New Zealand ───────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('New Zealand', 'NZ', 'Oceania', 35)
+values ('New Zealand', 'NZ', 'Oceania', 63)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -14567,9 +14707,34 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Bannockburn' and a.level = 'region' and a.region_id = r.id);
 
+-- ── North Macedonia ───────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('North Macedonia', 'MK', 'Europe', 64)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
+-- ── Norway ────────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Norway', 'NO', 'Europe', 65)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
+-- ── Palestine ─────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Palestine', 'PS', 'Asia', 66)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
+-- ── Paraguay ──────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Paraguay', 'PY', 'Americas', 67)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
+-- ── Peru ──────────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Peru', 'PE', 'Americas', 68)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
 -- ── Poland ────────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Poland', 'PL', 'Europe', 36)
+values ('Poland', 'PL', 'Europe', 69)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -14734,7 +14899,7 @@ from public.regions r
 
 -- ── Portugal ──────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Portugal', 'PT', 'Europe', 37)
+values ('Portugal', 'PT', 'Europe', 70)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.appellations (level, country_id, name, type, sort_order)
@@ -15139,9 +15304,14 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Pico' and a.level = 'region' and a.region_id = r.id);
 
+-- ── Reunion ───────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Reunion', 'RE', 'Africa', 71)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
 -- ── Romania ───────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Romania', 'RO', 'Europe', 38)
+values ('Romania', 'RO', 'Europe', 72)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.appellations (level, country_id, name, type, sort_order)
@@ -15324,9 +15494,14 @@ from public.sub_regions s
   and not exists (select 1 from public.appellations a
     where a.name = 'Mini-Maderat' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
+-- ── Russia ────────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Russia', 'RU', 'Europe', 73)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
 -- ── Serbia ────────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Serbia', 'RS', 'Europe', 39)
+values ('Serbia', 'RS', 'Europe', 74)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -15381,7 +15556,7 @@ from public.sub_regions s
 
 -- ── Slovakia ──────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Slovakia', 'SK', 'Europe', 40)
+values ('Slovakia', 'SK', 'Europe', 75)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -15500,7 +15675,7 @@ from public.sub_regions s
 
 -- ── Slovenia ──────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Slovenia', 'SI', 'Europe', 41)
+values ('Slovenia', 'SI', 'Europe', 76)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -15652,7 +15827,7 @@ from public.sub_regions s
 
 -- ── South Africa ──────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('South Africa', 'ZA', 'Africa', 42)
+values ('South Africa', 'ZA', 'Africa', 77)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.appellations (level, country_id, name, type, sort_order)
@@ -16817,9 +16992,14 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Rietrivier FS' and a.level = 'region' and a.region_id = r.id);
 
+-- ── South Korea ───────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('South Korea', 'KR', 'Asia', 78)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
 -- ── Spain ─────────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Spain', 'ES', 'Europe', 43)
+values ('Spain', 'ES', 'Europe', 79)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -18082,9 +18262,19 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Ycoden-Daute-Isora' and a.level = 'region' and a.region_id = r.id);
 
+-- ── Sri Lanka ─────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Sri Lanka', 'LK', 'Asia', 80)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
+-- ── Sweden ────────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Sweden', 'SE', 'Europe', 81)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
 -- ── Switzerland ───────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Switzerland', 'CH', 'Europe', 44)
+values ('Switzerland', 'CH', 'Europe', 82)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -18615,9 +18805,29 @@ from public.regions r
   and not exists (select 1 from public.appellations a
     where a.name = 'Zürichsee' and a.level = 'region' and a.region_id = r.id);
 
+-- ── Syria ─────────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Syria', 'SY', 'Asia', 83)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
+-- ── Taiwan ────────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Taiwan', 'TW', 'Asia', 84)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
+-- ── Tajikistan ────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Tajikistan', 'TJ', 'Asia', 85)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
+-- ── Tanzania ──────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Tanzania', 'TZ', 'Africa', 86)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
 -- ── Thailand ──────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Thailand', 'TH', 'Asia', 45)
+values ('Thailand', 'TH', 'Asia', 87)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -18660,7 +18870,7 @@ from public.sub_regions s
 
 -- ── Tunisia ───────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Tunisia', 'TN', 'Africa', 46)
+values ('Tunisia', 'TN', 'Africa', 88)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -18722,7 +18932,7 @@ from public.sub_regions s
 
 -- ── Turkey ────────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Turkey', 'TR', 'Asia', 47)
+values ('Turkey', 'TR', 'Asia', 89)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -18820,9 +19030,14 @@ from public.sub_regions s
   and not exists (select 1 from public.appellations a
     where a.name = 'Güneydogu Anadolu' and a.level = 'sub_region' and a.sub_region_id = s.id);
 
+-- ── Turkmenistan ──────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Turkmenistan', 'TM', 'Asia', 90)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
 -- ── Ukraine ───────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Ukraine', 'UA', 'Europe', 48)
+values ('Ukraine', 'UA', 'Europe', 91)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -18892,7 +19107,7 @@ from public.regions r
 
 -- ── United States ─────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('United States', 'US', 'Americas', 49)
+values ('United States', 'US', 'Americas', 92)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -21249,7 +21464,7 @@ from public.regions r
 
 -- ── Uruguay ───────────────────────────────────────────────────────────
 insert into public.countries (name, code, continent, sort_order)
-values ('Uruguay', 'UY', 'Americas', 50)
+values ('Uruguay', 'UY', 'Americas', 93)
 on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 insert into public.regions (country_id, name, sort_order)
@@ -21311,5 +21526,25 @@ from public.regions r
   where c.name = 'Uruguay' and r.name = 'Montevideo'
   and not exists (select 1 from public.appellations a
     where a.name = 'Montevideo' and a.level = 'region' and a.region_id = r.id);
+
+-- ── Uzbekistan ────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Uzbekistan', 'UZ', 'Asia', 94)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
+-- ── Venezuela ─────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Venezuela', 'VE', 'Americas', 95)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
+-- ── Vietnam ───────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Vietnam', 'VN', 'Asia', 96)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
+
+-- ── Zimbabwe ──────────────────────────────────────────────────────────
+insert into public.countries (name, code, continent, sort_order)
+values ('Zimbabwe', 'ZW', 'Africa', 97)
+on conflict (name) do update set code = excluded.code, continent = excluded.continent, sort_order = excluded.sort_order;
 
 commit;
