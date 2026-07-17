@@ -170,10 +170,28 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
     }
     setIfPresent("variety", parsed.variety);
     setIfPresent("classification", parsed.classification);
-    setIfPresent("notes", parsed.notes);
+    setIfPresent("location", parsed.location);
+    setIfPresent("terroir_notes", parsed.terroir_notes);
     setIfPresent("ready_from", parsed.ready_from); // V8 — KI-Trinkfenster
     setIfPresent("drink_by", parsed.drink_by);
     setIfPresent("alcohol_pct", parsed.alcohol_pct);
+
+    // Colour → colour_id: gescannte Kategorie auf eine Keller-Farbe mappen.
+    if (parsed.colour) {
+      const raw = parsed.colour.trim().toLowerCase();
+      const alias: Record<string, string> = {
+        sweet: "dessert_fortified", fortified: "dessert_fortified", dessert: "dessert_fortified",
+        bubbles: "sparkling", champagne: "sparkling",
+      };
+      const slug = alias[raw] ?? raw;
+      const hit =
+        colours.find((c) => c.name === slug) ??
+        colours.find((c) => c.name === raw) ??
+        colours.find((c) => (c.display_name ?? "").toLowerCase() === raw) ??
+        (slug === "dessert_fortified" ? colours.find((c) => c.kind === "sweet_fortified") : undefined) ??
+        (slug === "sparkling" ? colours.find((c) => c.kind === "sparkling") : undefined);
+      if (hit) setValue("colour_id", hit.id, { shouldValidate: true });
+    }
 
     // Dosage: „Brut" (Stufe) vs. „3" (g/L) über den geteilten Helfer trennen.
     if (parsed.dosage != null && String(parsed.dosage).trim() !== "") {

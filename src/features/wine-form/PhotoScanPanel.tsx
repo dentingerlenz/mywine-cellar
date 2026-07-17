@@ -10,19 +10,21 @@ const MAX_PHOTO_SIZE = 5 * 1024 * 1024;
 export type ScanResult = {
   producer?: string | null;
   name?: string | null;
+  colour?: string | null;
   vintage?: number | null;
   is_non_vintage?: boolean | null;
   country?: string | null;
   region?: string | null;
   sub_region?: string | null;
   appellation?: string | null;
+  location?: string | null;
   classification?: string | null;
   variety?: string | null;
   alcohol_pct?: number | null;
   dosage?: string | null;
   ready_from?: number | null; // V8 — KI-Trinkfenster
   drink_by?: number | null;
-  notes?: string | null;
+  terroir_notes?: string | null;
 };
 
 export type PhotoState = {
