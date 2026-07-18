@@ -136,9 +136,11 @@ Land für Land. Voller Workflow + wiederverwendbare Skripte:
   `node_modules/.bin/supabase functions deploy claude-assistant --project-ref
   czmjxsojbomkqtluzhru` (braucht `supabase login` + Docker fürs edge-runtime-Image).
   Auth-Gate per curl verifiziert (ohne Header → 401; anon-Key ohne User → „Please sign
-  in first", kein API-Call). Modell per Secret `ANTHROPIC_MODEL` überschreibbar
-  (`claude-haiku-4-5` = billiger). API-Key = EIN Projekt-Secret, Kosten laufen über den
-  Owner-Account. Supabase-MCP lokal in `.mcp.json` konfiguriert (nicht committet; braucht
+  in first", kein API-Call). Scan-Modell per Secret `ANTHROPIC_MODEL`, Sommelier separat
+  per `ANTHROPIC_SOMMELIER_MODEL` überschreibbar (`claude-haiku-4-5` = billiger). Der
+  Sommelier cacht Bestand+System-Prompt (Prompt-Caching) und referenziert Flaschen per
+  Integer-`ref` statt UUID → Folgefragen sehr günstig (Polish `52cf69e`, 2026-07-18).
+  API-Key = EIN Projekt-Secret, Kosten laufen über den Owner-Account. Supabase-MCP lokal in `.mcp.json` konfiguriert (nicht committet; braucht
   `claude /mcp`→Authenticate + neue Session).
 - 3 Weine (GR/HU/CY) haben leeres Regionsfeld (Datenfehler in Originaldaten:
   Produzentenname/Ländercode statt Ort) — in der App manuell korrigierbar.
