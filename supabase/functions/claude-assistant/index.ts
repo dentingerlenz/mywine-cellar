@@ -37,11 +37,12 @@ const fail = (error: string) =>
     headers: { ...corsHeaders, "Content-Type": "application/json" },
   });
 
-// ── Scan tool — every field required, values may be null (type: [..,"null"]). ──
+// ── Scan tool. NOT strict on purpose: 17 nullable fields exceed strict mode's limit of
+// 16 union-typed parameters (400 "too many parameters with union types"). A forced
+// tool_choice still yields a valid JSON `input` block, and applyScan guards missing keys.
 const extractLabel = {
   name: "extract_label",
   description: "Structured data extracted from a wine-label photo.",
-  strict: true,
   input_schema: {
     type: "object",
     additionalProperties: false,
@@ -118,8 +119,9 @@ const recommendTool = {
 
 const SOMMELIER_SYSTEM =
   "You are the house sommelier inside a private wine-cellar app. The user's current " +
-  "in-stock bottles are given as JSON in the <cellar> block, each with a short numeric " +
-  "`ref`. Answer their question — food pairings, what to drink tonight, what is peaking, " +
+  "in-stock bottles are in the <cellar> block as a pipe-delimited table; the first row is " +
+  "the header and each following row is one bottle, its `ref` in the first column. Answer " +
+  "their question — food pairings, what to drink tonight, what is peaking, " +
   "cellaring advice — and when you recommend bottles, choose ONLY from the provided cellar " +
   "and reference them by their `ref` in the recommendations array. If the cellar has " +
   "nothing suitable, say so honestly and leave recommendations empty. Keep the reply " +
@@ -205,26 +207,22 @@ Deno.serve(async (req) => {
       wine_colours: { display_name: string | null } | null;
       regions: Rel; appellations: Rel;
     };
-    // Trim the payload and reference each bottle by a short `ref` (1..N) rather than its
-    // 36-char UUID; map the model's refs back to real ids for the client afterwards.
+    // Compact pipe-delimited table (no repeated JSON keys → ~30% fewer tokens) and a
+    // short `ref` (1..N) instead of the 36-char UUID; map refs back to ids afterwards.
     const refToId = new Map<number, string>();
-    const context = ((rows as Row[]) ?? []).map((w, i) => {
+    const clean = (v: unknown) => (v == null ? "" : String(v).replace(/[|\r\n]+/g, " ").trim());
+    const CELLAR_HEADER = "ref|producer|name|vintage|colour|region|appellation|variety|ready_from|drink_by|occasion";
+    const cellarLines = ((rows as Row[]) ?? []).map((w, i) => {
       const ref = i + 1;
       refToId.set(ref, w.id);
-      return {
-        ref,
-        producer: w.producer,
-        name: w.name,
-        vintage: w.vintage ?? (w.is_non_vintage ? (w.base_vintage ? `NV (${w.base_vintage})` : "NV") : null) ?? w.aging_indication,
-        colour: w.wine_colours?.display_name ?? null,
-        region: w.regions?.name ?? null,
-        appellation: w.appellations?.name ?? null,
-        variety: w.variety,
-        ready_from: w.ready_from,
-        drink_by: w.drink_by,
-        occasion: w.occasion,
-      };
+      const vintage = w.vintage ?? (w.is_non_vintage ? (w.base_vintage ? `NV ${w.base_vintage}` : "NV") : null) ?? w.aging_indication;
+      return [
+        ref, clean(w.producer), clean(w.name), clean(vintage), clean(w.wine_colours?.display_name),
+        clean(w.regions?.name), clean(w.appellations?.name), clean(w.variety),
+        clean(w.ready_from), clean(w.drink_by), clean(w.occasion),
+      ].join("|");
     });
+    const cellarText = [CELLAR_HEADER, ...cellarLines].join("\n");
 
     // Prior turns from the client; keep it well-formed (start on a user turn).
     let priorTurns: { role: "user" | "assistant"; content: string }[] = Array.isArray(history)
@@ -242,7 +240,7 @@ Deno.serve(async (req) => {
       // questions in the same session pay ~0.1x for the (large) bottle list.
       system: [
         { type: "text", text: SOMMELIER_SYSTEM },
-        { type: "text", text: `<cellar>\n${JSON.stringify(context)}\n</cellar>`, cache_control: { type: "ephemeral" } },
+        { type: "text", text: `<cellar>\n${cellarText}\n</cellar>`, cache_control: { type: "ephemeral" } },
       ],
       tools: [recommendTool],
       tool_choice: { type: "tool", name: "recommend" },
