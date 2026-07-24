@@ -13,13 +13,18 @@ import { SommelierDialog } from "./components/SommelierDialog";
 import { Dashboard } from "./components/Dashboard";
 import { FilterBar, applyFilters, emptyFilters, type Filters, type SortKey, type GeoNames } from "./components/FilterBar";
 import { WineFormDialog } from "@/features/wine-form/WineFormDialog";
+import { ScanFlow } from "@/features/wine-form/ScanFlow";
+import type { ScanResult } from "@/features/wine-form/PhotoScanPanel";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import {
   Plus, LogOut, Wine as WineIcon, Upload, LayoutGrid, List,
-  Settings as SettingsIcon, BookOpen, Sparkles,
+  Settings as SettingsIcon, BookOpen, Sparkles, Camera, ChevronDown,
 } from "lucide-react";
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
@@ -41,6 +46,9 @@ export default function CellarPage() {
   const [deleteTarget, setDeleteTarget] = useState<Wine | null>(null);
   const [openingBottle, setOpeningBottle] = useState<Wine | null>(null);
   const [sommelierOpen, setSommelierOpen] = useState(false);
+  const [scanOpen, setScanOpen] = useState(false);
+  const [scanResult, setScanResult] = useState<ScanResult | null>(null);
+  const [scanPhoto, setScanPhoto] = useState<File | null>(null);
 
   const geoNames: GeoNames = useMemo(
     () => ({
@@ -66,16 +74,31 @@ export default function CellarPage() {
     [wines, filters, geoNames],
   );
 
-  const onAdd = () => {
+  const clearScan = () => { setScanResult(null); setScanPhoto(null); };
+  const onAddManual = () => {
+    clearScan();
     setEditing(null);
     setFormOpen(true);
   };
+  const onScan = () => {
+    clearScan();
+    setScanOpen(true);
+  };
   const onEdit = (b: Wine) => {
+    clearScan();
     setDetail(null);
     setEditing(b);
     setFormOpen(true);
   };
   const onOpenDetail = (b: Wine) => setDetail(b);
+
+  // Nach dem Scan: Ergebnis + Front-Foto ins vorbefüllte Formular übergeben.
+  const onScanComplete = (scan: ScanResult, photo: File) => {
+    setEditing(null);
+    setScanResult(scan);
+    setScanPhoto(photo);
+    setFormOpen(true);
+  };
 
   const confirmDelete = async () => {
     if (!deleteTarget) return;
@@ -120,9 +143,22 @@ export default function CellarPage() {
             >
               <Sparkles className="w-4 h-4" /> <span className="hidden sm:inline">Sommelier</span>
             </Button>
-            <Button onClick={onAdd} size="icon" className="sm:size-auto sm:px-3" title="Add bottle">
-              <Plus className="w-4 h-4" /> <span className="hidden sm:inline">Add bottle</span>
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button size="icon" className="sm:size-auto sm:px-3" title="Add bottle">
+                  <Plus className="w-4 h-4" /> <span className="hidden sm:inline">Add bottle</span>
+                  <ChevronDown className="hidden sm:inline w-3 h-3 opacity-70" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={onAddManual}>
+                  <Plus className="w-4 h-4" /> Add bottle manually
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={onScan}>
+                  <Camera className="w-4 h-4" /> Scan bottle
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <Button variant="ghost" size="icon" asChild title="Settings">
               <Link to="/settings">
                 <SettingsIcon className="w-4 h-4" />
@@ -195,8 +231,11 @@ export default function CellarPage() {
             <h3 className="font-display text-2xl mb-2">Your cellar is empty</h3>
             <p className="text-muted-foreground italic mb-6">Time to stock up.</p>
             <div className="flex gap-2 justify-center">
-              <Button onClick={onAdd}>
+              <Button onClick={onAddManual}>
                 <Plus className="w-4 h-4" /> Add a bottle
+              </Button>
+              <Button variant="outline" onClick={onScan}>
+                <Camera className="w-4 h-4" /> Scan a bottle
               </Button>
               <Button variant="outline" asChild>
                 <Link to="/import">
@@ -254,7 +293,15 @@ export default function CellarPage() {
         )}
       </main>
 
-      <WineFormDialog open={formOpen} onOpenChange={setFormOpen} wine={editing} />
+      <WineFormDialog
+        open={formOpen}
+        onOpenChange={setFormOpen}
+        wine={editing}
+        initialScan={scanResult}
+        initialPhotoFile={scanPhoto}
+      />
+
+      <ScanFlow open={scanOpen} onOpenChange={setScanOpen} onComplete={onScanComplete} />
 
       <SommelierDialog
         open={sommelierOpen}

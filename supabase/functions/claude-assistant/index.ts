@@ -78,6 +78,9 @@ const SCAN_SYSTEM =
   "text first (producer, cuvée, vintage, appellation, ABV, grape, dosage), then use your " +
   "wine knowledge to fill fields the label implies but does not spell out (country/region " +
   "for a known appellation, typical grape for a classic appellation, classification tier). " +
+  "You may get a FRONT and a BACK image — use both (the back often carries grape, ABV, " +
+  "importer and vinification notes). The vintage is sometimes NOT on the label but printed " +
+  "on a separate neck collar or tag ABOVE the front label — read that area too. " +
   "colour: pick the single best-fitting category from the fixed set. sub_region: fill it " +
   "when the wine belongs to a recognised subdivision of the region (e.g. Aube / Cote des " +
   "Bar for a Champagne from that area). location: the village, vineyard or lieu-dit — NOT " +
@@ -128,6 +131,47 @@ const SOMMELIER_SYSTEM =
   "concise and warm. Prefer bottles whose drinking window (ready_from/drink_by) matches " +
   "the occasion.";
 
+// ── Web-research pass (scan phase 2). Runs only when a REQUIRED_FOR_LOOKUP field is still
+// null after reading the labels — keeps cost proportional to how incomplete the labels are.
+// REQUIRED_FOR_LOOKUP is a server default; the client may override via `requiredFields`,
+// and it is intended to become a per-cellar setting later.
+const REQUIRED_FOR_LOOKUP = ["variety", "region", "ready_from", "drink_by"];
+// Fields the research pass is allowed to fill (never producer/name/vintage — no guessing IDs).
+const LOOKUP_FILLABLE = [
+  "country", "region", "sub_region", "appellation", "location", "classification",
+  "variety", "alcohol_pct", "ready_from", "drink_by", "terroir_notes",
+];
+
+const fillGaps = {
+  name: "fill_gaps",
+  description: "Report the wine details found via web search. Use null for anything not confirmed.",
+  input_schema: {
+    type: "object",
+    additionalProperties: false,
+    properties: {
+      country: { type: ["string", "null"] },
+      region: { type: ["string", "null"] },
+      sub_region: { type: ["string", "null"] },
+      appellation: { type: ["string", "null"] },
+      location: { type: ["string", "null"] },
+      classification: { type: ["string", "null"] },
+      variety: { type: ["string", "null"] },
+      alcohol_pct: { type: ["number", "null"] },
+      ready_from: { type: ["integer", "null"] },
+      drink_by: { type: ["integer", "null"] },
+      terroir_notes: { type: ["string", "null"] },
+    },
+    required: LOOKUP_FILLABLE,
+  },
+};
+
+const LOOKUP_SYSTEM =
+  "You research one specific wine to fill in missing catalogue fields. You are given what " +
+  "is already known (producer, cuvée, vintage). Use web_search sparingly (1-3 focused " +
+  "searches) to find ONLY the requested missing fields, then call fill_gaps with what you " +
+  "confirmed (null for anything you cannot verify). Do not guess — prefer null over a shaky " +
+  "answer. ready_from/drink_by = a conservative drinking window (years). terroir_notes short.";
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
@@ -154,13 +198,29 @@ Deno.serve(async (req) => {
     if (!apiKey) return fail("AI is not configured yet (missing API key).");
     const client = new Anthropic({ apiKey });
 
-    const { type, message, imageBase64, imageMediaType, history } = await req.json();
+    const {
+      type, message, history,
+      imageBase64, imageMediaType, // legacy single-image
+      frontImageBase64, frontMediaType, backImageBase64, backMediaType, requiredFields,
+    } = await req.json();
 
     // ── Mode: label scan ─────────────────────────────────────────────────────
     if (type === "scan") {
-      if (!imageBase64) return fail("No image supplied.");
       const allowed = ["image/jpeg", "image/png", "image/webp", "image/gif"];
-      const mediaType = allowed.includes(imageMediaType) ? imageMediaType : "image/jpeg";
+      const mt = (m: unknown) => (typeof m === "string" && allowed.includes(m) ? m : "image/jpeg");
+      const front = frontImageBase64 ?? imageBase64;
+      if (!front) return fail("No image supplied.");
+
+      // ── Phase 1 — read the label(s) (front + optional back), always. ─────────
+      const content: unknown[] = [
+        { type: "text", text: "FRONT label:" },
+        { type: "image", source: { type: "base64", media_type: mt(frontMediaType ?? imageMediaType), data: front } },
+      ];
+      if (backImageBase64) {
+        content.push({ type: "text", text: "BACK label:" });
+        content.push({ type: "image", source: { type: "base64", media_type: mt(backMediaType), data: backImageBase64 } });
+      }
+      content.push({ type: "text", text: "Scan this wine. Fill every field; use null where unknown." });
 
       const resp = await client.messages.create({
         model: MODEL,
@@ -168,19 +228,46 @@ Deno.serve(async (req) => {
         system: SCAN_SYSTEM,
         tools: [extractLabel],
         tool_choice: { type: "tool", name: "extract_label" },
-        messages: [{
-          role: "user",
-          content: [
-            { type: "image", source: { type: "base64", media_type: mediaType, data: imageBase64 } },
-            { type: "text", text: "Scan this wine label. Fill every field; use null where unknown." },
-          ],
-        }],
+        messages: [{ role: "user", content }],
       });
-
       if (resp.stop_reason === "refusal") return fail("The image could not be processed.");
       const block = resp.content.find((b) => b.type === "tool_use");
       if (!block) return fail("Could not read the label.");
-      return ok({ data: (block as { input: unknown }).input });
+      const data = { ...(block as { input: Record<string, unknown> }).input };
+
+      // ── Phase 2 — web research, only if a required field is still missing. ───
+      const required = Array.isArray(requiredFields) && requiredFields.length ? requiredFields : REQUIRED_FOR_LOOKUP;
+      const missing = required.filter((f: string) => data[f] == null);
+      if (missing.length && data.producer) {
+        try {
+          const known =
+            `Producer: ${data.producer}\nName: ${data.name ?? ""}\nVintage: ${data.vintage ?? "unknown"}\n` +
+            `Region so far: ${data.region ?? "unknown"}\nCountry so far: ${data.country ?? "unknown"}`;
+          let messages2: { role: "user" | "assistant"; content: unknown }[] = [
+            { role: "user", content: `Find these missing fields for this wine, then call fill_gaps: ${missing.join(", ")}.\n\n${known}` },
+          ];
+          let filled: Record<string, unknown> | null = null;
+          for (let i = 0; i < 3; i++) {
+            const r2 = await client.messages.create({
+              model: MODEL,
+              max_tokens: 1500,
+              system: LOOKUP_SYSTEM,
+              tools: [{ type: "web_search_20260209", name: "web_search", max_uses: 3 }, fillGaps],
+              messages: messages2,
+            });
+            const fg = r2.content.find((b) => b.type === "tool_use" && (b as { name?: string }).name === "fill_gaps");
+            if (fg) { filled = (fg as { input: Record<string, unknown> }).input; break; }
+            if (r2.stop_reason === "pause_turn") { messages2 = [...messages2, { role: "assistant", content: r2.content }]; continue; }
+            break; // ended without fill_gaps
+          }
+          if (filled) {
+            for (const f of LOOKUP_FILLABLE) {
+              if (data[f] == null && filled[f] != null) data[f] = filled[f];
+            }
+          }
+        } catch (_e) { /* non-fatal: keep the phase-1 result */ }
+      }
+      return ok({ data });
     }
 
     // ── Mode: sommelier chat ─────────────────────────────────────────────────

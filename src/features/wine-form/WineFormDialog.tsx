@@ -30,6 +30,9 @@ type Props = {
   open: boolean;
   onOpenChange: (v: boolean) => void;
   wine?: Wine | null;
+  /** Vorbefüllung nach einem Scan (nur beim Neu-Anlegen). */
+  initialScan?: ScanResult | null;
+  initialPhotoFile?: File | null;
 };
 
 const FIELD_LABELS: Record<string, string> = {
@@ -58,7 +61,7 @@ const FIELD_LABELS: Record<string, string> = {
   rating: "Rating",
 };
 
-export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
+export const WineFormDialog = ({ open, onOpenChange, wine, initialScan, initialPhotoFile }: Props) => {
   const { cellarId } = useCellar();
   const upsert = useUpsertWine();
   const { data: colours = [] } = useColours();
@@ -147,7 +150,12 @@ export const WineFormDialog = ({ open, onOpenChange, wine }: Props) => {
       setPhoto({ file: null, preview: labelPhotoUrl(wine.label_photo_path), remove: false });
     } else {
       reset({ quantity: 1, size_ml: 750, is_non_vintage: false, occasion: null, rating: null });
-      setPhoto(emptyPhotoState);
+      if (initialPhotoFile) {
+        setPhoto({ file: initialPhotoFile, preview: URL.createObjectURL(initialPhotoFile), remove: false });
+      } else {
+        setPhoto(emptyPhotoState);
+      }
+      if (initialScan) applyScan(initialScan); // Scan-Vorbefüllung (nach reset)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, wineId]);
